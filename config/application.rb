@@ -30,7 +30,7 @@ module Accentor
     config.api_only = true
 
     config.generators do |g|
-      g.template_engine = :jbuilder
+      g.template_engine :jbuilder
     end
   end
 end
