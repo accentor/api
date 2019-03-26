@@ -5,13 +5,13 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
     @user = create(:user, password: 'password')
   end
 
-  test "should get index" do
+  test 'should get index' do
     sign_in_as(@user)
     get auth_tokens_url
     assert_response :success
   end
 
-  test "should create auth_token" do
+  test 'should create auth_token' do
     assert_difference('AuthToken.count', 1) do
       post auth_tokens_url, params: {
           name: @user.name,
@@ -23,14 +23,14 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
     assert_response 201
   end
 
-  test "should show auth_token" do
+  test 'should show auth_token' do
     sign_in_as(@user)
     auth_token = create :auth_token, user: @user
     get auth_token_url(auth_token)
     assert_response :success
   end
 
-  test "should destroy auth_token" do
+  test 'should destroy auth_token' do
     sign_in_as(@user)
     auth_token = create :auth_token, user: @user
     assert_difference('AuthToken.count', -1) do

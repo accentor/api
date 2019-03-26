@@ -10,8 +10,8 @@
 
 FactoryBot.define do
   factory :user do
-    name {Faker::Name.unique.name}
-    password {Faker::Lorem.characters(20)}
+    name {Faker::Internet.unique.username}
+    password {Faker::Internet.password}
     permission {:user}
 
     factory :moderator do

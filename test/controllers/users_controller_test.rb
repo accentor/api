@@ -6,12 +6,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@user)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get users_url
     assert_response :success
   end
 
-  test "admin should create user" do
+  test 'admin should create user' do
     sign_in_as(create(:admin))
     user = build(:user)
     assert_difference('User.count') do
@@ -30,23 +30,23 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response 401
   end
 
-  test "should show user" do
+  test 'should show user' do
     get user_url(@user)
     assert_response :success
   end
 
-  test "should update own user" do
+  test 'should update own user' do
     patch user_url(@user), params: {user: {password: 'new_password'}}
     assert_response 200
   end
 
-  test "should not update own permission if not admin" do
+  test 'should not update own permission if not admin' do
     patch user_url(@user), params: {user: {password: 'new_password', permission: :admin}}
     assert_not_equal :admin, @user.permission
     assert_response 200
   end
 
-  test "should destroy user" do
+  test 'should destroy user' do
     assert_difference('User.count', -1) do
       delete user_url(@user), as: :json
     end

@@ -12,7 +12,7 @@
 FactoryBot.define do
   factory :auth_token do
     user
-    user_agent { Faker::Lorem::words(3) }
+    user_agent {Faker::Internet.user_agent}
 
     factory :moderator_auth_token do
       association :user, factory: :moderator
