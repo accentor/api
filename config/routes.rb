@@ -1,6 +1,22 @@
 # == Route Map
 #
 #                    Prefix Verb   URI Pattern                                                                              Controller#Action
+#           cover_filenames GET    /cover_filenames(.:format)                                                               cover_filenames#index
+#                           POST   /cover_filenames(.:format)                                                               cover_filenames#create
+#            cover_filename GET    /cover_filenames/:id(.:format)                                                           cover_filenames#show
+#                           PATCH  /cover_filenames/:id(.:format)                                                           cover_filenames#update
+#                           PUT    /cover_filenames/:id(.:format)                                                           cover_filenames#update
+#                           DELETE /cover_filenames/:id(.:format)                                                           cover_filenames#destroy
+#               auth_tokens GET    /auth_tokens(.:format)                                                                   auth_tokens#index
+#                           POST   /auth_tokens(.:format)                                                                   auth_tokens#create
+#                auth_token GET    /auth_tokens/:id(.:format)                                                               auth_tokens#show
+#                           DELETE /auth_tokens/:id(.:format)                                                               auth_tokens#destroy
+#                    codecs GET    /codecs(.:format)                                                                        codecs#index
+#                           POST   /codecs(.:format)                                                                        codecs#create
+#                     codec GET    /codecs/:id(.:format)                                                                    codecs#show
+#                           PATCH  /codecs/:id(.:format)                                                                    codecs#update
+#                           PUT    /codecs/:id(.:format)                                                                    codecs#update
+#                           DELETE /codecs/:id(.:format)                                                                    codecs#destroy
 #               image_types GET    /image_types(.:format)                                                                   image_types#index
 #                           POST   /image_types(.:format)                                                                   image_types#create
 #                image_type GET    /image_types/:id(.:format)                                                               image_types#show
@@ -11,16 +27,6 @@
 #                           POST   /locations(.:format)                                                                     locations#create
 #                  location GET    /locations/:id(.:format)                                                                 locations#show
 #                           DELETE /locations/:id(.:format)                                                                 locations#destroy
-#                    codecs GET    /codecs(.:format)                                                                        codecs#index
-#                           POST   /codecs(.:format)                                                                        codecs#create
-#                     codec GET    /codecs/:id(.:format)                                                                    codecs#show
-#                           PATCH  /codecs/:id(.:format)                                                                    codecs#update
-#                           PUT    /codecs/:id(.:format)                                                                    codecs#update
-#                           DELETE /codecs/:id(.:format)                                                                    codecs#destroy
-#               auth_tokens GET    /auth_tokens(.:format)                                                                   auth_tokens#index
-#                           POST   /auth_tokens(.:format)                                                                   auth_tokens#create
-#                auth_token GET    /auth_tokens/:id(.:format)                                                               auth_tokens#show
-#                           DELETE /auth_tokens/:id(.:format)                                                               auth_tokens#destroy
 #                     users GET    /users(.:format)                                                                         users#index
 #                           POST   /users(.:format)                                                                         users#create
 #                      user GET    /users/:id(.:format)                                                                     users#show
