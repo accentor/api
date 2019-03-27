@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_27_072133) do
+ActiveRecord::Schema.define(version: 2019_03_27_075150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "audio_files", force: :cascade do |t|
+    t.bigint "location_id", null: false
+    t.bigint "codec_id", null: false
+    t.string "filename", null: false
+    t.integer "length", null: false
+    t.integer "bitrate", null: false
+    t.index ["codec_id"], name: "index_audio_files_on_codec_id"
+    t.index ["location_id", "filename"], name: "index_audio_files_on_location_id_and_filename", unique: true
+    t.index ["location_id"], name: "index_audio_files_on_location_id"
+  end
 
   create_table "auth_tokens", force: :cascade do |t|
     t.bigint "user_id", null: false
