@@ -1,6 +1,12 @@
 # == Route Map
 #
 #                    Prefix Verb   URI Pattern                                                                              Controller#Action
+#               image_types GET    /image_types(.:format)                                                                   image_types#index
+#                           POST   /image_types(.:format)                                                                   image_types#create
+#                image_type GET    /image_types/:id(.:format)                                                               image_types#show
+#                           PATCH  /image_types/:id(.:format)                                                               image_types#update
+#                           PUT    /image_types/:id(.:format)                                                               image_types#update
+#                           DELETE /image_types/:id(.:format)                                                               image_types#destroy
 #                 locations GET    /locations(.:format)                                                                     locations#index
 #                           POST   /locations(.:format)                                                                     locations#create
 #                  location GET    /locations/:id(.:format)                                                                 locations#show
@@ -28,8 +34,9 @@
 #      rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
 
 Rails.application.routes.draw do
-  resources :locations, only: %i[index show create destroy]
-  resources :codecs
   resources :auth_tokens, only: %i[index show create destroy]
+  resources :codecs
+  resources :image_types
+  resources :locations, only: %i[index show create destroy]
   resources :users
 end
