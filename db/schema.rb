@@ -64,4 +64,7 @@ ActiveRecord::Schema.define(version: 2019_03_27_103442) do
     t.index ["name"], name: "index_users_on_name", unique: true
   end
 
+  add_foreign_key "audio_files", "codecs"
+  add_foreign_key "audio_files", "locations"
+  add_foreign_key "auth_tokens", "users"
 end
