@@ -1,12 +1,6 @@
 # == Route Map
 #
 #                    Prefix Verb   URI Pattern                                                                              Controller#Action
-#           cover_filenames GET    /cover_filenames(.:format)                                                               cover_filenames#index
-#                           POST   /cover_filenames(.:format)                                                               cover_filenames#create
-#            cover_filename GET    /cover_filenames/:id(.:format)                                                           cover_filenames#show
-#                           PATCH  /cover_filenames/:id(.:format)                                                           cover_filenames#update
-#                           PUT    /cover_filenames/:id(.:format)                                                           cover_filenames#update
-#                           DELETE /cover_filenames/:id(.:format)                                                           cover_filenames#destroy
 #               auth_tokens GET    /auth_tokens(.:format)                                                                   auth_tokens#index
 #                           POST   /auth_tokens(.:format)                                                                   auth_tokens#create
 #                auth_token GET    /auth_tokens/:id(.:format)                                                               auth_tokens#show
@@ -17,6 +11,10 @@
 #                           PATCH  /codecs/:id(.:format)                                                                    codecs#update
 #                           PUT    /codecs/:id(.:format)                                                                    codecs#update
 #                           DELETE /codecs/:id(.:format)                                                                    codecs#destroy
+#           cover_filenames GET    /cover_filenames(.:format)                                                               cover_filenames#index
+#                           POST   /cover_filenames(.:format)                                                               cover_filenames#create
+#            cover_filename GET    /cover_filenames/:id(.:format)                                                           cover_filenames#show
+#                           DELETE /cover_filenames/:id(.:format)                                                           cover_filenames#destroy
 #               image_types GET    /image_types(.:format)                                                                   image_types#index
 #                           POST   /image_types(.:format)                                                                   image_types#create
 #                image_type GET    /image_types/:id(.:format)                                                               image_types#show
@@ -40,9 +38,9 @@
 #      rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
 
 Rails.application.routes.draw do
-  resources :cover_filenames
   resources :auth_tokens, only: %i[index show create destroy]
   resources :codecs
+  resources :cover_filenames, only: %i[index show create destroy]
   resources :image_types
   resources :locations, only: %i[index show create destroy]
   resources :users
