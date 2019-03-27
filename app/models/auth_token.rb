@@ -14,6 +14,7 @@ class AuthToken < ApplicationRecord
 
   validates :device_id, presence: true, uniqueness: true
   validates :hashed_secret, presence: true
+  validates :user_agent, presence: true
   before_validation :generate_device_id, unless: :device_id?
   before_validation :generate_secret, unless: :hashed_secret?
 
@@ -38,6 +39,6 @@ class AuthToken < ApplicationRecord
 
   def generate_secret
     self.secret = SecureRandom.urlsafe_base64(48)
-    self.hashed_secret = BCrypt::Password.create(secret, cost: 12)
+    self.hashed_secret = BCrypt::Password.create(secret, cost: Rails.configuration.token_hash_rounds)
   end
 end

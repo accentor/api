@@ -23,6 +23,29 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
     assert_response 201
   end
 
+  test 'should not create auth_token with wrong credentials' do
+    assert_difference('AuthToken.count', 0) do
+      post auth_tokens_url, params: {
+          name: @user.name,
+          password: @user.password + 'a',
+          auth_token: {user_agent: 'Rails Test'}
+      }
+    end
+
+    assert_response :unauthorized
+  end
+
+  test 'should not create auth_token without user_agent' do
+    assert_difference('AuthToken.count', 0) do
+      post auth_tokens_url, params: {
+          name: @user.name,
+          password: @user.password
+      }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
   test 'should show auth_token' do
     sign_in_as(@user)
     auth_token = create :auth_token, user: @user

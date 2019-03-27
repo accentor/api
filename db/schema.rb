@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_26_122335) do
+ActiveRecord::Schema.define(version: 2019_03_27_072133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,11 @@ ActiveRecord::Schema.define(version: 2019_03_26_122335) do
     t.string "mimetype", null: false
     t.string "extension", null: false
     t.index ["extension"], name: "index_codecs_on_extension", unique: true
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "path", null: false
+    t.index ["path"], name: "index_locations_on_path", unique: true
   end
 
   create_table "users", force: :cascade do |t|
