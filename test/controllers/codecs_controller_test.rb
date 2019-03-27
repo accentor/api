@@ -36,7 +36,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not update codec for user' do
-    patch codec_url(@codec), params: {codec: {extension: @codec.extension, mimetype: @codec.mimetype}}
+    patch codec_url(@codec), params: {codec: {mimetype: @codec.mimetype}}
     assert_response 401
   end
 
