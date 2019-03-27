@@ -6,6 +6,10 @@ SimpleCov.start 'rails'
 
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
+
+  teardown do
+    Faker::UniqueGenerator.clear
+  end
 end
 
 module SignInHelper

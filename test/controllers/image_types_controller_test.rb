@@ -30,6 +30,16 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
     assert_response :created
   end
 
+  test 'should create image_type for admin' do
+    sign_in_as(create(:admin))
+    image_type = build(:image_type)
+    assert_difference('ImageType.count', 1) do
+      post image_types_url, params: {image_type: {extension: image_type.extension, mimetype: image_type.mimetype}}
+    end
+
+    assert_response :created
+  end
+
   test 'should show image_type' do
     get image_type_url(@image_type)
     assert_response :success
@@ -46,6 +56,12 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should update image_type for admin' do
+    sign_in_as(create(:admin))
+    patch image_type_url(@image_type), params: {image_type: {mimetype: @image_type.mimetype}}
+    assert_response :success
+  end
+
   test 'should not destroy image_type for user' do
     assert_difference('ImageType.count', 0) do
       delete image_type_url(@image_type)
@@ -56,6 +72,15 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should destroy image_type for moderator' do
     sign_in_as(create(:moderator))
+    assert_difference('ImageType.count', -1) do
+      delete image_type_url(@image_type)
+    end
+
+    assert_response :no_content
+  end
+
+  test 'should destroy image_type for admin' do
+    sign_in_as(create(:admin))
     assert_difference('ImageType.count', -1) do
       delete image_type_url(@image_type)
     end

@@ -38,6 +38,7 @@
 #      rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
 
 Rails.application.routes.draw do
+  resources :codec_conversions
   resources :auth_tokens, only: %i[index show create destroy]
   resources :codecs
   resources :cover_filenames, only: %i[index show create destroy]

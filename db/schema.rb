@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_27_103442) do
+ActiveRecord::Schema.define(version: 2019_03_27_133415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,14 @@ ActiveRecord::Schema.define(version: 2019_03_27_103442) do
     t.string "user_agent", null: false
     t.index ["device_id"], name: "index_auth_tokens_on_device_id", unique: true
     t.index ["user_id"], name: "index_auth_tokens_on_user_id"
+  end
+
+  create_table "codec_conversions", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "ffmpeg_params", null: false
+    t.bigint "resulting_codec_id", null: false
+    t.index ["name"], name: "index_codec_conversions_on_name", unique: true
+    t.index ["resulting_codec_id"], name: "index_codec_conversions_on_resulting_codec_id"
   end
 
   create_table "codecs", force: :cascade do |t|
@@ -67,4 +75,5 @@ ActiveRecord::Schema.define(version: 2019_03_27_103442) do
   add_foreign_key "audio_files", "codecs"
   add_foreign_key "audio_files", "locations"
   add_foreign_key "auth_tokens", "users"
+  add_foreign_key "codec_conversions", "codecs", column: "resulting_codec_id"
 end
