@@ -8,6 +8,8 @@
 #
 
 class Codec < ApplicationRecord
+  has_many :audio_files, dependent: :restrict_with_error
+
   validates :mimetype, presence: true
   validates :extension, presence: true, uniqueness: true
 end
