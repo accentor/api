@@ -10,4 +10,6 @@
 class ImageType < ApplicationRecord
   validates :mimetype, presence: true
   validates :extension, presence: true, uniqueness: true
+
+  has_many :images, dependent: :restrict_with_error
 end

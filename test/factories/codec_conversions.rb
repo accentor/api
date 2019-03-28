@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: codec_conversions
+#
+#  id                 :bigint(8)        not null, primary key
+#  name               :string           not null
+#  ffmpeg_params      :string           not null
+#  resulting_codec_id :bigint(8)        not null
+#
+
 FactoryBot.define do
   factory :codec_conversion do
     association :resulting_codec, factory: :codec

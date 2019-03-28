@@ -1,6 +1,18 @@
 # == Route Map
 #
 #                    Prefix Verb   URI Pattern                                                                              Controller#Action
+#                    images GET    /images(.:format)                                                                        images#index
+#                           POST   /images(.:format)                                                                        images#create
+#                     image GET    /images/:id(.:format)                                                                    images#show
+#                           PATCH  /images/:id(.:format)                                                                    images#update
+#                           PUT    /images/:id(.:format)                                                                    images#update
+#                           DELETE /images/:id(.:format)                                                                    images#destroy
+#         codec_conversions GET    /codec_conversions(.:format)                                                             codec_conversions#index
+#                           POST   /codec_conversions(.:format)                                                             codec_conversions#create
+#          codec_conversion GET    /codec_conversions/:id(.:format)                                                         codec_conversions#show
+#                           PATCH  /codec_conversions/:id(.:format)                                                         codec_conversions#update
+#                           PUT    /codec_conversions/:id(.:format)                                                         codec_conversions#update
+#                           DELETE /codec_conversions/:id(.:format)                                                         codec_conversions#destroy
 #               auth_tokens GET    /auth_tokens(.:format)                                                                   auth_tokens#index
 #                           POST   /auth_tokens(.:format)                                                                   auth_tokens#create
 #                auth_token GET    /auth_tokens/:id(.:format)                                                               auth_tokens#show

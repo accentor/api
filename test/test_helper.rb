@@ -4,6 +4,10 @@ require 'rails/test_help'
 require 'simplecov'
 SimpleCov.start 'rails'
 
+FactoryBot::SyntaxRunner.class_eval do
+  include ActionDispatch::TestProcess
+end
+
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
 
