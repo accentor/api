@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_27_160723) do
+ActiveRecord::Schema.define(version: 2019_03_28_162017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,17 @@ ActiveRecord::Schema.define(version: 2019_03_27_160723) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "albums", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "albumartist", null: false
+    t.bigint "image_id"
+    t.date "release"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["image_id"], name: "index_albums_on_image_id"
+    t.index ["image_id"], name: "index_albums_on_image_id_unique", unique: true
   end
 
   create_table "audio_files", force: :cascade do |t|
@@ -99,6 +110,7 @@ ActiveRecord::Schema.define(version: 2019_03_27_160723) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "albums", "images"
   add_foreign_key "audio_files", "codecs"
   add_foreign_key "audio_files", "locations"
   add_foreign_key "auth_tokens", "users"

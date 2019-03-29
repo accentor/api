@@ -1,18 +1,12 @@
 # == Route Map
 #
 #                    Prefix Verb   URI Pattern                                                                              Controller#Action
-#                    images GET    /images(.:format)                                                                        images#index
-#                           POST   /images(.:format)                                                                        images#create
-#                     image GET    /images/:id(.:format)                                                                    images#show
-#                           PATCH  /images/:id(.:format)                                                                    images#update
-#                           PUT    /images/:id(.:format)                                                                    images#update
-#                           DELETE /images/:id(.:format)                                                                    images#destroy
-#         codec_conversions GET    /codec_conversions(.:format)                                                             codec_conversions#index
-#                           POST   /codec_conversions(.:format)                                                             codec_conversions#create
-#          codec_conversion GET    /codec_conversions/:id(.:format)                                                         codec_conversions#show
-#                           PATCH  /codec_conversions/:id(.:format)                                                         codec_conversions#update
-#                           PUT    /codec_conversions/:id(.:format)                                                         codec_conversions#update
-#                           DELETE /codec_conversions/:id(.:format)                                                         codec_conversions#destroy
+#                    albums GET    /albums(.:format)                                                                        albums#index
+#                           POST   /albums(.:format)                                                                        albums#create
+#                     album GET    /albums/:id(.:format)                                                                    albums#show
+#                           PATCH  /albums/:id(.:format)                                                                    albums#update
+#                           PUT    /albums/:id(.:format)                                                                    albums#update
+#                           DELETE /albums/:id(.:format)                                                                    albums#destroy
 #               auth_tokens GET    /auth_tokens(.:format)                                                                   auth_tokens#index
 #                           POST   /auth_tokens(.:format)                                                                   auth_tokens#create
 #                auth_token GET    /auth_tokens/:id(.:format)                                                               auth_tokens#show
@@ -23,6 +17,12 @@
 #                           PATCH  /codecs/:id(.:format)                                                                    codecs#update
 #                           PUT    /codecs/:id(.:format)                                                                    codecs#update
 #                           DELETE /codecs/:id(.:format)                                                                    codecs#destroy
+#         codec_conversions GET    /codec_conversions(.:format)                                                             codec_conversions#index
+#                           POST   /codec_conversions(.:format)                                                             codec_conversions#create
+#          codec_conversion GET    /codec_conversions/:id(.:format)                                                         codec_conversions#show
+#                           PATCH  /codec_conversions/:id(.:format)                                                         codec_conversions#update
+#                           PUT    /codec_conversions/:id(.:format)                                                         codec_conversions#update
+#                           DELETE /codec_conversions/:id(.:format)                                                         codec_conversions#destroy
 #           cover_filenames GET    /cover_filenames(.:format)                                                               cover_filenames#index
 #                           POST   /cover_filenames(.:format)                                                               cover_filenames#create
 #            cover_filename GET    /cover_filenames/:id(.:format)                                                           cover_filenames#show
@@ -50,9 +50,10 @@
 #      rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
 
 Rails.application.routes.draw do
-  resources :codec_conversions
+  resources :albums
   resources :auth_tokens, only: %i[index show create destroy]
   resources :codecs
+  resources :codec_conversions
   resources :cover_filenames, only: %i[index show create destroy]
   resources :image_types
   resources :locations, only: %i[index show create destroy]
