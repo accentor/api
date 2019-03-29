@@ -10,7 +10,8 @@ class Image < ApplicationRecord
   has_one_attached :image
   belongs_to :image_type
 
-  has_one :album
+  has_one :album, required: false
+  has_one :artist, required: false
 
   validates :image, presence: true
   validates :image_type, presence: true

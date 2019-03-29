@@ -7,6 +7,12 @@
 #                           PATCH  /albums/:id(.:format)                                                                    albums#update
 #                           PUT    /albums/:id(.:format)                                                                    albums#update
 #                           DELETE /albums/:id(.:format)                                                                    albums#destroy
+#                   artists GET    /artists(.:format)                                                                       artists#index
+#                           POST   /artists(.:format)                                                                       artists#create
+#                    artist GET    /artists/:id(.:format)                                                                   artists#show
+#                           PATCH  /artists/:id(.:format)                                                                   artists#update
+#                           PUT    /artists/:id(.:format)                                                                   artists#update
+#                           DELETE /artists/:id(.:format)                                                                   artists#destroy
 #               auth_tokens GET    /auth_tokens(.:format)                                                                   auth_tokens#index
 #                           POST   /auth_tokens(.:format)                                                                   auth_tokens#create
 #                auth_token GET    /auth_tokens/:id(.:format)                                                               auth_tokens#show
@@ -51,6 +57,7 @@
 
 Rails.application.routes.draw do
   resources :albums
+  resources :artists
   resources :auth_tokens, only: %i[index show create destroy]
   resources :codecs
   resources :codec_conversions

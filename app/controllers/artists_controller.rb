@@ -1,46 +1,46 @@
-class AlbumsController < ApplicationController
-  before_action :set_album, only: [:show, :update, :destroy]
+class ArtistsController < ApplicationController
+  before_action :set_artist, only: [:show, :update, :destroy]
 
   def index
-    authorize Album
-    @albums = apply_scopes(policy_scope(Album))
+    authorize Artist
+    @artists = apply_scopes(policy_scope(Artist))
   end
 
   def show
   end
 
   def create
-    authorize Album
-    @album = Album.new(transformed_attributes)
+    authorize Artist
+    @artist = Artist.new(transformed_attributes)
 
-    if @album.save
+    if @artist.save
       render :show, status: :created
     else
-      render json: @album.errors, status: :unprocessable_entity
+      render json: @artist.errors, status: :unprocessable_entity
     end
   end
 
   def update
-    if @album.update(transformed_attributes)
+    if @artist.update(transformed_attributes)
       render :show, status: :ok
     else
-      render json: @album.errors, status: :unprocessable_entity
+      render json: @artist.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @album.destroy
+    @artist.destroy
   end
 
   private
 
-  def set_album
-    @album = Album.find(params[:id])
-    authorize @album
+  def set_artist
+    @artist = Artist.find(params[:id])
+    authorize @artist
   end
 
   def transformed_attributes
-    attributes = permitted_attributes(@album || Album)
+    attributes = permitted_attributes(@artist || Artist)
     if attributes[:image].present?
       image_type = ImageType.find_by(extension: File.extname(attributes[:image][:filename]).downcase) ||
           ImageType.new(extension: File.extname(attributes[:image][:filename]).downcase,
