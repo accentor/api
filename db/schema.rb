@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_29_093706) do
+ActiveRecord::Schema.define(version: 2019_03_29_105717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,8 +43,7 @@ ActiveRecord::Schema.define(version: 2019_03_29_093706) do
     t.date "release"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["image_id"], name: "index_albums_on_image_id"
-    t.index ["image_id"], name: "index_albums_on_image_id_unique", unique: true
+    t.index ["image_id"], name: "index_albums_on_image_id", unique: true
   end
 
   create_table "artists", force: :cascade do |t|
@@ -52,7 +51,7 @@ ActiveRecord::Schema.define(version: 2019_03_29_093706) do
     t.bigint "image_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["image_id"], name: "index_artists_on_image_id"
+    t.index ["image_id"], name: "index_artists_on_image_id", unique: true
   end
 
   create_table "audio_files", force: :cascade do |t|
@@ -92,6 +91,11 @@ ActiveRecord::Schema.define(version: 2019_03_29_093706) do
   create_table "cover_filenames", force: :cascade do |t|
     t.string "filename", null: false
     t.index ["filename"], name: "index_cover_filenames_on_filename", unique: true
+  end
+
+  create_table "genres", force: :cascade do |t|
+    t.string "name", null: false
+    t.index ["name"], name: "index_genres_on_name", unique: true
   end
 
   create_table "image_types", force: :cascade do |t|

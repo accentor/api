@@ -62,6 +62,7 @@ Rails.application.routes.draw do
   resources :codecs
   resources :codec_conversions
   resources :cover_filenames, only: %i[index show create destroy]
+  resources :genres
   resources :image_types
   resources :locations, only: %i[index show create destroy]
   resources :users
