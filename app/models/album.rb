@@ -12,6 +12,8 @@
 #
 
 class Album < ApplicationRecord
+  include HasImage
+
   validates :title, presence: true
   validates :albumartist, presence: true
 

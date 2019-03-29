@@ -70,7 +70,26 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
                  Album.find(album.id).image.image.download.bytes
 
     assert_response :success
+  end
 
+  test 'should destroy previous image when image is replaced' do
+    sign_in_as create(:moderator)
+    album = create :album, :with_release, :with_image
+
+    image = {
+        data: Base64.encode64(File.read(Rails.root.join('test', 'files', 'image.jpg'))),
+        filename: 'image.jpg',
+        mimetype: 'image/jpeg'
+    }
+
+    assert_difference('Image.count', 0) do
+      patch album_url(album), params: {album: {image: image}}
+    end
+
+    assert_equal File.read(Rails.root.join('test', 'files', 'image.jpg')).bytes,
+                 Album.find(album.id).image.image.download.bytes
+
+    assert_response :success
   end
 
   test 'should not destroy album for user' do
