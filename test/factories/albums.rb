@@ -23,5 +23,13 @@ FactoryBot.define do
     trait :with_image do
       association :image, factory: :image
     end
+
+    transient do
+      label_count {5}
+    end
+
+    after(:build) do |album, evaluator|
+      build_list(:album_label, evaluator.label_count, album: album)
+    end
   end
 end

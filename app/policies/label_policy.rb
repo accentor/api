@@ -1,4 +1,4 @@
-class AlbumPolicy < ApplicationPolicy
+class LabelPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope.all
@@ -26,13 +26,6 @@ class AlbumPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [
-        :title,
-        :albumartist,
-        :release,
-        image: [:data, :filename, :mimetype],
-        album_labels: [:label_id, :catalogue_number]
-    ]
+    [:name]
   end
-
 end

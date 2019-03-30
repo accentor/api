@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_29_105717) do
+ActiveRecord::Schema.define(version: 2019_03_29_140742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,15 @@ ActiveRecord::Schema.define(version: 2019_03_29_105717) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "album_labels", force: :cascade do |t|
+    t.bigint "album_id", null: false
+    t.bigint "label_id", null: false
+    t.string "catalogue_number", null: false
+    t.index ["album_id", "label_id"], name: "index_album_labels_on_album_id_and_label_id", unique: true
+    t.index ["album_id"], name: "index_album_labels_on_album_id"
+    t.index ["label_id"], name: "index_album_labels_on_label_id"
   end
 
   create_table "albums", force: :cascade do |t|
@@ -109,6 +118,10 @@ ActiveRecord::Schema.define(version: 2019_03_29_105717) do
     t.index ["image_type_id"], name: "index_images_on_image_type_id"
   end
 
+  create_table "labels", force: :cascade do |t|
+    t.string "name", null: false
+  end
+
   create_table "locations", force: :cascade do |t|
     t.string "path", null: false
     t.index ["path"], name: "index_locations_on_path", unique: true
@@ -122,6 +135,8 @@ ActiveRecord::Schema.define(version: 2019_03_29_105717) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "album_labels", "albums"
+  add_foreign_key "album_labels", "labels"
   add_foreign_key "albums", "images"
   add_foreign_key "artists", "images"
   add_foreign_key "audio_files", "codecs"

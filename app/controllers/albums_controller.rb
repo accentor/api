@@ -1,6 +1,9 @@
 class AlbumsController < ApplicationController
   before_action :set_album, only: [:show, :update, :destroy]
 
+  has_scope :by_label, as: 'label'
+  has_scope :by_labels, as: 'labels', type: :array
+
   def index
     authorize Album
     @albums = apply_scopes(policy_scope(Album))
@@ -41,6 +44,7 @@ class AlbumsController < ApplicationController
 
   def transformed_attributes
     attributes = permitted_attributes(@album || Album)
+
     if attributes[:image].present?
       image_type = ImageType.find_by(extension: File.extname(attributes[:image][:filename]).downcase) ||
           ImageType.new(extension: File.extname(attributes[:image][:filename]).downcase,
@@ -53,6 +57,13 @@ class AlbumsController < ApplicationController
 
       attributes[:image] = image
     end
+
+    if attributes[:album_labels].present?
+      attributes[:album_labels] = attributes[:album_labels].map do |al|
+        AlbumLabel.new(label_id: al[:label_id], catalogue_number: al[:catalogue_number])
+      end
+    end
+
     attributes
   end
 end

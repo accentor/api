@@ -44,6 +44,30 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     assert_response :created
   end
 
+  test 'should create dependent album_labels' do
+    sign_in_as create(:moderator)
+    album = build :album, :with_release
+
+    album_labels = (1..5).map {|_| {
+        label_id: create(:label).id,
+        catalogue_number: Faker::Lorem.word
+    }}
+
+    assert_difference('Album.count', 1) do
+      post albums_url, params: {album: {
+          albumartist: album.albumartist,
+          release: album.release,
+          title: album.title,
+          album_labels: album_labels
+      }}
+    end
+
+    assert_equal album_labels.count,
+                 Album.find(JSON.parse(@response.body)["id"]).album_labels.count
+
+    assert_response :created
+  end
+
   test 'should show album' do
     get album_url(@album)
     assert_response :success

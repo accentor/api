@@ -14,8 +14,13 @@
 class Album < ApplicationRecord
   include HasImage
 
+  has_many :album_labels, dependent: :destroy
+  has_many :labels, through: :album_labels, source: :label
+  belongs_to :image, optional: true, dependent: :destroy
+
   validates :title, presence: true
   validates :albumartist, presence: true
 
-  belongs_to :image, optional: true, dependent: :destroy
+  scope :by_label, ->(label) {joins(:album_labels).where(album_labels: {label_id: label})}
+  scope :by_labels, ->(labels) {joins(:album_labels).where(album_labels: {label_id: labels})}
 end
