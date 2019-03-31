@@ -16,6 +16,7 @@ class Album < ApplicationRecord
 
   has_many :album_labels, dependent: :destroy
   has_many :labels, through: :album_labels, source: :label
+  has_many :tracks, dependent: :restrict_with_error
   belongs_to :image, optional: true, dependent: :destroy
 
   validates :title, presence: true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_29_140742) do
+ActiveRecord::Schema.define(version: 2019_03_31_093927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,14 @@ ActiveRecord::Schema.define(version: 2019_03_29_140742) do
     t.index ["name"], name: "index_genres_on_name", unique: true
   end
 
+  create_table "genres_tracks", id: false, force: :cascade do |t|
+    t.bigint "track_id", null: false
+    t.bigint "genre_id", null: false
+    t.index ["genre_id"], name: "index_genres_tracks_on_genre_id"
+    t.index ["track_id", "genre_id"], name: "index_genres_tracks_on_track_id_and_genre_id", unique: true
+    t.index ["track_id"], name: "index_genres_tracks_on_track_id"
+  end
+
   create_table "image_types", force: :cascade do |t|
     t.string "extension", null: false
     t.string "mimetype", null: false
@@ -127,6 +135,27 @@ ActiveRecord::Schema.define(version: 2019_03_29_140742) do
     t.index ["path"], name: "index_locations_on_path", unique: true
   end
 
+  create_table "track_artists", force: :cascade do |t|
+    t.bigint "track_id", null: false
+    t.bigint "artist_id", null: false
+    t.string "name", null: false
+    t.integer "role", null: false
+    t.index ["artist_id"], name: "index_track_artists_on_artist_id"
+    t.index ["track_id", "artist_id", "name", "role"], name: "index_track_artists_on_track_id_and_artist_id_and_name_and_role", unique: true
+    t.index ["track_id"], name: "index_track_artists_on_track_id"
+  end
+
+  create_table "tracks", force: :cascade do |t|
+    t.string "title", null: false
+    t.integer "number", null: false
+    t.bigint "audio_file_id"
+    t.bigint "album_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["album_id"], name: "index_tracks_on_album_id"
+    t.index ["audio_file_id"], name: "index_tracks_on_audio_file_id", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "password_digest", null: false
@@ -143,5 +172,11 @@ ActiveRecord::Schema.define(version: 2019_03_29_140742) do
   add_foreign_key "audio_files", "locations"
   add_foreign_key "auth_tokens", "users"
   add_foreign_key "codec_conversions", "codecs", column: "resulting_codec_id"
+  add_foreign_key "genres_tracks", "genres"
+  add_foreign_key "genres_tracks", "tracks"
   add_foreign_key "images", "image_types"
+  add_foreign_key "track_artists", "artists"
+  add_foreign_key "track_artists", "tracks"
+  add_foreign_key "tracks", "albums"
+  add_foreign_key "tracks", "audio_files"
 end

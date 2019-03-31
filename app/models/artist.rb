@@ -12,7 +12,9 @@
 class Artist < ApplicationRecord
   include HasImage
 
-  validates :name, presence: true
-
   belongs_to :image, required: false, dependent: :destroy
+  has_many :track_artists, dependent: :destroy
+  has_many :tracks, through: :track_artists, source: :track
+
+  validates :name, presence: true
 end

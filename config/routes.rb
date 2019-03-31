@@ -55,6 +55,14 @@
 #                           POST   /locations(.:format)                                                                     locations#create
 #                  location GET    /locations/:id(.:format)                                                                 locations#show
 #                           DELETE /locations/:id(.:format)                                                                 locations#destroy
+#               audio_track GET    /tracks/:id/audio(.:format)                                                              tracks#audio
+#               merge_track POST   /tracks/:id/merge(.:format)                                                              tracks#merge
+#                    tracks GET    /tracks(.:format)                                                                        tracks#index
+#                           POST   /tracks(.:format)                                                                        tracks#create
+#                     track GET    /tracks/:id(.:format)                                                                    tracks#show
+#                           PATCH  /tracks/:id(.:format)                                                                    tracks#update
+#                           PUT    /tracks/:id(.:format)                                                                    tracks#update
+#                           DELETE /tracks/:id(.:format)                                                                    tracks#destroy
 #                     users GET    /users(.:format)                                                                         users#index
 #                           POST   /users(.:format)                                                                         users#create
 #                      user GET    /users/:id(.:format)                                                                     users#show
@@ -78,5 +86,11 @@ Rails.application.routes.draw do
   resources :image_types
   resources :labels
   resources :locations, only: %i[index show create destroy]
+  resources :tracks do
+    member do
+      get 'audio'
+      post 'merge'
+    end
+  end
   resources :users
 end
