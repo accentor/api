@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_31_093927) do
+ActiveRecord::Schema.define(version: 2019_03_31_174813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,21 @@ ActiveRecord::Schema.define(version: 2019_03_31_093927) do
     t.index ["filename"], name: "index_cover_filenames_on_filename", unique: true
   end
 
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer "priority", default: 0, null: false
+    t.integer "attempts", default: 0, null: false
+    t.text "handler", null: false
+    t.text "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string "locked_by"
+    t.string "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
   create_table "genres", force: :cascade do |t|
     t.string "name", null: false
     t.index ["name"], name: "index_genres_on_name", unique: true
@@ -133,6 +148,13 @@ ActiveRecord::Schema.define(version: 2019_03_31_093927) do
   create_table "locations", force: :cascade do |t|
     t.string "path", null: false
     t.index ["path"], name: "index_locations_on_path", unique: true
+  end
+
+  create_table "rescan_runners", force: :cascade do |t|
+    t.text "warning_text"
+    t.text "error_text"
+    t.integer "processed", default: 0, null: false
+    t.boolean "running", default: false, null: false
   end
 
   create_table "track_artists", force: :cascade do |t|

@@ -32,5 +32,7 @@ module Accentor
     config.generators do |g|
       g.template_engine :jbuilder
     end
+
+    config.active_job.queue_adapter = :delayed_job
   end
 end

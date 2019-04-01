@@ -38,4 +38,6 @@ Rails.application.configure do
   config.action_view.raise_on_missing_translations = true
 
   config.token_hash_rounds = 1
+
+  Delayed::Worker.delay_jobs = ->(_) {false}
 end

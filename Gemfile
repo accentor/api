@@ -16,6 +16,8 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.12'
 
+gem 'delayed_job_active_record', '~> 4.1.3'
+gem 'easytag', '~> 1.0.0'
 gem 'has_scope', '~> 0.7.2'
 gem 'pundit', '~> 2.0.1'
 
