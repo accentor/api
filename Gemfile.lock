@@ -47,7 +47,7 @@ GEM
       rake (>= 10.4, < 13.0)
     arel (9.0.0)
     bcrypt (3.1.12)
-    bootsnap (1.4.2)
+    bootsnap (1.4.3)
       msgpack (~> 1.0)
     builder (3.2.3)
     byebug (11.0.1)
@@ -107,7 +107,8 @@ GEM
     puma (3.12.1)
     pundit (2.0.1)
       activesupport (>= 3.0.0)
-    rack (2.0.6)
+    rack (2.0.7)
+    rack-cors (1.0.3)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.3)
@@ -184,6 +185,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
   pundit (~> 2.0.1)
+  rack-cors
   rails (~> 5.2.3)
   simplecov (~> 0.16.1)
   spring

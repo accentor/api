@@ -78,24 +78,26 @@
 #      rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
 
 Rails.application.routes.draw do
-  resources :albums
-  resources :artists
-  resources :auth_tokens, only: %i[index show create destroy]
-  resources :codecs
-  resources :codec_conversions
-  resources :cover_filenames, only: %i[index show create destroy]
-  resources :genres
-  resources :image_types
-  resources :labels
-  resources :locations, only: %i[index show create destroy]
-  resources :tracks do
-    member do
-      get 'audio'
-      post 'merge'
+  scope 'api' do
+    resources :albums
+    resources :artists
+    resources :auth_tokens, only: %i[index show create destroy]
+    resources :codecs
+    resources :codec_conversions
+    resources :cover_filenames, only: %i[index show create destroy]
+    resources :genres
+    resources :image_types
+    resources :labels
+    resources :locations, only: %i[index show create destroy]
+    resources :tracks do
+      member do
+        get 'audio'
+        post 'merge'
+      end
     end
-  end
-  resources :users
+    resources :users
 
-  get '/rescan' => 'rescan#show'
-  post '/rescan' => 'rescan#start'
+    get '/rescan' => 'rescan#show'
+    post '/rescan' => 'rescan#start'
+  end
 end

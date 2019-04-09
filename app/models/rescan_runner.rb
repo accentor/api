@@ -11,7 +11,9 @@
 
 class RescanRunner < ApplicationRecord
   def run
-    return if RescanRunner.where(id: id, running: false).update_all(running: true, processed: 0, warning_text: nil, error_text: nil) == 0
+    return if RescanRunner.where(id: id, running: false).update_all(running: true, processed: 0, warning_text: nil, error_text: nil).zero?
+
+    # We updated this instance in a round-about way
     reload
 
     begin

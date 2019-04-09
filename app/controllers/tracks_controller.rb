@@ -40,8 +40,8 @@ class TracksController < ApplicationController
   def audio
     conversion = CodecConversion.find_by(id: params[:codec_conversion_id])
     audio_file = @track.audio_file
-    raise ActiveRecord::RecordNotFound.new("track has no audio") unless audio_file.present? && audio_file.check_self
-    raise ActiveRecord::RecordNotFound.new("codec_conversion does not exist") if conversion.nil? && params[:codec_conversion_id].present?
+    raise ActiveRecord::RecordNotFound, 'track has no audio' unless audio_file.present? && audio_file.check_self
+    raise ActiveRecord::RecordNotFound, 'codec_conversion does not exist' if conversion.nil? && params[:codec_conversion_id].present?
 
     begin
       response.status = 200
