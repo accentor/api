@@ -63,7 +63,7 @@ class RescanRunner < ApplicationRecord
 
     EasyTag.open(path) do |tags|
       t_artist = tags.artist&.unicode_normalize
-      t_albumartist = (tags.album_artist || artist)&.unicode_normalize
+      t_albumartist = (tags.album_artist || t_artist)&.unicode_normalize
       t_composer = tags.composer&.unicode_normalize
       t_title = tags.title&.unicode_normalize
       t_number = tags.track_number
