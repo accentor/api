@@ -43,21 +43,31 @@ class TracksController < ApplicationController
     raise ActiveRecord::RecordNotFound, 'track has no audio' unless audio_file.present? && audio_file.check_self
     raise ActiveRecord::RecordNotFound, 'codec_conversion does not exist' if conversion.nil? && params[:codec_conversion_id].present?
 
-    begin
-      response.status = 200
-      response.content_type = if conversion.present?
-                                conversion.resulting_codec.mimetype
-                              else
-                                audio_file.codec.mimetype
-                              end
+    if conversion.present?
+      begin
+        response.status = 200
+        response.content_type = conversion.resulting_codec.mimetype
 
-      stream = audio_file.convert(conversion)
-      while (bytes = stream.read(16.kilobytes))
-        response.stream.write bytes
+        stream = audio_file.convert(conversion)
+        while (bytes = stream.read(16.kilobytes))
+          response.stream.write bytes
+        end
+      ensure
+        stream&.close
+        response.stream.close
       end
-    ensure
-      stream&.close
-      response.stream.close
+    else
+      Rack::File.new(nil).serving(request, audio_file.full_path).tap do |(status, headers, body)|
+        self.status = status
+        self.response_body = body
+
+        headers.each do |name, value|
+          response.headers[name] = value
+        end
+
+        response.headers['accept-ranges'] = 'bytes'
+        response.headers['content-type'] = audio_file.codec.mimetype
+      end
     end
   end
 

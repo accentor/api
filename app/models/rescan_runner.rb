@@ -102,7 +102,7 @@ class RescanRunner < ApplicationRecord
       genre = if t_genre.present?
                 Genre.find_by(name: t_genre) || Genre.new(name: t_genre)
               end
-      genres = genre.present? ? [genre] : nil
+      genres = genre.present? ? [genre] : []
 
       track = Track.new(title: t_title,
                         number: t_number,

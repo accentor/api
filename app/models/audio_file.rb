@@ -31,14 +31,11 @@ class AudioFile < ApplicationRecord
     false
   end
 
-  def convert(codec_conversion = nil)
-    unless codec_conversion
-      return File.open(File.join(location.path, filename))
-    end
+  def convert(codec_conversion)
     parameters = codec_conversion.ffmpeg_params.split
-    stdin, stdout, _ = Open3.popen2(
+    stdin, stdout, = Open3.popen2(
         'ffmpeg',
-        '-i', File.join(location.path, filename),
+        '-i', full_path,
         '-f', codec_conversion.resulting_codec.extension,
         *parameters,
         '-map_metadata', '-1',
@@ -47,5 +44,9 @@ class AudioFile < ApplicationRecord
     )
     stdin.close
     stdout
+  end
+
+  def full_path
+    File.join(location.path, filename)
   end
 end
