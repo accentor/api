@@ -11,7 +11,16 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'admin should create user' do
+  test 'should not create user for user' do
+    user = build(:user)
+    assert_difference('User.count', 0) do
+      post users_url, params: {user: {name: user.name, password: 'password', permission: user.permission}}
+    end
+
+    assert_response 401
+  end
+
+  test 'should create user for admin' do
     sign_in_as(create(:admin))
     user = build(:user)
     assert_difference('User.count') do
@@ -19,15 +28,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 201
-  end
-
-  test 'user shoud not create user' do
-    user = build(:user)
-    assert_difference('User.count', 0) do
-      post users_url, params: {user: {name: user.name, password: 'password', permission: user.permission}}
-    end
-
-    assert_response 401
   end
 
   test 'should show user' do

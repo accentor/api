@@ -1,7 +1,28 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+user = User.create(name: 'admin', password: 'admin', permission: :admin)
+
+if Rails.env.development?
+  token = AuthToken.create(user: user, user_agent: 'Rails')
+  token.update(hashed_secret: BCrypt::Password.create('secret', cost: 1), device_id: 'device-id')
+end
+
+Codec.create(mimetype: 'audio/flac', extension: 'flac')
+mp3 = Codec.create(mimetype: 'audio/mpeg', extension: 'mp3')
+
+CoverFilename.create(filename: 'folder')
+CoverFilename.create(filename: 'cover')
+CoverFilename.create(filename: 'front')
+
+ImageType.create(mimetype: 'image/jpeg', extension: 'jpg')
+ImageType.create(mimetype: 'image/jpeg', extension: 'jpeg')
+ImageType.create(mimetype: 'image/png', extension: 'png')
+
+CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
+CodecConversion.create(name: 'MP3 (V2)', ffmpeg_params: '-acodec mp3 -q:a 2', resulting_codec: mp3)
+
+if File.directory? File.expand_path('~/music')
+  Location.create(path: File.expand_path('~/music'))
+  RescanRunner.create.run
+elsif File.directory? File.expand_path('~/Music')
+  Location.create(path: File.expand_path('~/Music'))
+  RescanRunner.create.run
+end

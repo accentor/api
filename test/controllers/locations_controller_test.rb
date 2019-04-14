@@ -17,6 +17,12 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should get index for admin' do
+    sign_in_as create(:admin)
+    get locations_url
+    assert_response :success
+  end
+
   test 'should not create location for user' do
     location = build :location
     assert_difference('Location.count', 0) do
@@ -36,6 +42,16 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :created
   end
 
+  test 'should create location for admin' do
+    sign_in_as create(:admin)
+    location = build :location
+    assert_difference('Location.count', 1) do
+      post locations_url, params: {location: {path: location.path}}
+    end
+
+    assert_response :created
+  end
+
   test 'should not show location for user' do
     get location_url(@location)
     assert_response :unauthorized
@@ -43,6 +59,12 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show location for moderator' do
     sign_in_as create(:moderator)
+    get location_url(@location)
+    assert_response :success
+  end
+
+  test 'should show location for admin' do
+    sign_in_as create(:admin)
     get location_url(@location)
     assert_response :success
   end
@@ -57,6 +79,15 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should destroy location for moderator' do
     sign_in_as create(:moderator)
+    assert_difference('Location.count', -1) do
+      delete location_url(@location)
+    end
+
+    assert_response :no_content
+  end
+
+  test 'should destroy location for admin' do
+    sign_in_as create(:admin)
     assert_difference('Location.count', -1) do
       delete location_url(@location)
     end

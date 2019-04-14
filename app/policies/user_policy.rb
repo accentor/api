@@ -27,9 +27,9 @@ class UserPolicy < ApplicationPolicy
 
   def permitted_attributes
     if user.admin?
-      %i[name password permission]
+      %i[name password password_confirmation permission]
     else
-      %i[name password]
+      %i[name password password_confirmation]
     end
   end
 
