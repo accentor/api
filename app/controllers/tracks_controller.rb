@@ -8,7 +8,7 @@ class TracksController < ApplicationController
 
   def index
     authorize Track
-    @tracks = apply_scopes(policy_scope(Track))
+    @tracks = apply_scopes(policy_scope(Track)).includes(:track_artists, :genres, audio_file: [:location, :codec])
   end
 
   def show
