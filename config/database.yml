@@ -82,4 +82,5 @@ test:
 #
 production:
   <<: *default
+  host: db
   database: accentor_production
