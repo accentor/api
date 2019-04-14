@@ -6,7 +6,7 @@ class AlbumsController < ApplicationController
 
   def index
     authorize Album
-    @albums = apply_scopes(policy_scope(Album))
+    @albums = apply_scopes(policy_scope(Album)).includes(:album_labels, image: [:image_attachment, :image_blob, :image_type])
   end
 
   def show

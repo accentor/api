@@ -3,7 +3,7 @@ class ArtistsController < ApplicationController
 
   def index
     authorize Artist
-    @artists = apply_scopes(policy_scope(Artist))
+    @artists = apply_scopes(policy_scope(Artist)).includes(image: [:image_attachment, :image_blob, :image_type])
   end
 
   def show
