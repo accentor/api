@@ -88,7 +88,7 @@ class RescanRunner < ApplicationRecord
                            name: t_artist,
                            role: :main
                        }]
-      if t_composer.present?
+      if t_composer.present? && t_composer != t_artist
         composer = Artist.find_by(name: t_composer) || Artist.new(name: t_composer)
         track_artists << {
             artist: composer,
