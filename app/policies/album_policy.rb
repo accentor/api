@@ -33,10 +33,10 @@ class AlbumPolicy < ApplicationPolicy
     if user.moderator?
       [
           :title,
-          :albumartist,
           :release,
           :review_comment,
           image: [:data, :filename, :mimetype],
+          album_artists: [:artist_id, :name, :order, :separator],
           album_labels: [:label_id, :catalogue_number]
       ]
     else

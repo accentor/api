@@ -69,6 +69,12 @@ class AlbumsController < ApplicationController
       end
     end
 
+    if attributes[:album_artists].present?
+      attributes[:album_artists] = attributes[:album_artists].map do |aa, i|
+        AlbumArtist.new(artist_id: aa[:artist_id], name: aa[:name], separator: aa[:separator], order: aa[:order] || 0)
+      end
+    end
+
     attributes
   end
 end

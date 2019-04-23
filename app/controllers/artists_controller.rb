@@ -34,7 +34,10 @@ class ArtistsController < ApplicationController
 
   def destroy_empty
     authorize Artist
-    Artist.where.not(id: TrackArtist.select(:artist_id).distinct).destroy_all
+    Artist
+        .where.not(id: TrackArtist.select(:artist_id).distinct)
+        .where.not(id: AlbumArtist.select(:artist_id).distinct)
+        .destroy_all
   end
 
   private
