@@ -11,9 +11,9 @@
 
 FactoryBot.define do
   factory :track_artist do
-    track {nil}
-    artist {nil}
-    name {"MyString"}
-    role {"MyString"}
+    track
+    artist
+    name {Faker::Lorem.word}
+    role {TrackArtist.roles.keys.sample}
   end
 end

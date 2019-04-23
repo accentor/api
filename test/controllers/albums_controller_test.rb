@@ -135,4 +135,29 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :no_content
   end
+
+  test 'should not destroy empty albums for user' do
+    assert_difference('Album.count', 0) do
+      post destroy_empty_albums_url
+    end
+
+    assert_response :unauthorized
+  end
+
+  test 'should destroy empty albums for moderator' do
+    sign_in_as create(:moderator)
+    album2 = create :album
+    create :track, album: album2
+    assert_difference('Image.count', -1) do
+      assert_difference('ActiveStorage::Blob.count', -1) do
+        assert_difference('Album.count', -1) do
+          post destroy_empty_albums_url
+        end
+      end
+    end
+
+    assert_response :no_content
+
+    assert_not_nil Album.find_by(id: album2.id)
+  end
 end

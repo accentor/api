@@ -25,6 +25,10 @@ class ArtistPolicy < ApplicationPolicy
     create?
   end
 
+  def destroy_empty?
+    create?
+  end
+
   def permitted_attributes
     [:name, image: [:data, :filename, :mimetype]]
   end

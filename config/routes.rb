@@ -1,76 +1,81 @@
 # == Route Map
 #
 #                    Prefix Verb   URI Pattern                                                                              Controller#Action
-#                    albums GET    /albums(.:format)                                                                        albums#index
-#                           POST   /albums(.:format)                                                                        albums#create
-#                     album GET    /albums/:id(.:format)                                                                    albums#show
-#                           PATCH  /albums/:id(.:format)                                                                    albums#update
-#                           PUT    /albums/:id(.:format)                                                                    albums#update
-#                           DELETE /albums/:id(.:format)                                                                    albums#destroy
-#                   artists GET    /artists(.:format)                                                                       artists#index
-#                           POST   /artists(.:format)                                                                       artists#create
-#                    artist GET    /artists/:id(.:format)                                                                   artists#show
-#                           PATCH  /artists/:id(.:format)                                                                   artists#update
-#                           PUT    /artists/:id(.:format)                                                                   artists#update
-#                           DELETE /artists/:id(.:format)                                                                   artists#destroy
-#               auth_tokens GET    /auth_tokens(.:format)                                                                   auth_tokens#index
-#                           POST   /auth_tokens(.:format)                                                                   auth_tokens#create
-#                auth_token GET    /auth_tokens/:id(.:format)                                                               auth_tokens#show
-#                           DELETE /auth_tokens/:id(.:format)                                                               auth_tokens#destroy
-#                    codecs GET    /codecs(.:format)                                                                        codecs#index
-#                           POST   /codecs(.:format)                                                                        codecs#create
-#                     codec GET    /codecs/:id(.:format)                                                                    codecs#show
-#                           PATCH  /codecs/:id(.:format)                                                                    codecs#update
-#                           PUT    /codecs/:id(.:format)                                                                    codecs#update
-#                           DELETE /codecs/:id(.:format)                                                                    codecs#destroy
-#         codec_conversions GET    /codec_conversions(.:format)                                                             codec_conversions#index
-#                           POST   /codec_conversions(.:format)                                                             codec_conversions#create
-#          codec_conversion GET    /codec_conversions/:id(.:format)                                                         codec_conversions#show
-#                           PATCH  /codec_conversions/:id(.:format)                                                         codec_conversions#update
-#                           PUT    /codec_conversions/:id(.:format)                                                         codec_conversions#update
-#                           DELETE /codec_conversions/:id(.:format)                                                         codec_conversions#destroy
-#           cover_filenames GET    /cover_filenames(.:format)                                                               cover_filenames#index
-#                           POST   /cover_filenames(.:format)                                                               cover_filenames#create
-#            cover_filename GET    /cover_filenames/:id(.:format)                                                           cover_filenames#show
-#                           DELETE /cover_filenames/:id(.:format)                                                           cover_filenames#destroy
-#                    genres GET    /genres(.:format)                                                                        genres#index
-#                           POST   /genres(.:format)                                                                        genres#create
-#                     genre GET    /genres/:id(.:format)                                                                    genres#show
-#                           PATCH  /genres/:id(.:format)                                                                    genres#update
-#                           PUT    /genres/:id(.:format)                                                                    genres#update
-#                           DELETE /genres/:id(.:format)                                                                    genres#destroy
-#               image_types GET    /image_types(.:format)                                                                   image_types#index
-#                           POST   /image_types(.:format)                                                                   image_types#create
-#                image_type GET    /image_types/:id(.:format)                                                               image_types#show
-#                           PATCH  /image_types/:id(.:format)                                                               image_types#update
-#                           PUT    /image_types/:id(.:format)                                                               image_types#update
-#                           DELETE /image_types/:id(.:format)                                                               image_types#destroy
-#                    labels GET    /labels(.:format)                                                                        labels#index
-#                           POST   /labels(.:format)                                                                        labels#create
-#                     label GET    /labels/:id(.:format)                                                                    labels#show
-#                           PATCH  /labels/:id(.:format)                                                                    labels#update
-#                           PUT    /labels/:id(.:format)                                                                    labels#update
-#                           DELETE /labels/:id(.:format)                                                                    labels#destroy
-#                 locations GET    /locations(.:format)                                                                     locations#index
-#                           POST   /locations(.:format)                                                                     locations#create
-#                  location GET    /locations/:id(.:format)                                                                 locations#show
-#                           DELETE /locations/:id(.:format)                                                                 locations#destroy
-#               audio_track GET    /tracks/:id/audio(.:format)                                                              tracks#audio
-#               merge_track POST   /tracks/:id/merge(.:format)                                                              tracks#merge
-#                    tracks GET    /tracks(.:format)                                                                        tracks#index
-#                           POST   /tracks(.:format)                                                                        tracks#create
-#                     track GET    /tracks/:id(.:format)                                                                    tracks#show
-#                           PATCH  /tracks/:id(.:format)                                                                    tracks#update
-#                           PUT    /tracks/:id(.:format)                                                                    tracks#update
-#                           DELETE /tracks/:id(.:format)                                                                    tracks#destroy
-#                     users GET    /users(.:format)                                                                         users#index
-#                           POST   /users(.:format)                                                                         users#create
-#                      user GET    /users/:id(.:format)                                                                     users#show
-#                           PATCH  /users/:id(.:format)                                                                     users#update
-#                           PUT    /users/:id(.:format)                                                                     users#update
-#                           DELETE /users/:id(.:format)                                                                     users#destroy
-#                    rescan GET    /rescan(.:format)                                                                        rescan#show
-#                           POST   /rescan(.:format)                                                                        rescan#start
+#      destroy_empty_albums POST   /api/albums/destroy_empty(.:format)                                                      albums#destroy_empty
+#                    albums GET    /api/albums(.:format)                                                                    albums#index
+#                           POST   /api/albums(.:format)                                                                    albums#create
+#                     album GET    /api/albums/:id(.:format)                                                                albums#show
+#                           PATCH  /api/albums/:id(.:format)                                                                albums#update
+#                           PUT    /api/albums/:id(.:format)                                                                albums#update
+#                           DELETE /api/albums/:id(.:format)                                                                albums#destroy
+#     destroy_empty_artists POST   /api/artists/destroy_empty(.:format)                                                     artists#destroy_empty
+#                   artists GET    /api/artists(.:format)                                                                   artists#index
+#                           POST   /api/artists(.:format)                                                                   artists#create
+#                    artist GET    /api/artists/:id(.:format)                                                               artists#show
+#                           PATCH  /api/artists/:id(.:format)                                                               artists#update
+#                           PUT    /api/artists/:id(.:format)                                                               artists#update
+#                           DELETE /api/artists/:id(.:format)                                                               artists#destroy
+#               auth_tokens GET    /api/auth_tokens(.:format)                                                               auth_tokens#index
+#                           POST   /api/auth_tokens(.:format)                                                               auth_tokens#create
+#                auth_token GET    /api/auth_tokens/:id(.:format)                                                           auth_tokens#show
+#                           DELETE /api/auth_tokens/:id(.:format)                                                           auth_tokens#destroy
+#                    codecs GET    /api/codecs(.:format)                                                                    codecs#index
+#                           POST   /api/codecs(.:format)                                                                    codecs#create
+#                     codec GET    /api/codecs/:id(.:format)                                                                codecs#show
+#                           PATCH  /api/codecs/:id(.:format)                                                                codecs#update
+#                           PUT    /api/codecs/:id(.:format)                                                                codecs#update
+#                           DELETE /api/codecs/:id(.:format)                                                                codecs#destroy
+#         codec_conversions GET    /api/codec_conversions(.:format)                                                         codec_conversions#index
+#                           POST   /api/codec_conversions(.:format)                                                         codec_conversions#create
+#          codec_conversion GET    /api/codec_conversions/:id(.:format)                                                     codec_conversions#show
+#                           PATCH  /api/codec_conversions/:id(.:format)                                                     codec_conversions#update
+#                           PUT    /api/codec_conversions/:id(.:format)                                                     codec_conversions#update
+#                           DELETE /api/codec_conversions/:id(.:format)                                                     codec_conversions#destroy
+#           cover_filenames GET    /api/cover_filenames(.:format)                                                           cover_filenames#index
+#                           POST   /api/cover_filenames(.:format)                                                           cover_filenames#create
+#            cover_filename GET    /api/cover_filenames/:id(.:format)                                                       cover_filenames#show
+#                           DELETE /api/cover_filenames/:id(.:format)                                                       cover_filenames#destroy
+#      destroy_empty_genres POST   /api/genres/destroy_empty(.:format)                                                      genres#destroy_empty
+#                    genres GET    /api/genres(.:format)                                                                    genres#index
+#                           POST   /api/genres(.:format)                                                                    genres#create
+#                     genre GET    /api/genres/:id(.:format)                                                                genres#show
+#                           PATCH  /api/genres/:id(.:format)                                                                genres#update
+#                           PUT    /api/genres/:id(.:format)                                                                genres#update
+#                           DELETE /api/genres/:id(.:format)                                                                genres#destroy
+#               image_types GET    /api/image_types(.:format)                                                               image_types#index
+#                           POST   /api/image_types(.:format)                                                               image_types#create
+#                image_type GET    /api/image_types/:id(.:format)                                                           image_types#show
+#                           PATCH  /api/image_types/:id(.:format)                                                           image_types#update
+#                           PUT    /api/image_types/:id(.:format)                                                           image_types#update
+#                           DELETE /api/image_types/:id(.:format)                                                           image_types#destroy
+#      destroy_empty_labels POST   /api/labels/destroy_empty(.:format)                                                      labels#destroy_empty
+#                    labels GET    /api/labels(.:format)                                                                    labels#index
+#                           POST   /api/labels(.:format)                                                                    labels#create
+#                     label GET    /api/labels/:id(.:format)                                                                labels#show
+#                           PATCH  /api/labels/:id(.:format)                                                                labels#update
+#                           PUT    /api/labels/:id(.:format)                                                                labels#update
+#                           DELETE /api/labels/:id(.:format)                                                                labels#destroy
+#                 locations GET    /api/locations(.:format)                                                                 locations#index
+#                           POST   /api/locations(.:format)                                                                 locations#create
+#                  location GET    /api/locations/:id(.:format)                                                             locations#show
+#                           DELETE /api/locations/:id(.:format)                                                             locations#destroy
+#      destroy_empty_tracks POST   /api/tracks/destroy_empty(.:format)                                                      tracks#destroy_empty
+#               audio_track GET    /api/tracks/:id/audio(.:format)                                                          tracks#audio
+#               merge_track POST   /api/tracks/:id/merge(.:format)                                                          tracks#merge
+#                    tracks GET    /api/tracks(.:format)                                                                    tracks#index
+#                           POST   /api/tracks(.:format)                                                                    tracks#create
+#                     track GET    /api/tracks/:id(.:format)                                                                tracks#show
+#                           PATCH  /api/tracks/:id(.:format)                                                                tracks#update
+#                           PUT    /api/tracks/:id(.:format)                                                                tracks#update
+#                           DELETE /api/tracks/:id(.:format)                                                                tracks#destroy
+#                     users GET    /api/users(.:format)                                                                     users#index
+#                           POST   /api/users(.:format)                                                                     users#create
+#                      user GET    /api/users/:id(.:format)                                                                 users#show
+#                           PATCH  /api/users/:id(.:format)                                                                 users#update
+#                           PUT    /api/users/:id(.:format)                                                                 users#update
+#                           DELETE /api/users/:id(.:format)                                                                 users#destroy
+#                    rescan GET    /api/rescan(.:format)                                                                    rescan#show
+#                           POST   /api/rescan(.:format)                                                                    rescan#start
 #        rails_service_blob GET    /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 # rails_blob_representation GET    /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #        rails_disk_service GET    /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
@@ -79,17 +84,36 @@
 
 Rails.application.routes.draw do
   scope 'api' do
-    resources :albums
-    resources :artists
+    resources :albums do
+      collection do
+        post 'destroy_empty'
+      end
+    end
+    resources :artists do
+      collection do
+        post 'destroy_empty'
+      end
+    end
     resources :auth_tokens, only: %i[index show create destroy]
     resources :codecs
     resources :codec_conversions
     resources :cover_filenames, only: %i[index show create destroy]
-    resources :genres
+    resources :genres do
+      collection do
+        post 'destroy_empty'
+      end
+    end
     resources :image_types
-    resources :labels
+    resources :labels do
+      collection do
+        post 'destroy_empty'
+      end
+    end
     resources :locations, only: %i[index show create destroy]
     resources :tracks do
+      collection do
+        post 'destroy_empty'
+      end
       member do
         get 'audio'
         post 'merge'
