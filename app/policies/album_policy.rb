@@ -25,6 +25,10 @@ class AlbumPolicy < ApplicationPolicy
     create?
   end
 
+  def destroy_empty?
+    create?
+  end
+
   def permitted_attributes
     [
         :title,

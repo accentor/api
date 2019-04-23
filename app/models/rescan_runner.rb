@@ -2,11 +2,11 @@
 #
 # Table name: rescan_runners
 #
-#  id        :bigint(8)        not null, primary key
-#  warnings  :text
-#  errors    :text
-#  processed :integer          default(0), not null
-#  running   :boolean          default(FALSE), not null
+#  id           :bigint(8)        not null, primary key
+#  warning_text :text
+#  error_text   :text
+#  processed    :integer          default(0), not null
+#  running      :boolean          default(FALSE), not null
 #
 
 class RescanRunner < ApplicationRecord

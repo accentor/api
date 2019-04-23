@@ -35,6 +35,11 @@ class AlbumsController < ApplicationController
     @album.destroy
   end
 
+  def destroy_empty
+    authorize Album
+    Album.where.not(id: Track.select(:album_id).distinct).destroy_all
+  end
+
   private
 
   def set_album

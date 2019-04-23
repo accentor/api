@@ -25,6 +25,10 @@ class TrackPolicy < ApplicationPolicy
     create?
   end
 
+  def destroy_empty?
+    create?
+  end
+
   def audio?
     index?
   end

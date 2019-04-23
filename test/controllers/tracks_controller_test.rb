@@ -84,6 +84,28 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     assert_response :no_content
   end
 
+  test 'should not destroy empty tracks for user' do
+    assert_difference('Track.count', 0) do
+      post destroy_empty_tracks_url
+    end
+
+    assert_response :unauthorized
+  end
+
+  test 'should destroy empty tracks for moderator' do
+    sign_in_as(create(:moderator))
+
+    create :track
+
+    assert_difference('Track.count', -1) do
+      post destroy_empty_tracks_url
+    end
+
+    assert_response :no_content
+
+    assert_not_nil Track.find_by(id: @track.id)
+  end
+
   test 'should not merge tracks for user' do
     track = create(:track, :with_audio_file)
 

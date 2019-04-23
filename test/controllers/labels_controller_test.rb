@@ -87,4 +87,42 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response 204
   end
+
+  test 'should not destroy empty labels for user' do
+    assert_difference('Label.count', 0) do
+      post destroy_empty_labels_url
+    end
+
+    assert_response :unauthorized
+  end
+
+  test 'should destroy empty labels for moderator' do
+    sign_in_as(create(:moderator))
+
+    label2 = create :label
+    create :album_label, label: label2
+
+    assert_difference('Label.count', -1) do
+      post destroy_empty_labels_url
+    end
+
+    assert_response :no_content
+
+    assert_not_nil Label.find_by(id: label2.id)
+  end
+
+  test 'should destroy empty labels for admin' do
+    sign_in_as(create(:admin))
+
+    label2 = create :label
+    create :album_label, label: label2
+
+    assert_difference('Label.count', -1) do
+      post destroy_empty_labels_url
+    end
+
+    assert_response :no_content
+
+    assert_not_nil Label.find_by(id: label2.id)
+  end
 end

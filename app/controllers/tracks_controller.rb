@@ -37,6 +37,11 @@ class TracksController < ApplicationController
     @track.destroy
   end
 
+  def destroy_empty
+    authorize Track
+    Track.where(audio_file: nil).destroy_all
+  end
+
   def audio
     conversion = CodecConversion.find_by(id: params[:codec_conversion_id])
     audio_file = @track.audio_file
