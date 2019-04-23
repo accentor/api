@@ -18,7 +18,7 @@ class TrackPolicy < ApplicationPolicy
   end
 
   def update?
-    create?
+    user
   end
 
   def destroy?
@@ -38,6 +38,10 @@ class TrackPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:title, :number, :album_id, genre_ids: [], track_artists: %i[artist_id name role]]
+    if user.moderator?
+      [:title, :number, :album_id, :review_comment, genre_ids: [], track_artists: %i[artist_id name role]]
+    else
+      [:review_comment]
+    end
   end
 end

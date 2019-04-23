@@ -52,9 +52,26 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should not update track for user' do
+  test 'user should be able to update review_comment' do
+    patch track_url(@track), params: {track: {:review_comment => "comment"}}
+    assert_response :success
+    @track.reload
+    assert_equal "comment", @track.review_comment
+  end
+
+  test 'should not update track metadata for user' do
     patch track_url(@track), params: {track: {album_id: @track.album_id, number: @track.number, title: @track.title}}
-    assert_response :unauthorized
+    assert_response :success
+    @track.reload
+    assert_not_equal :album_id, @track.album_id
+  end
+
+  test 'should clear review comment' do
+    @track.update(review_comment: "test")
+    patch track_url(@track), params: {track: {:review_comment => nil}}
+    assert_response :success
+    @track.reload
+    assert_nil @track.review_comment
   end
 
   test 'should update track for moderator' do

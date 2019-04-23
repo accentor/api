@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_31_174813) do
+ActiveRecord::Schema.define(version: 2019_04_21_121933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 2019_03_31_174813) do
     t.date "release"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "review_comment"
     t.index ["image_id"], name: "index_albums_on_image_id", unique: true
   end
 
@@ -60,6 +61,7 @@ ActiveRecord::Schema.define(version: 2019_03_31_174813) do
     t.bigint "image_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "review_comment"
     t.index ["image_id"], name: "index_artists_on_image_id", unique: true
   end
 
@@ -174,6 +176,7 @@ ActiveRecord::Schema.define(version: 2019_03_31_174813) do
     t.bigint "album_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "review_comment"
     t.index ["album_id"], name: "index_tracks_on_album_id"
     t.index ["audio_file_id"], name: "index_tracks_on_audio_file_id", unique: true
   end

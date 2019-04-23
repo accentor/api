@@ -15,6 +15,7 @@ FactoryBot.define do
   factory :album do
     title {Faker::Music.album}
     albumartist {Faker::Music.band}
+    review_comment {Faker::Lorem.word}
 
     trait :with_release do
       release {Faker::Date.backward(365 * 100)}

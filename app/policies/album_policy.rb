@@ -18,7 +18,7 @@ class AlbumPolicy < ApplicationPolicy
   end
 
   def update?
-    create?
+    user
   end
 
   def destroy?
@@ -30,13 +30,18 @@ class AlbumPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [
-        :title,
-        :albumartist,
-        :release,
-        image: [:data, :filename, :mimetype],
-        album_labels: [:label_id, :catalogue_number]
-    ]
+    if user.moderator?
+      [
+          :title,
+          :albumartist,
+          :release,
+          :review_comment,
+          image: [:data, :filename, :mimetype],
+          album_labels: [:label_id, :catalogue_number]
+      ]
+    else
+      [:review_comment]
+    end
   end
 
 end
