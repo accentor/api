@@ -1,4 +1,4 @@
-json.extract! album, :id, :title, :albumartist, :release, :created_at, :updated_at
+json.extract! album, :id, :title, :albumartist, :release, :review_comment, :created_at, :updated_at
 json.album_labels do
   json.array! album.album_labels, partial: 'albums/album_label', as: :album_label
 end

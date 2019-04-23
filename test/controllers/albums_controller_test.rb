@@ -73,9 +73,23 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should not update album for user' do
-    patch album_url(@album), params: {album: {albumartist: @album.albumartist, release: @album.release, title: @album.title}}
-    assert_response :unauthorized
+  test 'should update review comment for user' do
+    patch album_url(@album), params: {album: {:review_comment => "comment"}}
+    @album.reload
+    assert_equal "comment", @album.review_comment
+  end
+
+  test 'should not update album metadata for user' do
+    patch album_url(@album), params: {album: {albumartist: @album.albumartist, release: @album.release, title: "Titel"}}
+    @album.reload
+    assert_not_equal "Titel", @album.review_comment
+  end
+
+  test 'should clear review comment' do
+    @album.update(review_comment: "test")
+    patch album_url(@album), params: {album: {:review_comment => nil}}
+    @album.reload
+    assert_nil @album.review_comment
   end
 
   test 'should update album for moderator' do

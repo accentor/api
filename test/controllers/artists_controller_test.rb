@@ -44,9 +44,23 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should not update artist for user' do
-    patch artist_url(@artist), params: {artist: {name: @artist.name}}
-    assert_response :unauthorized
+  test 'should update review_comment for user' do
+    patch artist_url(@artist), params: {artist: {review_comment: "Comment"}}
+    @artist.reload
+    assert_equal "Comment", @artist.review_comment
+  end
+
+  test 'should not update artist metadata for user' do
+    patch artist_url(@artist), params: {artist: {name: "Naam"}}
+    @artist.reload
+    assert_not_equal "Naam", @artist.name
+  end
+
+  test 'should clear review_comment' do
+    @artist.update(review_comment: "test")
+    patch artist_url(@artist), params: {artist: {review_comment: nil}}
+    @artist.reload
+    assert_nil @artist.review_comment
   end
 
   test 'should update artist for moderator' do

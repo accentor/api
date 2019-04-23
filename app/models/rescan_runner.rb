@@ -84,17 +84,21 @@ class RescanRunner < ApplicationRecord
       end
 
       album = Album.find_by(title: t_album, release: Date.ordinal(t_year)) ||
-          Album.new(title: t_album, albumartist: t_albumartist, release: Date.ordinal(t_year), image: find_image(Pathname.new(path).parent))
+          Album.new(title: t_album,
+                    albumartist: t_albumartist,
+                    release: Date.ordinal(t_year),
+                    image: find_image(Pathname.new(path).parent),
+                    review_comment: "New album")
       audio_file = AudioFile.new(location: location, codec: codec, filename: relative_path.to_s, length: length, bitrate: bitrate)
 
-      artist = Artist.find_by(name: t_artist) || Artist.new(name: t_artist)
+      artist = Artist.find_by(name: t_artist) || Artist.new(name: t_artist, review_comment: "New artist")
       track_artists = [{
                            artist: artist,
                            name: t_artist,
                            role: :main
                        }]
       if t_composer.present? && t_composer != t_artist
-        composer = Artist.find_by(name: t_composer) || Artist.new(name: t_composer)
+        composer = Artist.find_by(name: t_composer) || Artist.new(name: t_composer, review_comment: "New artist")
         track_artists << {
             artist: composer,
             name: t_composer,
@@ -114,7 +118,8 @@ class RescanRunner < ApplicationRecord
                         track_artists: track_artists,
                         genres: genres,
                         audio_file: audio_file,
-                        album: album)
+                        album: album,
+                        review_comment: "New track")
       track.save
     end
 
