@@ -24,10 +24,15 @@ class RescanRunner < ApplicationRecord
 
       unless Codec.count.positive?
         update(error_text: 'No codecs defined')
+        return
       end
 
       Location.all.each do |l|
         process_all_files(l, l.path)
+      end
+
+      AudioFile.find_each do |af|
+        update(warning_text: "#{warning_text}File #{af.full_path} doesn't exist anymore.\n") unless af.check_self
       end
     ensure
       update(running: false)
@@ -38,7 +43,7 @@ class RescanRunner < ApplicationRecord
 
   def process_all_files(location, path)
     unless File.directory?(path)
-      update(error_text: error_text + "#{path} (in #{location.path} is not a directory")
+      update(error_text: "#{error_text}#{path} (in #{location.path} is not a directory\n")
       return
     end
 
@@ -74,7 +79,7 @@ class RescanRunner < ApplicationRecord
       bitrate = tags.bitrate
 
       unless t_artist.present? && t_title.present? && t_album.present?
-        update(error_text: error_text + "File #{path} is missing required tags (album, artist, title)\n")
+        update(error_text: "#{error_text}File #{path} is missing required tags (album, artist, title)\n")
         return
       end
 
