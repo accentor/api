@@ -35,7 +35,7 @@ class RescanRunner < ApplicationRecord
         update(warning_text: "#{warning_text}File #{af.full_path} doesn't exist anymore.\n") unless af.check_self
       end
     rescue Exception => e
-      update(error_text: "#{error_text}A really unexpected error occurred while processing: #{e.message}\n#{e.backtrace}\n")
+      update(error_text: "#{error_text}A really unexpected error occurred while processing: #{e.message}\n#{e.backtrace.join("\n")}\n")
     ensure
       update(running: false)
     end
@@ -59,7 +59,7 @@ class RescanRunner < ApplicationRecord
               process_file(location, c, File.join(path, child))
               update(processed: processed + 1)
             rescue Exception => e
-              update(error_text: "#{error_text}An error occurred while processing #{File.join(path, child)}: #{e.message}\n#{e.backtrace}\n")
+              update(error_text: "#{error_text}An error occurred while processing #{File.join(path, child)}: #{e.message}\n#{e.backtrace.join("\n")}\n")
             end
           end
         end
