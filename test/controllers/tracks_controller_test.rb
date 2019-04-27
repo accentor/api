@@ -52,9 +52,26 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should not update track for user' do
+  test 'user should be able to update review_comment' do
+    patch track_url(@track), params: {track: {:review_comment => "comment"}}
+    assert_response :success
+    @track.reload
+    assert_equal "comment", @track.review_comment
+  end
+
+  test 'should not update track metadata for user' do
     patch track_url(@track), params: {track: {album_id: @track.album_id, number: @track.number, title: @track.title}}
-    assert_response :unauthorized
+    assert_response :success
+    @track.reload
+    assert_not_equal :album_id, @track.album_id
+  end
+
+  test 'should clear review comment' do
+    @track.update(review_comment: "test")
+    patch track_url(@track), params: {track: {:review_comment => nil}}
+    assert_response :success
+    @track.reload
+    assert_nil @track.review_comment
   end
 
   test 'should update track for moderator' do
@@ -82,6 +99,28 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :no_content
+  end
+
+  test 'should not destroy empty tracks for user' do
+    assert_difference('Track.count', 0) do
+      post destroy_empty_tracks_url
+    end
+
+    assert_response :unauthorized
+  end
+
+  test 'should destroy empty tracks for moderator' do
+    sign_in_as(create(:moderator))
+
+    create :track
+
+    assert_difference('Track.count', -1) do
+      post destroy_empty_tracks_url
+    end
+
+    assert_response :no_content
+
+    assert_not_nil Track.find_by(id: @track.id)
   end
 
   test 'should not merge tracks for user' do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_31_174813) do
+ActiveRecord::Schema.define(version: 2019_04_21_121933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,17 @@ ActiveRecord::Schema.define(version: 2019_03_31_174813) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "album_artists", force: :cascade do |t|
+    t.bigint "album_id", null: false
+    t.bigint "artist_id", null: false
+    t.string "name", null: false
+    t.integer "order", null: false
+    t.string "separator"
+    t.index ["album_id", "artist_id", "name"], name: "index_album_artists_on_album_id_and_artist_id_and_name", unique: true
+    t.index ["album_id"], name: "index_album_artists_on_album_id"
+    t.index ["artist_id"], name: "index_album_artists_on_artist_id"
+  end
+
   create_table "album_labels", force: :cascade do |t|
     t.bigint "album_id", null: false
     t.bigint "label_id", null: false
@@ -47,11 +58,11 @@ ActiveRecord::Schema.define(version: 2019_03_31_174813) do
 
   create_table "albums", force: :cascade do |t|
     t.string "title", null: false
-    t.string "albumartist", null: false
     t.bigint "image_id"
     t.date "release"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "review_comment"
     t.index ["image_id"], name: "index_albums_on_image_id", unique: true
   end
 
@@ -60,6 +71,7 @@ ActiveRecord::Schema.define(version: 2019_03_31_174813) do
     t.bigint "image_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "review_comment"
     t.index ["image_id"], name: "index_artists_on_image_id", unique: true
   end
 
@@ -174,6 +186,7 @@ ActiveRecord::Schema.define(version: 2019_03_31_174813) do
     t.bigint "album_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "review_comment"
     t.index ["album_id"], name: "index_tracks_on_album_id"
     t.index ["audio_file_id"], name: "index_tracks_on_audio_file_id", unique: true
   end
@@ -186,6 +199,8 @@ ActiveRecord::Schema.define(version: 2019_03_31_174813) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "album_artists", "albums"
+  add_foreign_key "album_artists", "artists"
   add_foreign_key "album_labels", "albums"
   add_foreign_key "album_labels", "labels"
   add_foreign_key "albums", "images"

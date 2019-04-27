@@ -13,7 +13,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not create album for user' do
     assert_difference('Album.count', 0) do
-      post albums_url, params: {album: {albumartist: @album.albumartist, release: @album.release, title: @album.title}}
+      post albums_url, params: {album: {release: @album.release, title: @album.title}}
     end
 
     assert_response :unauthorized
@@ -31,7 +31,6 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference('Album.count', 1) do
       post albums_url, params: {album: {
-          albumartist: album.albumartist,
           release: album.release,
           title: album.title,
           image: image
@@ -55,7 +54,6 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference('Album.count', 1) do
       post albums_url, params: {album: {
-          albumartist: album.albumartist,
           release: album.release,
           title: album.title,
           album_labels: album_labels
@@ -73,9 +71,23 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should not update album for user' do
-    patch album_url(@album), params: {album: {albumartist: @album.albumartist, release: @album.release, title: @album.title}}
-    assert_response :unauthorized
+  test 'should update review comment for user' do
+    patch album_url(@album), params: {album: {:review_comment => "comment"}}
+    @album.reload
+    assert_equal "comment", @album.review_comment
+  end
+
+  test 'should not update album metadata for user' do
+    patch album_url(@album), params: {album: {release: @album.release, title: "Titel"}}
+    @album.reload
+    assert_not_equal "Titel", @album.review_comment
+  end
+
+  test 'should clear review comment' do
+    @album.update(review_comment: "test")
+    patch album_url(@album), params: {album: {:review_comment => nil}}
+    @album.reload
+    assert_nil @album.review_comment
   end
 
   test 'should update album for moderator' do
@@ -134,5 +146,30 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 0, ActiveStorage::Blob.count
 
     assert_response :no_content
+  end
+
+  test 'should not destroy empty albums for user' do
+    assert_difference('Album.count', 0) do
+      post destroy_empty_albums_url
+    end
+
+    assert_response :unauthorized
+  end
+
+  test 'should destroy empty albums for moderator' do
+    sign_in_as create(:moderator)
+    album2 = create :album
+    create :track, album: album2
+    assert_difference('Image.count', -1) do
+      assert_difference('ActiveStorage::Blob.count', -1) do
+        assert_difference('Album.count', -1) do
+          post destroy_empty_albums_url
+        end
+      end
+    end
+
+    assert_response :no_content
+
+    assert_not_nil Album.find_by(id: album2.id)
   end
 end

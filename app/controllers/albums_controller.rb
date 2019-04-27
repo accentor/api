@@ -35,6 +35,11 @@ class AlbumsController < ApplicationController
     @album.destroy
   end
 
+  def destroy_empty
+    authorize Album
+    Album.where.not(id: Track.select(:album_id).distinct).destroy_all
+  end
+
   private
 
   def set_album
@@ -61,6 +66,12 @@ class AlbumsController < ApplicationController
     if attributes[:album_labels].present?
       attributes[:album_labels] = attributes[:album_labels].map do |al|
         AlbumLabel.new(label_id: al[:label_id], catalogue_number: al[:catalogue_number])
+      end
+    end
+
+    if attributes[:album_artists].present?
+      attributes[:album_artists] = attributes[:album_artists].map do |aa, i|
+        AlbumArtist.new(artist_id: aa[:artist_id], name: aa[:name], separator: aa[:separator], order: aa[:order] || 0)
       end
     end
 

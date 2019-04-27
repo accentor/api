@@ -1,20 +1,21 @@
 # == Schema Information
 #
-# Table name: track_artists
+# Table name: album_artists
 #
 #  id        :bigint(8)        not null, primary key
-#  track_id  :bigint(8)        not null
+#  album_id  :bigint(8)        not null
 #  artist_id :bigint(8)        not null
 #  name      :string           not null
-#  role      :integer          not null
+#  order     :integer          not null
+#  join      :string
 #
 
 FactoryBot.define do
-  factory :track_artist do
-    track
+  factory :album_artist do
+    album
     artist
-    name {Faker::Lorem.word}
-    role {TrackArtist.roles.keys.sample}
+    join {"/"}
     order {1}
+    name {Faker::Music.band}
   end
 end

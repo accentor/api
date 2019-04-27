@@ -18,14 +18,22 @@ class ArtistPolicy < ApplicationPolicy
   end
 
   def update?
-    create?
+    user
   end
 
   def destroy?
     create?
   end
 
+  def destroy_empty?
+    create?
+  end
+
   def permitted_attributes
-    [:name, image: [:data, :filename, :mimetype]]
+    if user.moderator?
+      [:name, :review_comment, image: [:data, :filename, :mimetype]]
+    else
+      [:review_comment]
+    end
   end
 end

@@ -32,6 +32,11 @@ class GenresController < ApplicationController
     @genre.destroy
   end
 
+  def destroy_empty
+    authorize Genre
+    Genre.left_outer_joins(:tracks).where(tracks: {id: nil}).destroy_all
+  end
+
   private
 
   def set_genre

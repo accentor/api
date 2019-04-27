@@ -2,11 +2,11 @@
 #
 # Table name: rescan_runners
 #
-#  id        :bigint(8)        not null, primary key
-#  warnings  :text
-#  errors    :text
-#  processed :integer          default(0), not null
-#  running   :boolean          default(FALSE), not null
+#  id           :bigint(8)        not null, primary key
+#  warning_text :text
+#  error_text   :text
+#  processed    :integer          default(0), not null
+#  running      :boolean          default(FALSE), not null
 #
 
 class RescanRunner < ApplicationRecord
@@ -24,10 +24,15 @@ class RescanRunner < ApplicationRecord
 
       unless Codec.count.positive?
         update(error_text: 'No codecs defined')
+        return
       end
 
       Location.all.each do |l|
         process_all_files(l, l.path)
+      end
+
+      AudioFile.find_each do |af|
+        update(warning_text: "#{warning_text}File #{af.full_path} doesn't exist anymore.\n") unless af.check_self
       end
     rescue Exception => e
       update(error_text: "#{error_text}A really unexpected error occurred while processing: #{e.message}\n#{e.backtrace.join("\n")}\n")
@@ -40,7 +45,7 @@ class RescanRunner < ApplicationRecord
 
   def process_all_files(location, path)
     unless File.directory?(path)
-      update(error_text: error_text + "#{path} (in #{location.path} is not a directory")
+      update(error_text: "#{error_text}#{path} (in #{location.path} is not a directory\n")
       return
     end
 
@@ -80,30 +85,42 @@ class RescanRunner < ApplicationRecord
       bitrate = tags.bitrate
 
       unless t_artist.present? && t_title.present? && t_album.present?
-        update(error_text: error_text + "File #{path} is missing required tags (album, artist, title)\n")
+        update(error_text: "#{error_text}File #{path} is missing required tags (album, artist, title)\n")
         return
       end
 
+      albumartist = Artist.find_by(name: t_albumartist) || Artist.new(name: t_albumartist, review_comment: 'New artist')
+
       album = Album.find_by(title: t_album, release: Date.ordinal(t_year)) ||
-          Album.new(title: t_album, albumartist: t_albumartist, release: Date.ordinal(t_year), image: find_image(Pathname.new(path).parent))
+          Album.new(title: t_album,
+                    release: Date.ordinal(t_year),
+                    image: find_image(Pathname.new(path).parent),
+                    review_comment: "New album",
+                    album_artist: [AlbumArtist.new(artist: albumartist, name: t_albumartist, order: 0)])
       audio_file = AudioFile.new(location: location, codec: codec, filename: relative_path.to_s, length: length, bitrate: bitrate)
 
-      artist = Artist.find_by(name: t_artist) || Artist.new(name: t_artist)
+      artist = if t_albumartist == t_artist
+                 albumartist
+               else
+                 Artist.find_by(name: t_artist) || Artist.new(name: t_artist, review_comment: "New artist")
+               end
       track_artists = [{
                            artist: artist,
                            name: t_artist,
-                           role: :main
+                           role: :main,
+                           order: 0
                        }]
       if t_composer.present? && t_composer != t_artist
-        composer = Artist.find_by(name: t_composer) || Artist.new(name: t_composer)
+        composer = Artist.find_by(name: t_composer) || Artist.new(name: t_composer, review_comment: "New artist")
         track_artists << {
             artist: composer,
             name: t_composer,
-            role: :composer
+            role: :composer,
+            order: 1
         }
       end
 
-      track_artists = track_artists.map {|ta| TrackArtist.new(artist: ta[:artist], name: ta[:name], role: ta[:role])}
+      track_artists = track_artists.map {|ta| TrackArtist.new(artist: ta[:artist], name: ta[:name], role: ta[:role], order: ta[:order])}
 
       genre = if t_genre.present?
                 Genre.find_by(name: t_genre) || Genre.new(name: t_genre)
@@ -115,7 +132,8 @@ class RescanRunner < ApplicationRecord
                         track_artists: track_artists,
                         genres: genres,
                         audio_file: audio_file,
-                        album: album)
+                        album: album,
+                        review_comment: "New track")
       track.save
     end
 

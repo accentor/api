@@ -32,6 +32,11 @@ class LabelsController < ApplicationController
     @label.destroy
   end
 
+  def destroy_empty
+    authorize Label
+    Label.where.not(id: AlbumLabel.select(:label_id).distinct).destroy_all
+  end
+
   private
 
   def set_label

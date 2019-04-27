@@ -37,6 +37,11 @@ class TracksController < ApplicationController
     @track.destroy
   end
 
+  def destroy_empty
+    authorize Track
+    Track.where(audio_file: nil).destroy_all
+  end
+
   def audio
     conversion = CodecConversion.find_by(id: params[:codec_conversion_id])
     audio_file = @track.audio_file
@@ -88,7 +93,7 @@ class TracksController < ApplicationController
 
     if attributes[:track_artists].present?
       attributes[:track_artists] = attributes[:track_artists].map do |ta|
-        TrackArtist.new(artist_id: ta[:artist_id], name: ta[:name], role: ta[:role])
+        TrackArtist.new(artist_id: ta[:artist_id], name: ta[:name], role: ta[:role], order: ta[:order] || 0)
       end
     end
 
