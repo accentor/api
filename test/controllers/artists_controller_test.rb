@@ -129,12 +129,30 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unauthorized
   end
 
-  test 'should destroy empty artists for moderator' do
+  test 'should destroy empty artists for moderator (track_artist)' do
     sign_in_as create(:moderator)
 
     artist2 = create :artist
-    track = create :track
-    create :track_artist, track: track, artist: artist2
+    create :track_artist, artist: artist2
+
+    assert_difference('Image.count', -1) do
+      assert_difference('ActiveStorage::Blob.count', -1) do
+        assert_difference('Artist.count', -1) do
+          post destroy_empty_artists_url
+        end
+      end
+    end
+
+    assert_response :no_content
+
+    assert_not_nil Artist.find_by(id: artist2.id)
+  end
+
+  test 'should destroy empty artists for moderator (album_artist)' do
+    sign_in_as create(:moderator)
+
+    artist2 = create :artist
+    create :album_artist, artist: artist2
 
     assert_difference('Image.count', -1) do
       assert_difference('ActiveStorage::Blob.count', -1) do

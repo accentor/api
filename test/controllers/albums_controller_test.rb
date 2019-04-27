@@ -13,7 +13,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not create album for user' do
     assert_difference('Album.count', 0) do
-      post albums_url, params: {album: {albumartist: @album.albumartist, release: @album.release, title: @album.title}}
+      post albums_url, params: {album: {release: @album.release, title: @album.title}}
     end
 
     assert_response :unauthorized
@@ -31,7 +31,6 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference('Album.count', 1) do
       post albums_url, params: {album: {
-          albumartist: album.albumartist,
           release: album.release,
           title: album.title,
           image: image
@@ -55,7 +54,6 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference('Album.count', 1) do
       post albums_url, params: {album: {
-          albumartist: album.albumartist,
           release: album.release,
           title: album.title,
           album_labels: album_labels
@@ -80,7 +78,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not update album metadata for user' do
-    patch album_url(@album), params: {album: {albumartist: @album.albumartist, release: @album.release, title: "Titel"}}
+    patch album_url(@album), params: {album: {release: @album.release, title: "Titel"}}
     @album.reload
     assert_not_equal "Titel", @album.review_comment
   end
