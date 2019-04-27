@@ -107,18 +107,20 @@ class RescanRunner < ApplicationRecord
       track_artists = [{
                            artist: artist,
                            name: t_artist,
-                           role: :main
+                           role: :main,
+                           order: 0
                        }]
       if t_composer.present? && t_composer != t_artist
         composer = Artist.find_by(name: t_composer) || Artist.new(name: t_composer, review_comment: "New artist")
         track_artists << {
             artist: composer,
             name: t_composer,
-            role: :composer
+            role: :composer,
+            order: 1
         }
       end
 
-      track_artists = track_artists.map {|ta| TrackArtist.new(artist: ta[:artist], name: ta[:name], role: ta[:role])}
+      track_artists = track_artists.map {|ta| TrackArtist.new(artist: ta[:artist], name: ta[:name], role: ta[:role], order: ta[:order])}
 
       genre = if t_genre.present?
                 Genre.find_by(name: t_genre) || Genre.new(name: t_genre)

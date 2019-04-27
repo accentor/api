@@ -19,4 +19,5 @@ class TrackArtist < ApplicationRecord
   validates :name, presence: true, uniqueness: {scope: %i[track artist role]}
   validates :track, presence: true
   validates :artist, presence: true
+  validates :order, presence: true
 end
