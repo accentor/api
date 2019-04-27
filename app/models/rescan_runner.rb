@@ -29,6 +29,8 @@ class RescanRunner < ApplicationRecord
       Location.all.each do |l|
         process_all_files(l, l.path)
       end
+    rescue Exception => e
+      update(error_text: "#{error_text}A really unexpected error occurred while processing: #{e.message}\n#{e.backtrace}\n")
     ensure
       update(running: false)
     end
@@ -48,8 +50,12 @@ class RescanRunner < ApplicationRecord
       else
         Codec.all.each do |c|
           if File.extname(child).downcase == ".#{c.extension.downcase}"
-            process_file(location, c, File.join(path, child))
-            update(processed: processed + 1)
+            begin
+              process_file(location, c, File.join(path, child))
+              update(processed: processed + 1)
+            rescue Exception => e
+              update(error_text: "#{error_text}An error occurred while processing #{File.join(path, child)}: #{e.message}\n#{e.backtrace}\n")
+            end
           end
         end
       end
