@@ -15,5 +15,6 @@ FactoryBot.define do
     artist
     name {Faker::Lorem.word}
     role {TrackArtist.roles.keys.sample}
+    order {1}
   end
 end

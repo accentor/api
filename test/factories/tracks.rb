@@ -18,7 +18,6 @@ FactoryBot.define do
     title {Faker::Lorem.word}
     number {Random.rand(20)}
     review_comment {Faker::Lorem.word}
-
     trait :with_audio_file do
       association :audio_file, factory: :audio_file
     end
