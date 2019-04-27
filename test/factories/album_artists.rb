@@ -14,7 +14,7 @@ FactoryBot.define do
   factory :album_artist do
     album
     artist
-    join {"/"}
+    separator {" / "}
     order {1}
     name {Faker::Music.band}
   end
