@@ -96,7 +96,7 @@ class RescanRunner < ApplicationRecord
                     release: Date.ordinal(t_year),
                     image: find_image(Pathname.new(path).parent),
                     review_comment: "New album",
-                    album_artist: [AlbumArtist.new(artist: albumartist, name: t_albumartist, order: 0)])
+                    album_artists: [AlbumArtist.new(artist: albumartist, name: t_albumartist, order: 1, separator: nil)])
       audio_file = AudioFile.new(location: location, codec: codec, filename: relative_path.to_s, length: length, bitrate: bitrate)
 
       artist = if t_albumartist == t_artist
@@ -108,7 +108,7 @@ class RescanRunner < ApplicationRecord
                            artist: artist,
                            name: t_artist,
                            role: :main,
-                           order: 0
+                           order: 1
                        }]
       if t_composer.present? && t_composer != t_artist
         composer = Artist.find_by(name: t_composer) || Artist.new(name: t_composer, review_comment: "New artist")
@@ -116,7 +116,7 @@ class RescanRunner < ApplicationRecord
             artist: composer,
             name: t_composer,
             role: :composer,
-            order: 1
+            order: 2
         }
       end
 
