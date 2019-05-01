@@ -4,6 +4,8 @@ class CoverFilenamesController < ApplicationController
   def index
     authorize CoverFilename
     @cover_filenames = apply_scopes(policy_scope(CoverFilename))
+                           .order(id: :asc)
+                           .paginate(page: params[:page])
   end
 
   def show

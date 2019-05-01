@@ -4,6 +4,8 @@ class AuthTokensController < ApplicationController
   def index
     authorize AuthToken
     @auth_tokens = apply_scopes(policy_scope(AuthToken))
+                       .order(id: :asc)
+                       .paginate(page: params[:page])
   end
 
   def show

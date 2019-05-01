@@ -4,6 +4,8 @@ class UsersController < ApplicationController
   def index
     authorize User
     @users = apply_scopes(policy_scope(User))
+                 .order(id: :asc)
+                 .paginate(page: params[:page])
   end
 
   def show
