@@ -4,6 +4,8 @@ class CodecsController < ApplicationController
   def index
     authorize Codec
     @codecs = apply_scopes(policy_scope(Codec))
+                  .order(id: :asc)
+                  .paginate(page: params[:page])
   end
 
   def show

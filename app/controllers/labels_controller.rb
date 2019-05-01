@@ -4,6 +4,8 @@ class LabelsController < ApplicationController
   def index
     authorize Label
     @labels = apply_scopes(policy_scope(Label))
+                  .order(id: :asc)
+                  .paginate(page: params[:page])
   end
 
   def show

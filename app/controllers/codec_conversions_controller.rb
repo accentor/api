@@ -6,6 +6,8 @@ class CodecConversionsController < ApplicationController
   def index
     authorize CodecConversion
     @codec_conversions = apply_scopes(policy_scope(CodecConversion))
+                             .order(id: :asc)
+                             .paginate(page: params[:page])
   end
 
   def show

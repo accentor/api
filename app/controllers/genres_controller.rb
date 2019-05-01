@@ -4,6 +4,8 @@ class GenresController < ApplicationController
   def index
     authorize Genre
     @genres = apply_scopes(policy_scope(Genre))
+                  .order(id: :asc)
+                  .paginate(page: params[:page])
   end
 
   def show

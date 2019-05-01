@@ -20,6 +20,7 @@ gem 'delayed_job_active_record', '~> 4.1.3'
 gem 'easytag', '~> 1.0.0'
 gem 'has_scope', '~> 0.7.2'
 gem 'pundit', '~> 2.0.1'
+gem 'will_paginate', '~> 3.1.7'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

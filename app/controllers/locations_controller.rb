@@ -4,6 +4,8 @@ class LocationsController < ApplicationController
   def index
     authorize Location
     @locations = apply_scopes(policy_scope(Location))
+                     .order(id: :asc)
+                     .paginate(page: params[:page])
   end
 
   def show
