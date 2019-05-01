@@ -4,6 +4,8 @@ class ImageTypesController < ApplicationController
   def index
     authorize ImageType
     @image_types = apply_scopes(policy_scope(ImageType))
+                       .order(id: :asc)
+                       .paginate(page: params[:page])
   end
 
   def show

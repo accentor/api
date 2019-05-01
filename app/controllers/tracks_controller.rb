@@ -8,7 +8,10 @@ class TracksController < ApplicationController
 
   def index
     authorize Track
-    @tracks = apply_scopes(policy_scope(Track)).includes(:track_artists, :genres, audio_file: [:location, :codec])
+    @tracks = apply_scopes(policy_scope(Track))
+                  .includes(:track_artists, :genres, audio_file: [:location, :codec])
+                  .order(id: :asc)
+                  .paginate(page: params[:page])
   end
 
   def show
