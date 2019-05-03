@@ -1,4 +1,4 @@
-json.extract! album, :id, :title, :release, :review_comment, :created_at, :updated_at
+json.extract! album, :id, :title, :release, :review_comment, :edition, :edition_description, :created_at, :updated_at
 json.album_labels do
   json.array! album.album_labels do |album_label|
     json.extract! album_label, :label_id, :catalogue_number
