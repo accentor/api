@@ -35,6 +35,8 @@ class AlbumPolicy < ApplicationPolicy
           :title,
           :release,
           :review_comment,
+          :edition,
+          :edition_description,
           image: [:data, :filename, :mimetype],
           album_artists: [:artist_id, :name, :order, :separator],
           album_labels: [:label_id, :catalogue_number]
