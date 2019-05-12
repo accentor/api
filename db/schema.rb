@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_27_120544) do
+ActiveRecord::Schema.define(version: 2019_05_03_135843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(version: 2019_04_27_120544) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "review_comment"
+    t.date "edition"
+    t.string "edition_description"
     t.index ["image_id"], name: "index_albums_on_image_id", unique: true
   end
 
