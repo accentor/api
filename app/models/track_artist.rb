@@ -10,7 +10,7 @@
 #
 
 class TrackArtist < ApplicationRecord
-  enum role: %i[main guest composer conductor remixer producer]
+  enum role: %i[main performer composer conductor remixer producer arranger]
 
   belongs_to :track
   belongs_to :artist
