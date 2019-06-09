@@ -23,7 +23,9 @@ class LocationsController < ApplicationController
   end
 
   def destroy
-    @location.destroy
+    unless @location.destroy
+      render json: @location.errors, status: :unprocessable_entity
+    end
   end
 
   private

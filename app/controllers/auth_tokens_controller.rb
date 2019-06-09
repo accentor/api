@@ -35,7 +35,9 @@ class AuthTokensController < ApplicationController
   end
 
   def destroy
-    @auth_token.destroy
+    unless @auth_token.destroy
+      render json: @auth_token.errors, status: :unprocessable_entity
+    end
   end
 
   private

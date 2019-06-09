@@ -35,7 +35,9 @@ class AlbumsController < ApplicationController
   end
 
   def destroy
-    @album.destroy
+    unless @album.destroy
+      render json: @album.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy_empty

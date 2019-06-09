@@ -23,7 +23,9 @@ class CoverFilenamesController < ApplicationController
   end
 
   def destroy
-    @cover_filename.destroy
+    unless @cover_filename.destroy
+      render json: @cover_filename.errors, status: :unprocessable_entity
+    end
   end
 
   private

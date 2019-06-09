@@ -32,7 +32,9 @@ class ArtistsController < ApplicationController
   end
 
   def destroy
-    @artist.destroy
+    unless @artist.destroy
+      render json: @artist.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy_empty

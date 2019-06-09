@@ -31,7 +31,9 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
+    unless @user.destroy
+      render json: @user.errors, status: :unprocessable_entity
+    end
   end
 
   private

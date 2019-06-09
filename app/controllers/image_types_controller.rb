@@ -31,7 +31,9 @@ class ImageTypesController < ApplicationController
   end
 
   def destroy
-    @image_type.destroy
+    unless @image_type.destroy
+      render json: @image_type.errors, status: :unprocessable_entity
+    end
   end
 
   private
