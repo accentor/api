@@ -31,7 +31,9 @@ class GenresController < ApplicationController
   end
 
   def destroy
-    @genre.destroy
+    unless @genre.destroy
+      render json: @genre.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy_empty

@@ -37,7 +37,9 @@ class TracksController < ApplicationController
   end
 
   def destroy
-    @track.destroy
+    unless @track.destroy
+      render json: @track.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy_empty

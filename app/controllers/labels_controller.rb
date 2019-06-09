@@ -31,7 +31,9 @@ class LabelsController < ApplicationController
   end
 
   def destroy
-    @label.destroy
+    unless @label.destroy
+      render json: @label.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy_empty

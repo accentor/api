@@ -31,7 +31,9 @@ class CodecsController < ApplicationController
   end
 
   def destroy
-    @codec.destroy
+    unless @codec.destroy
+      render json: @codec.errors, status: :unprocessable_entity
+    end
   end
 
   private
