@@ -54,7 +54,7 @@ class RescanRunner < ApplicationRecord
         process_all_files(location, File.join(path, child))
       else
         Codec.all.each do |c|
-          if File.extname(child).downcase == ".#{c.extension.downcase}"
+          if File.extname(child)[1..].downcase == "#{c.extension.downcase}"
             begin
               process_file(location, c, File.join(path, child))
               update(processed: processed + 1)
