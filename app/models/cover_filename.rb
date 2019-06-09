@@ -8,4 +8,10 @@
 
 class CoverFilename < ApplicationRecord
   validates :filename, presence: true, uniqueness: true
+
+  before_validation :downcase
+
+  def downcase
+    self.filename = filename.downcase
+  end
 end
