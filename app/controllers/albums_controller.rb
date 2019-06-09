@@ -56,8 +56,8 @@ class AlbumsController < ApplicationController
     attributes = permitted_attributes(@album || Album)
 
     if attributes[:image].present?
-      image_type = ImageType.find_by(extension: File.extname(attributes[:image][:filename]).downcase) ||
-          ImageType.new(extension: File.extname(attributes[:image][:filename]).downcase,
+      image_type = ImageType.find_by(extension: File.extname(attributes[:image][:filename])[1..].downcase) ||
+          ImageType.new(extension: File.extname(attributes[:image][:filename])[1..].downcase,
                         mimetype: attributes[:image][:mimetype])
 
       image = Image.new(image_type: image_type)
