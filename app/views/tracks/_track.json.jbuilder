@@ -5,7 +5,7 @@ json.track_artists do
     json.extract! track_artist, :artist_id, :name, :role, :order
   end
 end
-json.codec track.audio_file&.codec
+json.codec_id track.audio_file&.codec&.id
 json.length track.audio_file&.length
 json.bitrate track.audio_file&.bitrate
 json.location_id track.audio_file&.location&.id
