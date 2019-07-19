@@ -50,9 +50,9 @@ class Album < ApplicationRecord
   def album_artist_separators
     album_artists.each do |aa|
       if aa.order == album_artists.to_a.count
-        errors.add(:album_artists, "Last album artist should not have separator") unless aa.separator.nil?
+        errors.add(:album_artists, "aa-last-no-separator") unless aa.separator.nil?
       else
-        errors.add(:album_artists, "Album artists (except last) should have separator") unless aa.separator.present?
+        errors.add(:album_artists, "aa-separator") unless aa.separator.present?
       end
     end
   end

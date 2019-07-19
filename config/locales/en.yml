@@ -30,8 +30,93 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  pundit:
-    default: 'You are not authorized to do this.'
+  activerecord:
+    errors:
+      models:
+        album:
+          attributes:
+            title: 
+              blank: "albums.title-blank"
+        album_artists:
+          attributes:
+            name:
+              blank: "aa.name-blank"
+            order:
+              blank: "aa.order-blank"
+        album_label:
+          attributes:
+            catalogue_number: 
+              blank: "al.cat-blank"
+        artist:
+          attributes:
+            name:
+              blank: "artists.name-blank"
+        codec:
+          attributes:
+            mimetype: 
+              blank: "codec.mime-blank"
+            extension:
+              blank: "codec.ext-blank"
+              taken: "codec.ext-taken"
+        codec_conversion:
+          attributes:
+            name:
+              blank: "codecconv.nane-blank"
+              taken: "codecconv.name-taken"
+            ffmpeg_params:
+              blank: "codecconv.ffmpeg-blank"
+            resulting_codec:
+              blank: "codecconv.result-blank"
+        genre:
+          attributes:
+            name:
+              blank: "genre.name-blank"
+              taken: "genre.name-taken"
+        image_type:
+          attributes:
+            mimetype: 
+              blank: "image.mime-blank"
+            extension:
+              blank: "image.ext-blank"
+              taken: "image.ext-taken"
+        label:
+          attributes: 
+            name: 
+              blank: "label.name-blank"
+        location:
+          attributes:
+            path:
+              blank: "location.path-blank"
+              taken: "location.path-taken"
+        track:
+          attributes:
+            title:
+              blank: "tracks.title-blank"
+            number:
+              blank: "tracks.number-blank"
+        track_artist:
+          attributes:
+            artist:
+              blank: "ta.artist-blank"
+            name:
+              blank: "ta.name-blank"
+              taken: "ta.name-taken"
+            order:
+              blank: "ta.order-blank"
+            role:
+              blank: "ta.role-blank"
+            track:
+              blank: "ta.track-blank"
+        user:
+          attributes:
+            name:
+              blank: "user.name-blank"
+            password_digest:
+              blank: "user.password-blank"
+            permission:
+              blank: "user.permission-blank"
   auth_tokens:
     create:
-      wrong_credentials: 'Wrong credentials'
+      wrong_credentials: 'user.wrong-credentials'
+  pundit:
+    default: 'not-authorized'
