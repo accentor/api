@@ -9,5 +9,5 @@
 class Location < ApplicationRecord
   has_many :audio_files, dependent: :destroy
 
-  validates :path, uniqueness: true
+  validates :path, presence: true, uniqueness: true
 end
