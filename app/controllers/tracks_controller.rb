@@ -54,9 +54,14 @@ class TracksController < ApplicationController
     raise ActiveRecord::RecordNotFound, 'codec_conversion does not exist' if conversion.nil? && params[:codec_conversion_id].present?
 
     if conversion.present?
+      content_length = ContentLength.find_by(audio_file: audio_file, codec_conversion: conversion)
+      unless content_length.present?
+        content_length = audio_file.calc_audio_length(conversion)
+      end
       begin
         response.status = 200
         response.content_type = conversion.resulting_codec.mimetype
+        response.headers['content-length'] = content_length.length
 
         stream = audio_file.convert(conversion)
         while (bytes = stream.read(16.kilobytes))

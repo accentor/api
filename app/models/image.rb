@@ -2,8 +2,8 @@
 #
 # Table name: images
 #
-#  id            :bigint(8)        not null, primary key
-#  image_type_id :bigint(8)        not null
+#  id            :bigint           not null, primary key
+#  image_type_id :bigint           not null
 #
 
 class Image < ApplicationRecord

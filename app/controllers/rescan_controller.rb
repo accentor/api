@@ -5,7 +5,7 @@ class RescanController < ApplicationController
   end
 
   def start
-    @rescan.delay.run
+    @rescan.delay(priority: 0).run
     render :show
   end
 

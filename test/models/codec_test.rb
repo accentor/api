@@ -2,7 +2,7 @@
 #
 # Table name: codecs
 #
-#  id        :bigint(8)        not null, primary key
+#  id        :bigint           not null, primary key
 #  mimetype  :string           not null
 #  extension :string           not null
 #

@@ -2,11 +2,12 @@
 #
 # Table name: track_artists
 #
-#  id        :bigint(8)        not null, primary key
-#  track_id  :bigint(8)        not null
-#  artist_id :bigint(8)        not null
+#  id        :bigint           not null, primary key
+#  track_id  :bigint           not null
+#  artist_id :bigint           not null
 #  name      :string           not null
 #  role      :integer          not null
+#  order     :integer          not null
 #
 
 FactoryBot.define do
