@@ -2,11 +2,11 @@
 #
 # Table name: tracks
 #
-#  id             :bigint(8)        not null, primary key
+#  id             :bigint           not null, primary key
 #  title          :string           not null
 #  number         :integer          not null
-#  audio_file_id  :bigint(8)
-#  album_id       :bigint(8)        not null
+#  audio_file_id  :bigint
+#  album_id       :bigint           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  review_comment :string

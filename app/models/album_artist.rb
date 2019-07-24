@@ -2,12 +2,12 @@
 #
 # Table name: album_artists
 #
-#  id        :bigint(8)        not null, primary key
-#  album_id  :bigint(8)        not null
-#  artist_id :bigint(8)        not null
+#  id        :bigint           not null, primary key
+#  album_id  :bigint           not null
+#  artist_id :bigint           not null
 #  name      :string           not null
 #  order     :integer          not null
-#  join      :string
+#  separator :string
 #
 
 class AlbumArtist < ApplicationRecord

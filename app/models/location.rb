@@ -2,7 +2,7 @@
 #
 # Table name: locations
 #
-#  id   :bigint(8)        not null, primary key
+#  id   :bigint           not null, primary key
 #  path :string           not null
 #
 

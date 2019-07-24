@@ -2,9 +2,9 @@
 #
 # Table name: audio_files
 #
-#  id          :bigint(8)        not null, primary key
-#  location_id :bigint(8)        not null
-#  codec_id    :bigint(8)        not null
+#  id          :bigint           not null, primary key
+#  location_id :bigint           not null
+#  codec_id    :bigint           not null
 #  filename    :string           not null
 #  length      :integer          not null
 #  bitrate     :integer          not null
