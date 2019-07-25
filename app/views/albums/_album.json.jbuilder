@@ -10,7 +10,7 @@ json.album_artists do
   end
 end
 json.image((album.image.present? && album.image.image.variable?) ? rails_blob_url(album.image.image) : nil)
-json.image_500((album.image.present? && album.image.image.variable?) ? rails_representation_url(album.image.image.variant(resize: "500x500>")) : nil)
-json.image_250((album.image.present? && album.image.image.variable?) ? rails_representation_url(album.image.image.variant(resize: "250x250>")) : nil)
-json.image_100((album.image.present? && album.image.image.variable?) ? rails_representation_url(album.image.image.variant(resize: "100x100>")) : nil)
+json.image500((album.image.present? && album.image.image.variable?) ? rails_representation_url(album.image.image.variant(resize: "500x500>")) : nil)
+json.image250((album.image.present? && album.image.image.variable?) ? rails_representation_url(album.image.image.variant(resize: "250x250>")) : nil)
+json.image100((album.image.present? && album.image.image.variable?) ? rails_representation_url(album.image.image.variant(resize: "100x100>")) : nil)
 json.image_type((album.image.present? && album.image.image.variable?) ? album.image.image_type.mimetype : nil)
