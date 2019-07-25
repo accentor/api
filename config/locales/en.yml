@@ -118,5 +118,7 @@ en:
   auth_tokens:
     create:
       wrong_credentials: 'user.wrong-credentials'
+  users:
+      current_password_is_incorrect: 'user.current-password-incorrect'
   pundit:
     default: 'not-authorized'

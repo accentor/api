@@ -36,12 +36,28 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update own user' do
-    patch user_url(@user), params: {user: {password: 'new_password'}}
+    patch user_url(@user), params: {user: {name: 'new name'}}
+    assert_response 200
+  end
+
+  test 'should not update password without current password for current user' do
+    patch user_url(@user), params: {user: {password: 'new password', current_password: 'not correct'}}
+    assert_response 401
+  end
+
+  test 'should update password with current password for current user' do
+    patch user_url(@user), params: {user: {current_password: @user.password, password: 'new password'}}
+    assert_response 200
+  end
+
+  test 'should update password for other user for admin' do
+    sign_in_as(create(:admin))
+    patch user_url(@user), params: {user: {password: 'new password'}}
     assert_response 200
   end
 
   test 'should not update own permission if not admin' do
-    patch user_url(@user), params: {user: {password: 'new_password', permission: :admin}}
+    patch user_url(@user), params: {user: {permission: :admin}}
     assert_not_equal :admin, @user.permission
     assert_response 200
   end
