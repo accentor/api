@@ -1,3 +1,6 @@
 json.extract! artist, :id, :name, :review_comment, :created_at, :updated_at
 json.image artist.image.present? ? rails_blob_url(artist.image.image) : nil
+json.image_500 artist.image.present? ? rails_representation_url(artist.image.image.variant(resize: "500x500>")) : nil
+json.image_250 artist.image.present? ? rails_representation_url(artist.image.image.variant(resize: "250x250>")) : nil
+json.image_100 artist.image.present? ? rails_representation_url(artist.image.image.variant(resize: "100x100>")) : nil
 json.image_type artist.image.present? ? artist.image.image_type.mimetype : nil
