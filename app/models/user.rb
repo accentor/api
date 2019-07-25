@@ -18,7 +18,7 @@ class User < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :password_digest, presence: true
   validates :permission, presence: true
-
+  
   def moderator?
     admin? || permission == 'moderator'
   end
