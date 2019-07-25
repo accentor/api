@@ -23,11 +23,20 @@ class UsersController < ApplicationController
   end
 
   def update
+    if @user == self.current_user && params[:user][:password].present?
+      unless @user.try(:authenticate, params[:user][:current_password])
+        render json: {unauthorized: [I18n.t('users.current_password_is_incorrect')]},
+               status: :unauthorized
+        return
+      end
+    end
+
     if @user.update(permitted_attributes(@user))
       render :show, status: :ok
     else
       render json: @user.errors, status: :unprocessable_entity
     end
+
   end
 
   def destroy
