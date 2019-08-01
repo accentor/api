@@ -50,6 +50,8 @@ class AudioFile < ApplicationRecord
   end
 
   def calc_audio_length(codec_conversion)
+    existing = ContentLength.find_by(audio_file: self, codec_conversion: codec_conversion)
+    return existing if existing.present?
     parameters = codec_conversion.ffmpeg_params.split
     stdin, stdout, = Open3.popen2(
         'ffmpeg',
