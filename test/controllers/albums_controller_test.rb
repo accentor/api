@@ -138,12 +138,14 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should destroy album for moderator' do
     sign_in_as create(:moderator)
-    assert_difference('Album.count', -1) do
-      delete album_url(@album)
+    assert_difference('Image.count', -1) do
+      assert_difference('ActiveStorage::Blob.count', -1) do
+        assert_difference('Album.count', -1) do
+          delete album_url(@album)
+          perform_enqueued_jobs
+        end
+      end
     end
-
-    assert_equal 0, Image.count
-    assert_equal 0, ActiveStorage::Blob.count
 
     assert_response :no_content
   end
@@ -164,6 +166,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
       assert_difference('ActiveStorage::Blob.count', -1) do
         assert_difference('Album.count', -1) do
           post destroy_empty_albums_url
+          perform_enqueued_jobs
         end
       end
     end
