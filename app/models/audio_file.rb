@@ -52,22 +52,16 @@ class AudioFile < ApplicationRecord
   def calc_audio_length(codec_conversion)
     existing = ContentLength.find_by(audio_file: self, codec_conversion: codec_conversion)
     return existing if existing.present?
-    parameters = codec_conversion.ffmpeg_params.split
-    stdin, stdout, = Open3.popen2(
-        'ffmpeg',
-        '-i', full_path,
-        '-f', codec_conversion.resulting_codec.extension,
-        *parameters,
-        '-map_metadata', '-1',
-        '-map', 'a', '-',
-        err: [Rails.root.join('log', 'ffmpeg.log').to_s, 'a']
-    )
-    stdin.close
+
+    stdout = convert(codec_conversion)
     length = 0
     while (bytes = stdout.read(16.kilobytes))
       length += bytes.length
     end
-    ContentLength.create(audio_file: self, codec_conversion: codec_conversion, length: length)
+
+    ContentLength.find_or_create_by(audio_file: self, codec_conversion: codec_conversion) do |cl|
+      cl.length = length
+    end
   end
 
   def full_path
