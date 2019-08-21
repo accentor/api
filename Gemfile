@@ -16,11 +16,11 @@ gem 'jbuilder', '~> 2.9.1'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.13'
 
-gem 'delayed_job_active_record', '~> 4.1.4.beta1'
+gem 'delayed_job_active_record', '~> 4.1.4'
 gem 'easytag', '~> 1.0.0'
 gem 'has_scope', '~> 0.7.2'
 gem 'pundit', '~> 2.1.0'
-gem 'will_paginate', '~> 3.1.7'
+gem 'will_paginate', '~> 3.1.8'
 
 # Use ActiveStorage variant
 gem 'image_processing', '~> 1.2'
