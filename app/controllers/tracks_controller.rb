@@ -54,10 +54,8 @@ class TracksController < ApplicationController
     raise ActiveRecord::RecordNotFound, 'codec_conversion does not exist' if conversion.nil? && params[:codec_conversion_id].present?
 
     if conversion.present?
-      content_length = ContentLength.find_by(audio_file: audio_file, codec_conversion: conversion)
-      unless content_length.present?
-        content_length = audio_file.calc_audio_length(conversion)
-      end
+      # AudioFile will only do the conversion if the `ContentLength` doesn't exist yet.
+      content_length = audio_file.calc_audio_length(conversion)
       begin
         response.status = 200
         response.content_type = conversion.resulting_codec.mimetype
@@ -68,7 +66,7 @@ class TracksController < ApplicationController
           response.stream.write bytes
         end
       ensure
-        stream&.close
+        stream.close
         response.stream.close
       end
     else
