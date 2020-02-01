@@ -4,11 +4,20 @@
 #
 #  id              :bigint           not null, primary key
 #  name            :string           not null
-#  image_id        :bigint
+#  normalized_name :string           not null
+#  review_comment  :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  review_comment  :string
-#  normalized_name :string           not null
+#  image_id        :bigint
+#
+# Indexes
+#
+#  index_artists_on_image_id         (image_id) UNIQUE
+#  index_artists_on_normalized_name  (normalized_name)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (image_id => images.id)
 #
 
 FactoryBot.define do
