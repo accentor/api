@@ -2,6 +2,7 @@
 #
 #                    Prefix Verb   URI Pattern                                                                              Controller#Action
 #      destroy_empty_albums POST   /api/albums/destroy_empty(.:format)                                                      albums#destroy_empty
+#              album_tracks GET    /api/albums/:album_id/tracks(.:format)                                                   tracks#index
 #                    albums GET    /api/albums(.:format)                                                                    albums#index
 #                           POST   /api/albums(.:format)                                                                    albums#create
 #                     album GET    /api/albums/:id(.:format)                                                                albums#show
@@ -9,6 +10,8 @@
 #                           PUT    /api/albums/:id(.:format)                                                                albums#update
 #                           DELETE /api/albums/:id(.:format)                                                                albums#destroy
 #     destroy_empty_artists POST   /api/artists/destroy_empty(.:format)                                                     artists#destroy_empty
+#             artist_albums GET    /api/artists/:artist_id/albums(.:format)                                                 albums#index
+#             artist_tracks GET    /api/artists/:artist_id/tracks(.:format)                                                 tracks#index
 #                   artists GET    /api/artists(.:format)                                                                   artists#index
 #                           POST   /api/artists(.:format)                                                                   artists#create
 #                    artist GET    /api/artists/:id(.:format)                                                               artists#show

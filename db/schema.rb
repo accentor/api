@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_24_090720) do
+ActiveRecord::Schema.define(version: 2020_02_01_191707) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,9 +42,11 @@ ActiveRecord::Schema.define(version: 2019_07_24_090720) do
     t.string "name", null: false
     t.integer "order", null: false
     t.string "separator"
+    t.string "normalized_name", null: false
     t.index ["album_id", "artist_id", "name"], name: "index_album_artists_on_album_id_and_artist_id_and_name", unique: true
     t.index ["album_id"], name: "index_album_artists_on_album_id"
     t.index ["artist_id"], name: "index_album_artists_on_artist_id"
+    t.index ["normalized_name"], name: "index_album_artists_on_normalized_name"
   end
 
   create_table "album_labels", force: :cascade do |t|
@@ -65,7 +67,9 @@ ActiveRecord::Schema.define(version: 2019_07_24_090720) do
     t.string "review_comment"
     t.date "edition"
     t.string "edition_description"
+    t.string "normalized_title", null: false
     t.index ["image_id"], name: "index_albums_on_image_id", unique: true
+    t.index ["normalized_title"], name: "index_albums_on_normalized_title"
   end
 
   create_table "artists", force: :cascade do |t|
@@ -74,7 +78,9 @@ ActiveRecord::Schema.define(version: 2019_07_24_090720) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "review_comment"
+    t.string "normalized_name", null: false
     t.index ["image_id"], name: "index_artists_on_image_id", unique: true
+    t.index ["normalized_name"], name: "index_artists_on_normalized_name"
   end
 
   create_table "audio_files", force: :cascade do |t|
@@ -142,7 +148,9 @@ ActiveRecord::Schema.define(version: 2019_07_24_090720) do
 
   create_table "genres", force: :cascade do |t|
     t.string "name", null: false
+    t.string "normalized_name", null: false
     t.index ["name"], name: "index_genres_on_name", unique: true
+    t.index ["normalized_name"], name: "index_genres_on_normalized_name"
   end
 
   create_table "genres_tracks", id: false, force: :cascade do |t|
@@ -166,6 +174,8 @@ ActiveRecord::Schema.define(version: 2019_07_24_090720) do
 
   create_table "labels", force: :cascade do |t|
     t.string "name", null: false
+    t.string "normalized_name", null: false
+    t.index ["normalized_name"], name: "index_labels_on_normalized_name"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -186,7 +196,9 @@ ActiveRecord::Schema.define(version: 2019_07_24_090720) do
     t.string "name", null: false
     t.integer "role", null: false
     t.integer "order", null: false
+    t.string "normalized_name", null: false
     t.index ["artist_id"], name: "index_track_artists_on_artist_id"
+    t.index ["normalized_name"], name: "index_track_artists_on_normalized_name"
     t.index ["track_id", "artist_id", "name", "role"], name: "index_track_artists_on_track_id_and_artist_id_and_name_and_role", unique: true
     t.index ["track_id"], name: "index_track_artists_on_track_id"
   end
@@ -199,8 +211,10 @@ ActiveRecord::Schema.define(version: 2019_07_24_090720) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "review_comment"
+    t.string "normalized_title", null: false
     t.index ["album_id"], name: "index_tracks_on_album_id"
     t.index ["audio_file_id"], name: "index_tracks_on_audio_file_id", unique: true
+    t.index ["normalized_title"], name: "index_tracks_on_normalized_title"
   end
 
   create_table "users", force: :cascade do |t|

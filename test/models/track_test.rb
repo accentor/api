@@ -2,14 +2,15 @@
 #
 # Table name: tracks
 #
-#  id             :bigint           not null, primary key
-#  title          :string           not null
-#  number         :integer          not null
-#  audio_file_id  :bigint
-#  album_id       :bigint           not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  review_comment :string
+#  id               :bigint           not null, primary key
+#  title            :string           not null
+#  number           :integer          not null
+#  audio_file_id    :bigint
+#  album_id         :bigint           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  review_comment   :string
+#  normalized_title :string           not null
 #
 
 require 'test_helper'
@@ -38,5 +39,12 @@ class TrackTest < ActiveSupport::TestCase
     assert_equal [t1], Track.by_genre(g1.id).to_a
     assert_equal [t1, t2], Track.by_genre(g2.id).to_a
     assert_equal [t2], Track.by_genre(g3.id).to_a
+  end
+
+  test 'should automatically generate normalized_title' do
+    track = build(:track, title: 'ïóùåAÁ')
+    track.save
+    assert_not track.normalized_title.nil?
+    assert_equal "iouaaa", track.normalized_title
   end
 end

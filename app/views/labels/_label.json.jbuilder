@@ -1,1 +1,1 @@
-json.extract! label, :id, :name
+json.extract! label, :id, :name, :normalized_name

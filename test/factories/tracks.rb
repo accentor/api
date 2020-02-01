@@ -2,14 +2,15 @@
 #
 # Table name: tracks
 #
-#  id             :bigint           not null, primary key
-#  title          :string           not null
-#  number         :integer          not null
-#  audio_file_id  :bigint
-#  album_id       :bigint           not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  review_comment :string
+#  id               :bigint           not null, primary key
+#  title            :string           not null
+#  number           :integer          not null
+#  audio_file_id    :bigint
+#  album_id         :bigint           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  review_comment   :string
+#  normalized_title :string           not null
 #
 
 FactoryBot.define do

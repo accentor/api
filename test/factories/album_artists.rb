@@ -2,12 +2,13 @@
 #
 # Table name: album_artists
 #
-#  id        :bigint           not null, primary key
-#  album_id  :bigint           not null
-#  artist_id :bigint           not null
-#  name      :string           not null
-#  order     :integer          not null
-#  separator :string
+#  id              :bigint           not null, primary key
+#  album_id        :bigint           not null
+#  artist_id       :bigint           not null
+#  name            :string           not null
+#  order           :integer          not null
+#  separator       :string
+#  normalized_name :string           not null
 #
 
 FactoryBot.define do

@@ -2,17 +2,20 @@
 #
 # Table name: tracks
 #
-#  id             :bigint           not null, primary key
-#  title          :string           not null
-#  number         :integer          not null
-#  audio_file_id  :bigint
-#  album_id       :bigint           not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  review_comment :string
+#  id               :bigint           not null, primary key
+#  title            :string           not null
+#  number           :integer          not null
+#  audio_file_id    :bigint
+#  album_id         :bigint           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  review_comment   :string
+#  normalized_title :string           not null
 #
 
 class Track < ApplicationRecord
+  include HasNormalized
+
   belongs_to :audio_file, optional: true, dependent: :destroy
   belongs_to :album
   has_and_belongs_to_many :genres
@@ -21,6 +24,8 @@ class Track < ApplicationRecord
 
   validates :title, presence: true
   validates :number, presence: true
+
+  normalized_col_generator :title
 
   before_save :normalize_artist_order
 

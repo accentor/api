@@ -11,6 +11,7 @@
 #  review_comment      :string
 #  edition             :date
 #  edition_description :string
+#  normalized_title    :string           not null
 #
 
 FactoryBot.define do

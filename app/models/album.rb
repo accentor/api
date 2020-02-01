@@ -11,10 +11,12 @@
 #  review_comment      :string
 #  edition             :date
 #  edition_description :string
+#  normalized_title    :string           not null
 #
 
 class Album < ApplicationRecord
   include HasImage
+  include HasNormalized
 
   has_many :album_labels, dependent: :destroy
   has_many :labels, through: :album_labels, source: :label
@@ -29,6 +31,8 @@ class Album < ApplicationRecord
   validate :album_artist_separators
 
   scope :by_artist, ->(artist) {joins(:artists).where(artists: {id: artist})}
+  normalized_col_generator :title
+
   scope :by_label, ->(label) {joins(:album_labels).where(album_labels: {label_id: label})}
   scope :by_labels, ->(labels) {joins(:album_labels).where(album_labels: {label_id: labels})}
 
