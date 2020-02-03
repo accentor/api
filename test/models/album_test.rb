@@ -13,15 +13,6 @@
 #  updated_at          :datetime         not null
 #  image_id            :bigint
 #
-# Indexes
-#
-#  index_albums_on_image_id          (image_id) UNIQUE
-#  index_albums_on_normalized_title  (normalized_title)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (image_id => images.id)
-#
 
 require 'test_helper'
 

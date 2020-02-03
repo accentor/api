@@ -6,10 +6,6 @@
 #  extension :string           not null
 #  mimetype  :string           not null
 #
-# Indexes
-#
-#  index_image_types_on_extension  (extension) UNIQUE
-#
 
 FactoryBot.define do
   factory :image_type do

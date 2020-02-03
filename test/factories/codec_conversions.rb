@@ -7,15 +7,6 @@
 #  name               :string           not null
 #  resulting_codec_id :bigint           not null
 #
-# Indexes
-#
-#  index_codec_conversions_on_name                (name) UNIQUE
-#  index_codec_conversions_on_resulting_codec_id  (resulting_codec_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (resulting_codec_id => codecs.id)
-#
 
 FactoryBot.define do
   factory :codec_conversion do
