@@ -5,7 +5,8 @@ class UsersController < ApplicationController
     authorize User
     @users = apply_scopes(policy_scope(User))
                  .order(id: :asc)
-                 .paginate(page: params[:page])
+                 .paginate(page: params[:page], per_page: params[:per_page])
+    set_pagination_headers(@users)
   end
 
   def show

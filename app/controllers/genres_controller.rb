@@ -5,7 +5,8 @@ class GenresController < ApplicationController
     authorize Genre
     @genres = apply_scopes(policy_scope(Genre))
                   .order(id: :asc)
-                  .paginate(page: params[:page])
+                  .paginate(page: params[:page], per_page: params[:per_page])
+    set_pagination_headers(@genres)
   end
 
   def show

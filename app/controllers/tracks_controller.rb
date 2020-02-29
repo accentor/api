@@ -11,7 +11,8 @@ class TracksController < ApplicationController
     @tracks = apply_scopes(policy_scope(Track))
                   .includes(:track_artists, :genres, audio_file: [:location, :codec])
                   .order(id: :asc)
-                  .paginate(page: params[:page])
+                  .paginate(page: params[:page], per_page: params[:per_page])
+    set_pagination_headers(@tracks)
   end
 
   def show

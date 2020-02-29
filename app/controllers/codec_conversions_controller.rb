@@ -7,7 +7,8 @@ class CodecConversionsController < ApplicationController
     authorize CodecConversion
     @codec_conversions = apply_scopes(policy_scope(CodecConversion))
                              .order(id: :asc)
-                             .paginate(page: params[:page])
+                             .paginate(page: params[:page], per_page: params[:per_page])
+    set_pagination_headers(@codec_conversions)
   end
 
   def show

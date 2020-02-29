@@ -5,7 +5,8 @@ class CodecsController < ApplicationController
     authorize Codec
     @codecs = apply_scopes(policy_scope(Codec))
                   .order(id: :asc)
-                  .paginate(page: params[:page])
+                  .paginate(page: params[:page], per_page: params[:per_page])
+    set_pagination_headers(@codecs)
   end
 
   def show

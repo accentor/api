@@ -5,7 +5,8 @@ class LocationsController < ApplicationController
     authorize Location
     @locations = apply_scopes(policy_scope(Location))
                      .order(id: :asc)
-                     .paginate(page: params[:page])
+                     .paginate(page: params[:page], per_page: params[:per_page])
+    set_pagination_headers(@locations)
   end
 
   def show

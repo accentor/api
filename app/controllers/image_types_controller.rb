@@ -5,7 +5,8 @@ class ImageTypesController < ApplicationController
     authorize ImageType
     @image_types = apply_scopes(policy_scope(ImageType))
                        .order(id: :asc)
-                       .paginate(page: params[:page])
+                       .paginate(page: params[:page], per_page: params[:per_page])
+    set_pagination_headers(@image_types)
   end
 
   def show

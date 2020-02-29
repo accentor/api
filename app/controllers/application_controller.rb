@@ -10,6 +10,16 @@ class ApplicationController < ActionController::API
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from ActiveRecord::RecordNotFound, with: :model_not_found
 
+  protected
+
+  def set_pagination_headers(collection)
+    response.headers['x-total-entries'] = collection.total_entries
+    response.headers['x-total-pages'] = collection.total_pages
+    response.headers['x-current-page'] = collection.current_page
+    response.headers['x-per-page'] = collection.per_page
+    response.headers['x-offset'] = collection.offset
+  end
+
   private
 
   def authenticate_from_token

@@ -5,7 +5,8 @@ class AuthTokensController < ApplicationController
     authorize AuthToken
     @auth_tokens = apply_scopes(policy_scope(AuthToken))
                        .order(id: :asc)
-                       .paginate(page: params[:page])
+                       .paginate(page: params[:page], per_page: params[:per_page])
+    set_pagination_headers(@auth_tokens)
   end
 
   def show

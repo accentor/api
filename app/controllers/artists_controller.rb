@@ -6,7 +6,8 @@ class ArtistsController < ApplicationController
     @artists = apply_scopes(policy_scope(Artist))
                    .includes(image: [:image_attachment, :image_blob, :image_type])
                    .order(id: :asc)
-                   .paginate(page: params[:page])
+                   .paginate(page: params[:page], per_page: params[:per_page])
+    set_pagination_headers(@artists)
   end
 
   def show
