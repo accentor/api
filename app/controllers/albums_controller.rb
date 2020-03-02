@@ -3,6 +3,7 @@ class AlbumsController < ApplicationController
 
   has_scope :by_label, as: 'label'
   has_scope :by_labels, as: 'labels', type: :array
+  has_scope :by_artist, as: 'artist_id'
 
   def index
     authorize Album

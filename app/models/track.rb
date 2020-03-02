@@ -24,6 +24,7 @@ class Track < ApplicationRecord
 
   before_save :normalize_artist_order
 
+  scope :by_artist, ->(artist) {joins(:artists).where(artists: {id: artist})}
   scope :by_album, ->(album) {where(album: album)}
   scope :by_genre, ->(genre) {joins(:genres).where(genres: {id: genre})}
 
@@ -38,7 +39,7 @@ class Track < ApplicationRecord
   private
 
   def normalize_artist_order
-    track_artists.sort do |ta1, ta2| 
+    track_artists.sort do |ta1, ta2|
       return ta1.order <=> ta2.order unless (ta1.order <=> ta2.order).nil?
       if ta1.order.present?
         1

@@ -88,11 +88,14 @@ Rails.application.routes.draw do
       collection do
         post 'destroy_empty'
       end
+      resources :tracks, only: [:index]
     end
     resources :artists do
       collection do
         post 'destroy_empty'
       end
+      resources :albums, only: [:index]
+      resources :tracks, only: [:index]
     end
     resources :auth_tokens, only: %i[index show create destroy]
     resources :codecs

@@ -4,6 +4,7 @@ class TracksController < ApplicationController
   before_action :set_track, only: %i[show update destroy audio merge]
 
   has_scope :by_album, as: 'album_id'
+  has_scope :by_artist, as: 'artist_id'
   has_scope :by_genre, as: 'genre_id'
 
   def index
