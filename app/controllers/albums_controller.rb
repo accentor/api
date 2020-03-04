@@ -7,10 +7,26 @@ class AlbumsController < ApplicationController
 
   def index
     authorize Album
-    @albums = apply_scopes(policy_scope(Album))
-                  .includes(:album_artists, :album_labels, image: [:image_attachment, :image_blob, :image_type])
-                  .order(id: :asc)
-                  .paginate(page: params[:page], per_page: params[:per_page])
+    unsorted_albums = apply_scopes(policy_scope(Album))
+      .includes(:album_artists, :album_labels, image: [:image_attachment, :image_blob, :image_type])
+    sort_direction = %w(asc desc).include?(params[:sort_direction]) ? params[:sort_direction].to_sym : nil
+    sorted_albums = case params[:sort_key]
+                    when "title"
+                      unsorted_albums
+                        .order(normalized_title: sort_direction || :asc)
+                        .order(id: :asc)
+                    when "added"
+                      unsorted_albums
+                        .order(created_at: sort_direction || :desc)
+                        .order(id: :asc)
+                    when "released"
+                      unsorted_albums
+                        .order(release: sort_direction || :desc)
+                        .order(id: :asc)
+                    else
+                      unsorted_albums.order(id: sort_direction || :asc)
+                    end
+    @albums = sorted_albums.paginate(page: params[:page], per_page: params[:per_page])
     set_pagination_headers(@albums)
   end
 

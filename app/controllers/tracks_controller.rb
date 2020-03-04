@@ -3,16 +3,39 @@ class TracksController < ApplicationController
 
   before_action :set_track, only: %i[show update destroy audio merge]
 
+  has_scope :by_filter, as: 'filter'
   has_scope :by_album, as: 'album_id'
   has_scope :by_artist, as: 'artist_id'
   has_scope :by_genre, as: 'genre_id'
 
   def index
     authorize Track
-    @tracks = apply_scopes(policy_scope(Track))
-                  .includes(:track_artists, :genres, audio_file: [:location, :codec])
-                  .order(id: :asc)
-                  .paginate(page: params[:page], per_page: params[:per_page])
+    unsorted_tracks = apply_scopes(policy_scope(Track)).includes(:track_artists, :genres, audio_file: [:location, :codec])
+    sort_direction = %w(asc desc).include?(params[:sort_direction]) ? params[:sort_direction].to_sym : nil
+    sorted_tracks = case params[:sort_key]
+                    when "album_title"
+                      unsorted_tracks.joins(:album)
+                        .order('albums.normalized_title': sort_direction || :asc)
+                        .order('albums.id': :asc)
+                        .order(number: :asc)
+                        .order(id: :asc)
+                    when "album_added"
+                      unsorted_tracks.joins(:album)
+                        .order('albums.created_at': sort_direction || :desc)
+                        .order('albums.id': :asc)
+                        .order(number: :asc)
+                        .order(id: :asc)
+                    when "album_released"
+                      unsorted_tracks.joins(:album)
+                        .order('albums.release': sort_direction || :asc)
+                        .order('albums.id': :asc)
+                        .order(number: :asc)
+                        .order(id: :asc)
+                    else
+                      unsorted_tracks.order(id: sort_direction || :asc)
+                    end
+
+    @tracks = sorted_tracks.paginate(page: params[:page], per_page: params[:per_page])
     set_pagination_headers(@tracks)
   end
 
