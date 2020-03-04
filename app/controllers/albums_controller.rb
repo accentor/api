@@ -1,6 +1,7 @@
 class AlbumsController < ApplicationController
   before_action :set_album, only: [:show, :update, :destroy]
 
+  has_scope :by_filter, as: 'filter'
   has_scope :by_label, as: 'label'
   has_scope :by_labels, as: 'labels', type: :array
   has_scope :by_artist, as: 'artist_id'

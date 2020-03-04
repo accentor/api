@@ -30,9 +30,10 @@ class Album < ApplicationRecord
   validates :title, presence: true
   validate :album_artist_separators
 
-  scope :by_artist, ->(artist) {joins(:artists).where(artists: {id: artist})}
   normalized_col_generator :title
 
+  scope :by_filter, ->(filter) {where("normalized_title LIKE ?", "%#{Album.normalize(filter)}%")}
+  scope :by_artist, ->(artist) {joins(:artists).where(artists: {id: artist})}
   scope :by_label, ->(label) {joins(:album_labels).where(album_labels: {label_id: label})}
   scope :by_labels, ->(labels) {joins(:album_labels).where(album_labels: {label_id: labels})}
 

@@ -1,6 +1,8 @@
 class ArtistsController < ApplicationController
   before_action :set_artist, only: [:show, :update, :destroy]
 
+  has_scope :by_filter, as: 'filter'
+
   def index
     authorize Artist
     unsorted_artists = apply_scopes(policy_scope(Artist)).includes(image: [:image_attachment, :image_blob, :image_type])

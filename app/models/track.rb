@@ -29,6 +29,7 @@ class Track < ApplicationRecord
 
   before_save :normalize_artist_order
 
+  scope :by_filter, ->(filter) {where("normalized_title LIKE ?", "%#{Track.normalize(filter)}%")}
   scope :by_artist, ->(artist) {joins(:artists).where(artists: {id: artist})}
   scope :by_album, ->(album) {where(album: album)}
   scope :by_genre, ->(genre) {joins(:genres).where(genres: {id: genre})}
