@@ -18,6 +18,7 @@ class ApplicationController < ActionController::API
     response.headers['x-current-page'] = collection.current_page
     response.headers['x-per-page'] = collection.per_page
     response.headers['x-offset'] = collection.offset
+    response.headers['Access-Control-Expose-Headers'] = 'x-total-entries, x-total-pages, x-current-page, x-per-page, x-offset'
   end
 
   private
