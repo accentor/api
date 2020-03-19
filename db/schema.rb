@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_01_191707) do
+ActiveRecord::Schema.define(version: 2020_03_18_125903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2020_02_01_191707) do
   create_table "album_labels", force: :cascade do |t|
     t.bigint "album_id", null: false
     t.bigint "label_id", null: false
-    t.string "catalogue_number", null: false
+    t.string "catalogue_number"
     t.index ["album_id", "label_id"], name: "index_album_labels_on_album_id_and_label_id", unique: true
     t.index ["album_id"], name: "index_album_labels_on_album_id"
     t.index ["label_id"], name: "index_album_labels_on_label_id"
