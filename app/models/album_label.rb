@@ -12,6 +12,5 @@ class AlbumLabel < ApplicationRecord
   belongs_to :album
   belongs_to :label
 
-  validates :catalogue_number, presence: true
   validates :album, uniqueness: {scope: :label}
 end
