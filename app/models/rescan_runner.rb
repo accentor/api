@@ -3,10 +3,10 @@
 # Table name: rescan_runners
 #
 #  id           :bigint           not null, primary key
-#  warning_text :text
 #  error_text   :text
-#  processed    :integer          default(0), not null
-#  running      :boolean          default(FALSE), not null
+#  processed    :integer          default("0"), not null
+#  running      :boolean          default("false"), not null
+#  warning_text :text
 #
 
 class RescanRunner < ApplicationRecord
