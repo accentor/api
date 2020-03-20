@@ -42,10 +42,11 @@ class ApplicationController < ActionController::API
   def user_not_authorized(exc)
     policy_name = exc.policy.class.to_s.underscore
 
-    render json: { unauthorized: [I18n.t("#{policy_name}.#{exc.query}",
-                                         scope: 'pundit',
-                                         default: :default)] },
-           status: :unauthorized
+    status = current_user.present? ? :forbidden : :unauthorized
+    render json: { status => [I18n.t("#{policy_name}.#{exc.query}",
+                                     scope: 'pundit',
+                                     default: :default)] },
+           status: status
   end
 
   def model_not_found(exc)
