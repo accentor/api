@@ -47,5 +47,4 @@ class UserPolicy < ApplicationPolicy
       %i[name password password_confirmation]
     end
   end
-
 end

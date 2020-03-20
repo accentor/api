@@ -22,11 +22,11 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
   test 'should not create codec_conversion for user' do
     codec_conversion = build(:codec_conversion)
     assert_difference('CodecConversion.count', 0) do
-      post codec_conversions_url, params: {codec_conversion: {
-          ffmpeg_params: codec_conversion.ffmpeg_params,
-          name: codec_conversion.name,
-          resulting_codec_id: codec_conversion.resulting_codec_id
-      }}
+      post codec_conversions_url, params: { codec_conversion: {
+        ffmpeg_params: codec_conversion.ffmpeg_params,
+        name: codec_conversion.name,
+        resulting_codec_id: codec_conversion.resulting_codec_id
+      } }
     end
 
     assert_response :unauthorized
@@ -36,11 +36,11 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:moderator))
     codec_conversion = build(:codec_conversion, resulting_codec: create(:codec))
     assert_difference('CodecConversion.count', 1) do
-      post codec_conversions_url, params: {codec_conversion: {
-          ffmpeg_params: codec_conversion.ffmpeg_params,
-          name: codec_conversion.name,
-          resulting_codec_id: codec_conversion.resulting_codec_id
-      }}
+      post codec_conversions_url, params: { codec_conversion: {
+        ffmpeg_params: codec_conversion.ffmpeg_params,
+        name: codec_conversion.name,
+        resulting_codec_id: codec_conversion.resulting_codec_id
+      } }
     end
 
     assert_response :created
@@ -50,11 +50,11 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:admin))
     codec_conversion = build(:codec_conversion, resulting_codec: create(:codec))
     assert_difference('CodecConversion.count', 1) do
-      post codec_conversions_url, params: {codec_conversion: {
-          ffmpeg_params: codec_conversion.ffmpeg_params,
-          name: codec_conversion.name,
-          resulting_codec_id: codec_conversion.resulting_codec_id
-      }}
+      post codec_conversions_url, params: { codec_conversion: {
+        ffmpeg_params: codec_conversion.ffmpeg_params,
+        name: codec_conversion.name,
+        resulting_codec_id: codec_conversion.resulting_codec_id
+      } }
     end
 
     assert_response :created
@@ -66,31 +66,31 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not update codec_conversion for user' do
-    patch codec_conversion_url(@codec_conversion), params: {codec_conversion: {
-        ffmpeg_params: @codec_conversion.ffmpeg_params,
-        name: @codec_conversion.name,
-        resulting_codec_id: @codec_conversion.resulting_codec_id
-    }}
+    patch codec_conversion_url(@codec_conversion), params: { codec_conversion: {
+      ffmpeg_params: @codec_conversion.ffmpeg_params,
+      name: @codec_conversion.name,
+      resulting_codec_id: @codec_conversion.resulting_codec_id
+    } }
     assert_response :unauthorized
   end
 
   test 'should update codec_conversion for moderator' do
     sign_in_as(create(:moderator))
-    patch codec_conversion_url(@codec_conversion), params: {codec_conversion: {
-        ffmpeg_params: @codec_conversion.ffmpeg_params,
-        name: @codec_conversion.name,
-        resulting_codec_id: @codec_conversion.resulting_codec_id
-    }}
+    patch codec_conversion_url(@codec_conversion), params: { codec_conversion: {
+      ffmpeg_params: @codec_conversion.ffmpeg_params,
+      name: @codec_conversion.name,
+      resulting_codec_id: @codec_conversion.resulting_codec_id
+    } }
     assert_response :success
   end
 
   test 'should update codec_conversion for admin' do
     sign_in_as(create(:admin))
-    patch codec_conversion_url(@codec_conversion), params: {codec_conversion: {
-        ffmpeg_params: @codec_conversion.ffmpeg_params,
-        name: @codec_conversion.name,
-        resulting_codec_id: @codec_conversion.resulting_codec_id
-    }}
+    patch codec_conversion_url(@codec_conversion), params: { codec_conversion: {
+      ffmpeg_params: @codec_conversion.ffmpeg_params,
+      name: @codec_conversion.name,
+      resulting_codec_id: @codec_conversion.resulting_codec_id
+    } }
     assert_response :success
   end
 

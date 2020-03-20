@@ -14,7 +14,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
   test 'should not create codec for user' do
     codec = build(:codec)
     assert_difference('Codec.count', 0) do
-      post codecs_url, params: {codec: {extension: codec.extension, mimetype: codec.mimetype}}
+      post codecs_url, params: { codec: { extension: codec.extension, mimetype: codec.mimetype } }
     end
 
     assert_response 401
@@ -24,7 +24,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:moderator))
     codec = build(:codec)
     assert_difference('Codec.count', 1) do
-      post codecs_url, params: {codec: {extension: codec.extension, mimetype: codec.mimetype}}
+      post codecs_url, params: { codec: { extension: codec.extension, mimetype: codec.mimetype } }
     end
 
     assert_response 201
@@ -34,7 +34,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:admin))
     codec = build(:codec)
     assert_difference('Codec.count', 1) do
-      post codecs_url, params: {codec: {extension: codec.extension, mimetype: codec.mimetype}}
+      post codecs_url, params: { codec: { extension: codec.extension, mimetype: codec.mimetype } }
     end
 
     assert_response 201
@@ -46,19 +46,19 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not update codec for user' do
-    patch codec_url(@codec), params: {codec: {mimetype: @codec.mimetype}}
+    patch codec_url(@codec), params: { codec: { mimetype: @codec.mimetype } }
     assert_response 401
   end
 
   test 'should update codec for moderator' do
     sign_in_as(create(:moderator))
-    patch codec_url(@codec), params: {codec: {extension: @codec.extension, mimetype: @codec.mimetype}}
+    patch codec_url(@codec), params: { codec: { extension: @codec.extension, mimetype: @codec.mimetype } }
     assert_response 200
   end
 
   test 'should update codec for admin' do
     sign_in_as(create(:admin))
-    patch codec_url(@codec), params: {codec: {extension: @codec.extension, mimetype: @codec.mimetype}}
+    patch codec_url(@codec), params: { codec: { extension: @codec.extension, mimetype: @codec.mimetype } }
     assert_response 200
   end
 

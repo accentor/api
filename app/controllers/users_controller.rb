@@ -1,16 +1,15 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: %i[show update destroy]
 
   def index
     authorize User
     @users = apply_scopes(policy_scope(User))
-                 .order(id: :asc)
-                 .paginate(page: params[:page], per_page: params[:per_page])
-    set_pagination_headers(@users)
+             .order(id: :asc)
+             .paginate(page: params[:page], per_page: params[:per_page])
+    add_pagination_headers(@users)
   end
 
-  def show
-  end
+  def show; end
 
   def create
     authorize User
@@ -24,9 +23,9 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user == self.current_user && params[:user][:password].present?
+    if @user == current_user && params[:user][:password].present?
       unless @user.try(:authenticate, params[:user][:current_password])
-        render json: {unauthorized: [I18n.t('users.current_password_is_incorrect')]},
+        render json: { unauthorized: [I18n.t('users.current_password_is_incorrect')] },
                status: :unauthorized
         return
       end
@@ -37,13 +36,10 @@ class UsersController < ApplicationController
     else
       render json: @user.errors, status: :unprocessable_entity
     end
-
   end
 
   def destroy
-    unless @user.destroy
-      render json: @user.errors, status: :unprocessable_entity
-    end
+    render json: @user.errors, status: :unprocessable_entity unless @user.destroy
   end
 
   private
@@ -52,5 +48,4 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     authorize @user
   end
-
 end

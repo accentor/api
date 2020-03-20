@@ -1,16 +1,15 @@
 class LabelsController < ApplicationController
-  before_action :set_label, only: [:show, :update, :destroy]
+  before_action :set_label, only: %i[show update destroy]
 
   def index
     authorize Label
     @labels = apply_scopes(policy_scope(Label))
-                  .order(id: :asc)
-                  .paginate(page: params[:page], per_page: params[:per_page])
-    set_pagination_headers(@labels)
+              .order(id: :asc)
+              .paginate(page: params[:page], per_page: params[:per_page])
+    add_pagination_headers(@labels)
   end
 
-  def show
-  end
+  def show; end
 
   def create
     authorize Label
@@ -32,9 +31,7 @@ class LabelsController < ApplicationController
   end
 
   def destroy
-    unless @label.destroy
-      render json: @label.errors, status: :unprocessable_entity
-    end
+    render json: @label.errors, status: :unprocessable_entity unless @label.destroy
   end
 
   def destroy_empty

@@ -13,7 +13,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not create album for user' do
     assert_difference('Album.count', 0) do
-      post albums_url, params: {album: {release: @album.release, title: @album.title}}
+      post albums_url, params: { album: { release: @album.release, title: @album.title } }
     end
 
     assert_response :unauthorized
@@ -24,21 +24,21 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     album = build :album, :with_release
 
     image = {
-        data: Base64.encode64(File.read(Rails.root.join('test', 'files', 'image.jpg'))),
-        filename: 'image.jpg',
-        mimetype: 'image/jpeg'
+      data: Base64.encode64(File.read(Rails.root.join('test/files/image.jpg'))),
+      filename: 'image.jpg',
+      mimetype: 'image/jpeg'
     }
 
     assert_difference('Album.count', 1) do
-      post albums_url, params: {album: {
-          release: album.release,
-          title: album.title,
-          image: image
-      }}
+      post albums_url, params: { album: {
+        release: album.release,
+        title: album.title,
+        image: image
+      } }
     end
 
-    assert_equal File.read(Rails.root.join('test', 'files', 'image.jpg')).bytes,
-                 Album.find(JSON.parse(@response.body)["id"]).image.image.download.bytes
+    assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
+                 Album.find(JSON.parse(@response.body)['id']).image.image.download.bytes
 
     assert_response :created
   end
@@ -47,21 +47,23 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as create(:moderator)
     album = build :album, :with_release
 
-    album_labels = (1..5).map {|_| {
+    album_labels = (1..5).map do |_|
+      {
         label_id: create(:label).id,
         catalogue_number: Faker::Lorem.word
-    }}
+      }
+    end
 
     assert_difference('Album.count', 1) do
-      post albums_url, params: {album: {
-          release: album.release,
-          title: album.title,
-          album_labels: album_labels
-      }}
+      post albums_url, params: { album: {
+        release: album.release,
+        title: album.title,
+        album_labels: album_labels
+      } }
     end
 
     assert_equal album_labels.count,
-                 Album.find(JSON.parse(@response.body)["id"]).album_labels.count
+                 Album.find(JSON.parse(@response.body)['id']).album_labels.count
 
     assert_response :created
   end
@@ -72,20 +74,20 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update review comment for user' do
-    patch album_url(@album), params: {album: {:review_comment => "comment"}}
+    patch album_url(@album), params: { album: { review_comment: 'comment' } }
     @album.reload
-    assert_equal "comment", @album.review_comment
+    assert_equal 'comment', @album.review_comment
   end
 
   test 'should not update album metadata for user' do
-    patch album_url(@album), params: {album: {release: @album.release, title: "Titel"}}
+    patch album_url(@album), params: { album: { release: @album.release, title: 'Titel' } }
     @album.reload
-    assert_not_equal "Titel", @album.review_comment
+    assert_not_equal 'Titel', @album.review_comment
   end
 
   test 'should clear review comment' do
-    @album.update(review_comment: "test")
-    patch album_url(@album), params: {album: {:review_comment => nil}}
+    @album.update(review_comment: 'test')
+    patch album_url(@album), params: { album: { review_comment: nil } }
     @album.reload
     assert_nil @album.review_comment
   end
@@ -95,14 +97,14 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     album = create :album, :with_release
 
     image = {
-        data: Base64.encode64(File.read(Rails.root.join('test', 'files', 'image.jpg'))),
-        filename: 'image.jpg',
-        mimetype: 'image/jpeg'
+      data: Base64.encode64(File.read(Rails.root.join('test/files/image.jpg'))),
+      filename: 'image.jpg',
+      mimetype: 'image/jpeg'
     }
 
-    patch album_url(album), params: {album: {image: image}}
+    patch album_url(album), params: { album: { image: image } }
 
-    assert_equal File.read(Rails.root.join('test', 'files', 'image.jpg')).bytes,
+    assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
                  Album.find(album.id).image.image.download.bytes
 
     assert_response :success
@@ -113,16 +115,16 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     album = create :album, :with_release, :with_image
 
     image = {
-        data: Base64.encode64(File.read(Rails.root.join('test', 'files', 'image.jpg'))),
-        filename: 'image.jpg',
-        mimetype: 'image/jpeg'
+      data: Base64.encode64(File.read(Rails.root.join('test/files/image.jpg'))),
+      filename: 'image.jpg',
+      mimetype: 'image/jpeg'
     }
 
     assert_difference('Image.count', 0) do
-      patch album_url(album), params: {album: {image: image}}
+      patch album_url(album), params: { album: { image: image } }
     end
 
-    assert_equal File.read(Rails.root.join('test', 'files', 'image.jpg')).bytes,
+    assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
                  Album.find(album.id).image.image.download.bytes
 
     assert_response :success

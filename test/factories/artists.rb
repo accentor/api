@@ -13,8 +13,8 @@
 
 FactoryBot.define do
   factory :artist do
-    name {Faker::Artist.name}
-    review_comment {Faker::Lorem.word}
+    name { Faker::Artist.name }
+    review_comment { Faker::Lorem.word }
 
     trait :with_image do
       association :image, factory: :image

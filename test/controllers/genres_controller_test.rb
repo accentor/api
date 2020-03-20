@@ -14,7 +14,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
   test 'should not create genre for user' do
     genre = build(:genre)
     assert_difference('Genre.count', 0) do
-      post genres_url, params: {genre: {name: genre.name}}
+      post genres_url, params: { genre: { name: genre.name } }
     end
 
     assert_response :unauthorized
@@ -24,7 +24,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:moderator))
     genre = build(:genre)
     assert_difference('Genre.count', 1) do
-      post genres_url, params: {genre: {name: genre.name}}
+      post genres_url, params: { genre: { name: genre.name } }
     end
 
     assert_response :created
@@ -34,7 +34,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:admin))
     genre = build(:genre)
     assert_difference('Genre.count', 1) do
-      post genres_url, params: {genre: {name: genre.name}}
+      post genres_url, params: { genre: { name: genre.name } }
     end
 
     assert_response :created
@@ -46,19 +46,19 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not update genre for user' do
-    patch genre_url(@genre), params: {genre: {name: @genre.name}}
+    patch genre_url(@genre), params: { genre: { name: @genre.name } }
     assert_response 401
   end
 
   test 'should update genre for moderator' do
     sign_in_as(create(:moderator))
-    patch genre_url(@genre), params: {genre: {name: @genre.name}}
+    patch genre_url(@genre), params: { genre: { name: @genre.name } }
     assert_response 200
   end
 
   test 'should update genre for admin' do
     sign_in_as(create(:admin))
-    patch genre_url(@genre), params: {genre: {name: @genre.name}}
+    patch genre_url(@genre), params: { genre: { name: @genre.name } }
     assert_response 200
   end
 

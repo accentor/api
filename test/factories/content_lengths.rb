@@ -12,6 +12,6 @@ FactoryBot.define do
   factory :content_length do
     audio_file
     codec_conversion
-    length {1000}
+    length { 1000 }
   end
 end

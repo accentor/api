@@ -41,11 +41,10 @@ class CodecPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    [:mimetype, :extension]
+    %i[mimetype extension]
   end
 
   def permitted_attributes_for_update
     [:mimetype]
   end
-
 end

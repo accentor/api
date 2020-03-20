@@ -26,7 +26,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
   test 'should not create location for user' do
     location = build :location
     assert_difference('Location.count', 0) do
-      post locations_url, params: {location: {path: location.path}}
+      post locations_url, params: { location: { path: location.path } }
     end
 
     assert_response :unauthorized
@@ -36,7 +36,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as create(:moderator)
     location = build :location
     assert_difference('Location.count', 1) do
-      post locations_url, params: {location: {path: location.path}}
+      post locations_url, params: { location: { path: location.path } }
     end
 
     assert_response :created
@@ -46,7 +46,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as create(:admin)
     location = build :location
     assert_difference('Location.count', 1) do
-      post locations_url, params: {location: {path: location.path}}
+      post locations_url, params: { location: { path: location.path } }
     end
 
     assert_response :created

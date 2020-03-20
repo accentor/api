@@ -14,7 +14,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
   test 'should not create label for user' do
     label = build(:label)
     assert_difference('Label.count', 0) do
-      post labels_url, params: {label: {name: label.name}}
+      post labels_url, params: { label: { name: label.name } }
     end
 
     assert_response :unauthorized
@@ -24,7 +24,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:moderator))
     label = build(:label)
     assert_difference('Label.count', 1) do
-      post labels_url, params: {label: {name: label.name}}
+      post labels_url, params: { label: { name: label.name } }
     end
 
     assert_response :created
@@ -34,7 +34,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:admin))
     label = build(:label)
     assert_difference('Label.count', 1) do
-      post labels_url, params: {label: {name: label.name}}
+      post labels_url, params: { label: { name: label.name } }
     end
 
     assert_response :created
@@ -46,19 +46,19 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not update label for user' do
-    patch label_url(@label), params: {label: {name: @label.name}}
+    patch label_url(@label), params: { label: { name: @label.name } }
     assert_response 401
   end
 
   test 'should update label for moderator' do
     sign_in_as(create(:moderator))
-    patch label_url(@label), params: {label: {name: @label.name}}
+    patch label_url(@label), params: { label: { name: @label.name } }
     assert_response 200
   end
 
   test 'should update label for admin' do
     sign_in_as(create(:admin))
-    patch label_url(@label), params: {label: {name: @label.name}}
+    patch label_url(@label), params: { label: { name: @label.name } }
     assert_response 200
   end
 

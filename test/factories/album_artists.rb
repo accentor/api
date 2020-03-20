@@ -15,8 +15,8 @@ FactoryBot.define do
   factory :album_artist do
     album
     artist
-    separator {" / "}
-    order {1}
-    name {Faker::Music.band}
+    separator { ' / ' }
+    order { 1 }
+    name { Faker::Music.band }
   end
 end

@@ -1,16 +1,15 @@
 class LocationsController < ApplicationController
-  before_action :set_location, only: [:show, :destroy]
+  before_action :set_location, only: %i[show destroy]
 
   def index
     authorize Location
     @locations = apply_scopes(policy_scope(Location))
-                     .order(id: :asc)
-                     .paginate(page: params[:page], per_page: params[:per_page])
-    set_pagination_headers(@locations)
+                 .order(id: :asc)
+                 .paginate(page: params[:page], per_page: params[:per_page])
+    add_pagination_headers(@locations)
   end
 
-  def show
-  end
+  def show; end
 
   def create
     authorize Location
@@ -24,9 +23,7 @@ class LocationsController < ApplicationController
   end
 
   def destroy
-    unless @location.destroy
-      render json: @location.errors, status: :unprocessable_entity
-    end
+    render json: @location.errors, status: :unprocessable_entity unless @location.destroy
   end
 
   private

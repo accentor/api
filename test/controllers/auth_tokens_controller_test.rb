@@ -14,9 +14,9 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
   test 'should create auth_token' do
     assert_difference('AuthToken.count', 1) do
       post auth_tokens_url, params: {
-          name: @user.name,
-          password: @user.password,
-          auth_token: {user_agent: 'Rails Test'}
+        name: @user.name,
+        password: @user.password,
+        auth_token: { user_agent: 'Rails Test' }
       }
     end
 
@@ -26,9 +26,9 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
   test 'should not create auth_token with wrong credentials' do
     assert_difference('AuthToken.count', 0) do
       post auth_tokens_url, params: {
-          name: @user.name,
-          password: @user.password + 'a',
-          auth_token: {user_agent: 'Rails Test'}
+        name: @user.name,
+        password: @user.password + 'a',
+        auth_token: { user_agent: 'Rails Test' }
       }
     end
 
@@ -38,8 +38,8 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
   test 'should not create auth_token without user_agent' do
     assert_difference('AuthToken.count', 0) do
       post auth_tokens_url, params: {
-          name: @user.name,
-          password: @user.password
+        name: @user.name,
+        password: @user.password
       }
     end
 

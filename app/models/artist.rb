@@ -15,7 +15,7 @@ class Artist < ApplicationRecord
   include HasImage
   include HasNormalized
 
-  belongs_to :image, required: false, dependent: :destroy
+  belongs_to :image, optional: true, dependent: :destroy
   has_many :track_artists, dependent: :destroy
   has_many :tracks, through: :track_artists, source: :track
   has_many :album_artists, dependent: :destroy
@@ -25,5 +25,5 @@ class Artist < ApplicationRecord
 
   normalized_col_generator :name
 
-  scope :by_filter, ->(filter) {where("normalized_name LIKE ?", "%#{Artist.normalize(filter)}%")}
+  scope :by_filter, ->(filter) { where('normalized_name LIKE ?', "%#{Artist.normalize(filter)}%") }
 end

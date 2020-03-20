@@ -1,16 +1,15 @@
 class GenresController < ApplicationController
-  before_action :set_genre, only: [:show, :update, :destroy]
+  before_action :set_genre, only: %i[show update destroy]
 
   def index
     authorize Genre
     @genres = apply_scopes(policy_scope(Genre))
-                  .order(id: :asc)
-                  .paginate(page: params[:page], per_page: params[:per_page])
-    set_pagination_headers(@genres)
+              .order(id: :asc)
+              .paginate(page: params[:page], per_page: params[:per_page])
+    add_pagination_headers(@genres)
   end
 
-  def show
-  end
+  def show; end
 
   def create
     authorize Genre
@@ -32,14 +31,12 @@ class GenresController < ApplicationController
   end
 
   def destroy
-    unless @genre.destroy
-      render json: @genre.errors, status: :unprocessable_entity
-    end
+    render json: @genre.errors, status: :unprocessable_entity unless @genre.destroy
   end
 
   def destroy_empty
     authorize Genre
-    Genre.left_outer_joins(:tracks).where(tracks: {id: nil}).destroy_all
+    Genre.left_outer_joins(:tracks).where(tracks: { id: nil }).destroy_all
   end
 
   private

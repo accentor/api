@@ -1,7 +1,7 @@
 json.extract! track, :id, :title, :normalized_title, :number, :album_id, :review_comment, :created_at, :updated_at
 json.genre_ids track.genre_ids
 json.track_artists do
-  json.array! track.track_artists do  |track_artist|
+  json.array! track.track_artists do |track_artist|
     json.extract! track_artist, :artist_id, :name, :normalized_name, :role, :order
   end
 end

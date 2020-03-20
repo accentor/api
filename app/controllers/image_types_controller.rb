@@ -1,16 +1,15 @@
 class ImageTypesController < ApplicationController
-  before_action :set_image_type, only: [:show, :update, :destroy]
+  before_action :set_image_type, only: %i[show update destroy]
 
   def index
     authorize ImageType
     @image_types = apply_scopes(policy_scope(ImageType))
-                       .order(id: :asc)
-                       .paginate(page: params[:page], per_page: params[:per_page])
-    set_pagination_headers(@image_types)
+                   .order(id: :asc)
+                   .paginate(page: params[:page], per_page: params[:per_page])
+    add_pagination_headers(@image_types)
   end
 
-  def show
-  end
+  def show; end
 
   def create
     authorize ImageType
@@ -32,9 +31,7 @@ class ImageTypesController < ApplicationController
   end
 
   def destroy
-    unless @image_type.destroy
-      render json: @image_type.errors, status: :unprocessable_entity
-    end
+    render json: @image_type.errors, status: :unprocessable_entity unless @image_type.destroy
   end
 
   private
@@ -43,5 +40,4 @@ class ImageTypesController < ApplicationController
     @image_type = ImageType.find(params[:id])
     authorize @image_type
   end
-
 end

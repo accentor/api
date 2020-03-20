@@ -16,7 +16,7 @@ class CodecConversion < ApplicationRecord
   validates :ffmpeg_params, presence: true
   validates :resulting_codec, presence: true
 
-  scope :by_codec, ->(codec) {where(resulting_codec: codec)}
+  scope :by_codec, ->(codec) { where(resulting_codec: codec) }
 
   after_save :queue_content_length_calculations
 

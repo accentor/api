@@ -20,16 +20,15 @@ class AudioFile < ApplicationRecord
 
   validates :location, presence: true
   validates :codec, presence: true
-  validates :filename, presence: true, uniqueness: {scope: :location}
+  validates :filename, presence: true, uniqueness: { scope: :location }
   validates :length, presence: true
   validates :bitrate, presence: true
 
   after_save :queue_content_length_calculations
 
   def check_self
-    if File.exist?(File.join(location.path, filename))
-      return true
-    end
+    return true if File.exist?(File.join(location.path, filename))
+
     destroy
     false
   end
@@ -37,13 +36,13 @@ class AudioFile < ApplicationRecord
   def convert(codec_conversion)
     parameters = codec_conversion.ffmpeg_params.split
     stdin, stdout, = Open3.popen2(
-        'ffmpeg',
-        '-i', full_path,
-        '-f', codec_conversion.resulting_codec.extension,
-        *parameters,
-        '-map_metadata', '-1',
-        '-map', 'a', '-',
-        err: [Rails.root.join('log', 'ffmpeg.log').to_s, 'a']
+      'ffmpeg',
+      '-i', full_path,
+      '-f', codec_conversion.resulting_codec.extension,
+      *parameters,
+      '-map_metadata', '-1',
+      '-map', 'a', '-',
+      err: [Rails.root.join('log/ffmpeg.log').to_s, 'a']
     )
     stdin.close
     stdout

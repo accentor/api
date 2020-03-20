@@ -10,37 +10,36 @@ class TracksController < ApplicationController
 
   def index
     authorize Track
-    unsorted_tracks = apply_scopes(policy_scope(Track)).includes(:track_artists, :genres, audio_file: [:location, :codec])
-    sort_direction = %w(asc desc).include?(params[:sort_direction]) ? params[:sort_direction].to_sym : nil
+    unsorted_tracks = apply_scopes(policy_scope(Track)).includes(:track_artists, :genres, audio_file: %i[location codec])
+    sort_direction = %w[asc desc].include?(params[:sort_direction]) ? params[:sort_direction].to_sym : nil
     sorted_tracks = case params[:sort_key]
-                    when "album_title"
+                    when 'album_title'
                       unsorted_tracks.joins(:album)
-                        .order('albums.normalized_title': sort_direction || :asc)
-                        .order('albums.id': :asc)
-                        .order(number: :asc)
-                        .order(id: :asc)
-                    when "album_added"
+                                     .order('albums.normalized_title': sort_direction || :asc)
+                                     .order('albums.id': :asc)
+                                     .order(number: :asc)
+                                     .order(id: :asc)
+                    when 'album_added'
                       unsorted_tracks.joins(:album)
-                        .order('albums.created_at': sort_direction || :desc)
-                        .order('albums.id': :asc)
-                        .order(number: :asc)
-                        .order(id: :asc)
-                    when "album_released"
+                                     .order('albums.created_at': sort_direction || :desc)
+                                     .order('albums.id': :asc)
+                                     .order(number: :asc)
+                                     .order(id: :asc)
+                    when 'album_released'
                       unsorted_tracks.joins(:album)
-                        .order('albums.release': sort_direction || :asc)
-                        .order('albums.id': :asc)
-                        .order(number: :asc)
-                        .order(id: :asc)
+                                     .order('albums.release': sort_direction || :asc)
+                                     .order('albums.id': :asc)
+                                     .order(number: :asc)
+                                     .order(id: :asc)
                     else
                       unsorted_tracks.order(id: sort_direction || :asc)
                     end
 
     @tracks = sorted_tracks.paginate(page: params[:page], per_page: params[:per_page])
-    set_pagination_headers(@tracks)
+    add_pagination_headers(@tracks)
   end
 
-  def show
-  end
+  def show; end
 
   def create
     authorize Track
@@ -62,9 +61,7 @@ class TracksController < ApplicationController
   end
 
   def destroy
-    unless @track.destroy
-      render json: @track.errors, status: :unprocessable_entity
-    end
+    render json: @track.errors, status: :unprocessable_entity unless @track.destroy
   end
 
   def destroy_empty

@@ -47,18 +47,17 @@ class AlbumPolicy < ApplicationPolicy
   def permitted_attributes
     if user.moderator?
       [
-          :title,
-          :release,
-          :review_comment,
-          :edition,
-          :edition_description,
-          image: [:data, :filename, :mimetype],
-          album_artists: [:artist_id, :name, :order, :separator],
-          album_labels: [:label_id, :catalogue_number]
+        :title,
+        :release,
+        :review_comment,
+        :edition,
+        :edition_description,
+        image: %i[data filename mimetype],
+        album_artists: %i[artist_id name order separator],
+        album_labels: %i[label_id catalogue_number]
       ]
     else
       [:review_comment]
     end
   end
-
 end

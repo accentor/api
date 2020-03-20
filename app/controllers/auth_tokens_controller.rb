@@ -1,31 +1,30 @@
 class AuthTokensController < ApplicationController
-  before_action :set_auth_token, only: [:show, :destroy]
+  before_action :set_auth_token, only: %i[show destroy]
 
   def index
     authorize AuthToken
     @auth_tokens = apply_scopes(policy_scope(AuthToken))
-                       .order(id: :asc)
-                       .paginate(page: params[:page], per_page: params[:per_page])
-    set_pagination_headers(@auth_tokens)
+                   .order(id: :asc)
+                   .paginate(page: params[:page], per_page: params[:per_page])
+    add_pagination_headers(@auth_tokens)
   end
 
-  def show
-  end
+  def show; end
 
   def create
     authorize AuthToken
 
     user = User.find_by(name: params[:name])
     unless user.try(:authenticate, params[:password])
-      render json: {unauthorized: [I18n.t('auth_tokens.create.wrong_credentials')]},
+      render json: { unauthorized: [I18n.t('auth_tokens.create.wrong_credentials')] },
              status: :unauthorized
       return
     end
 
     @auth_token = AuthToken.new(
-        {user_agent: request.headers[:'user-agent']}
-            .merge(params[:auth_token].present? ? permitted_attributes(AuthToken) : {})
-            .merge(user: user)
+      { user_agent: request.headers[:'user-agent'] }
+          .merge(params[:auth_token].present? ? permitted_attributes(AuthToken) : {})
+          .merge(user: user)
     )
 
     if @auth_token.save
@@ -36,9 +35,7 @@ class AuthTokensController < ApplicationController
   end
 
   def destroy
-    unless @auth_token.destroy
-      render json: @auth_token.errors, status: :unprocessable_entity
-    end
+    render json: @auth_token.errors, status: :unprocessable_entity unless @auth_token.destroy
   end
 
   private
@@ -47,5 +44,4 @@ class AuthTokensController < ApplicationController
     @auth_token = AuthToken.find(params[:id])
     authorize @auth_token
   end
-
 end

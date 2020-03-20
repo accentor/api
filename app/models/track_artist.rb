@@ -14,13 +14,13 @@
 class TrackArtist < ApplicationRecord
   include HasNormalized
 
-  enum role: %i[main performer composer conductor remixer producer arranger]
+  enum role: { main: 0, performer: 1, composer: 2, conductor: 3, remixer: 4, producer: 5, arranger: 6 }
 
   belongs_to :track
   belongs_to :artist
 
   validates :role, presence: true
-  validates :name, presence: true, uniqueness: {scope: %i[track artist role]}
+  validates :name, presence: true, uniqueness: { scope: %i[track artist role] }
   validates :track, presence: true
   validates :artist, presence: true
   validates :order, presence: true

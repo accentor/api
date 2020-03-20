@@ -13,7 +13,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not create artist for user' do
     assert_difference('Artist.count', 0) do
-      post artists_url, params: {artist: {name: @artist.name}}
+      post artists_url, params: { artist: { name: @artist.name } }
     end
 
     assert_response :unauthorized
@@ -24,17 +24,17 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     artist = build :artist
 
     image = {
-        data: Base64.encode64(File.read(Rails.root.join('test', 'files', 'image.jpg'))),
-        filename: 'image.jpg',
-        mimetype: 'image/jpeg'
+      data: Base64.encode64(File.read(Rails.root.join('test/files/image.jpg'))),
+      filename: 'image.jpg',
+      mimetype: 'image/jpeg'
     }
 
     assert_difference('Artist.count', 1) do
-      post artists_url, params: {artist: {name: artist.name, image: image}}
+      post artists_url, params: { artist: { name: artist.name, image: image } }
     end
 
-    assert_equal File.read(Rails.root.join('test', 'files', 'image.jpg')).bytes,
-                 Artist.find(JSON.parse(@response.body)["id"]).image.image.download.bytes
+    assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
+                 Artist.find(JSON.parse(@response.body)['id']).image.image.download.bytes
 
     assert_response :created
   end
@@ -45,20 +45,20 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update review_comment for user' do
-    patch artist_url(@artist), params: {artist: {review_comment: "Comment"}}
+    patch artist_url(@artist), params: { artist: { review_comment: 'Comment' } }
     @artist.reload
-    assert_equal "Comment", @artist.review_comment
+    assert_equal 'Comment', @artist.review_comment
   end
 
   test 'should not update artist metadata for user' do
-    patch artist_url(@artist), params: {artist: {name: "Naam"}}
+    patch artist_url(@artist), params: { artist: { name: 'Naam' } }
     @artist.reload
-    assert_not_equal "Naam", @artist.name
+    assert_not_equal 'Naam', @artist.name
   end
 
   test 'should clear review_comment' do
-    @artist.update(review_comment: "test")
-    patch artist_url(@artist), params: {artist: {review_comment: nil}}
+    @artist.update(review_comment: 'test')
+    patch artist_url(@artist), params: { artist: { review_comment: nil } }
     @artist.reload
     assert_nil @artist.review_comment
   end
@@ -68,14 +68,14 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     artist = create :artist
 
     image = {
-        data: Base64.encode64(File.read(Rails.root.join('test', 'files', 'image.jpg'))),
-        filename: 'image.jpg',
-        mimetype: 'image/jpeg'
+      data: Base64.encode64(File.read(Rails.root.join('test/files/image.jpg'))),
+      filename: 'image.jpg',
+      mimetype: 'image/jpeg'
     }
 
-    patch artist_url(artist), params: {artist: {image: image}}
+    patch artist_url(artist), params: { artist: { image: image } }
 
-    assert_equal File.read(Rails.root.join('test', 'files', 'image.jpg')).bytes,
+    assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
                  Artist.find(artist.id).image.image.download.bytes
 
     assert_response :success
@@ -86,16 +86,16 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     artist = create :artist, :with_image
 
     image = {
-        data: Base64.encode64(File.read(Rails.root.join('test', 'files', 'image.jpg'))),
-        filename: 'image.jpg',
-        mimetype: 'image/jpeg'
+      data: Base64.encode64(File.read(Rails.root.join('test/files/image.jpg'))),
+      filename: 'image.jpg',
+      mimetype: 'image/jpeg'
     }
 
     assert_difference('Image.count', 0) do
-      patch artist_url(artist), params: {artist: {image: image}}
+      patch artist_url(artist), params: { artist: { image: image } }
     end
 
-    assert_equal File.read(Rails.root.join('test', 'files', 'image.jpg')).bytes,
+    assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
                  Artist.find(artist.id).image.image.download.bytes
 
     assert_response :success

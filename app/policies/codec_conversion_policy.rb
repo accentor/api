@@ -41,6 +41,6 @@ class CodecConversionPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, :ffmpeg_params, :resulting_codec_id]
+    %i[name ffmpeg_params resulting_codec_id]
   end
 end

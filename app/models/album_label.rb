@@ -12,5 +12,5 @@ class AlbumLabel < ApplicationRecord
   belongs_to :album
   belongs_to :label
 
-  validates :album, uniqueness: {scope: :label}
+  validates :album, uniqueness: { scope: :label }
 end

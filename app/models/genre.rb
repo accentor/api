@@ -10,7 +10,8 @@
 class Genre < ApplicationRecord
   include HasNormalized
 
-  has_and_belongs_to_many :tracks
+  has_many :track_genres, dependent: :destroy
+  has_many :tracks, through: :track_genres, source: :track
 
   validates :name, presence: true, uniqueness: true
 

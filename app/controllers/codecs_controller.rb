@@ -1,16 +1,15 @@
 class CodecsController < ApplicationController
-  before_action :set_codec, only: [:show, :update, :destroy]
+  before_action :set_codec, only: %i[show update destroy]
 
   def index
     authorize Codec
     @codecs = apply_scopes(policy_scope(Codec))
-                  .order(id: :asc)
-                  .paginate(page: params[:page], per_page: params[:per_page])
-    set_pagination_headers(@codecs)
+              .order(id: :asc)
+              .paginate(page: params[:page], per_page: params[:per_page])
+    add_pagination_headers(@codecs)
   end
 
-  def show
-  end
+  def show; end
 
   def create
     authorize Codec
@@ -32,9 +31,7 @@ class CodecsController < ApplicationController
   end
 
   def destroy
-    unless @codec.destroy
-      render json: @codec.errors, status: :unprocessable_entity
-    end
+    render json: @codec.errors, status: :unprocessable_entity unless @codec.destroy
   end
 
   private

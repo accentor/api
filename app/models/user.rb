@@ -9,7 +9,7 @@
 #
 
 class User < ApplicationRecord
-  enum permission: %i[user moderator admin]
+  enum permission: { user: 0, moderator: 1, admin: 2 }
 
   has_secure_password
 
@@ -18,9 +18,8 @@ class User < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :password_digest, presence: true
   validates :permission, presence: true
-  
+
   def moderator?
     admin? || permission == 'moderator'
   end
-
 end

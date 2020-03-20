@@ -12,6 +12,6 @@ FactoryBot.define do
   factory :album_label do
     album
     label
-    catalogue_number {Faker::Lorem.word}
+    catalogue_number { Faker::Lorem.word }
   end
 end

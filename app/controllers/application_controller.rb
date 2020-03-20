@@ -5,14 +5,18 @@ class ApplicationController < ActionController::API
 
   before_action :authenticate_from_token
   after_action :verify_authorized
+  # rubocop:disable Rails/LexicallyScopedActionFilter
+  # Most subclasses will have this action, if they don't we also don't need to
+  # check that we used policy_scope
   after_action :verify_policy_scoped, only: :index
+  # rubocop:enable Rails/LexicallyScopedActionFilter
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from ActiveRecord::RecordNotFound, with: :model_not_found
 
   protected
 
-  def set_pagination_headers(collection)
+  def add_pagination_headers(collection)
     response.headers['x-total-entries'] = collection.total_entries
     response.headers['x-total-pages'] = collection.total_pages
     response.headers['x-current-page'] = collection.current_page
@@ -25,10 +29,10 @@ class ApplicationController < ActionController::API
 
   def authenticate_from_token
     token = AuthToken.find_authenticated(
-        {
-            secret: (request.headers[:'x-secret'] || params[:secret]),
-            device_id: (request.headers[:'x-device-id'] || params[:device_id])
-        }
+      {
+        secret: (request.headers[:'x-secret'] || params[:secret]),
+        device_id: (request.headers[:'x-device-id'] || params[:device_id])
+      }
     )
     self.current_user = token&.user
   end
@@ -36,13 +40,13 @@ class ApplicationController < ActionController::API
   def user_not_authorized(exc)
     policy_name = exc.policy.class.to_s.underscore
 
-    render json: {unauthorized: [I18n.t("#{policy_name}.#{exc.query}",
-                                       scope: 'pundit',
-                                       default: :default)]},
+    render json: { unauthorized: [I18n.t("#{policy_name}.#{exc.query}",
+                                         scope: 'pundit',
+                                         default: :default)] },
            status: :unauthorized
   end
 
   def model_not_found(exc)
-    render json: {not_found: [exc.message]}, status: :not_found
+    render json: { not_found: [exc.message] }, status: :not_found
   end
 end

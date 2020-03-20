@@ -46,7 +46,7 @@ class ArtistPolicy < ApplicationPolicy
 
   def permitted_attributes
     if user.moderator?
-      [:name, :review_comment, image: [:data, :filename, :mimetype]]
+      [:name, :review_comment, image: %i[data filename mimetype]]
     else
       [:review_comment]
     end

@@ -13,7 +13,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not create track for user' do
     assert_difference('Track.count', 0) do
-      post tracks_url, params: {track: {album_id: @track.album_id, number: @track.number, title: @track.title}}
+      post tracks_url, params: { track: { album_id: @track.album_id, number: @track.number, title: @track.title } }
     end
 
     assert_response :unauthorized
@@ -25,24 +25,24 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     genres = create_list(:genre, 5)
     track_artists = (1..5).map do |_|
       {
-          artist_id: create(:artist).id,
-          name: Faker::Artist.name,
-          role: TrackArtist.roles.to_a.sample[0]
+        artist_id: create(:artist).id,
+        name: Faker::Artist.name,
+        role: TrackArtist.roles.to_a.sample[0]
       }
     end
 
     assert_difference('Track.count', 1) do
-      post tracks_url, params: {track: {
-          album_id: track.album_id,
-          number: track.number,
-          title: track.title,
-          genre_ids: genres.map(&:id),
-          track_artists: track_artists
-      }}
+      post tracks_url, params: { track: {
+        album_id: track.album_id,
+        number: track.number,
+        title: track.title,
+        genre_ids: genres.map(&:id),
+        track_artists: track_artists
+      } }
     end
 
-    assert_equal genres.count, Track.find(JSON.parse(@response.body)["id"]).genres.count
-    assert_equal track_artists.count, Track.find(JSON.parse(@response.body)["id"]).track_artists.count
+    assert_equal genres.count, Track.find(JSON.parse(@response.body)['id']).genres.count
+    assert_equal track_artists.count, Track.find(JSON.parse(@response.body)['id']).track_artists.count
 
     assert_response :created
   end
@@ -53,22 +53,22 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should be able to update review_comment' do
-    patch track_url(@track), params: {track: {:review_comment => "comment"}}
+    patch track_url(@track), params: { track: { review_comment: 'comment' } }
     assert_response :success
     @track.reload
-    assert_equal "comment", @track.review_comment
+    assert_equal 'comment', @track.review_comment
   end
 
   test 'should not update track metadata for user' do
-    patch track_url(@track), params: {track: {album_id: @track.album_id, number: @track.number, title: @track.title}}
+    patch track_url(@track), params: { track: { album_id: @track.album_id, number: @track.number, title: @track.title } }
     assert_response :success
     @track.reload
     assert_not_equal :album_id, @track.album_id
   end
 
   test 'should clear review comment' do
-    @track.update(review_comment: "test")
-    patch track_url(@track), params: {track: {:review_comment => nil}}
+    @track.update(review_comment: 'test')
+    patch track_url(@track), params: { track: { review_comment: nil } }
     assert_response :success
     @track.reload
     assert_nil @track.review_comment
@@ -79,7 +79,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     track = build(:track, album: @track.album)
     album = create(:album)
 
-    patch track_url(@track), params: {track: {album_id: album.id, number: track.number, title: track.title}}
+    patch track_url(@track), params: { track: { album_id: album.id, number: track.number, title: track.title } }
     assert_response :success
   end
 

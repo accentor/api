@@ -14,10 +14,10 @@
 require 'test_helper'
 
 class ArtistTest < ActiveSupport::TestCase
-    test 'should automatically generate normalized_name' do
-        artist = build(:artist, name: 'ïóùåAÁ')
-        artist.save
-        assert_not artist.normalized_name.nil?
-        assert_equal "iouaaa", artist.normalized_name
-    end
+  test 'should automatically generate normalized_name' do
+    artist = build(:artist, name: 'ïóùåAÁ')
+    artist.save
+    assert_not artist.normalized_name.nil?
+    assert_equal 'iouaaa', artist.normalized_name
+  end
 end

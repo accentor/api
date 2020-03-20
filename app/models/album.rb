@@ -32,16 +32,17 @@ class Album < ApplicationRecord
 
   normalized_col_generator :title
 
-  scope :by_filter, ->(filter) {where('"albums"."normalized_title" LIKE ?', "%#{Album.normalize(filter)}%")}
-  scope :by_artist, ->(artist) {joins(:artists).where(artists: {id: artist})}
-  scope :by_label, ->(label) {joins(:album_labels).where(album_labels: {label_id: label})}
-  scope :by_labels, ->(labels) {joins(:album_labels).where(album_labels: {label_id: labels})}
+  scope :by_filter, ->(filter) { where('"albums"."normalized_title" LIKE ?', "%#{Album.normalize(filter)}%") }
+  scope :by_artist, ->(artist) { joins(:artists).where(artists: { id: artist }) }
+  scope :by_label, ->(label) { joins(:album_labels).where(album_labels: { label_id: label }) }
+  scope :by_labels, ->(labels) { joins(:album_labels).where(album_labels: { label_id: labels }) }
 
   private
 
   def normalize_artist_order
     album_artists.sort do |aa1, aa2|
       return aa1.order <=> aa2.order unless (aa1.order <=> aa2.order).nil?
+
       if aa1.order.present?
         1
       elsif aa2.order.present?
@@ -58,9 +59,9 @@ class Album < ApplicationRecord
   def album_artist_separators
     album_artists.each do |aa|
       if aa.order == album_artists.to_a.count
-        errors.add(:album_artists, "aa-last-no-separator") unless aa.separator.nil?
-      else
-        errors.add(:album_artists, "aa-separator") unless aa.separator.present?
+        errors.add(:album_artists, 'aa-last-no-separator') unless aa.separator.nil?
+      elsif aa.separator.blank?
+        errors.add(:album_artists, 'aa-separator')
       end
     end
   end

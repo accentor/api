@@ -45,6 +45,6 @@ class TrackTest < ActiveSupport::TestCase
     track = build(:track, title: 'ïóùåAÁ')
     track.save
     assert_not track.normalized_title.nil?
-    assert_equal "iouaaa", track.normalized_title
+    assert_equal 'iouaaa', track.normalized_title
   end
 end

@@ -32,9 +32,10 @@ class AuthToken < ApplicationRecord
   private
 
   def generate_device_id
-    begin
+    loop do
       self.device_id = SecureRandom.hex(12)
-    end while AuthToken.exists?(device_id: device_id)
+      break unless AuthToken.exists?(device_id: device_id)
+    end
   end
 
   def generate_secret

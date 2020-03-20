@@ -1,18 +1,17 @@
 class CodecConversionsController < ApplicationController
-  before_action :set_codec_conversion, only: [:show, :update, :destroy]
+  before_action :set_codec_conversion, only: %i[show update destroy]
 
   has_scope :by_codec, as: 'codec'
 
   def index
     authorize CodecConversion
     @codec_conversions = apply_scopes(policy_scope(CodecConversion))
-                             .order(id: :asc)
-                             .paginate(page: params[:page], per_page: params[:per_page])
-    set_pagination_headers(@codec_conversions)
+                         .order(id: :asc)
+                         .paginate(page: params[:page], per_page: params[:per_page])
+    add_pagination_headers(@codec_conversions)
   end
 
-  def show
-  end
+  def show; end
 
   def create
     authorize CodecConversion
@@ -34,9 +33,7 @@ class CodecConversionsController < ApplicationController
   end
 
   def destroy
-    unless @codec_conversion.destroy
-      render json: @codec_conversion.errors, status: :unprocessable_entity
-    end
+    render json: @codec_conversion.errors, status: :unprocessable_entity unless @codec_conversion.destroy
   end
 
   private
@@ -45,5 +42,4 @@ class CodecConversionsController < ApplicationController
     @codec_conversion = CodecConversion.find(params[:id])
     authorize @codec_conversion
   end
-
 end

@@ -16,11 +16,11 @@
 
 FactoryBot.define do
   factory :album do
-    title {Faker::Music.album}
-    review_comment {Faker::Lorem.word}
+    title { Faker::Music.album }
+    review_comment { Faker::Lorem.word }
 
     trait :with_release do
-      release {Faker::Date.backward(365 * 100)}
+      release { Faker::Date.backward(365 * 100) }
     end
 
     trait :with_image do
@@ -28,7 +28,7 @@ FactoryBot.define do
     end
 
     transient do
-      label_count {5}
+      label_count { 5 }
     end
 
     after(:build) do |album, evaluator|

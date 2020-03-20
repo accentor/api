@@ -17,10 +17,10 @@
 require 'test_helper'
 
 class AlbumTest < ActiveSupport::TestCase
-    test 'should automatically generate normalized_title' do
-        album = build(:album, title: 'ïóùåAÁ')
-        album.save
-        assert_not album.normalized_title.nil?
-        assert_equal "iouaaa", album.normalized_title
-    end
+  test 'should automatically generate normalized_title' do
+    album = build(:album, title: 'ïóùåAÁ')
+    album.save
+    assert_not album.normalized_title.nil?
+    assert_equal 'iouaaa', album.normalized_title
+  end
 end

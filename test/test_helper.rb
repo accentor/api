@@ -24,7 +24,7 @@ module SignInHelper
 
   def sign_in_as(user)
     auth_token = create(:auth_token, user: user)
-    self.credentials = {'x-device-id': auth_token.device_id, 'x-secret': auth_token.secret}
+    self.credentials = { 'x-device-id': auth_token.device_id, 'x-secret': auth_token.secret }
   end
 
   def sign_out
@@ -32,10 +32,10 @@ module SignInHelper
   end
 
   def merge_args(args)
-    args = args || {}
+    args ||= {}
     args[:headers] = args[:headers] || {}
     creds = credentials || {}
-    {as: :json}.merge(args || {}).merge(headers: creds.merge(args[:headers]))
+    { as: :json }.merge(args || {}).merge(headers: creds.merge(args[:headers]))
   end
 
   def get(path, **args)
@@ -61,7 +61,6 @@ module SignInHelper
   def head(path, **args)
     process(:head, path, **merge_args(args))
   end
-
 end
 
 class ActionDispatch::IntegrationTest

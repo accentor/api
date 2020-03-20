@@ -18,7 +18,8 @@ class Track < ApplicationRecord
 
   belongs_to :audio_file, optional: true, dependent: :destroy
   belongs_to :album
-  has_and_belongs_to_many :genres
+  has_many :track_genres, dependent: :destroy
+  has_many :genres, through: :track_genres, source: :genre
   has_many :track_artists, dependent: :destroy
   has_many :artists, through: :track_artists, source: :artist
 
@@ -29,10 +30,10 @@ class Track < ApplicationRecord
 
   before_save :normalize_artist_order
 
-  scope :by_filter, ->(filter) {where('"tracks"."normalized_title" LIKE ?', "%#{Track.normalize(filter)}%")}
-  scope :by_artist, ->(artist) {joins(:artists).where(artists: {id: artist})}
-  scope :by_album, ->(album) {where(album: album)}
-  scope :by_genre, ->(genre) {joins(:genres).where(genres: {id: genre})}
+  scope :by_filter, ->(filter) { where('"tracks"."normalized_title" LIKE ?', "%#{Track.normalize(filter)}%") }
+  scope :by_artist, ->(artist) { joins(:artists).where(artists: { id: artist }) }
+  scope :by_album, ->(album) { where(album: album) }
+  scope :by_genre, ->(genre) { joins(:genres).where(genres: { id: genre }) }
 
   def merge(other)
     af = other.audio_file
@@ -47,6 +48,7 @@ class Track < ApplicationRecord
   def normalize_artist_order
     track_artists.sort do |ta1, ta2|
       return ta1.order <=> ta2.order unless (ta1.order <=> ta2.order).nil?
+
       if ta1.order.present?
         1
       elsif ta2.order.present?
@@ -59,5 +61,4 @@ class Track < ApplicationRecord
       ta.save unless ta.new_record?
     end
   end
-
 end
