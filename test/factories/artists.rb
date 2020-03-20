@@ -4,11 +4,11 @@
 #
 #  id              :bigint           not null, primary key
 #  name            :string           not null
-#  image_id        :bigint
+#  normalized_name :string           not null
+#  review_comment  :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  review_comment  :string
-#  normalized_name :string           not null
+#  image_id        :bigint
 #
 
 FactoryBot.define do

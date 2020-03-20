@@ -5,11 +5,11 @@ require 'open3'
 # Table name: audio_files
 #
 #  id          :bigint           not null, primary key
-#  location_id :bigint           not null
-#  codec_id    :bigint           not null
+#  bitrate     :integer          not null
 #  filename    :string           not null
 #  length      :integer          not null
-#  bitrate     :integer          not null
+#  codec_id    :bigint           not null
+#  location_id :bigint           not null
 #
 
 class AudioFile < ApplicationRecord

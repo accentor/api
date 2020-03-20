@@ -3,9 +3,9 @@
 # Table name: album_labels
 #
 #  id               :bigint           not null, primary key
+#  catalogue_number :string
 #  album_id         :bigint           not null
 #  label_id         :bigint           not null
-#  catalogue_number :string           not null
 #
 
 require 'test_helper'

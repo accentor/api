@@ -3,8 +3,8 @@
 # Table name: codec_conversions
 #
 #  id                 :bigint           not null, primary key
-#  name               :string           not null
 #  ffmpeg_params      :string           not null
+#  name               :string           not null
 #  resulting_codec_id :bigint           not null
 #
 

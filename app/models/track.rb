@@ -3,14 +3,14 @@
 # Table name: tracks
 #
 #  id               :bigint           not null, primary key
-#  title            :string           not null
+#  normalized_title :string           not null
 #  number           :integer          not null
-#  audio_file_id    :bigint
-#  album_id         :bigint           not null
+#  review_comment   :string
+#  title            :string           not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  review_comment   :string
-#  normalized_title :string           not null
+#  album_id         :bigint           not null
+#  audio_file_id    :bigint
 #
 
 class Track < ApplicationRecord
