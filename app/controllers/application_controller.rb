@@ -14,6 +14,8 @@ class ApplicationController < ActionController::API
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from ActiveRecord::RecordNotFound, with: :model_not_found
 
+  has_scope :sorted, using: %i[key direction], default: {}, allow_blank: true
+
   protected
 
   def add_pagination_headers(collection)

@@ -3,7 +3,7 @@ class ApplicationRecord < ActiveRecord::Base
   self.per_page = 500
 
   scope :sorted, lambda { |_key, direction|
-    order(id: direction || :asc)
+    order(id: direction || :desc)
   }
 
   def self.normalize(str)

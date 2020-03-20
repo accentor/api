@@ -5,21 +5,9 @@ class ArtistsController < ApplicationController
 
   def index
     authorize Artist
-    unsorted_artists = apply_scopes(policy_scope(Artist)).includes(image: %i[image_attachment image_blob image_type])
-    sort_direction = %w[asc desc].include?(params[:sort_direction]) ? params[:sort_direction].to_sym : nil
-    sorted_artists = case params[:sort_key]
-                     when 'name'
-                       unsorted_artists
-                     .order(normalized_name: sort_direction || :asc)
-                     .order(id: :asc)
-                     when 'added'
-                       unsorted_artists
-                     .order(created_at: sort_direction || :desc)
-                     .order(id: :asc)
-                     else
-                       unsorted_artists.order(id: sort_direction || :asc)
-                     end
-    @artists = sorted_artists.paginate(page: params[:page], per_page: params[:per_page])
+    @artists = apply_scopes(policy_scope(Artist))
+               .includes(image: %i[image_attachment image_blob image_type])
+               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@artists)
   end
 

@@ -40,6 +40,8 @@ Naming/HeredocDelimiterNaming:
 Naming/MethodParameterName:
   Enabled: false
 
+Rails/HasAndBelongsToMany:
+  Enabled: false
 Rails/UnknownEnv:
   Environments:
     - development

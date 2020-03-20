@@ -19,7 +19,7 @@ class Track < ApplicationRecord
   belongs_to :audio_file, optional: true, dependent: :destroy
   belongs_to :album
   has_many :track_genres, dependent: :destroy
-  has_many :genres, through: :track_genres, source: :genre
+  has_and_belongs_to_many :genres
   has_many :track_artists, dependent: :destroy
   has_many :artists, through: :track_artists, source: :artist
 
@@ -34,6 +34,29 @@ class Track < ApplicationRecord
   scope :by_artist, ->(artist) { joins(:artists).where(artists: { id: artist }) }
   scope :by_album, ->(album) { where(album: album) }
   scope :by_genre, ->(genre) { joins(:genres).where(genres: { id: genre }) }
+  scope :sorted, lambda { |key, direction|
+    case key
+    when 'album_title'
+      joins(:album)
+        .order('albums.normalized_title': direction || :asc)
+        .order('albums.id': :desc)
+        .order(number: :asc)
+        .order(id: :desc)
+    when 'album_added'
+      joins(:album)
+        .order('albums.id': direction || :desc)
+        .order(number: :asc)
+        .order(id: :desc)
+    when 'album_released'
+      joins(:album)
+        .order('albums.release': direction || :desc)
+        .order('albums.id': :desc)
+        .order(number: :asc)
+        .order(id: :desc)
+    else
+      order(id: direction || :desc)
+    end
+  }
 
   def merge(other)
     af = other.audio_file

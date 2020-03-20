@@ -26,4 +26,12 @@ class Artist < ApplicationRecord
   normalized_col_generator :name
 
   scope :by_filter, ->(filter) { where('normalized_name LIKE ?', "%#{Artist.normalize(filter)}%") }
+  scope :sorted, lambda { |key, direction|
+    case key
+    when 'name'
+      order(normalized_name: direction || :asc).order(id: :desc)
+    else
+      order(id: direction || :desc)
+    end
+  }
 end
