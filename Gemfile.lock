@@ -195,7 +195,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    taglib-ruby (0.7.1)
+    taglib-ruby (1.0.0)
     thor (1.0.1)
     thread_safe (0.3.6)
     tzinfo (1.2.6)
@@ -233,7 +233,7 @@ DEPENDENCIES
   simplecov (~> 0.18)
   spring (~> 2.1)
   spring-watcher-listen (~> 2.0)
-  taglib-ruby (< 1.0)
+  taglib-ruby (< 2.0)
   tzinfo-data
   will_paginate (~> 3.3)
 
