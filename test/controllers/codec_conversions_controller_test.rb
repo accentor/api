@@ -29,7 +29,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
       } }
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should create codec_conversion for moderator' do
@@ -71,7 +71,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
       name: @codec_conversion.name,
       resulting_codec_id: @codec_conversion.resulting_codec_id
     } }
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should update codec_conversion for moderator' do
@@ -99,7 +99,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
       delete codec_conversion_url(@codec_conversion)
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should destroy codec_conversion for moderator' do

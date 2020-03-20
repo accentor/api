@@ -20,7 +20,7 @@ FactoryBot.define do
     review_comment { Faker::Lorem.word }
 
     trait :with_release do
-      release { Faker::Date.backward(365 * 100) }
+      release { Faker::Date.backward(days: 365 * 100) }
     end
 
     trait :with_image do

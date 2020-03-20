@@ -8,7 +8,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not get index for user' do
     get locations_url
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should get index for moderator' do
@@ -29,7 +29,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
       post locations_url, params: { location: { path: location.path } }
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should create location for moderator' do
@@ -54,7 +54,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not show location for user' do
     get location_url(@location)
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should show location for moderator' do
@@ -74,7 +74,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
       delete location_url(@location)
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should destroy location for moderator' do

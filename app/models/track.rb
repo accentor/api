@@ -18,7 +18,6 @@ class Track < ApplicationRecord
 
   belongs_to :audio_file, optional: true, dependent: :destroy
   belongs_to :album
-  has_many :track_genres, dependent: :destroy
   has_and_belongs_to_many :genres
   has_many :track_artists, dependent: :destroy
   has_many :artists, through: :track_artists, source: :artist

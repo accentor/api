@@ -16,7 +16,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
       post artists_url, params: { artist: { name: @artist.name } }
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should create artist for moderator' do
@@ -106,7 +106,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
       delete artist_url(@artist)
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should destroy artist for moderator' do
@@ -128,7 +128,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
       post destroy_empty_artists_url
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should destroy empty artists for moderator (track_artist)' do

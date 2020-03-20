@@ -17,7 +17,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
       post codecs_url, params: { codec: { extension: codec.extension, mimetype: codec.mimetype } }
     end
 
-    assert_response 401
+    assert_response :forbidden
   end
 
   test 'should create codec for moderator' do
@@ -27,7 +27,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
       post codecs_url, params: { codec: { extension: codec.extension, mimetype: codec.mimetype } }
     end
 
-    assert_response 201
+    assert_response :created
   end
 
   test 'should create codec for admin' do
@@ -37,7 +37,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
       post codecs_url, params: { codec: { extension: codec.extension, mimetype: codec.mimetype } }
     end
 
-    assert_response 201
+    assert_response :created
   end
 
   test 'should show codec' do
@@ -47,19 +47,19 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not update codec for user' do
     patch codec_url(@codec), params: { codec: { mimetype: @codec.mimetype } }
-    assert_response 401
+    assert_response :forbidden
   end
 
   test 'should update codec for moderator' do
     sign_in_as(create(:moderator))
     patch codec_url(@codec), params: { codec: { extension: @codec.extension, mimetype: @codec.mimetype } }
-    assert_response 200
+    assert_response :ok
   end
 
   test 'should update codec for admin' do
     sign_in_as(create(:admin))
     patch codec_url(@codec), params: { codec: { extension: @codec.extension, mimetype: @codec.mimetype } }
-    assert_response 200
+    assert_response :ok
   end
 
   test 'should not destroy codec for user' do
@@ -67,7 +67,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
       delete codec_url(@codec)
     end
 
-    assert_response 401
+    assert_response :forbidden
   end
 
   test 'should destroy codec for moderator' do
@@ -76,7 +76,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
       delete codec_url(@codec)
     end
 
-    assert_response 204
+    assert_response :no_content
   end
 
   test 'should destroy codec for admin' do
@@ -85,6 +85,6 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
       delete codec_url(@codec)
     end
 
-    assert_response 204
+    assert_response :no_content
   end
 end

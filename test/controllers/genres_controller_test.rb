@@ -17,7 +17,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
       post genres_url, params: { genre: { name: genre.name } }
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should create genre for moderator' do
@@ -47,19 +47,19 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not update genre for user' do
     patch genre_url(@genre), params: { genre: { name: @genre.name } }
-    assert_response 401
+    assert_response :forbidden
   end
 
   test 'should update genre for moderator' do
     sign_in_as(create(:moderator))
     patch genre_url(@genre), params: { genre: { name: @genre.name } }
-    assert_response 200
+    assert_response :success
   end
 
   test 'should update genre for admin' do
     sign_in_as(create(:admin))
     patch genre_url(@genre), params: { genre: { name: @genre.name } }
-    assert_response 200
+    assert_response :success
   end
 
   test 'should not destroy genre for user' do
@@ -67,7 +67,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
       delete genre_url(@genre)
     end
 
-    assert_response 401
+    assert_response :forbidden
   end
 
   test 'should destroy genre for moderator' do
@@ -76,7 +76,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
       delete genre_url(@genre)
     end
 
-    assert_response 204
+    assert_response :success
   end
 
   test 'should destroy genre for admin' do
@@ -85,7 +85,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
       delete genre_url(@genre)
     end
 
-    assert_response 204
+    assert_response :success
   end
 
   test 'should not destroy empty genres for user' do
@@ -93,7 +93,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
       post destroy_empty_genres_url
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should destroy empty genres for moderator' do

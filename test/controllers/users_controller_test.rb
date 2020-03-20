@@ -17,7 +17,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       post users_url, params: { user: { name: user.name, password: 'password', permission: user.permission } }
     end
 
-    assert_response 401
+    assert_response :forbidden
   end
 
   test 'should create user for admin' do
@@ -27,7 +27,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       post users_url, params: { user: { name: user.name, password: 'password', permission: user.permission } }
     end
 
-    assert_response 201
+    assert_response :created
   end
 
   test 'should show user' do
@@ -37,29 +37,29 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update own user' do
     patch user_url(@user), params: { user: { name: 'new name' } }
-    assert_response 200
+    assert_response :ok
   end
 
   test 'should not update password without current password for current user' do
     patch user_url(@user), params: { user: { password: 'new password', current_password: 'not correct' } }
-    assert_response 401
+    assert_response :unauthorized
   end
 
   test 'should update password with current password for current user' do
     patch user_url(@user), params: { user: { current_password: @user.password, password: 'new password' } }
-    assert_response 200
+    assert_response :ok
   end
 
   test 'should update password for other user for admin' do
     sign_in_as(create(:admin))
     patch user_url(@user), params: { user: { password: 'new password' } }
-    assert_response 200
+    assert_response :ok
   end
 
   test 'should not update own permission if not admin' do
     patch user_url(@user), params: { user: { permission: :admin } }
     assert_not_equal :admin, @user.permission
-    assert_response 200
+    assert_response :ok
   end
 
   test 'should destroy user' do
@@ -67,6 +67,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       delete user_url(@user), as: :json
     end
 
-    assert_response 204
+    assert_response :no_content
   end
 end

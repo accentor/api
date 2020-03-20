@@ -8,7 +8,7 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not get index for user' do
     get cover_filenames_url
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should get index for moderator' do
@@ -29,7 +29,7 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
       post cover_filenames_url, params: { cover_filename: { filename: cover_filename.filename } }
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should create cover_filename for moderator' do
@@ -54,7 +54,7 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not show cover_filename for user' do
     get cover_filename_url(@cover_filename)
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should show cover_filename for moderator' do
@@ -74,7 +74,7 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
       delete cover_filename_url(@cover_filename)
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should destroy cover_filename for moderator' do

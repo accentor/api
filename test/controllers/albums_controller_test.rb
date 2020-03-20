@@ -16,7 +16,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
       post albums_url, params: { album: { release: @album.release, title: @album.title } }
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should create album for moderator' do
@@ -135,7 +135,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
       delete album_url(@album)
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should destroy album for moderator' do
@@ -157,7 +157,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
       post destroy_empty_albums_url
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should destroy empty albums for moderator' do

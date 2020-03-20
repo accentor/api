@@ -16,7 +16,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
       post tracks_url, params: { track: { album_id: @track.album_id, number: @track.number, title: @track.title } }
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should create track for moderator' do
@@ -88,7 +88,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
       delete track_url(@track)
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should destroy track for moderator' do
@@ -106,7 +106,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
       post destroy_empty_tracks_url
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should destroy empty tracks for moderator' do
@@ -132,7 +132,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should merge tracks for moderator' do

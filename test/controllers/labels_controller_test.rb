@@ -17,7 +17,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
       post labels_url, params: { label: { name: label.name } }
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should create label for moderator' do
@@ -47,19 +47,19 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not update label for user' do
     patch label_url(@label), params: { label: { name: @label.name } }
-    assert_response 401
+    assert_response :forbidden
   end
 
   test 'should update label for moderator' do
     sign_in_as(create(:moderator))
     patch label_url(@label), params: { label: { name: @label.name } }
-    assert_response 200
+    assert_response :ok
   end
 
   test 'should update label for admin' do
     sign_in_as(create(:admin))
     patch label_url(@label), params: { label: { name: @label.name } }
-    assert_response 200
+    assert_response :ok
   end
 
   test 'should not destroy label for user' do
@@ -67,7 +67,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
       delete label_url(@label)
     end
 
-    assert_response 401
+    assert_response :forbidden
   end
 
   test 'should destroy label for moderator' do
@@ -76,7 +76,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
       delete label_url(@label)
     end
 
-    assert_response 204
+    assert_response :no_content
   end
 
   test 'should destroy label for admin' do
@@ -85,7 +85,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
       delete label_url(@label)
     end
 
-    assert_response 204
+    assert_response :no_content
   end
 
   test 'should not destroy empty labels for user' do
@@ -93,7 +93,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
       post destroy_empty_labels_url
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should destroy empty labels for moderator' do

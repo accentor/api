@@ -17,7 +17,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
       post image_types_url, params: { image_type: { extension: image_type.extension, mimetype: image_type.mimetype } }
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should create image_type for moderator' do
@@ -47,7 +47,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not update image_type for user' do
     patch image_type_url(@image_type), params: { image_type: { mimetype: @image_type.mimetype } }
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should update image_type for moderator' do
@@ -67,7 +67,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
       delete image_type_url(@image_type)
     end
 
-    assert_response :unauthorized
+    assert_response :forbidden
   end
 
   test 'should destroy image_type for moderator' do
