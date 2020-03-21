@@ -1,16 +1,13 @@
 # == Schema Information
 #
-# Table name: tracks
+# Table name: rescan_runners
 #
-#  id               :bigint           not null, primary key
-#  normalized_title :string           not null
-#  number           :integer          not null
-#  review_comment   :string
-#  title            :string           not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  album_id         :bigint           not null
-#  audio_file_id    :bigint
+#  id           :bigint           not null, primary key
+#  error_text   :text
+#  finished_at  :datetime         not null
+#  processed    :integer          default("0"), not null
+#  running      :boolean          default("false"), not null
+#  warning_text :text
 #
 
 class RescanPolicy < ApplicationPolicy

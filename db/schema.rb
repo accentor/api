@@ -188,7 +188,7 @@ ActiveRecord::Schema.define(version: 2020_03_21_105358) do
     t.text "error_text"
     t.integer "processed", default: 0, null: false
     t.boolean "running", default: false, null: false
-    t.datetime "last_scan"
+    t.datetime "finished_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
   end
 
   create_table "track_artists", force: :cascade do |t|

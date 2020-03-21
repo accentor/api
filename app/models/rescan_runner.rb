@@ -4,7 +4,7 @@
 #
 #  id           :bigint           not null, primary key
 #  error_text   :text
-#  last_scan    :datetime
+#  finished_at  :datetime         not null
 #  processed    :integer          default("0"), not null
 #  running      :boolean          default("false"), not null
 #  warning_text :text
@@ -42,7 +42,7 @@ class RescanRunner < ApplicationRecord
     rescue StandardError => e
       update(error_text: "#{error_text}A really unexpected error occurred while processing: #{e.message}\n#{e.backtrace.join("\n")}\n")
     ensure
-      update(running: false, last_scan: DateTime.current)
+      update(running: false, finished_at: DateTime.current)
     end
   end
 
