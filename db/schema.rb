@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_18_125903) do
+ActiveRecord::Schema.define(version: 2020_03_21_105358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -188,6 +188,7 @@ ActiveRecord::Schema.define(version: 2020_03_18_125903) do
     t.text "error_text"
     t.integer "processed", default: 0, null: false
     t.boolean "running", default: false, null: false
+    t.datetime "last_scan"
   end
 
   create_table "track_artists", force: :cascade do |t|
