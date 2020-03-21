@@ -1,0 +1,62 @@
+name: CI
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: ruby:2.7.0
+    env:
+      RAILS_ENV: "test"
+      DATABASE_URL: "postgres://postgres:accentor@postgresql:5432/accentor"
+    services:
+      postgresql:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: "accentor"
+    steps:
+    - uses: actions/checkout@v1
+    - name: Cache Ruby dependencies
+      uses: actions/cache@v1
+      with:
+        path: /usr/local/bundle
+        key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gem-
+    - name: Install dependencies
+      run: |
+        apt-get -y update
+        apt-get -y install --no-install-recommends libtag1-dev
+        bundle config path
+        bundle install --jobs 4 --retry 3
+    - name: Run tests
+      env:
+        CI: true
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: |
+        bundle exec rails db:setup
+        bundle exec rails test
+  lint:
+    runs-on: ubuntu-latest
+    container:
+      image: ruby:2.7.0
+    steps:
+    - uses: actions/checkout@v1
+    - name: Cache Ruby dependencies
+      uses: actions/cache@v1
+      with:
+        path: /usr/local/bundle
+        key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gem-
+    - name: Install dependencies
+      run: |
+        apt-get -y update
+        apt-get -y install --no-install-recommends libtag1-dev
+        bundle config path
+        bundle install --jobs 4 --retry 3
+    - name: Lint with rubocop
+      env:
+        RAILS_ENV: "test"
+      run: |
+        bundle exec rubocop -c .rubocop.yml
