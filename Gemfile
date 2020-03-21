@@ -41,7 +41,7 @@ gem 'bootsnap', '>= 1.4.6', require: false
 gem 'rack-cors', '~> 1.1'
 
 group :test do
-  gem 'simplecov', '~> 0.18'
+  gem 'simplecov', '~> 0.18', require: false
 end
 
 group :development, :test do
