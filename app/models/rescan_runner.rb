@@ -94,16 +94,18 @@ class RescanRunner < ApplicationRecord
         next
       end
 
-      albumartist = [AlbumArtist.new(artist: (Artist.find_by(name: t_albumartist) || Artist.new(name: t_albumartist, review_comment: 'New artist')), 
-                                     name: t_albumartist, 
-                                     order: 1, 
-                                     separator: nil)] unless t_albumartist.downcase == 'various artists'
+      unless t_albumartist.downcase == 'various artists'
+        albumartist = [AlbumArtist.new(artist: (Artist.find_by(name: t_albumartist) || Artist.new(name: t_albumartist, review_comment: 'New artist')),
+                                       name: t_albumartist,
+                                       order: 1,
+                                       separator: nil)]
+      end
 
       album = Album.find_by(title: t_album, release: Date.ordinal(t_year)) || Album.new(title: t_album,
-                            release: Date.ordinal(t_year),
-                            image: find_image(Pathname.new(path).parent),
-                            review_comment: 'New album', 
-                            album_artists: albumartist || [])
+                                                                                        release: Date.ordinal(t_year),
+                                                                                        image: find_image(Pathname.new(path).parent),
+                                                                                        review_comment: 'New album',
+                                                                                        album_artists: albumartist || [])
 
       audio_file = AudioFile.new(location: location, codec: codec, filename: relative_path.to_s, length: length, bitrate: bitrate)
 
