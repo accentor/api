@@ -95,13 +95,22 @@ class RescanRunner < ApplicationRecord
       end
 
       albumartist = Artist.find_by(name: t_albumartist) || Artist.new(name: t_albumartist, review_comment: 'New artist')
+      albumartists = if t_albumartist.downcase != 'various artists'
+                       [AlbumArtist.new(artist: albumartist,
+                                        name: t_albumartist,
+                                        order: 1,
+                                        separator: nil)]
+                     else
+                       []
+                     end
 
       album = Album.find_by(title: t_album, release: Date.ordinal(t_year)) ||
               Album.new(title: t_album,
                         release: Date.ordinal(t_year),
                         image: find_image(Pathname.new(path).parent),
                         review_comment: 'New album',
-                        album_artists: [AlbumArtist.new(artist: albumartist, name: t_albumartist, order: 1, separator: nil)])
+                        album_artists: albumartists)
+
       audio_file = AudioFile.new(location: location, codec: codec, filename: relative_path.to_s, length: length, bitrate: bitrate)
 
       artist = if t_albumartist == t_artist
