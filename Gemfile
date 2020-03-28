@@ -56,7 +56,7 @@ end
 group :development do
   gem 'annotate', '~> 3.1'
 
-  gem 'rubocop-rails', '~> 2.4'
+  gem 'rubocop-rails', '~> 2.5'
 
   gem 'listen', '>= 3.1.5', '< 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
