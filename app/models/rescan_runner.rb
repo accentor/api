@@ -5,8 +5,8 @@
 #  id           :bigint           not null, primary key
 #  error_text   :text
 #  finished_at  :datetime         not null
-#  processed    :integer          default("0"), not null
-#  running      :boolean          default("false"), not null
+#  processed    :integer          default(0), not null
+#  running      :boolean          default(FALSE), not null
 #  warning_text :text
 #
 

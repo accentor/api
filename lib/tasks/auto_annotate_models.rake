@@ -10,7 +10,7 @@ if Rails.env.development?
     # You can override any of these by setting an environment variable of the
     # same name.
     Annotate.set_defaults(
-      'additional_file_patterns' => ['app/policies/*'],
+      'additional_file_patterns' => [],
       'routes' => 'true',
       'models' => 'true',
       'position_in_routes' => 'before',
