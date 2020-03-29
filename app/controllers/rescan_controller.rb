@@ -1,17 +1,19 @@
 class RescanController < ApplicationController
   before_action :set_rescan
 
-  def show; end
+  def show
+    render json: @rescan
+  end
 
   def start
     @rescan.delay(priority: 0).run
-    render :show
+    render json: @rescan
   end
 
   private
 
   def set_rescan
     @rescan = RescanRunner.first || RescanRunner.create
-    authorize @rescan, policy_class: RescanPolicy
+    authorize @rescan
   end
 end

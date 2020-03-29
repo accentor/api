@@ -9,16 +9,19 @@ class ArtistsController < ApplicationController
                .includes(image: [{ image_attachment: :blob }, :image_type])
                .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@artists)
+    render json: @artists
   end
 
-  def show; end
+  def show
+    render json: @artist
+  end
 
   def create
     authorize Artist
     @artist = Artist.new(transformed_attributes)
 
     if @artist.save
-      render :show, status: :created
+      render json: @artist, status: :created
     else
       render json: @artist.errors, status: :unprocessable_entity
     end
@@ -26,7 +29,7 @@ class ArtistsController < ApplicationController
 
   def update
     if @artist.update(transformed_attributes)
-      render :show, status: :ok
+      render json: @artist, status: :ok
     else
       render json: @artist.errors, status: :unprocessable_entity
     end

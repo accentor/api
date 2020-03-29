@@ -16,6 +16,8 @@ class ApplicationController < ActionController::API
 
   has_scope :sorted, using: %i[key direction], default: {}, allow_blank: true
 
+  serialization_scope :url_options
+
   protected
 
   def add_pagination_headers(collection)

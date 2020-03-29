@@ -9,16 +9,19 @@ class CodecConversionsController < ApplicationController
                          .order(id: :asc)
                          .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@codec_conversions)
+    render json: @codec_conversions
   end
 
-  def show; end
+  def show
+    render json: @codec_conversion
+  end
 
   def create
     authorize CodecConversion
     @codec_conversion = CodecConversion.new(permitted_attributes(CodecConversion))
 
     if @codec_conversion.save
-      render :show, status: :created
+      render json: @codec_conversion, status: :created
     else
       render json: @codec_conversion.errors, status: :unprocessable_entity
     end
@@ -26,7 +29,7 @@ class CodecConversionsController < ApplicationController
 
   def update
     if @codec_conversion.update(permitted_attributes(CodecConversion))
-      render :show, status: :ok
+      render json: @codec_conversion, status: :ok
     else
       render json: @codec_conversion.errors, status: :unprocessable_entity
     end

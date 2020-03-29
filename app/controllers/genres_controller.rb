@@ -7,16 +7,19 @@ class GenresController < ApplicationController
               .order(id: :asc)
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@genres)
+    render json: @genres
   end
 
-  def show; end
+  def show
+    render json: @genre
+  end
 
   def create
     authorize Genre
     @genre = Genre.new(permitted_attributes(Genre))
 
     if @genre.save
-      render :show, status: :created
+      render json: @genre, status: :created
     else
       render json: @genre.errors, status: :unprocessable_entity
     end
@@ -24,7 +27,7 @@ class GenresController < ApplicationController
 
   def update
     if @genre.update(permitted_attributes(@genre))
-      render :show, status: :ok
+      render json: @genre, status: :ok
     else
       render json: @genre.errors, status: :unprocessable_entity
     end

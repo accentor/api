@@ -7,16 +7,19 @@ class LocationsController < ApplicationController
                  .order(id: :asc)
                  .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@locations)
+    render json: @locations
   end
 
-  def show; end
+  def show
+    render json: @location
+  end
 
   def create
     authorize Location
     @location = Location.new(permitted_attributes(Location))
 
     if @location.save
-      render :show, status: :created
+      render json: @location, status: :created
     else
       render json: @location.errors, status: :unprocessable_entity
     end
