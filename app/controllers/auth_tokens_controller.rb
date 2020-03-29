@@ -31,7 +31,7 @@ class AuthTokensController < ApplicationController
     )
 
     if @auth_token.save
-      render json: @auth_token, serializer: FullAuthTokenSerializer, status: :created
+      render json: @auth_token, serializer: AuthTokenWithSecretSerializer, status: :created
     else
       render json: @auth_token.errors, status: :unprocessable_entity
     end
