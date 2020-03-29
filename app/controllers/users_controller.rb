@@ -7,16 +7,19 @@ class UsersController < ApplicationController
              .order(id: :asc)
              .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@users)
+    render json: @users
   end
 
-  def show; end
+  def show
+    render json: @user
+  end
 
   def create
     authorize User
     @user = User.new(permitted_attributes(User))
 
     if @user.save
-      render :show, status: :created
+      render json: @user, status: :created
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -32,7 +35,7 @@ class UsersController < ApplicationController
     end
 
     if @user.update(permitted_attributes(@user))
-      render :show, status: :ok
+      render json: @user, status: :ok
     else
       render json: @user.errors, status: :unprocessable_entity
     end

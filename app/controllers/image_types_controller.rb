@@ -7,16 +7,19 @@ class ImageTypesController < ApplicationController
                    .order(id: :asc)
                    .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@image_types)
+    render json: @image_types
   end
 
-  def show; end
+  def show
+    render json: @image_type
+  end
 
   def create
     authorize ImageType
     @image_type = ImageType.new(permitted_attributes(ImageType))
 
     if @image_type.save
-      render :show, status: :created
+      render json: @image_type, status: :created
     else
       render json: @image_type.errors, status: :unprocessable_entity
     end
@@ -24,7 +27,7 @@ class ImageTypesController < ApplicationController
 
   def update
     if @image_type.update(permitted_attributes(@image_type))
-      render :show, status: :ok
+      render json: @image_type, status: :ok
     else
       render json: @image_type.errors, status: :unprocessable_entity
     end

@@ -7,16 +7,19 @@ class LabelsController < ApplicationController
               .order(id: :asc)
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@labels)
+    render json: @labels
   end
 
-  def show; end
+  def show
+    render json: @label
+  end
 
   def create
     authorize Label
     @label = Label.new(permitted_attributes(Label))
 
     if @label.save
-      render :show, status: :created
+      render json: @label, status: :created
     else
       render json: @label.errors, status: :unprocessable_entity
     end
@@ -24,7 +27,7 @@ class LabelsController < ApplicationController
 
   def update
     if @label.update(permitted_attributes(@label))
-      render :show, status: :ok
+      render json: @label, status: :ok
     else
       render json: @label.errors, status: :unprocessable_entity
     end

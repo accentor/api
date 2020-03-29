@@ -14,16 +14,19 @@ class TracksController < ApplicationController
               .includes(:track_artists, :genres, audio_file: %i[location codec])
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@tracks)
+    render json: @tracks
   end
 
-  def show; end
+  def show
+    render json: @track
+  end
 
   def create
     authorize Track
     @track = Track.new(transformed_attributes)
 
     if @track.save
-      render :show, status: :created
+      render json: @track, status: :created
     else
       render json: @track.errors, status: :unprocessable_entity
     end
@@ -31,7 +34,7 @@ class TracksController < ApplicationController
 
   def update
     if @track.update(transformed_attributes)
-      render :show, status: :ok
+      render json: @track, status: :ok
     else
       render json: @track.errors, status: :unprocessable_entity
     end

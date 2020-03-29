@@ -7,16 +7,19 @@ class CoverFilenamesController < ApplicationController
                        .order(id: :asc)
                        .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@cover_filenames)
+    render json: @cover_filenames
   end
 
-  def show; end
+  def show
+    render json: @cover_filename
+  end
 
   def create
     authorize CoverFilename
     @cover_filename = CoverFilename.new(permitted_attributes(CoverFilename))
 
     if @cover_filename.save
-      render :show, status: :created
+      render json: @cover_filename, status: :created
     else
       render json: @cover_filename.errors, status: :unprocessable_entity
     end

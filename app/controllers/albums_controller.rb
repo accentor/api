@@ -12,16 +12,19 @@ class AlbumsController < ApplicationController
               .includes(:album_artists, :album_labels, image: [{ image_attachment: :blob }, :image_type])
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@albums)
+    render json: @albums
   end
 
-  def show; end
+  def show
+    render json: @album
+  end
 
   def create
     authorize Album
     @album = Album.new(transformed_attributes)
 
     if @album.save
-      render :show, status: :created
+      render json: @album, status: :created
     else
       render json: @album.errors, status: :unprocessable_entity
     end
@@ -29,7 +32,7 @@ class AlbumsController < ApplicationController
 
   def update
     if @album.update(transformed_attributes)
-      render :show, status: :ok
+      render json: @album, status: :ok
     else
       render json: @album.errors, status: :unprocessable_entity
     end

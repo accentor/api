@@ -29,10 +29,6 @@ module Accentor
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    config.generators do |g|
-      g.template_engine :jbuilder
-    end
-
     config.active_job.queue_adapter = :delayed_job
   end
 end
