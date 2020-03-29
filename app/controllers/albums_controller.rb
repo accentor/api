@@ -9,7 +9,7 @@ class AlbumsController < ApplicationController
   def index
     authorize Album
     @albums = apply_scopes(policy_scope(Album))
-              .includes(:album_artists, :album_labels, image: %i[image_attachment image_blob image_type])
+              .includes(:album_artists, :album_labels, image: [{ image_attachment: :blob }, :image_type])
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@albums)
   end
