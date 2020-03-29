@@ -6,7 +6,7 @@ class ArtistsController < ApplicationController
   def index
     authorize Artist
     @artists = apply_scopes(policy_scope(Artist))
-               .includes(image: %i[image_attachment image_blob image_type])
+               .includes(image: [{ image_attachment: :blob }, :image_type])
                .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@artists)
   end
