@@ -136,7 +136,7 @@ class RescanRunner < ApplicationRecord
 
       track_artists = track_artists.map { |ta| TrackArtist.new(artist: ta[:artist], name: ta[:name], role: ta[:role], order: ta[:order]) }
 
-      genre = (Genre.find_by(normalized_name: t_genre.normalize) || Genre.new(name: t_genre) if t_genre.present?)
+      genre = (Genre.find_by(normalized_name: Genre.normalize(t_genre)) || Genre.new(name: t_genre) if t_genre.present?)
       genres = genre.present? ? [genre] : []
 
       track = Track.new(title: t_title,
