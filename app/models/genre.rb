@@ -15,4 +15,11 @@ class Genre < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   normalized_col_generator :name
+
+  def merge(other)
+    other.tracks.find_each do |track|
+      tracks << track unless tracks.include?(track)
+    end
+    other.destroy
+  end
 end
