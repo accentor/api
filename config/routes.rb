@@ -99,6 +99,9 @@ Rails.application.routes.draw do
       collection do
         post 'destroy_empty'
       end
+      member do
+        post 'merge'
+      end
       resources :albums, only: [:index]
       resources :tracks, only: [:index]
     end

@@ -170,4 +170,25 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
 
     assert_not_nil Artist.find_by(id: artist2.id)
   end
+
+  test 'should not merge artists for user' do
+    artist = create(:artist)
+
+    assert_difference('Artist.count', 0) do
+      post merge_artist_url(@artist, other_artist_id: artist.id)
+    end
+
+    assert_response :forbidden
+  end
+
+  test 'should merge artists for moderator' do
+    sign_in_as(create(:moderator))
+    artist = create(:artist)
+
+    assert_difference('Artist.count', -1) do
+      post merge_artist_url(@artist, other_artist_id: artist.id)
+    end
+
+    assert_response :success
+  end
 end

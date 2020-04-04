@@ -34,4 +34,15 @@ class Artist < ApplicationRecord
       order(id: direction || :desc)
     end
   }
+
+  def merge(other)
+    other.album_artists.find_each do |aa|
+      aa.update(artist_id: id) unless albums.include?(aa.album)
+    end
+    other.track_artists.find_each do |ta|
+      ta.update(artist_id: id) unless tracks.include?(ta.track) && track_artists.where(role: ta.role).present?
+    end
+
+    other.destroy
+  end
 end
