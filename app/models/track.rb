@@ -61,6 +61,8 @@ class Track < ApplicationRecord
     af = other.audio_file
     other.update(audio_file: nil)
     other.destroy
+    return if af.blank?
+
     audio_file.destroy if audio_file_id?
     update(audio_file: af)
   end
