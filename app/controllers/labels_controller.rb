@@ -1,5 +1,5 @@
 class LabelsController < ApplicationController
-  before_action :set_label, only: %i[show update destroy]
+  before_action :set_label, only: %i[show update destroy merge]
 
   def index
     authorize Label
@@ -40,6 +40,12 @@ class LabelsController < ApplicationController
   def destroy_empty
     authorize Label
     Label.where.not(id: AlbumLabel.select(:label_id).distinct).destroy_all
+  end
+
+  def merge
+    @label.merge(Label.find(params[:other_label_id]))
+    # We don't do error handling here. The merge action isn't supposed to fail.
+    render json: @label, status: :ok
   end
 
   private
