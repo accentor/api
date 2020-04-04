@@ -88,7 +88,8 @@ class TracksController < ApplicationController
 
   def merge
     @track.merge(Track.find(params[:other_track_id]))
-    render :show, status: :ok
+    # We don't do error handling here. The merge action isn't supposed to fail.
+    render json: @track, status: :ok
   end
 
   private
