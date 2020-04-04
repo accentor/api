@@ -18,7 +18,7 @@ class Genre < ApplicationRecord
 
   def merge(other)
     other.tracks.find_each do |track|
-      self.tracks << track unless self.tracks.include?(track)
+      tracks << track unless tracks.include?(track)
     end
     other.destroy
   end
