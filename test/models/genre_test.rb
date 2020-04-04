@@ -17,14 +17,31 @@ class GenreTest < ActiveSupport::TestCase
     assert_equal 'iouaaa', genre.normalized_name
   end
 
-  test 'should update tracks on merge' do
+  test 'should be able to merge genres' do
+    genre1 = create(:genre)
+    genre2 = create(:genre)
+
+    assert genre2.merge(genre1)
+  end
+
+  test 'should be able to merge genres if track belongs to one' do
     genre1 = create(:genre)
     genre2 = create(:genre)
     track = create(:track, genres: [genre1])
 
-    genre1.merge(genre2)
-    updated_track = Track.find(track.id)
-    assert_not updated_track.genres.include?(genre1)
-    assert updated_track.genres.include?(genre2)
+    genre2.merge(genre1)
+    assert_not track.reload.genres.include?(genre1)
+    assert track.reload.genres.include?(genre2)
   end
+
+  test 'should be able to merge genres if track belongs to both' do
+    genre1 = create(:genre)
+    genre2 = create(:genre)
+    track = create(:track, genres: [genre1, genre2])
+
+    genre2.merge(genre1)
+    assert_not track.reload.genres.include?(genre1)
+    assert track.reload.genres.include?(genre2)
+  end
+
 end
