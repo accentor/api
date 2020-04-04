@@ -17,42 +17,48 @@ require 'test_helper'
 
 class TrackTest < ActiveSupport::TestCase
   test 'should be able to merge two tracks with two starting audio_files' do
-    a1 = create(:track, :with_audio_file)
-    a2 = create(:track, :with_audio_file)
+    t1 = create(:track, :with_audio_file)
+    t2 = create(:track, :with_audio_file)
+    audio_file_id = t2.audio_file.id
 
-    a1.merge(a2)
+    t1.merge(t2)
 
     assert_equal 1, AudioFile.count
+    assert_equal audio_file_id, t1.reload.audio_file.id
+    assert 1, Track.count
   end
 
   test 'should be able to merge two tracks with one resulting audio_file' do
-    a1 = create(:track)
-    a2 = create(:track, :with_audio_file)
+    t1 = create(:track)
+    t2 = create(:track, :with_audio_file)
 
-    a1.merge(a2)
+    t1.merge(t2)
 
     assert_equal 1, AudioFile.count
-    assert a1.reload.audio_file.present?
+    assert t1.reload.audio_file.present?
+    assert 1, Track.count
   end
 
-  test 'should be able to merge two tracks with zero resulting audio_files' do
-    a1 = create(:track, :with_audio_file)
-    a2 = create(:track)
+  test 'merging a track with no audio_file should not change audio_file' do
+    t1 = create(:track, :with_audio_file)
+    t2 = create(:track)
 
-    a1.merge(a2)
+    t1.merge(t2)
 
-    assert_equal 0, AudioFile.count
-    assert a1.reload.audio_file.blank?
+    assert_equal 1, AudioFile.count
+    assert t1.reload.audio_file.present?
+    assert 1, Track.count
   end
 
   test 'should be able to merge two tracks with zero starting audio_files' do
-    a1 = create(:track)
-    a2 = create(:track)
+    t1 = create(:track)
+    t2 = create(:track)
 
-    a1.merge(a2)
+    t1.merge(t2)
 
     assert_equal 0, AudioFile.count
-    assert a1.reload.audio_file.blank?
+    assert t1.reload.audio_file.blank?
+    assert 1, Track.count
   end
 
   test 'should be able to destroy track with genres' do
