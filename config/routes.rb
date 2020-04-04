@@ -39,6 +39,7 @@
 #            cover_filename GET    /api/cover_filenames/:id(.:format)                                                       cover_filenames#show
 #                           DELETE /api/cover_filenames/:id(.:format)                                                       cover_filenames#destroy
 #      destroy_empty_genres POST   /api/genres/destroy_empty(.:format)                                                      genres#destroy_empty
+#               merge_genre POST   /api/genres/:id/merge(.:format)                                                          genres#merge
 #                    genres GET    /api/genres(.:format)                                                                    genres#index
 #                           POST   /api/genres(.:format)                                                                    genres#create
 #                     genre GET    /api/genres/:id(.:format)                                                                genres#show

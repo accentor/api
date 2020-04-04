@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: artists
+#
+#  id              :bigint           not null, primary key
+#  name            :string           not null
+#  normalized_name :string           not null
+#  review_comment  :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  image_id        :bigint
+#
 class ArtistSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
