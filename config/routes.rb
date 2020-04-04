@@ -53,6 +53,7 @@
 #                           PUT    /api/image_types/:id(.:format)                                                           image_types#update
 #                           DELETE /api/image_types/:id(.:format)                                                           image_types#destroy
 #      destroy_empty_labels POST   /api/labels/destroy_empty(.:format)                                                      labels#destroy_empty
+#               merge_label POST   /api/labels/:id/merge(.:format)                                                          labels#merge
 #                    labels GET    /api/labels(.:format)                                                                    labels#index
 #                           POST   /api/labels(.:format)                                                                    labels#create
 #                     label GET    /api/labels/:id(.:format)                                                                labels#show
@@ -117,6 +118,9 @@ Rails.application.routes.draw do
     resources :labels do
       collection do
         post 'destroy_empty'
+      end
+      member do
+        post 'merge'
       end
     end
     resources :locations, only: %i[index show create destroy]

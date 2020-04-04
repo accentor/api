@@ -16,4 +16,11 @@ class Label < ApplicationRecord
   validates :name, presence: true
 
   normalized_col_generator :name
+
+  def merge(other)
+    other.album_labels.find_each do |al|
+      al.update(label_id: id) unless self.albums.include?(al.album)
+    end
+    other.destroy
+  end
 end
