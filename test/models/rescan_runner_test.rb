@@ -148,4 +148,37 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal 64, @runner.processed
     assert_equal true, @runner.running
   end
+
+  test 'artist tag should be required' do
+    Location.create(path: Rails.root.join('test/files/failure-no-artist'))
+
+    @runner.run
+    @runner.reload
+    assert_not @runner.error_text.empty?
+    assert @runner.error_text.include?('no-artist.mp3')
+    assert_equal 1, @runner.processed
+    assert_equal false, @runner.running
+  end
+
+  test 'album tag should be required' do
+    Location.create(path: Rails.root.join('test/files/failure-no-album'))
+
+    @runner.run
+    @runner.reload
+    assert_not @runner.error_text.empty?
+    assert @runner.error_text.include?('no-album.mp3')
+    assert_equal 1, @runner.processed
+    assert_equal false, @runner.running
+  end
+
+  test 'title tag should be required' do
+    Location.create(path: Rails.root.join('test/files/failure-no-title'))
+
+    @runner.run
+    @runner.reload
+    assert_not @runner.error_text.empty?
+    assert @runner.error_text.include?('no-title.mp3')
+    assert_equal 1, @runner.processed
+    assert_equal false, @runner.running
+  end
 end
