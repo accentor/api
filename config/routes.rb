@@ -108,6 +108,9 @@ Rails.application.routes.draw do
       collection do
         post 'destroy_empty'
       end
+      member do
+        post 'merge'
+      end
     end
     resources :image_types
     resources :labels do

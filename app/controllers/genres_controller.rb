@@ -42,6 +42,10 @@ class GenresController < ApplicationController
     Genre.left_outer_joins(:tracks).where(tracks: { id: nil }).destroy_all
   end
 
+  def merge
+    render json: @genre.errors, status: :unprocessable_entity unless @genre.merge(Genre.find(params[:old_genre_id]))
+  end
+
   private
 
   def set_genre
