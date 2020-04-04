@@ -42,6 +42,7 @@ gem 'rack-cors', '~> 1.1'
 
 group :test do
   gem 'codecov', '~> 0.1.16', require: false
+  gem 'mocha', '~> 1.11.2', require: false
   gem 'simplecov', '~> 0.18', require: false
 end
 

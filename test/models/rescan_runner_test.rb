@@ -111,4 +111,15 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal 1970, Album.first.release.year
     assert_equal 'genre', Genre.first.name
   end
+
+  test 'should be able to recover from catastrophic error' do
+    Location.stubs(:all).raises('Catastrophic error')
+
+    @runner.run
+    @runner.reload
+    assert_not @runner.error_text.empty?
+    assert @runner.error_text.include?('Catastrophic error')
+    assert_equal 0, @runner.processed
+    assert_equal false, @runner.running
+  end
 end
