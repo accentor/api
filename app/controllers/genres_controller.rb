@@ -1,5 +1,5 @@
 class GenresController < ApplicationController
-  before_action :set_genre, only: %i[show update destroy]
+  before_action :set_genre, only: %i[show update destroy merge]
 
   def index
     authorize Genre
@@ -43,7 +43,7 @@ class GenresController < ApplicationController
   end
 
   def merge
-    render json: @genre.errors, status: :unprocessable_entity unless @genre.merge(Genre.find(params[:old_genre_id]))
+    render json: @genre.errors, status: :unprocessable_entity unless @genre.merge(Genre.find(params[:other_genre_id]))
   end
 
   private
