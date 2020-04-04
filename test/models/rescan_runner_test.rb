@@ -69,6 +69,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
 
     @runner.run
     @runner.reload
+
     assert_equal '', @runner.error_text
     assert_equal '', @runner.warning_text
     assert_equal 1, @runner.processed
@@ -180,5 +181,30 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert @runner.error_text.include?('no-title.mp3')
     assert_equal 1, @runner.processed
     assert_equal false, @runner.running
+  end
+
+  test 'album artists should be empty if albumartist tag is Various Artists' do
+    Location.create(path: Rails.root.join('test/files/success-various-artists'))
+
+    @runner.run
+    @runner.reload
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 1, @runner.processed
+    assert_equal false, @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 2, Artist.count
+    assert_equal 1, Track.count
+    assert_equal 1, AudioFile.count
+    assert_equal 1, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal %w[artist composer], Track.first.artists.map(&:name).sort
+    assert_equal 'album', Album.first.title
+    assert_equal 0, Album.first.artists.count
+    assert_equal 1970, Album.first.release.year
+    assert_equal 'genre', Genre.first.name
   end
 end
