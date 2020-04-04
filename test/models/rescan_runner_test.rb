@@ -207,4 +207,138 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal 1970, Album.first.release.year
     assert_equal 'genre', Genre.first.name
   end
+
+  test 'only one artist should be created if artist and album_artist are equal' do
+    Location.create(path: Rails.root.join('test/files/success-equal-artists'))
+
+    @runner.run
+    @runner.reload
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 1, @runner.processed
+    assert_equal false, @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 1, Artist.count
+    assert_equal 1, Track.count
+    assert_equal 1, AudioFile.count
+    assert_equal 1, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal %w[artist], Track.first.artists.map(&:name)
+    assert_equal Track.first.artists.first, Album.first.artists.first
+    assert_equal 'album', Album.first.title
+    assert_equal 1, Album.first.artists.count
+    assert_equal 1970, Album.first.release.year
+    assert_equal 'genre', Genre.first.name
+  end
+
+  test 'artist should not be created if they already exist' do
+    Location.create(path: Rails.root.join('test/files/success-equal-artists'))
+    Artist.create(name: 'artist')
+
+    assert_difference('Artist.count', 0) do
+      @runner.run
+      @runner.reload
+    end
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 1, @runner.processed
+    assert_equal false, @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 1, Artist.count
+    assert_equal 1, Track.count
+    assert_equal 1, AudioFile.count
+    assert_equal 1, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal %w[artist], Track.first.artists.map(&:name)
+    assert_equal Track.first.artists.first, Album.first.artists.first
+    assert_equal 'album', Album.first.title
+    assert_equal 1, Album.first.artists.count
+    assert_equal 1970, Album.first.release.year
+    assert_equal 'genre', Genre.first.name
+  end
+
+  test 'album should not be created if it already exists' do
+    Location.create(path: Rails.root.join('test/files/success-equal-artists'))
+    Album.create(title: 'album', release: Date.new(1970, 1, 1))
+
+    assert_difference('Album.count', 0) do
+      @runner.run
+      @runner.reload
+    end
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 1, @runner.processed
+    assert_equal false, @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 1, Artist.count
+    assert_equal 1, Track.count
+    assert_equal 1, AudioFile.count
+    assert_equal 1, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal %w[artist], Track.first.artists.map(&:name)
+    assert_equal 'genre', Genre.first.name
+  end
+
+  test 'composer should not be created if they already exist' do
+    Location.create(path: Rails.root.join('test/files/success-one-file'))
+    Artist.create(name: 'composer')
+
+    assert_difference('Artist.count', 2) do
+      @runner.run
+      @runner.reload
+    end
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 1, @runner.processed
+    assert_equal false, @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 3, Artist.count
+    assert_equal 1, Track.count
+    assert_equal 1, AudioFile.count
+    assert_equal 1, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal 'album', Album.first.title
+    assert_equal 1, Album.first.artists.count
+    assert_equal 1970, Album.first.release.year
+    assert_equal 'genre', Genre.first.name
+  end
+
+  test 'genre should not be created if it already exists' do
+    Location.create(path: Rails.root.join('test/files/success-one-file'))
+    # Also checks that normalized version is used for matching
+    Genre.create(name: 'Genré')
+
+    assert_difference('Genre.count', 0) do
+      @runner.run
+      @runner.reload
+    end
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 1, @runner.processed
+    assert_equal false, @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 3, Artist.count
+    assert_equal 1, Track.count
+    assert_equal 1, AudioFile.count
+    assert_equal 1, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal 'album', Album.first.title
+    assert_equal 1, Album.first.artists.count
+    assert_equal 1970, Album.first.release.year
+  end
 end
