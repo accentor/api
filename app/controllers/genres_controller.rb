@@ -1,5 +1,5 @@
 class GenresController < ApplicationController
-  before_action :set_genre, only: %i[show update destroy]
+  before_action :set_genre, only: %i[show update destroy merge]
 
   def index
     authorize Genre
@@ -40,6 +40,12 @@ class GenresController < ApplicationController
   def destroy_empty
     authorize Genre
     Genre.left_outer_joins(:tracks).where(tracks: { id: nil }).destroy_all
+  end
+
+  def merge
+    @genre.merge(Genre.find(params[:other_genre_id]))
+    # We don't do error handling here. The merge action isn't supposed to fail.
+    render json: @genre, status: :ok
   end
 
   private

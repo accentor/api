@@ -16,4 +16,37 @@ class GenreTest < ActiveSupport::TestCase
     assert_not genre.normalized_name.nil?
     assert_equal 'iouaaa', genre.normalized_name
   end
+
+  test 'should be able to merge genres' do
+    genre1 = create(:genre)
+    genre2 = create(:genre)
+
+    assert_difference('Genre.count', -1) do
+      genre2.merge(genre1)
+    end
+  end
+
+  test 'should be able to merge genres if track belongs to one' do
+    genre1 = create(:genre)
+    genre2 = create(:genre)
+    track = create(:track, genres: [genre1])
+
+    assert_difference('Genre.count', -1) do
+      genre2.merge(genre1)
+    end
+    assert_not track.reload.genres.include?(genre1)
+    assert track.reload.genres.include?(genre2)
+  end
+
+  test 'should be able to merge genres if track belongs to both' do
+    genre1 = create(:genre)
+    genre2 = create(:genre)
+    track = create(:track, genres: [genre1, genre2])
+
+    assert_difference('Genre.count', -1) do
+      genre2.merge(genre1)
+    end
+    assert_not track.reload.genres.include?(genre1)
+    assert track.reload.genres.include?(genre2)
+  end
 end
