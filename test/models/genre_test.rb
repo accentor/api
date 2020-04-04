@@ -21,7 +21,9 @@ class GenreTest < ActiveSupport::TestCase
     genre1 = create(:genre)
     genre2 = create(:genre)
 
-    assert genre2.merge(genre1)
+    assert_difference('Genre.count', -1) do
+      genre2.merge(genre1)
+    end
   end
 
   test 'should be able to merge genres if track belongs to one' do
