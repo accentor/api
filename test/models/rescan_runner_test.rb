@@ -136,4 +136,16 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal 1, @runner.processed
     assert_equal false, @runner.running
   end
+
+  test 'should not do anything if runner is already running' do
+    Location.create(path: Rails.root.join('test/files/success-one-file'))
+
+    @runner.update(running: true, warning_text: 'unchanged', error_text: 'unchanged', processed: 64)
+    @runner.run
+    @runner.reload
+    assert_equal 'unchanged', @runner.error_text
+    assert_equal 'unchanged', @runner.warning_text
+    assert_equal 64, @runner.processed
+    assert_equal true, @runner.running
+  end
 end
