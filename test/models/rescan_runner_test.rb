@@ -122,4 +122,18 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal 0, @runner.processed
     assert_equal false, @runner.running
   end
+
+  test 'should be able to recover from bad files and proceed' do
+    Location.create(path: Rails.root.join('test/files/failure-bad-file'))
+    # Make sure bad file is processed before good file
+    Dir.stubs(:each_child).multiple_yields('empty.flac', 'all-tags.mp3')
+
+    @runner.run
+    @runner.reload
+
+    assert_not @runner.error_text.empty?
+    assert @runner.error_text.include?('empty.flac')
+    assert_equal 1, @runner.processed
+    assert_equal false, @runner.running
+  end
 end
