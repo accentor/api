@@ -341,4 +341,32 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal 1, Album.first.artists.count
     assert_equal 1970, Album.first.release.year
   end
+
+  test 'should create album with cover if applicable' do
+    Location.create(path: Rails.root.join('test/files/success-with-cover'))
+
+    assert_difference('Image.count', 1) do
+      @runner.run
+    end
+    @runner.reload
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 1, @runner.processed
+    assert_equal false, @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 3, Artist.count
+    assert_equal 1, Track.count
+    assert_equal 1, AudioFile.count
+    assert_equal 1, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal %w[artist composer], Track.first.artists.map(&:name).sort
+    assert_equal 'album', Album.first.title
+    assert_equal 'albumartist', Album.first.artists.first.name
+    assert_equal 1970, Album.first.release.year
+    assert Album.first.image.present?
+    assert_equal 'genre', Genre.first.name
+  end
 end
