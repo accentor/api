@@ -31,7 +31,9 @@ class GenreTest < ActiveSupport::TestCase
     genre2 = create(:genre)
     track = create(:track, genres: [genre1])
 
-    genre2.merge(genre1)
+    assert_difference('Genre.count', -1) do
+      genre2.merge(genre1)
+    end
     assert_not track.reload.genres.include?(genre1)
     assert track.reload.genres.include?(genre2)
   end
@@ -41,7 +43,9 @@ class GenreTest < ActiveSupport::TestCase
     genre2 = create(:genre)
     track = create(:track, genres: [genre1, genre2])
 
-    genre2.merge(genre1)
+    assert_difference('Genre.count', -1) do
+      genre2.merge(genre1)
+    end
     assert_not track.reload.genres.include?(genre1)
     assert track.reload.genres.include?(genre2)
   end
