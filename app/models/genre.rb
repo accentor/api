@@ -21,6 +21,6 @@ class Genre < ApplicationRecord
     tracks.find_each do |track|
       track.genres << other unless track.genres.include?(other)
     end
-    self.destroy
+    destroy
   end
 end
