@@ -16,13 +16,52 @@
 require 'test_helper'
 
 class TrackTest < ActiveSupport::TestCase
-  test 'should be able to merge two tracks' do
+  test 'should be able to merge two tracks with two starting audio_files' do
     a1 = create(:track, :with_audio_file)
     a2 = create(:track, :with_audio_file)
 
     a1.merge(a2)
 
     assert_equal 1, AudioFile.count
+  end
+
+  test 'should be able to merge two tracks with one resulting audio_file' do
+    a1 = create(:track)
+    a2 = create(:track, :with_audio_file)
+
+    a1.merge(a2)
+
+    assert_equal 1, AudioFile.count
+    assert a1.reload.audio_file.present?
+  end
+
+  test 'should be able to merge two tracks with zero resulting audio_files' do
+    a1 = create(:track, :with_audio_file)
+    a2 = create(:track)
+
+    a1.merge(a2)
+
+    assert_equal 0, AudioFile.count
+    assert a1.reload.audio_file.blank?
+  end
+
+  test 'should be able to merge two tracks with zero starting audio_files' do
+    a1 = create(:track)
+    a2 = create(:track)
+
+    a1.merge(a2)
+
+    assert_equal 0, AudioFile.count
+    assert a1.reload.audio_file.blank?
+  end
+
+  test 'should be able to destroy track with genres' do
+    g1 = create(:genre)
+    g2 = create(:genre)
+    track = create(:track, genres: [g1, g2])
+
+    assert track.destroy
+    assert_equal 0, Track.count
   end
 
   test 'should be able to search by genre' do

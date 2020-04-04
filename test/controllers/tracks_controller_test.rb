@@ -139,11 +139,17 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:moderator))
     track = create(:track, :with_audio_file)
 
+    audio_file = track.audio_file
+
     assert_difference('Track.count', -1) do
       assert_difference('AudioFile.count', -1) do
         post merge_track_url(@track, other_track_id: track.id)
       end
     end
+
+    assert_equal @track, audio_file.reload.track
+    assert_equal audio_file.length, JSON.parse(response.body)['length']
+    assert_equal audio_file.bitrate, JSON.parse(response.body)['bitrate']
 
     assert_response :success
   end
