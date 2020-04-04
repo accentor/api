@@ -21,6 +21,49 @@ class RescanRunnerTest < ActiveSupport::TestCase
     CoverFilename.create(filename: 'image')
   end
 
+  test 'should complain when there are no locations' do
+    @runner.run
+    @runner.reload
+
+    assert_not @runner.error_text.empty?
+    assert_equal 0, @runner.processed
+    assert_equal false, @runner.running
+  end
+
+  test 'should complain when there are no codecs' do
+    Location.create(path: Rails.root.join('test/files/success-one-file'))
+    Codec.destroy_all
+
+    @runner.run
+    @runner.reload
+
+    assert_not @runner.error_text.empty?
+    assert_equal 0, @runner.processed
+    assert_equal false, @runner.running
+  end
+
+  test "should complain when location doesn't exist" do
+    Location.create(path: Rails.root.join('test/files/doesnt-exist'))
+
+    @runner.run
+    @runner.reload
+
+    assert_not @runner.error_text.empty?
+    assert_equal 0, @runner.processed
+    assert_equal false, @runner.running
+  end
+
+  test 'should complain when location is a file' do
+    Location.create(path: Rails.root.join('test/files/base.flac'))
+
+    @runner.run
+    @runner.reload
+
+    assert_not @runner.error_text.empty?
+    assert_equal 0, @runner.processed
+    assert_equal false, @runner.running
+  end
+
   test 'should be able to read a file successfully' do
     Location.create(path: Rails.root.join('test/files/success-one-file'))
 
