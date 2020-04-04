@@ -125,4 +125,25 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
 
     assert_not_nil Genre.find_by(id: genre2.id)
   end
+
+  test 'should not merge genres for user' do
+    genre = create(:genre)
+
+    assert_difference('Genre.count', 0) do
+      post merge_genre_url(@genre, other_genre_id: genre.id)
+    end
+
+    assert_response :forbidden
+  end
+
+  test 'should merge genres for moderator' do
+    sign_in_as(create(:moderator))
+    genre = create(:genre)
+
+    assert_difference('Genre.count', -1) do
+      post merge_genre_url(@genre, other_genre_id: genre.id)
+    end
+
+    assert_response :success
+  end
 end
