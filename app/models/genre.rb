@@ -17,10 +17,10 @@ class Genre < ApplicationRecord
   normalized_col_generator :name
 
   def merge(other)
-    tracks = self.tracks
+    tracks = other.tracks
     tracks.find_each do |track|
-      track.genres << other unless track.genres.include?(other)
+      self.tracks << track unless self.tracks.include?(track)
     end
-    destroy
+    other.destroy
   end
 end

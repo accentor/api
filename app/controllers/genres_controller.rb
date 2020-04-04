@@ -43,7 +43,9 @@ class GenresController < ApplicationController
   end
 
   def merge
-    render json: @genre.errors, status: :unprocessable_entity unless @genre.merge(Genre.find(params[:other_genre_id]))
+    @genre.merge(Genre.find(params[:other_genre_id]))
+    # We don't do error handling here. The merge action isn't supposed to fail.
+    render :show, status: :ok
   end
 
   private
