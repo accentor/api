@@ -19,7 +19,7 @@ class Label < ApplicationRecord
 
   def merge(other)
     other.album_labels.find_each do |al|
-      al.update(label_id: id) unless self.albums.include?(al.album)
+      al.update(label_id: id) unless albums.include?(al.album)
     end
     other.destroy
   end
