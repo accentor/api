@@ -2,6 +2,8 @@ require 'simplecov'
 SimpleCov.start 'rails' do
   enable_coverage :branch
   add_filter 'vendor'
+  add_group 'Policies', 'app/policies'
+  add_group 'Serializers', 'app/serializers'
 end
 
 if ENV['CI'].present?
