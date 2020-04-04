@@ -126,7 +126,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil Label.find_by(id: label2.id)
   end
 
-  test 'should not merge genres for user' do
+  test 'should not merge labels for user' do
     label = create(:label)
 
     assert_difference('Label.count', 0) do
@@ -136,7 +136,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
-  test 'should merge genres for moderator' do
+  test 'should merge labels for moderator' do
     sign_in_as(create(:moderator))
     label = create(:label)
 
