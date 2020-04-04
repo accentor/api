@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: albums
+#
+#  id                  :bigint           not null, primary key
+#  edition             :date
+#  edition_description :string
+#  normalized_title    :string           not null
+#  release             :date
+#  review_comment      :string
+#  title               :string           not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  image_id            :bigint
+#
 class AlbumSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
