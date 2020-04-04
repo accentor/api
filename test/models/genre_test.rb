@@ -43,5 +43,4 @@ class GenreTest < ActiveSupport::TestCase
     assert_not track.reload.genres.include?(genre1)
     assert track.reload.genres.include?(genre2)
   end
-
 end
