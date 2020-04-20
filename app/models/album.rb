@@ -70,9 +70,12 @@ class Album < ApplicationRecord
     album_artists.each do |aa|
       if aa.order == album_artists.to_a.count
         errors.add(:album_artists, 'aa-last-no-separator') unless aa.separator.nil?
-      elsif aa.separator.empty?
+      # rubocop:disable Rails/Blank
+      # We don't want to check for blank? here, since we specifically want to allow a blank string
+      elsif aa.separator.nil? || aa.separator.empty?
         errors.add(:album_artists, 'aa-separator')
       end
+      # rubocop:enable Rails/Blank
     end
   end
 end
