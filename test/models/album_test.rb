@@ -35,8 +35,8 @@ class AlbumTest < ActiveSupport::TestCase
     assert_not_empty album.errors[:album_artists]
   end
 
-  test 'should allow album artists with single space as separator' do
-    album = build(:album, album_artists: [build(:album_artist, separator: ' ', order: 1), build(:album_artist, separator: nil, order: 2)])
+  test 'should allow album artists with empty string as separator' do
+    album = build(:album, album_artists: [build(:album_artist, separator: '', order: 1), build(:album_artist, separator: nil, order: 2)])
     assert album.valid?
   end
 
