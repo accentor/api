@@ -16,6 +16,8 @@ class Genre < ApplicationRecord
 
   normalized_col_generator :name
 
+  scope :by_ids, ->(ids) { where(id: ids) }
+
   def merge(other)
     other.tracks.find_each do |track|
       tracks << track unless tracks.include?(track)

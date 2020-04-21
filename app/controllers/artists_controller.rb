@@ -2,6 +2,7 @@ class ArtistsController < ApplicationController
   before_action :set_artist, only: %i[show update destroy]
 
   has_scope :by_filter, as: 'filter'
+  has_scope :by_ids, as: 'ids', type: :array
 
   def index
     authorize Artist

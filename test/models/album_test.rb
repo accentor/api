@@ -45,4 +45,14 @@ class AlbumTest < ActiveSupport::TestCase
     assert_not album.valid?
     assert_not_empty album.errors[:album_artists]
   end
+
+  test 'should be able to search by id' do
+    a1 = create(:album)
+    a2 = create(:album)
+    a3 = create(:album)
+
+    assert_equal [a1], Album.by_ids(a1.id).to_a
+    assert_equal [a1, a2], Album.by_ids([a1.id, a2.id]).to_a
+    assert_equal [a3], Album.by_ids(a3.id).to_a
+  end
 end

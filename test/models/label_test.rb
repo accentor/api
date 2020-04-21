@@ -52,4 +52,14 @@ class LabelTest < ActiveSupport::TestCase
     assert_not album.reload.labels.include?(label1)
     assert album.reload.labels.include?(label2)
   end
+
+  test 'should be able to search by id' do
+    l1 = create(:label)
+    l2 = create(:label)
+    l3 = create(:label)
+
+    assert_equal [l1], Label.by_ids(l1.id).to_a
+    assert_equal [l1, l2], Label.by_ids([l1.id, l2.id]).to_a
+    assert_equal [l3], Label.by_ids(l3.id).to_a
+  end
 end

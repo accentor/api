@@ -17,6 +17,8 @@ class Label < ApplicationRecord
 
   normalized_col_generator :name
 
+  scope :by_ids, ->(ids) { where(id: ids) }
+
   def merge(other)
     other.album_labels.find_each do |al|
       al.update(label_id: id) unless albums.include?(al.album)

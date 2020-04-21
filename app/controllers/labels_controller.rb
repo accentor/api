@@ -1,6 +1,8 @@
 class LabelsController < ApplicationController
   before_action :set_label, only: %i[show update destroy merge]
 
+  has_scope :by_ids, as: 'ids', type: :array
+
   def index
     authorize Label
     @labels = apply_scopes(policy_scope(Label))

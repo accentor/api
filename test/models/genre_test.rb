@@ -49,4 +49,14 @@ class GenreTest < ActiveSupport::TestCase
     assert_not track.reload.genres.include?(genre1)
     assert track.reload.genres.include?(genre2)
   end
+
+  test 'should be able to search by id' do
+    g1 = create(:genre)
+    g2 = create(:genre)
+    g3 = create(:genre)
+
+    assert_equal [g1], Genre.by_ids(g1.id).to_a
+    assert_equal [g1, g2], Genre.by_ids([g1.id, g2.id]).to_a
+    assert_equal [g3], Genre.by_ids(g3.id).to_a
+  end
 end

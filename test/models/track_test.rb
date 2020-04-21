@@ -86,6 +86,16 @@ class TrackTest < ActiveSupport::TestCase
     assert_equal [t2], Track.by_genre(g3.id).to_a
   end
 
+  test 'should be able to search by id' do
+    t1 = create(:track)
+    t2 = create(:track)
+    t3 = create(:track)
+
+    assert_equal [t1], Track.by_ids(t1.id).to_a
+    assert_equal [t1, t2], Track.by_ids([t1.id, t2.id]).to_a
+    assert_equal [t3], Track.by_ids(t3.id).to_a
+  end
+
   test 'should automatically generate normalized_title' do
     track = build(:track, title: 'ïóùåAÁ')
     track.save

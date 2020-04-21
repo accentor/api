@@ -1,6 +1,8 @@
 class GenresController < ApplicationController
   before_action :set_genre, only: %i[show update destroy merge]
 
+  has_scope :by_ids, as: 'ids', type: :array
+
   def index
     authorize Genre
     @genres = apply_scopes(policy_scope(Genre))
