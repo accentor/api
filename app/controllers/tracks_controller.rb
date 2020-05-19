@@ -14,7 +14,11 @@ class TracksController < ApplicationController
               .includes(:track_artists, :genres, audio_file: %i[location codec])
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@tracks)
-    render json: @tracks
+    if current_user.moderator?
+      render json: @tracks, serializer: TrackWithFilenameSerializer
+    else
+      render json: @tracks
+    end
   end
 
   def show

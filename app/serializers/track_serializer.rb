@@ -13,7 +13,7 @@
 #  audio_file_id    :bigint
 #
 class TrackSerializer < ActiveModel::Serializer
-  attributes :id, :title, :normalized_title, :number, :album_id, :review_comment, :created_at, :updated_at, :genre_ids, :codec_id, :length, :bitrate, :location_id, :filename
+  attributes :id, :title, :normalized_title, :number, :album_id, :review_comment, :created_at, :updated_at, :genre_ids, :codec_id, :length, :bitrate, :location_id
 
   has_many :track_artists
 
@@ -31,9 +31,5 @@ class TrackSerializer < ActiveModel::Serializer
 
   def location_id
     object.audio_file&.location_id
-  end
-
-  def filename
-    object.audio_file&.filename
   end
 end
