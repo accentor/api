@@ -29,7 +29,7 @@ gem 'pundit', '~> 2.1'
 gem 'will_paginate', '~> 3.3'
 
 # Use ActiveStorage variant
-gem 'image_processing', '~> 1.10.3'
+gem 'image_processing', '~> 1.11.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
