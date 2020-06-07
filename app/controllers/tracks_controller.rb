@@ -34,11 +34,7 @@ class TracksController < ApplicationController
     @track = Track.new(transformed_attributes)
 
     if @track.save
-      if current_user.moderator?
-        render json: @track, serializer: TrackModeratorSerializer, status: :created
-      else
-        render json: @track, status: :created
-      end
+      render json: @track, serializer: TrackModeratorSerializer, status: :created
     else
       render json: @track.errors, status: :unprocessable_entity
     end
