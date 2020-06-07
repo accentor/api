@@ -14,19 +14,12 @@ class TracksController < ApplicationController
               .includes(:track_artists, :genres, audio_file: %i[location codec])
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@tracks)
-    if current_user.moderator?
-      render json: @tracks, each_serializer: TrackModeratorSerializer
-    else
-      render json: @tracks
-    end
+
+    render json: @tracks, each_serializer: serializer
   end
 
   def show
-    if current_user.moderator?
-      render json: @track, serializer: TrackModeratorSerializer
-    else
-      render json: @track
-    end
+    render json: @track, serializer: serializer
   end
 
   def create
@@ -34,7 +27,7 @@ class TracksController < ApplicationController
     @track = Track.new(transformed_attributes)
 
     if @track.save
-      render json: @track, serializer: TrackModeratorSerializer, status: :created
+      render json: @track, serializer: serializer, status: :created
     else
       render json: @track.errors, status: :unprocessable_entity
     end
@@ -42,11 +35,7 @@ class TracksController < ApplicationController
 
   def update
     if @track.update(transformed_attributes)
-      if current_user.moderator?
-        render json: @track, serializer: TrackModeratorSerializer, status: :ok
-      else
-        render json: @track, status: :ok
-      end
+      render json: @track, serializer: serializer, status: :ok
     else
       render json: @track.errors, status: :unprocessable_entity
     end
@@ -105,6 +94,10 @@ class TracksController < ApplicationController
   end
 
   private
+
+  def serializer
+    current_user.moderator? ? TrackModeratorSerializer : TrackSerializer
+  end
 
   def set_track
     @track = Track.find(params[:id])
