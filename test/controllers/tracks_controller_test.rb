@@ -52,6 +52,21 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should show track with filename for moderator' do
+    sign_in_as(create(:moderator))
+    get track_url(@track)
+    assert_response :success
+    body = ActiveSupport::JSON.decode response.body
+    assert_equal @track.audio_file&.filename, body['filename']
+  end
+
+  test 'should show track without filename for user' do
+    get track_url(@track)
+    assert_response :success
+    body = ActiveSupport::JSON.decode response.body
+    assert_nil body['filename']
+  end
+
   test 'user should be able to update review_comment' do
     patch track_url(@track), params: { track: { review_comment: 'comment' } }
     assert_response :success
