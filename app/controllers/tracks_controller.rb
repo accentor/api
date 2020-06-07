@@ -15,14 +15,18 @@ class TracksController < ApplicationController
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@tracks)
     if current_user.moderator?
-      render json: @tracks, serializer: TrackWithFilenameSerializer
+      render json: @tracks, each_serializer: TrackModeratorSerializer
     else
       render json: @tracks
     end
   end
 
   def show
-    render json: @track
+    if current_user.moderator?
+      render json: @track, serializer: TrackModeratorSerializer
+    else
+      render json: @track
+    end
   end
 
   def create
@@ -30,7 +34,11 @@ class TracksController < ApplicationController
     @track = Track.new(transformed_attributes)
 
     if @track.save
-      render json: @track, status: :created
+      if current_user.moderator?
+        render json: @track, serializer: TrackModeratorSerializer, status: :created
+      else
+        render json: @track, status: :created
+      end
     else
       render json: @track.errors, status: :unprocessable_entity
     end
@@ -38,7 +46,11 @@ class TracksController < ApplicationController
 
   def update
     if @track.update(transformed_attributes)
-      render json: @track, status: :ok
+      if current_user.moderator?
+        render json: @track, serializer: TrackModeratorSerializer, status: :ok
+      else
+        render json: @track, status: :ok
+      end
     else
       render json: @track.errors, status: :unprocessable_entity
     end
