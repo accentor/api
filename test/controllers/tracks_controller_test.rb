@@ -6,9 +6,19 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:user))
   end
 
-  test 'should get index' do
+  test 'should get index with filenames for moderator' do
+    sign_in_as(create(:moderator))
     get tracks_url
     assert_response :success
+    body = ActiveSupport::JSON.decode response.body
+    assert_equal @track.audio_file&.filename, body.first['filename']
+  end
+
+  test 'should get index without filenames for user' do
+    get tracks_url
+    assert_response :success
+    body = ActiveSupport::JSON.decode response.body
+    assert_nil body.first['filename']
   end
 
   test 'should not create track for user' do
@@ -50,6 +60,21 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   test 'should show track' do
     get track_url(@track)
     assert_response :success
+  end
+
+  test 'should show track with filename for moderator' do
+    sign_in_as(create(:moderator))
+    get track_url(@track)
+    assert_response :success
+    body = ActiveSupport::JSON.decode response.body
+    assert_equal @track.audio_file&.filename, body['filename']
+  end
+
+  test 'should show track without filename for user' do
+    get track_url(@track)
+    assert_response :success
+    body = ActiveSupport::JSON.decode response.body
+    assert_nil body['filename']
   end
 
   test 'user should be able to update review_comment' do
