@@ -1,4 +1,4 @@
-class TrackWithFilenameSerializer < TrackSerializer
+class TrackModeratorSerializer < TrackSerializer
   attribute :filename
 
   def filename
