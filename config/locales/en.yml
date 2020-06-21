@@ -111,6 +111,8 @@ en:
           attributes:
             name:
               blank: "user.name-blank"
+            password_confirmation:
+              confirmation: "user.password-confirmation"
             password_digest:
               blank: "user.password-blank"
             permission:
