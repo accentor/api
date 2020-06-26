@@ -36,13 +36,20 @@ class Artist < ApplicationRecord
   }
 
   def merge(other)
+    # we check if the artist to be merged have some overlap. If they do, we tell the user that they should resolve this first.
+    errors.add(:album_artists, 'aa.albums-overlap') unless (other.albums.map(&:id) & albums.map(&:id)).empty?
+    errors.add(:track_artists, 'ta.tracks-overlap') unless (other.track_artists.map { |ta| [ta.track_id, ta.role] } & track_artists.map { |ta| [ta.track_id, ta.role] }).empty?
+    return false if errors.present?
+
     other.album_artists.find_each do |aa|
-      aa.update(artist_id: id) unless albums.include?(aa.album)
-    end
-    other.track_artists.find_each do |ta|
-      ta.update(artist_id: id) unless tracks.include?(ta.track) && track_artists.where(role: ta.role).present?
+      aa.update(artist_id: id)
     end
 
-    other.destroy
+    other.track_artists.find_each do |ta|
+      ta.update(artist_id: id)
+    end
+
+    # we have to reload to make sure the track_artists and album_artists relation isn't cached anymore
+    other.reload.destroy
   end
 end

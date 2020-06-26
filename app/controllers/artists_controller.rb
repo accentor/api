@@ -48,9 +48,7 @@ class ArtistsController < ApplicationController
   end
 
   def merge
-    @artist.merge(Artist.find(params[:other_artist_id]))
-    # We don't do error handling here. The merge action isn't supposed to fail.
-    render json: @artist, status: :ok
+    render json: @artist.errors, status: :unprocessable_entity unless @artist.merge(Artist.find(params[:other_artist_id]))
   end
 
   private
