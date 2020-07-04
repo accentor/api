@@ -91,7 +91,7 @@ class RescanRunner < ApplicationRecord
 
     unless t_artist.present? && t_title.present? && t_album.present?
       update(error_text: "#{error_text}File #{path} is missing required tags (album, artist, title)\n")
-      return false
+      return
     end
 
     albumartist = Artist.find_by(name: t_albumartist) || Artist.new(name: t_albumartist, review_comment: 'New artist')
