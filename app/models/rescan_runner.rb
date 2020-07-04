@@ -77,77 +77,76 @@ class RescanRunner < ApplicationRecord
 
     return if AudioFile.where(location: location, filename: relative_path.to_s).exists?
 
-    EasyTag.open(path) do |tags|
-      t_artist = tags.artist&.unicode_normalize
-      t_albumartist = (tags.album_artist || t_artist)&.unicode_normalize
-      t_composer = tags.composer&.unicode_normalize
-      t_title = tags.title&.unicode_normalize
-      t_number = tags.track_number
-      t_album = tags.album&.unicode_normalize
-      t_year = tags.year
-      t_genre = tags.genre&.unicode_normalize
-      length = tags.length
-      bitrate = tags.bitrate
+    tag = WahWah.open(path)
+    t_artist = tag.artist&.unicode_normalize
+    t_albumartist = tag.albumartist&.unicode_normalize || t_artist
+    t_composer = tag.composer&.unicode_normalize
+    t_title = tag.title&.unicode_normalize
+    t_number = tag.track || 0
+    t_album = tag.album&.unicode_normalize
+    t_year = tag.year.to_i
+    t_genre = tag.genre&.unicode_normalize
+    length = tag.duration
+    bitrate = tag.bitrate
 
-      unless t_artist.present? && t_title.present? && t_album.present?
-        update(error_text: "#{error_text}File #{path} is missing required tags (album, artist, title)\n")
-        next
-      end
-
-      albumartist = Artist.find_by(name: t_albumartist) || Artist.new(name: t_albumartist, review_comment: 'New artist')
-      albumartists = if t_albumartist.downcase != 'various artists'
-                       [AlbumArtist.new(artist: albumartist,
-                                        name: t_albumartist,
-                                        order: 1,
-                                        separator: nil)]
-                     else
-                       []
-                     end
-
-      album = Album.find_by(title: t_album, release: Date.ordinal(t_year)) ||
-              Album.new(title: t_album,
-                        release: Date.ordinal(t_year),
-                        image: find_image(Pathname.new(path).parent),
-                        review_comment: 'New album',
-                        album_artists: albumartists)
-
-      audio_file = AudioFile.new(location: location, codec: codec, filename: relative_path.to_s, length: length, bitrate: bitrate)
-
-      artist = if t_albumartist == t_artist
-                 albumartist
-               else
-                 Artist.find_by(name: t_artist) || Artist.new(name: t_artist, review_comment: 'New artist')
-               end
-      track_artists = [{
-        artist: artist,
-        name: t_artist,
-        role: :main,
-        order: 1
-      }]
-      if t_composer.present? && t_composer != t_artist
-        composer = Artist.find_by(name: t_composer) || Artist.new(name: t_composer, review_comment: 'New artist')
-        track_artists << {
-          artist: composer,
-          name: t_composer,
-          role: :composer,
-          order: 2
-        }
-      end
-
-      track_artists = track_artists.map { |ta| TrackArtist.new(artist: ta[:artist], name: ta[:name], role: ta[:role], order: ta[:order]) }
-
-      genre = (Genre.find_by(normalized_name: Genre.normalize(t_genre)) || Genre.new(name: t_genre) if t_genre.present?)
-      genres = genre.present? ? [genre] : []
-
-      track = Track.new(title: t_title,
-                        number: t_number,
-                        track_artists: track_artists,
-                        genres: genres,
-                        audio_file: audio_file,
-                        album: album,
-                        review_comment: 'New track')
-      track.save
+    unless t_artist.present? && t_title.present? && t_album.present?
+      update(error_text: "#{error_text}File #{path} is missing required tags (album, artist, title)\n")
+      return false
     end
+
+    albumartist = Artist.find_by(name: t_albumartist) || Artist.new(name: t_albumartist, review_comment: 'New artist')
+    albumartists = if t_albumartist.downcase != 'various artists'
+                     [AlbumArtist.new(artist: albumartist,
+                                      name: t_albumartist,
+                                      order: 1,
+                                      separator: nil)]
+                   else
+                     []
+                   end
+
+    album = Album.find_by(title: t_album, release: Date.ordinal(t_year)) ||
+            Album.new(title: t_album,
+                      release: Date.ordinal(t_year),
+                      image: find_image(Pathname.new(path).parent),
+                      review_comment: 'New album',
+                      album_artists: albumartists)
+
+    audio_file = AudioFile.new(location: location, codec: codec, filename: relative_path.to_s, length: length, bitrate: bitrate)
+
+    artist = if t_albumartist == t_artist
+               albumartist
+             else
+               Artist.find_by(name: t_artist) || Artist.new(name: t_artist, review_comment: 'New artist')
+             end
+    track_artists = [{
+      artist: artist,
+      name: t_artist,
+      role: :main,
+      order: 1
+    }]
+    if t_composer.present? && t_composer != t_artist
+      composer = Artist.find_by(name: t_composer) || Artist.new(name: t_composer, review_comment: 'New artist')
+      track_artists << {
+        artist: composer,
+        name: t_composer,
+        role: :composer,
+        order: 2
+      }
+    end
+
+    track_artists = track_artists.map { |ta| TrackArtist.new(artist: ta[:artist], name: ta[:name], role: ta[:role], order: ta[:order]) }
+
+    genre = (Genre.find_by(normalized_name: Genre.normalize(t_genre)) || Genre.new(name: t_genre) if t_genre.present?)
+    genres = genre.present? ? [genre] : []
+
+    track = Track.new(title: t_title,
+                      number: t_number,
+                      track_artists: track_artists,
+                      genres: genres,
+                      audio_file: audio_file,
+                      album: album,
+                      review_comment: 'New track')
+    track.save
   end
 
   def find_image(path)
