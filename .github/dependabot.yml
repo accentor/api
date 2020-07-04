@@ -15,6 +15,3 @@ updates:
     versions:
     - ">= 2.2.a"
     - "< 2.3"
-  - dependency-name: taglib-ruby
-    versions:
-    - "> 0.7.1"
