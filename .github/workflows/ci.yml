@@ -26,7 +26,6 @@ jobs:
     - name: Install dependencies
       run: |
         apt-get -y update
-        apt-get -y install --no-install-recommends libtag1-dev
         bundle config path
         bundle install --jobs 4 --retry 3
     - name: Run tests
@@ -52,7 +51,6 @@ jobs:
     - name: Install dependencies
       run: |
         apt-get -y update
-        apt-get -y install --no-install-recommends libtag1-dev
         bundle config path
         bundle install --jobs 4 --retry 3
     - name: Lint with rubocop
