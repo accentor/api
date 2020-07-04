@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Cache Ruby dependencies
-      uses: actions/cache@v1
+      uses: actions/cache@v2
       with:
         path: /usr/local/bundle
         key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
@@ -41,7 +41,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Cache Ruby dependencies
-      uses: actions/cache@v1
+      uses: actions/cache@v2
       with:
         path: /usr/local/bundle
         key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
