@@ -20,9 +20,7 @@ gem 'bcrypt', '~> 3.1'
 
 gem 'delayed_job_active_record', '~> 4.1'
 
-gem 'easytag', '~> 1.0'
-# taglib-ruby released version 1.0, but easytag isn't updated (yet) to work with it.
-gem 'taglib-ruby', '< 1.0'
+gem 'wahwah', '~> 1.0'
 
 gem 'has_scope', '~> 0.7'
 gem 'pundit', '~> 2.1'
