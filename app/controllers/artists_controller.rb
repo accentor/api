@@ -1,5 +1,5 @@
 class ArtistsController < ApplicationController
-  before_action :set_artist, only: %i[show update destroy]
+  before_action :set_artist, only: %i[show update destroy merge]
 
   has_scope :by_filter, as: 'filter'
 
@@ -45,6 +45,10 @@ class ArtistsController < ApplicationController
       .where.not(id: TrackArtist.select(:artist_id).distinct)
       .where.not(id: AlbumArtist.select(:artist_id).distinct)
       .destroy_all
+  end
+
+  def merge
+    render json: @artist.errors, status: :unprocessable_entity unless @artist.merge(Artist.find(params[:other_artist_id]))
   end
 
   private

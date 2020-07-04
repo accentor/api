@@ -29,6 +29,10 @@ class ArtistPolicy < ApplicationPolicy
     create?
   end
 
+  def merge?
+    create?
+  end
+
   def permitted_attributes
     if user.moderator?
       [:name, :review_comment, image: %i[data filename mimetype]]
