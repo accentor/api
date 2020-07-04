@@ -25,7 +25,6 @@ jobs:
           ${{ runner.os }}-gem-
     - name: Install dependencies
       run: |
-        apt-get -y update
         bundle config path
         bundle install --jobs 4 --retry 3
     - name: Run tests
@@ -50,7 +49,6 @@ jobs:
           ${{ runner.os }}-gem-
     - name: Install dependencies
       run: |
-        apt-get -y update
         bundle config path
         bundle install --jobs 4 --retry 3
     - name: Lint with rubocop
