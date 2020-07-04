@@ -87,7 +87,7 @@ class RescanRunner < ApplicationRecord
     t_year = tag.year.to_i
     t_genre = tag.genre&.unicode_normalize
     length = tag.duration
-    bitrate = tag.bitrate
+    bitrate = tag.bitrate || 0
 
     unless t_artist.present? && t_title.present? && t_album.present?
       update(error_text: "#{error_text}File #{path} is missing required tags (album, artist, title)\n")
