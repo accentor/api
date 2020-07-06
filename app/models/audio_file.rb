@@ -37,6 +37,16 @@ class AudioFile < ApplicationRecord
     false
   end
 
+  def check_file
+    check_self
+    tag = WahWah.open(full_path)
+
+    # rubocop:disable Rails/SkipsModelValidations
+    # Use update_columns so we don't trigger after_save queue_content_length_calculations
+    update_columns(sample_rate: tag.sample_rate || 0, bit_depth: tag.bit_depth || 0)
+    # rubocop:enable Rails/SkipsModelValidations
+  end
+
   def convert(codec_conversion)
     parameters = codec_conversion.ffmpeg_params.split
     stdin, stdout, = Open3.popen2(
