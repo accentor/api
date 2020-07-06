@@ -27,7 +27,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
 
     assert_not @runner.error_text.empty?
     assert_equal 0, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
   end
 
   test 'should complain when there are no codecs' do
@@ -39,7 +39,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
 
     assert_not @runner.error_text.empty?
     assert_equal 0, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
   end
 
   test "should complain when location doesn't exist" do
@@ -50,7 +50,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
 
     assert_not @runner.error_text.empty?
     assert_equal 0, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
   end
 
   test 'should complain when location is a file' do
@@ -61,7 +61,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
 
     assert_not @runner.error_text.empty?
     assert_equal 0, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
   end
 
   test 'should be able to read a file successfully' do
@@ -73,7 +73,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal '', @runner.error_text
     assert_equal '', @runner.warning_text
     assert_equal 1, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
 
     assert_equal 1, Album.count
     assert_equal 3, Artist.count
@@ -97,7 +97,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal '', @runner.error_text
     assert_equal '', @runner.warning_text
     assert_equal 1, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
 
     assert_equal 1, Album.count
     assert_equal 3, Artist.count
@@ -119,9 +119,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
     @runner.run
     @runner.reload
     assert_not @runner.error_text.empty?
-    assert @runner.error_text.include?('Catastrophic error')
+    assert_includes @runner.error_text, 'Catastrophic error'
     assert_equal 0, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
   end
 
   test 'should be able to recover from bad files and proceed' do
@@ -133,9 +133,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
     @runner.reload
 
     assert_not @runner.error_text.empty?
-    assert @runner.error_text.include?('empty.flac')
+    assert_includes @runner.error_text, 'empty.flac'
     assert_equal 1, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
   end
 
   test 'should not do anything if runner is already running' do
@@ -147,7 +147,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal 'unchanged', @runner.error_text
     assert_equal 'unchanged', @runner.warning_text
     assert_equal 64, @runner.processed
-    assert_equal true, @runner.running
+    assert @runner.running
   end
 
   test 'artist tag should be required' do
@@ -156,9 +156,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
     @runner.run
     @runner.reload
     assert_not @runner.error_text.empty?
-    assert @runner.error_text.include?('no-artist.mp3')
+    assert_includes @runner.error_text, 'no-artist.mp3'
     assert_equal 1, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
   end
 
   test 'album tag should be required' do
@@ -167,9 +167,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
     @runner.run
     @runner.reload
     assert_not @runner.error_text.empty?
-    assert @runner.error_text.include?('no-album.mp3')
+    assert_includes @runner.error_text, 'no-album.mp3'
     assert_equal 1, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
   end
 
   test 'title tag should be required' do
@@ -178,9 +178,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
     @runner.run
     @runner.reload
     assert_not @runner.error_text.empty?
-    assert @runner.error_text.include?('no-title.mp3')
+    assert_includes @runner.error_text, 'no-title.mp3'
     assert_equal 1, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
   end
 
   test 'album artists should be empty if albumartist tag is Various Artists' do
@@ -192,7 +192,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal '', @runner.error_text
     assert_equal '', @runner.warning_text
     assert_equal 1, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
 
     assert_equal 1, Album.count
     assert_equal 2, Artist.count
@@ -217,7 +217,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal '', @runner.error_text
     assert_equal '', @runner.warning_text
     assert_equal 1, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
 
     assert_equal 1, Album.count
     assert_equal 1, Artist.count
@@ -246,7 +246,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal '', @runner.error_text
     assert_equal '', @runner.warning_text
     assert_equal 1, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
 
     assert_equal 1, Album.count
     assert_equal 1, Artist.count
@@ -275,7 +275,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal '', @runner.error_text
     assert_equal '', @runner.warning_text
     assert_equal 1, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
 
     assert_equal 1, Album.count
     assert_equal 1, Artist.count
@@ -300,7 +300,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal '', @runner.error_text
     assert_equal '', @runner.warning_text
     assert_equal 1, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
 
     assert_equal 1, Album.count
     assert_equal 3, Artist.count
@@ -328,7 +328,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal '', @runner.error_text
     assert_equal '', @runner.warning_text
     assert_equal 1, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
 
     assert_equal 1, Album.count
     assert_equal 3, Artist.count
@@ -353,7 +353,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal '', @runner.error_text
     assert_equal '', @runner.warning_text
     assert_equal 1, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
 
     assert_equal 1, Album.count
     assert_equal 3, Artist.count
@@ -381,9 +381,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
 
     assert_equal '', @runner.error_text
     assert_not @runner.warning_text.empty?
-    assert @runner.warning_text.include?('non-existent.flac')
+    assert_includes @runner.warning_text, 'non-existent.flac'
     assert_equal 1, @runner.processed
-    assert_equal false, @runner.running
+    assert_not @runner.running
 
     assert_equal 1, Album.count
     assert_equal 3, Artist.count

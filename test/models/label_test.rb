@@ -36,7 +36,7 @@ class LabelTest < ActiveSupport::TestCase
       label2.merge(label1)
     end
     assert_not album.reload.labels.include?(label1)
-    assert album.reload.labels.include?(label2)
+    assert_includes album.reload.labels, label2
   end
 
   test 'should be able to merge labels if track belongs to both' do
@@ -50,6 +50,6 @@ class LabelTest < ActiveSupport::TestCase
       label2.merge(label1)
     end
     assert_not album.reload.labels.include?(label1)
-    assert album.reload.labels.include?(label2)
+    assert_includes album.reload.labels, label2
   end
 end
