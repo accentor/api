@@ -372,7 +372,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
 
   test 'should remove non-existent audio file afterwards' do
     Location.create(path: Rails.root.join('test/files/success-one-file'))
-    af = AudioFile.create(bitrate: 1, filename: 'non-existent.flac', length: 1, codec: Codec.first, location: Location.first)
+    af = AudioFile.create(bitrate: 1, filename: 'non-existent.flac', length: 1, codec: Codec.first, location: Location.first, sample_rate: 44_100, bit_depth: 16)
 
     @runner.run
     @runner.reload
