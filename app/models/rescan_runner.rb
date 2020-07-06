@@ -88,6 +88,8 @@ class RescanRunner < ApplicationRecord
     t_genre = tag.genre&.unicode_normalize
     length = tag.duration
     bitrate = tag.bitrate || 0
+    sample_rate = tag.sample_rate || 0
+    bit_depth = tag.bit_depth || 0
 
     unless t_artist.present? && t_title.present? && t_album.present?
       update(error_text: "#{error_text}File #{path} is missing required tags (album, artist, title)\n")
@@ -111,7 +113,7 @@ class RescanRunner < ApplicationRecord
                       review_comment: 'New album',
                       album_artists: albumartists)
 
-    audio_file = AudioFile.new(location: location, codec: codec, filename: relative_path.to_s, length: length, bitrate: bitrate)
+    audio_file = AudioFile.new(location: location, codec: codec, filename: relative_path.to_s, length: length, bitrate: bitrate, sample_rate: sample_rate, bit_depth: bit_depth)
 
     artist = if t_albumartist == t_artist
                albumartist
