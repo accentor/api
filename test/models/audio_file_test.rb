@@ -21,11 +21,13 @@ class AudioFileTest < ActiveSupport::TestCase
   end
 
   test 'check_file should add sample_rate and bit_depth' do
-    af = AudioFile.create(bitrate: 1, filename: 'base.flac', length: 1, codec: Codec.first, location: Location.first, sample_rate: 0, bit_depth: 0)
-    af.check_file
+    af = AudioFile.create(bitrate: 0, filename: 'base.flac', length: 100, codec: Codec.first, location: Location.first, sample_rate: 0, bit_depth: 0)
+    af.check_file_attributes
     af.reload
 
     assert_equal 48_000, af.sample_rate
     assert_equal 16, af.bit_depth
+    assert_equal 768, af.bitrate
+    assert_equal 0, af.length
   end
 end
