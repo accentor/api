@@ -31,20 +31,17 @@ class AudioFile < ApplicationRecord
   after_save :queue_content_length_calculations
 
   def check_self
-    return true if File.exist?(File.join(location.path, filename))
+    return true if File.exist?(full_path)
 
     destroy
     false
   end
 
-  def check_file
-    check_self
-    tag = WahWah.open(full_path)
+  def check_file_attributes
+    return unless check_self
 
-    # rubocop:disable Rails/SkipsModelValidations
-    # Use update_columns so we don't trigger after_save queue_content_length_calculations
-    update_columns(sample_rate: tag.sample_rate || 0, bit_depth: tag.bit_depth || 0)
-    # rubocop:enable Rails/SkipsModelValidations
+    tag = WahWah.open(full_path)
+    update(length: tag.duration, bitrate: tag.bitrate || 0, sample_rate: tag.sample_rate || 0, bit_depth: tag.bit_depth || 0)
   end
 
   def convert(codec_conversion)

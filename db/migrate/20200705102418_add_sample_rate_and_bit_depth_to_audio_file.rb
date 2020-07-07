@@ -5,7 +5,7 @@ class AddSampleRateAndBitDepthToAudioFile < ActiveRecord::Migration[6.0]
 
     AudioFile.update_all(sample_rate: 0, bit_depth: 0)
     AudioFile.find_each do |af|
-      af.delay(priority: 10).check_file
+      af.delay(priority: 9).check_file_attributes
     end
 
     change_column_null :audio_files, :sample_rate, false
