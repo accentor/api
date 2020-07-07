@@ -68,7 +68,7 @@ class Album < ApplicationRecord
 
   def album_artist_separators
     album_artists.each do |aa|
-      if aa.order == album_artists.to_a.count
+      if aa.order == album_artists.to_a.size
         errors.add(:album_artists, 'aa-last-no-separator') unless aa.separator.nil?
       elsif aa.separator.nil?
         errors.add(:album_artists, 'aa-separator')
