@@ -1,4 +1,6 @@
-require: rubocop-rails
+require: 
+  - rubocop-minitest
+  - rubocop-rails
 
 AllCops:
   Exclude:

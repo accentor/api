@@ -43,7 +43,7 @@ class ArtistTest < ActiveSupport::TestCase
       end
     end
     assert_not track.reload.artists.include?(artist1)
-    assert track.reload.artists.include?(artist2)
+    assert_includes track.reload.artists, artist2
   end
 
   test 'should not be able to merge artists if they share track_artist with same role' do
@@ -83,7 +83,7 @@ class ArtistTest < ActiveSupport::TestCase
       artist2.merge(artist1)
     end
     assert_not album.reload.artists.include?(artist1)
-    assert album.reload.artists.include?(artist2)
+    assert_includes album.reload.artists, artist2
   end
 
   test 'should not be able to merge artists if they share album_artist' do

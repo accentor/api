@@ -35,7 +35,7 @@ class GenreTest < ActiveSupport::TestCase
       genre2.merge(genre1)
     end
     assert_not track.reload.genres.include?(genre1)
-    assert track.reload.genres.include?(genre2)
+    assert_includes track.reload.genres, genre2
   end
 
   test 'should be able to merge genres if track belongs to both' do
@@ -47,6 +47,6 @@ class GenreTest < ActiveSupport::TestCase
       genre2.merge(genre1)
     end
     assert_not track.reload.genres.include?(genre1)
-    assert track.reload.genres.include?(genre2)
+    assert_includes track.reload.genres, genre2
   end
 end
