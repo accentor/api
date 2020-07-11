@@ -213,7 +213,7 @@ GEM
       thread_safe (~> 0.1)
     unicode-display_width (1.7.0)
     url (0.3.2)
-    wahwah (1.0.0)
+    wahwah (1.1.0)
     websocket-driver (0.7.2)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -249,7 +249,7 @@ DEPENDENCIES
   spring (~> 2.1)
   spring-watcher-listen (~> 2.0)
   tzinfo-data
-  wahwah (~> 1.0)
+  wahwah (~> 1.1)
   will_paginate (~> 3.3)
 
 RUBY VERSION
