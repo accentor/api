@@ -20,7 +20,7 @@ gem 'bcrypt', '~> 3.1'
 
 gem 'delayed_job_active_record', '~> 4.1'
 
-gem 'wahwah', '~> 1.0'
+gem 'wahwah', '~> 1.1.0'
 
 gem 'has_scope', '~> 0.7'
 gem 'pundit', '~> 2.1'

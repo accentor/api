@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_21_105358) do
+ActiveRecord::Schema.define(version: 2020_07_05_102418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,8 @@ ActiveRecord::Schema.define(version: 2020_03_21_105358) do
     t.string "filename", null: false
     t.integer "length", null: false
     t.integer "bitrate", null: false
+    t.integer "sample_rate", null: false
+    t.integer "bit_depth", null: false
     t.index ["codec_id"], name: "index_audio_files_on_codec_id"
     t.index ["location_id", "filename"], name: "index_audio_files_on_location_id_and_filename", unique: true
     t.index ["location_id"], name: "index_audio_files_on_location_id"

@@ -5,9 +5,11 @@ require 'open3'
 # Table name: audio_files
 #
 #  id          :bigint           not null, primary key
+#  bit_depth   :integer          not null
 #  bitrate     :integer          not null
 #  filename    :string           not null
 #  length      :integer          not null
+#  sample_rate :integer          not null
 #  codec_id    :bigint           not null
 #  location_id :bigint           not null
 #
@@ -23,14 +25,23 @@ class AudioFile < ApplicationRecord
   validates :filename, presence: true, uniqueness: { scope: :location }
   validates :length, presence: true
   validates :bitrate, presence: true
+  validates :sample_rate, presence: true
+  validates :bit_depth, presence: true
 
   after_save :queue_content_length_calculations
 
   def check_self
-    return true if File.exist?(File.join(location.path, filename))
+    return true if File.exist?(full_path)
 
     destroy
     false
+  end
+
+  def check_file_attributes
+    return unless check_self
+
+    tag = WahWah.open(full_path)
+    update(length: tag.duration, bitrate: tag.bitrate || 0, sample_rate: tag.sample_rate || 0, bit_depth: tag.bit_depth || 0)
   end
 
   def convert(codec_conversion)
