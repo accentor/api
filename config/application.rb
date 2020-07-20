@@ -30,5 +30,7 @@ module Accentor
     config.api_only = true
 
     config.active_job.queue_adapter = :delayed_job
+
+    config.transcode_cache_expiry = -> { 1.day.ago }
   end
 end
