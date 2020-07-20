@@ -19,6 +19,7 @@ class AudioFile < ApplicationRecord
   belongs_to :codec
   has_one :track, dependent: :nullify
   has_many :content_lengths, dependent: :destroy
+  has_many :transcoded_items, dependent: :destroy
 
   validates :location, presence: true
   validates :codec, presence: true
@@ -81,7 +82,7 @@ class AudioFile < ApplicationRecord
   def queue_content_length_calculations
     ContentLength.where(audio_file: self).destroy_all
     CodecConversion.find_each do |cc|
-      delay(priority: 10).calc_audio_length(cc)
+      delay(queue: :content_lengths).calc_audio_length(cc)
     end
   end
 end

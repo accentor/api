@@ -26,3 +26,5 @@ elsif File.directory? File.expand_path('~/Music')
   Location.create(path: File.expand_path('~/Music'))
   RescanRunner.create.run
 end
+
+Delayed::Job.enqueue(TranscodeCacheCleanJob.new, cron: '0 0 * * *')

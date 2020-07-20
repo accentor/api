@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_05_102418) do
+ActiveRecord::Schema.define(version: 2020_07_20_092916) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,6 +145,7 @@ ActiveRecord::Schema.define(version: 2020_07_05_102418) do
     t.string "queue"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "cron"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
@@ -220,6 +221,19 @@ ActiveRecord::Schema.define(version: 2020_07_05_102418) do
     t.index ["normalized_title"], name: "index_tracks_on_normalized_title"
   end
 
+  create_table "transcoded_items", force: :cascade do |t|
+    t.string "path", null: false
+    t.datetime "last_used", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.bigint "audio_file_id", null: false
+    t.bigint "codec_conversion_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["audio_file_id", "codec_conversion_id"], name: "index_transcoded_items_on_audio_file_id_and_codec_conversion_id", unique: true
+    t.index ["audio_file_id"], name: "index_transcoded_items_on_audio_file_id"
+    t.index ["codec_conversion_id"], name: "index_transcoded_items_on_codec_conversion_id"
+    t.index ["path"], name: "index_transcoded_items_on_path", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "password_digest", null: false
@@ -247,4 +261,6 @@ ActiveRecord::Schema.define(version: 2020_07_05_102418) do
   add_foreign_key "track_artists", "tracks"
   add_foreign_key "tracks", "albums"
   add_foreign_key "tracks", "audio_files"
+  add_foreign_key "transcoded_items", "audio_files"
+  add_foreign_key "transcoded_items", "codec_conversions"
 end
