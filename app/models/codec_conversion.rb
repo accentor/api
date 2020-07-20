@@ -11,6 +11,7 @@
 class CodecConversion < ApplicationRecord
   belongs_to :resulting_codec, class_name: 'Codec'
   has_many :content_lengths, dependent: :destroy
+  has_many :transcoded_items, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
   validates :ffmpeg_params, presence: true
@@ -23,7 +24,7 @@ class CodecConversion < ApplicationRecord
   def queue_content_length_calculations
     ContentLength.where(codec_conversion: self).destroy_all
     AudioFile.find_each do |af|
-      af.delay(priority: 10).calc_audio_length(self)
+      af.delay(queue: :content_lengths).calc_audio_length(self)
     end
   end
 end

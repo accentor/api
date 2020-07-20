@@ -10,6 +10,7 @@
 #                           PUT    /api/albums/:id(.:format)                                                                albums#update
 #                           DELETE /api/albums/:id(.:format)                                                                albums#destroy
 #     destroy_empty_artists POST   /api/artists/destroy_empty(.:format)                                                     artists#destroy_empty
+#              merge_artist POST   /api/artists/:id/merge(.:format)                                                         artists#merge
 #             artist_albums GET    /api/artists/:artist_id/albums(.:format)                                                 albums#index
 #             artist_tracks GET    /api/artists/:artist_id/tracks(.:format)                                                 tracks#index
 #                   artists GET    /api/artists(.:format)                                                                   artists#index

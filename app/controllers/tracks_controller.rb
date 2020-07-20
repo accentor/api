@@ -57,33 +57,24 @@ class TracksController < ApplicationController
     raise ActiveRecord::RecordNotFound, 'codec_conversion does not exist' if conversion.nil? && params[:codec_conversion_id].present?
 
     if conversion.present?
-      # AudioFile will only do the conversion if the `ContentLength` doesn't exist yet.
-      content_length = audio_file.calc_audio_length(conversion)
-      begin
-        response.status = 200
-        response.content_type = conversion.resulting_codec.mimetype
-        response.headers['content-length'] = content_length.length
-
-        stream = audio_file.convert(conversion)
-        while (bytes = stream.read(16.kilobytes))
-          response.stream.write bytes
+      item = TranscodedItem.find_by(audio_file: audio_file, codec_conversion: conversion)
+      if item.present? && File.exist?(item.path)
+        item.update(last_used: Time.current)
+        audio_with_file(item.path, item.codec_conversion.resulting_codec.mimetype)
+      else
+        if item.present?
+          # Maybe the file was lost, maybe the transcode just hadn't finished
+          # yet. Anyway, doing the transcode again doesn't really hurt.
+          item.do_delayed_conversion
+        else
+          TranscodedItem.create(audio_file: audio_file, codec_conversion: conversion)
         end
-      ensure
-        stream.close
-        response.stream.close
+        # AudioFile will only do the conversion if the `ContentLength` doesn't exist yet.
+        content_length = audio_file.calc_audio_length(conversion)
+        audio_with_stream(audio_file.convert(conversion), conversion.resulting_codec.mimetype, content_length.length)
       end
     else
-      Rack::File.new(nil).serving(request, audio_file.full_path).tap do |(status, headers, body)|
-        self.status = status
-        self.response_body = body
-
-        headers.each do |name, value|
-          response.headers[name] = value
-        end
-
-        response.headers['accept-ranges'] = 'bytes'
-        response.headers['content-type'] = audio_file.codec.mimetype
-      end
+      audio_with_file(audio_file.full_path, audio_file.codec.mimetype)
     end
   end
 
@@ -94,6 +85,55 @@ class TracksController < ApplicationController
   end
 
   private
+
+  def audio_with_file(path, mimetype)
+    Rack::File.new(nil).serving(request, path).tap do |(status, headers, body)|
+      self.status = status
+      self.response_body = body
+
+      headers.each do |name, value|
+        response.headers[name] = value
+      end
+
+      response.content_type = mimetype
+      response.headers['accept-ranges'] = 'bytes'
+    end
+  end
+
+  def audio_with_stream(stream, mimetype, total_size)
+    first_byte = 0
+    last_byte = total_size - 1
+    if request.headers['range'].present?
+      response.status = 206
+      # This is technically not a correct parsing of the header; a user agent
+      # can request multiple byte ranges. In practice this doesn't happen
+      # (especially not for web audio).
+      match = request.headers['range'].match(/bytes=(\d+)-(\d*)/)
+      first_byte = match[1].to_i
+      last_byte = match[2].present? ? match[2].to_i : last_byte
+      response.headers['content-range'] = "bytes #{first_byte}-#{last_byte}/#{total_size}"
+    else
+      response.status = 200
+    end
+    response.content_type = mimetype
+    response.headers['accept-ranges'] = 'bytes'
+    response.headers['content-length'] = (last_byte - first_byte + 1).to_s
+
+    to_skip = first_byte
+    while to_skip.positive?
+      read_bytes = stream.read([to_skip, 16.kilobytes].min)
+      to_skip -= read_bytes.length
+    end
+    to_send = last_byte - first_byte + 1
+    while to_send.positive?
+      read_bytes = stream.read([to_send, 16.kilobytes].min)
+      to_send -= read_bytes.length
+      response.stream.write read_bytes
+    end
+  ensure
+    stream.close
+    response.stream.close
+  end
 
   def serializer
     current_user.moderator? ? TrackModeratorSerializer : TrackSerializer

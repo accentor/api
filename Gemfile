@@ -20,6 +20,8 @@ gem 'bcrypt', '~> 3.1'
 
 gem 'delayed_job_active_record', '~> 4.1'
 
+gem 'delayed_cron_job', '~> 0.7'
+
 gem 'wahwah', '~> 1.1.0'
 
 gem 'has_scope', '~> 0.7'
@@ -28,9 +30,6 @@ gem 'will_paginate', '~> 3.3'
 
 # Use ActiveStorage variant
 gem 'image_processing', '~> 1.11.0'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.6', require: false

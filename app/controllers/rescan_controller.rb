@@ -6,7 +6,7 @@ class RescanController < ApplicationController
   end
 
   def start
-    @rescan.delay(priority: 0).run
+    @rescan.delay(queue: :rescans).run
     render json: @rescan
   end
 

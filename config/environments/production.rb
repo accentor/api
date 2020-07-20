@@ -73,4 +73,6 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.token_hash_rounds = 10
+
+  config.transcode_cache_expiry = -> { 3.days.ago }
 end
