@@ -39,7 +39,7 @@ class TrackPolicy < ApplicationPolicy
 
   def permitted_attributes
     if user.moderator?
-      [:title, :number, :album_id, :review_comment, genre_ids: [], track_artists: %i[artist_id name role order]]
+      [:title, :number, :album_id, :review_comment, { genre_ids: [], track_artists: %i[artist_id name role order] }]
     else
       [:review_comment]
     end
