@@ -37,9 +37,9 @@ class AlbumPolicy < ApplicationPolicy
         :review_comment,
         :edition,
         :edition_description,
-        image: %i[data filename mimetype],
-        album_artists: %i[artist_id name order separator],
-        album_labels: %i[label_id catalogue_number]
+        { image: %i[data filename mimetype],
+          album_artists: %i[artist_id name order separator],
+          album_labels: %i[label_id catalogue_number] }
       ]
     else
       [:review_comment]
