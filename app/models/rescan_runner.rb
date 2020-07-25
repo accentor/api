@@ -75,7 +75,7 @@ class RescanRunner < ApplicationRecord
   def process_file(location, codec, path)
     relative_path = Pathname.new(path).relative_path_from(Pathname.new(location.path))
 
-    return if AudioFile.where(location: location, filename: relative_path.to_s).exists?
+    return if AudioFile.exists?(location: location, filename: relative_path.to_s)
 
     tag = WahWah.open(path)
     t_artist = tag.artist&.unicode_normalize
