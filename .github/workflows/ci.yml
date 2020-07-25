@@ -25,13 +25,13 @@ jobs:
     - name: Cache Ruby dependencies
       uses: actions/cache@v2
       with:
-        path: /usr/local/bundle
+        path: vendor/bundle
         key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gem-
     - name: Install dependencies
       run: |
-        bundle config path
+        bundle config set path vendor/bundle
         bundle install --jobs 4 --retry 3
     - name: Run tests
       env:
@@ -51,13 +51,13 @@ jobs:
     - name: Cache Ruby dependencies
       uses: actions/cache@v2
       with:
-        path: /usr/local/bundle
+        path: vendor/bundle
         key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gem-
     - name: Install dependencies
       run: |
-        bundle config path
+        bundle config set path vendor/bundle
         bundle install --jobs 4 --retry 3
     - name: Lint with rubocop
       env:
