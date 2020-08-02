@@ -109,7 +109,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal %w[artist composer], Track.first.artists.map(&:name).sort
     assert_equal 'album', Album.first.title
     assert_equal 'albumartist', Album.first.artists.first.name
-    assert_equal 1970, Album.first.release.year
+    assert_equal Date.new(1970, 1, 1), Album.first.release
     assert_equal 'genre', Genre.first.name
   end
 
@@ -204,7 +204,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal %w[artist composer], Track.first.artists.map(&:name).sort
     assert_equal 'album', Album.first.title
     assert_equal 0, Album.first.artists.count
-    assert_equal 1970, Album.first.release.year
+    assert_equal Date.new(1970, 1, 1), Album.first.release
     assert_equal 'genre', Genre.first.name
   end
 
@@ -230,7 +230,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal Track.first.artists.first, Album.first.artists.first
     assert_equal 'album', Album.first.title
     assert_equal 1, Album.first.artists.count
-    assert_equal 1970, Album.first.release.year
+    assert_equal Date.new(1970, 1, 1), Album.first.release
     assert_equal 'genre', Genre.first.name
   end
 
@@ -259,7 +259,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal Track.first.artists.first, Album.first.artists.first
     assert_equal 'album', Album.first.title
     assert_equal 1, Album.first.artists.count
-    assert_equal 1970, Album.first.release.year
+    assert_equal Date.new(1970, 1, 1), Album.first.release
     assert_equal 'genre', Genre.first.name
   end
 
@@ -311,7 +311,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal 'title', Track.first.title
     assert_equal 'album', Album.first.title
     assert_equal 1, Album.first.artists.count
-    assert_equal 1970, Album.first.release.year
+    assert_equal Date.new(1970, 1, 1), Album.first.release
     assert_equal 'genre', Genre.first.name
   end
 
@@ -339,7 +339,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal 'title', Track.first.title
     assert_equal 'album', Album.first.title
     assert_equal 1, Album.first.artists.count
-    assert_equal 1970, Album.first.release.year
+    assert_equal Date.new(1970, 1, 1), Album.first.release
   end
 
   test 'should create album with cover if applicable' do
@@ -365,7 +365,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal %w[artist composer], Track.first.artists.map(&:name).sort
     assert_equal 'album', Album.first.title
     assert_equal 'albumartist', Album.first.artists.first.name
-    assert_equal 1970, Album.first.release.year
+    assert_equal Date.new(1970, 1, 1), Album.first.release
     assert Album.first.image.present?
     assert_equal 'genre', Genre.first.name
   end
@@ -395,7 +395,55 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal %w[artist composer], Track.first.artists.map(&:name).sort
     assert_equal 'album', Album.first.title
     assert_equal 'albumartist', Album.first.artists.first.name
-    assert_equal 1970, Album.first.release.year
+    assert_equal Date.new(1970, 1, 1), Album.first.release
+    assert_equal 'genre', Genre.first.name
+  end
+
+  test 'should get full date from id3v2 tag' do
+    Location.create(path: Rails.root.join('test/files/success-full-date'))
+
+    @runner.run
+    @runner.reload
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 1, @runner.processed
+    assert_not @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 1, Artist.count
+    assert_equal 1, Track.count
+    assert_equal 1, AudioFile.count
+    assert_equal 1, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal 'artist', Track.first.artists.first.name
+    assert_equal 'album', Album.first.title
+    assert_equal Date.new(1970, 2, 3), Album.first.release
+    assert_equal 'genre', Genre.first.name
+  end
+
+  test 'should be able to ignore time in id3v2 date tage' do
+    Location.create(path: Rails.root.join('test/files/success-ignore-time'))
+
+    @runner.run
+    @runner.reload
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 1, @runner.processed
+    assert_not @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 1, Artist.count
+    assert_equal 1, Track.count
+    assert_equal 1, AudioFile.count
+    assert_equal 1, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal 'artist', Track.first.artists.first.name
+    assert_equal 'album', Album.first.title
+    assert_equal Date.new(1970, 2, 3), Album.first.release
     assert_equal 'genre', Genre.first.name
   end
 end
