@@ -84,7 +84,7 @@ class RescanRunner < ApplicationRecord
     t_title = tag.title&.unicode_normalize
     t_number = tag.track || 0
     t_album = tag.album&.unicode_normalize
-    t_year = tag.year.to_i
+    t_year = convert_year(tag.year)
     t_genre = tag.genre&.unicode_normalize
     length = tag.duration
     bitrate = tag.bitrate || 0
@@ -106,9 +106,9 @@ class RescanRunner < ApplicationRecord
                      []
                    end
 
-    album = Album.find_by(title: t_album, release: Date.ordinal(t_year)) ||
+    album = Album.find_by(title: t_album, release: t_year) ||
             Album.new(title: t_album,
-                      release: Date.ordinal(t_year),
+                      release: t_year,
                       image: find_image(Pathname.new(path).parent),
                       review_comment: 'New album',
                       album_artists: albumartists)
@@ -170,5 +170,12 @@ class RescanRunner < ApplicationRecord
       end
     end
     nil
+  end
+
+  def convert_year(tag)
+    return Date.new(0) unless tag # WahWah returns nil if the file doesn't have a date tag
+
+    date = tag.split('-').map(&:to_i)
+    Date.new(date[0] || 0, date[1] || 1, date[2] || 1)
   end
 end
