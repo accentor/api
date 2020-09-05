@@ -27,7 +27,7 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
     assert_difference('AuthToken.count', 0) do
       post auth_tokens_url, params: {
         name: @user.name,
-        password: @user.password + 'a',
+        password: "#{@user.password}a",
         auth_token: { user_agent: 'Rails Test' }
       }
     end
