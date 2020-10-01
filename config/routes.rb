@@ -65,6 +65,7 @@
 #                                 POST   /api/locations(.:format)                                                                          locations#create
 #                        location GET    /api/locations/:id(.:format)                                                                      locations#show
 #                                 DELETE /api/locations/:id(.:format)                                                                      locations#destroy
+#                           plays POST   /api/plays(.:format)                                                                              plays#create
 #            destroy_empty_tracks POST   /api/tracks/destroy_empty(.:format)                                                               tracks#destroy_empty
 #                     audio_track GET    /api/tracks/:id/audio(.:format)                                                                   tracks#audio
 #                     merge_track POST   /api/tracks/:id/merge(.:format)                                                                   tracks#merge
@@ -132,6 +133,7 @@ Rails.application.routes.draw do
       end
     end
     resources :locations, only: %i[index show create destroy]
+    resources :plays, only: %i[create]
     resources :tracks do
       collection do
         post 'destroy_empty'
