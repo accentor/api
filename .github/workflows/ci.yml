@@ -19,7 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2.3.3
     - name: Use ruby 2.7
-      uses: actions/setup-ruby@v1.1.1
+      uses: actions/setup-ruby@v1.1.2
       with:
         ruby-version: 2.7.1
     - name: Cache Ruby dependencies
@@ -45,7 +45,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2.3.3
     - name: Use ruby 2.7
-      uses: actions/setup-ruby@v1.1.1
+      uses: actions/setup-ruby@v1.1.2
       with:
         ruby-version: 2.7.1
     - name: Cache Ruby dependencies
