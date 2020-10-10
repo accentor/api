@@ -9,9 +9,10 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create play' do
     assert_difference('Play.count', 1) do
-      post plays_url, params: { play: { played_at: DateTime.current, track_id: @track.id, user_id: @user.id } }
+      post plays_url, params: { play: { played_at: DateTime.current, track_id: @track.id } }
     end
 
     assert_response 201
+    assert_equal Play.first.user_id, @user.id
   end
 end
