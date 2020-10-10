@@ -10,6 +10,6 @@ class PlayPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[user_id track_id played_at]
+    %i[track_id played_at]
   end
 end
