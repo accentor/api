@@ -70,18 +70,8 @@ class Track < ApplicationRecord
   private
 
   def normalize_artist_order
-    track_artists.sort do |ta1, ta2|
-      return ta1.order <=> ta2.order unless (ta1.order <=> ta2.order).nil?
-
-      if ta1.order.present?
-        1
-      elsif ta2.order.present?
-        -1
-      else
-        0
-      end
-    end.map.with_index do |ta, i|
-      ta.order = i + 1
+    track_artists.sort { |ta1, ta2| ta1.order <=> ta2.order }.map.with_index(1) do |ta, i|
+      ta.order = i
       ta.save unless ta.new_record?
     end
   end

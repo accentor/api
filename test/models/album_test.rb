@@ -45,4 +45,31 @@ class AlbumTest < ActiveSupport::TestCase
     assert_not album.valid?
     assert_not_empty album.errors[:album_artists]
   end
+
+  test 'should normalize order of album artists' do
+    aa1 = build(:album_artist, order: 5)
+    aa2 = build(:album_artist, order: 2)
+    album = build(:album, album_artists: [aa1, aa2])
+    album.save
+    assert_equal 2, aa1.order
+    assert_equal 1, aa2.order
+  end
+
+  test 'should leave order of album artists alone if normalized' do
+    aa1 = build(:album_artist, order: 1)
+    aa2 = build(:album_artist, order: 2)
+    album = build(:album, album_artists: [aa1, aa2])
+    album.save
+    assert_equal 1, aa1.order
+    assert_equal 2, aa2.order
+  end
+
+  test 'should normalize order of album artists in order provided if equal' do
+    aa1 = build(:album_artist, order: 0)
+    aa2 = build(:album_artist, order: 0)
+    album = build(:album, album_artists: [aa1, aa2])
+    album.save
+    assert_equal 1, aa1.order
+    assert_equal 2, aa2.order
+  end
 end
