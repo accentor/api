@@ -178,4 +178,106 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+
+  test 'should return not_found if track has no audio' do
+    get audio_track_url(create(:track))
+
+    assert_response :not_found
+  end
+
+  test 'should return not_found and destroy audio if file is missing ' do
+    audio_file = create(:audio_file, filename: '/does-not-exist.flac')
+
+    assert_difference('AudioFile.count', -1) do
+      get audio_track_url(create(:track, audio_file: audio_file))
+    end
+
+    assert_response :not_found
+  end
+
+  test 'should serve audio to user' do
+    location = Location.create(path: Rails.root.join('test/files'))
+    audio_file = create(:audio_file, location: location, filename: '/base.flac')
+    track = create(:track, audio_file: audio_file)
+
+    get audio_track_url(track)
+
+    assert_response :success
+  end
+
+  test 'should return not_found if codec_conversion does not exit ' do
+    location = Location.create(path: Rails.root.join('test/files'))
+    audio_file = create(:audio_file, location: location, filename: '/base.flac')
+    track = create(:track, audio_file: audio_file)
+
+    get audio_track_url(track, codec_conversion_id: 0)
+
+    assert_response :not_found
+  end
+
+  test 'should create transcoded_item if codec_conversion is present' do
+    mp3 = Codec.create(mimetype: 'audio/mpeg', extension: 'mp3')
+    codec_conversion = CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
+    location = Location.create(path: Rails.root.join('test/files'))
+    audio_file = create(:audio_file, location: location, filename: '/base.flac')
+    length = audio_file.content_lengths.find_by(codec_conversion: codec_conversion).length
+    track = create(:track, audio_file: audio_file)
+
+    assert_difference('TranscodedItem.count', 1) do
+      get audio_track_url(track, codec_conversion_id: codec_conversion.id)
+    end
+
+    assert_equal length.to_s, response.headers['content-length']
+    assert_match 'audio/mpeg', response.headers['content-type']
+
+    assert_response :success
+  end
+
+  test 'should not create transcoded_item if it already exists' do
+    codec_conversion = create :codec_conversion
+    location = Location.create(path: Rails.root.join('test/files'))
+    audio_file = create(:audio_file, location: location, filename: '/base.flac')
+    track = create(:track, audio_file: audio_file)
+    get audio_track_url(track, codec_conversion_id: codec_conversion.id)
+
+    assert_difference('TranscodedItem.count', 0) do
+      get audio_track_url(track, codec_conversion_id: codec_conversion.id)
+    end
+
+    assert_response :success
+  end
+
+  test 'should return correct headers for  range request' do
+    mp3 = Codec.create(mimetype: 'audio/mpeg', extension: 'mp3')
+    codec_conversion = CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
+    location = Location.create(path: Rails.root.join('test/files'))
+    audio_file = create(:audio_file, location: location, filename: '/base.flac')
+    length = audio_file.content_lengths.find_by(codec_conversion: codec_conversion).length
+    track = create(:track, audio_file: audio_file)
+
+    get(audio_track_url(track, codec_conversion_id: codec_conversion.id), headers: { "range": 'bytes=150-500' })
+
+    assert_equal "bytes 150-500/#{length}", response.headers['content-range']
+    assert_equal '351', response.headers['content-length']
+    assert_match 'audio/mpeg', response.headers['content-type']
+
+    assert_response :success
+  end
+
+  test 'accepts range request without end' do
+    mp3 = Codec.create(mimetype: 'audio/mpeg', extension: 'mp3')
+    codec_conversion = CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
+    location = Location.create(path: Rails.root.join('test/files'))
+    audio_file = create(:audio_file, location: location, filename: '/base.flac')
+    length = audio_file.content_lengths.find_by(codec_conversion: codec_conversion).length
+    track = create(:track, audio_file: audio_file)
+
+    get(audio_track_url(track, codec_conversion_id: codec_conversion.id), headers: { "range": 'bytes=150-' })
+
+    assert_equal "bytes 150-#{length - 1}/#{length}", response.headers['content-range']
+    assert_equal (length - 150).to_s, response.headers['content-length']
+    assert_match 'audio/mpeg', response.headers['content-type']
+
+    assert_response :success
+  end
 end
