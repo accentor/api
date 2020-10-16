@@ -38,4 +38,8 @@ Rails.application.configure do
 
   config.active_job.queue_adapter = :delayed_job
   Delayed::Worker.delay_jobs = false
+
+  # For tests we want to be the transcode cache expiry setting to remain
+  # the same, regardless of the configuration in application.rb
+  config.transcode_cache_expiry = -> { 1.day.ago }
 end
