@@ -52,6 +52,6 @@ class ApplicationController < ActionController::API
   end
 
   def model_not_found(exc)
-    render json: { not_found: ["#{exc.model.downcase}.not-found"] }, status: :not_found
+    render json: { not_found: ["#{exc.model.pluralize.downcase}.not-found"] }, status: :not_found
   end
 end
