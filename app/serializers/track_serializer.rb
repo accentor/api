@@ -32,4 +32,9 @@ class TrackSerializer < ActiveModel::Serializer
   def location_id
     object.audio_file&.location_id
   end
+
+  def play_count
+    # This fallback will only be accessed if the track was just created
+    object.has_attribute?(:play_count) ? object.play_count : 0
+  end
 end
