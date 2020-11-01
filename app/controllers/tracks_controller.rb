@@ -11,7 +11,10 @@ class TracksController < ApplicationController
   def index
     authorize Track
     @tracks = apply_scopes(policy_scope(Track))
-              .includes(:track_artists, :genres, :plays, audio_file: %i[location codec])
+              .joins("LEFT JOIN plays ON tracks.id = plays.track_id AND plays.user_id = #{current_user.id}")
+              .select('tracks.*, COUNT(plays.*) AS play_count')
+              .group(:id)
+              .includes(:track_artists, :genres, audio_file: %i[location codec])
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@tracks)
 
@@ -131,7 +134,10 @@ class TracksController < ApplicationController
   end
 
   def set_track
-    @track = Track.find(params[:id])
+    @track = Track.joins("LEFT JOIN plays ON tracks.id = plays.track_id AND plays.user_id = #{current_user.id}")
+                  .select('tracks.*, COUNT(plays.*) AS play_count')
+                  .group(:id)
+                  .find(params[:id])
     authorize @track
   end
 
