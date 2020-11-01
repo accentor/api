@@ -216,6 +216,8 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create transcoded_item if codec_conversion is present' do
+    io = StringIO.new File.read(Rails.root.join('test/files/base.flac'))
+    AudioFile.any_instance.stubs(:convert).returns(io)
     mp3 = Codec.create(mimetype: 'audio/mpeg', extension: 'mp3')
     codec_conversion = CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
     location = Location.create(path: Rails.root.join('test/files'))
@@ -234,6 +236,8 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not create transcoded_item if it already exists' do
+    io = StringIO.new File.read(Rails.root.join('test/files/base.flac'))
+    AudioFile.any_instance.stubs(:convert).returns(io)
     codec_conversion = create :codec_conversion
     location = Location.create(path: Rails.root.join('test/files'))
     audio_file = create(:audio_file, location: location, filename: '/base.flac')
@@ -248,6 +252,8 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should return correct headers for  range request' do
+    io = StringIO.new File.read(Rails.root.join('test/files/base.flac'))
+    AudioFile.any_instance.stubs(:convert).returns(io)
     mp3 = Codec.create(mimetype: 'audio/mpeg', extension: 'mp3')
     codec_conversion = CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
     location = Location.create(path: Rails.root.join('test/files'))
@@ -265,6 +271,8 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'accepts range request without end' do
+    io = StringIO.new File.read(Rails.root.join('test/files/base.flac'))
+    AudioFile.any_instance.stubs(:convert).returns(io)
     mp3 = Codec.create(mimetype: 'audio/mpeg', extension: 'mp3')
     codec_conversion = CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
     location = Location.create(path: Rails.root.join('test/files'))
