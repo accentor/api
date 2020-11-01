@@ -12,4 +12,9 @@ class Play < ApplicationRecord
   belongs_to :user
 
   validates :played_at, presence: true
+  validate :play_cannot_be_in_future
+
+  def play_cannot_be_in_future
+    errors.add(:played_at, 'play-not-in-future') unless played_at <= DateTime.current
+  end
 end
