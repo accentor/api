@@ -50,18 +50,8 @@ class Album < ApplicationRecord
   private
 
   def normalize_artist_order
-    album_artists.sort do |aa1, aa2|
-      return aa1.order <=> aa2.order unless (aa1.order <=> aa2.order).nil?
-
-      if aa1.order.present?
-        1
-      elsif aa2.order.present?
-        -1
-      else
-        0
-      end
-    end.map.with_index do |aa, i|
-      aa.order = i + 1
+    album_artists.sort { |aa1, aa2| aa1.order <=> aa2.order }.map.with_index(1) do |aa, i|
+      aa.order = i
       aa.save unless aa.new_record?
     end
   end

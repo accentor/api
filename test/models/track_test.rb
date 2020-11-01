@@ -92,4 +92,31 @@ class TrackTest < ActiveSupport::TestCase
     assert_not track.normalized_title.nil?
     assert_equal 'iouaaa', track.normalized_title
   end
+
+  test 'should normalize order of track artists' do
+    ta1 = build(:track_artist, order: 5)
+    ta2 = build(:track_artist, order: 2)
+    track = build(:track, track_artists: [ta1, ta2])
+    track.save
+    assert_equal 2, ta1.order
+    assert_equal 1, ta2.order
+  end
+
+  test 'should leave order of track artists alone if normalized' do
+    ta1 = build(:track_artist, order: 1)
+    ta2 = build(:track_artist, order: 2)
+    track = build(:track, track_artists: [ta1, ta2])
+    track.save
+    assert_equal 1, ta1.order
+    assert_equal 2, ta2.order
+  end
+
+  test 'should normalize order of track artists in order provided if equal' do
+    ta1 = build(:track_artist, order: 0)
+    ta2 = build(:track_artist, order: 0)
+    track = build(:track, track_artists: [ta1, ta2])
+    track.save
+    assert_equal 1, ta1.order
+    assert_equal 2, ta2.order
+  end
 end
