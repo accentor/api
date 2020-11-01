@@ -21,7 +21,7 @@ jobs:
     - name: Use ruby 2.7
       uses: actions/setup-ruby@v1.1.2
       with:
-        ruby-version: 2.7.1
+        ruby-version: 2.7.2
     - name: Cache Ruby dependencies
       uses: actions/cache@v2
       with:
@@ -47,7 +47,7 @@ jobs:
     - name: Use ruby 2.7
       uses: actions/setup-ruby@v1.1.2
       with:
-        ruby-version: 2.7.1
+        ruby-version: 2.7.2
     - name: Cache Ruby dependencies
       uses: actions/cache@v2
       with:
