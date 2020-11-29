@@ -208,6 +208,31 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal 'genre', Genre.first.name
   end
 
+  test 'album artists should fall back to artist if albumartist tag is empty string' do
+    Location.create(path: Rails.root.join('test/files/success-empty-albumartist'))
+
+    @runner.run
+    @runner.reload
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 1, @runner.processed
+    assert_not @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 1, Artist.count
+    assert_equal 1, Track.count
+    assert_equal 1, AudioFile.count
+    assert_equal 1, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal %w[artist], Track.first.artists.map(&:name)
+    assert_equal 'album', Album.first.title
+    assert_equal %w[artist], Album.first.artists.map(&:name)
+    assert_equal Date.new(1970, 1, 1), Album.first.release
+    assert_equal 'genre', Genre.first.name
+  end
+
   test 'only one artist should be created if artist and album_artist are equal' do
     Location.create(path: Rails.root.join('test/files/success-equal-artists'))
 
