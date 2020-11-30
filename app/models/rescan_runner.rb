@@ -79,7 +79,7 @@ class RescanRunner < ApplicationRecord
 
     tag = WahWah.open(path)
     t_artist = tag.artist&.unicode_normalize
-    t_albumartist = tag.albumartist&.unicode_normalize || t_artist
+    t_albumartist = tag.albumartist.present? ? tag.albumartist&.unicode_normalize : t_artist
     t_composer = tag.composer&.unicode_normalize
     t_title = tag.title&.unicode_normalize
     t_number = tag.track || 0
