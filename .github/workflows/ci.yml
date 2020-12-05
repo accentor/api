@@ -17,50 +17,50 @@ jobs:
         - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
-      - uses: actions/checkout@v2.3.4
-      - name: Use ruby 2.7
-        uses: actions/setup-ruby@v1.1.2
-        with:
-          ruby-version: 2.7.2
-      - name: Cache Ruby dependencies
-        uses: actions/cache@v2
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gem-
-      - name: Install dependencies
-        run: |
-          bundle config set path vendor/bundle
-          bundle install --jobs 4 --retry 3
-      - name: Run tests
-        env:
-          CI: true
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: |
-          bundle exec rails db:setup
-          bundle exec rails test
+    - uses: actions/checkout@v2.3.4
+    - name: Use ruby 2.7
+      uses: actions/setup-ruby@v1.1.2
+      with:
+        ruby-version: 2.7.2
+    - name: Cache Ruby dependencies
+      uses: actions/cache@v2
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gem-
+    - name: Install dependencies
+      run: |
+        bundle config set path vendor/bundle
+        bundle install --jobs 4 --retry 3
+    - name: Run tests
+      env:
+        CI: true
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: |
+        bundle exec rails db:setup
+        bundle exec rails test
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
-      - name: Use ruby 2.7
-        uses: actions/setup-ruby@v1.1.2
-        with:
-          ruby-version: 2.7.2
-      - name: Cache Ruby dependencies
-        uses: actions/cache@v2
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gem-
-      - name: Install dependencies
-        run: |
-          bundle config set path vendor/bundle
-          bundle install --jobs 4 --retry 3
-      - name: Lint with rubocop
-        env:
-          RAILS_ENV: "test"
-        run: |
-          bundle exec rubocop -c .rubocop.yml
+    - uses: actions/checkout@v2.3.4
+    - name: Use ruby 2.7
+      uses: actions/setup-ruby@v1.1.2
+      with:
+        ruby-version: 2.7.2
+    - name: Cache Ruby dependencies
+      uses: actions/cache@v2
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gem-
+    - name: Install dependencies
+      run: |
+        bundle config set path vendor/bundle
+        bundle install --jobs 4 --retry 3
+    - name: Lint with rubocop
+      env:
+        RAILS_ENV: "test"
+      run: |
+        bundle exec rubocop -c .rubocop.yml
