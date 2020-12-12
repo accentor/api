@@ -193,14 +193,6 @@ ActiveRecord::Schema.define(version: 2020_12_12_115622) do
     t.index ["path"], name: "index_locations_on_path", unique: true
   end
 
-  create_table "plays", force: :cascade do |t|
-    t.bigint "track_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "played_at", null: false
-    t.index ["track_id"], name: "index_plays_on_track_id"
-    t.index ["user_id"], name: "index_plays_on_user_id"
-  end
-
   create_table "rescan_runners", force: :cascade do |t|
     t.text "warning_text"
     t.text "error_text"
@@ -273,8 +265,6 @@ ActiveRecord::Schema.define(version: 2020_12_12_115622) do
   add_foreign_key "genres_tracks", "genres"
   add_foreign_key "genres_tracks", "tracks"
   add_foreign_key "images", "image_types"
-  add_foreign_key "plays", "tracks"
-  add_foreign_key "plays", "users"
   add_foreign_key "track_artists", "artists"
   add_foreign_key "track_artists", "tracks"
   add_foreign_key "tracks", "albums"
