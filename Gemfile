@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0'
+gem 'rails', '~> 6.1'
 # Keep this low enough until https://github.com/rack/rack/issues/1619 is fixed
 gem 'rack', '~> 2.1.4'
 # Use postgresql as the database for Active Record
