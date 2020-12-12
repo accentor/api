@@ -16,6 +16,8 @@ require 'rails/test_help'
 require 'mocha/minitest'
 
 FactoryBot::SyntaxRunner.class_eval do
+  def self.file_fixture_path; end
+
   include ActionDispatch::TestProcess
 end
 
