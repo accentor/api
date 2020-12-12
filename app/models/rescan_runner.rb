@@ -97,13 +97,13 @@ class RescanRunner < ApplicationRecord
     end
 
     albumartist = Artist.find_by(name: t_albumartist) || Artist.new(name: t_albumartist, review_comment: 'New artist')
-    albumartists = if t_albumartist.downcase != 'various artists'
+    albumartists = if t_albumartist.downcase == 'various artists'
+                     []
+                   else
                      [AlbumArtist.new(artist: albumartist,
                                       name: t_albumartist,
                                       order: 1,
                                       separator: nil)]
-                   else
-                     []
                    end
 
     album = Album.find_by(title: t_album, release: t_year) ||
