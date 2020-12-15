@@ -1,24 +1,23 @@
-# README
+# Accentor API
+API for Accentor, a modern music server focusing on metadata.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Why use Accentor?
+Accentor gives you complete control over your music. You can build your own collection (with good old CD's, bandcamp downloads, ...) in the soundquality that you want and stream it either through the [web frontend](https://github.com/accentor/web) or [android app](https://github.com/accentor/android).
 
-Things you may want to cover:
+Accentor is focused on metadata. We allow you to add detailed metadata to your music collection, beyond what the tags inside an audio file are capable of. Album and tracks can have multiple artists with a different name on different albums/tracks, albums can have multiple labels and tracks can have multiple genres.
 
-* Ruby version
+The metadata is completely in your control: you can edit them however you want.
 
-* System dependencies
+# How to deploy
+-- Deployment guide coming soon --
 
-* Configuration
+# Local development
+To run and develop locally:
+1. Make sure you are running [the correct version of ruby](https://github.com/accentor/api/blob/develop/.ruby-version).
+2. Install all dependencies with `bundle install`
+3. Start rails using `rails serve`
+# Help
+Have a question?
+You can ask your question through [GitHub discussions](https://github.com/accentor/api/discussions) or in the [Matrix channel](https://matrix.to/#/!PCYHOaWItkVRNacTSv:vanpetegem.me?via=vanpetegem.me&via=matrix.org).
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Think you have noticed a bug? [Create an issue](https://github.com/accentor/api/issues/new?assignees=&labels=bug&template=bug_report.md&title=).
