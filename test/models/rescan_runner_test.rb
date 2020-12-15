@@ -471,4 +471,28 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal Date.new(1970, 2, 3), Album.first.release
     assert_equal 'genre', Genre.first.name
   end
+
+  test 'should be not fail if date has incorrect format' do
+    Location.create(path: Rails.root.join('test/files/success-invalid-date'))
+
+    @runner.run
+    @runner.reload
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 4, @runner.processed
+    assert_not @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 1, Artist.count
+    assert_equal 4, Track.count
+    assert_equal 4, AudioFile.count
+    assert_equal 1, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal 'artist', Track.first.artists.first.name
+    assert_equal 'album', Album.first.title
+    assert_equal Date.new(0), Album.first.release
+    assert_equal 'genre', Genre.first.name
+  end
 end
