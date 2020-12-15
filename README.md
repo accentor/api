@@ -14,9 +14,12 @@ The metadata is completely in your control: you can edit them however you want.
 # Local development
 To run and develop locally:
 1. Make sure you are running [the correct version of ruby](https://github.com/accentor/api/blob/develop/.ruby-version).
-1. Make sure you have postgresql is running and add a role `accentor` with password `accentor` (This role should have the permission to login and createdb)
-2. Install all dependencies with `bundle install`
-3. Start rails using `rails serve`
+1. Install all dependencies with `bundle install`
+1.  Make sure you have postgresql is running and add a role `accentor` with password `accentor` (This role should have the permission to login and createdb)
+1. Setup the local database with `rails db:setup`
+  This will also [seed](https://github.com/accentor/api/blob/develop/db/seeds.rb) the database with an admin account and some starting points for the application.
+
+Once you've done this, you can always run a local server with `rails serve`
 # Help
 Have a question?
 You can ask your question through [GitHub discussions](https://github.com/accentor/api/discussions) or in the [Matrix channel](https://matrix.to/#/!PCYHOaWItkVRNacTSv:vanpetegem.me?via=vanpetegem.me&via=matrix.org).
