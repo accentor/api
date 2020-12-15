@@ -472,7 +472,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal 'genre', Genre.first.name
   end
 
-  test 'should be not fail if date has incorrect format' do
+  test 'should not fail if date has incorrect format' do
     Location.create(path: Rails.root.join('test/files/success-invalid-date'))
 
     @runner.run
