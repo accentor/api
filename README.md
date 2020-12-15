@@ -16,6 +16,7 @@ To run and develop locally:
 1. Make sure you are running [the correct version of ruby](https://github.com/accentor/api/blob/develop/.ruby-version).
 1. Install all dependencies with `bundle install`
 1.  Make sure you have postgresql is running and add a role `accentor` with password `accentor` (This role should have the permission to login and createdb)
+1. Make sure you have [ffmpeg](https://ffmpeg.org/download.html) installed, this is needed to calucate file length and convert audio.
 1. Setup the local database with `rails db:setup`
   This will also [seed](https://github.com/accentor/api/blob/develop/db/seeds.rb) the database with an admin account and some starting points for the application.
 
