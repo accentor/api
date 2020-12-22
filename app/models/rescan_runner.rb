@@ -176,6 +176,8 @@ class RescanRunner < ApplicationRecord
     return Date.new(0) unless tag # WahWah returns nil if the file doesn't have a date tag
 
     date = tag.split('-').map(&:to_i)
-    Date.new(date[0] || 0, date[1] || 1, date[2] || 1)
+    Date.new(date[0], date[1] || 1, date[2] || 1)
+  rescue Date::Error
+    Date.new(0)
   end
 end
