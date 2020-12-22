@@ -15,12 +15,6 @@ require_relative '../config/environment'
 require 'rails/test_help'
 require 'mocha/minitest'
 
-FactoryBot::SyntaxRunner.class_eval do
-  def self.file_fixture_path; end
-
-  include ActionDispatch::TestProcess
-end
-
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
 
