@@ -18,21 +18,10 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
     - uses: actions/checkout@v2.3.4
-    - name: Use ruby 2.7
-      uses: actions/setup-ruby@v1.1.2
+    - name: Setup ruby from /.ruby_version
+      uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7.2
-    - name: Cache Ruby dependencies
-      uses: actions/cache@v2
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-gem-
-    - name: Install dependencies
-      run: |
-        bundle config set path vendor/bundle
-        bundle install --jobs 4 --retry 3
+        bundler-cache: true
     - name: Run tests
       env:
         CI: true
@@ -44,21 +33,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2.3.4
-    - name: Use ruby 2.7
-      uses: actions/setup-ruby@v1.1.2
+    - name: Setup ruby from /.ruby_version
+      uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7.2
-    - name: Cache Ruby dependencies
-      uses: actions/cache@v2
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-gem-
-    - name: Install dependencies
-      run: |
-        bundle config set path vendor/bundle
-        bundle install --jobs 4 --retry 3
+        bundler-cache: true
     - name: Lint with rubocop
       env:
         RAILS_ENV: "test"
