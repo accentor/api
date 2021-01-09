@@ -35,6 +35,6 @@ class TrackSerializer < ActiveModel::Serializer
 
   def play_count
     # This fallback will only be accessed if the track was just created
-    object.has_attribute?(:play_count) ? object.play_count : 0
+    object.has_attribute?(:play_count) ? object.play_count : object.play_count_fallback
   end
 end
