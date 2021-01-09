@@ -198,6 +198,7 @@ ActiveRecord::Schema.define(version: 2021_01_04_190247) do
     t.bigint "user_id", null: false
     t.datetime "played_at", null: false
     t.index ["track_id"], name: "index_plays_on_track_id"
+    t.index ["user_id", "track_id"], name: "index_plays_on_user_id_and_track_id"
     t.index ["user_id"], name: "index_plays_on_user_id"
   end
 
