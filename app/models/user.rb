@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :auth_tokens, dependent: :destroy
+  has_many :plays, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
   validates :password_digest, presence: true
