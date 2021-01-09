@@ -15,4 +15,12 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     assert_response 201
     assert_equal Play.first.user_id, @user.id
   end
+
+  test 'should return error if invalid play' do
+    assert_difference('Play.count', 0) do
+      post plays_url, params: { play: { played_at: nil, track_id: @track.id } }
+    end
+
+    assert_response 422
+  end
 end
