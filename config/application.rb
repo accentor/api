@@ -36,5 +36,6 @@ module Accentor
 
     config.transcode_cache_expiry = -> { 1.day.ago }
     config.recalculate_content_length_if = ->(af) { af.length > 299 || af.track.created_at.after?(1.month.ago) }
+    config.plays_are_public = false
   end
 end

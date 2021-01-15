@@ -21,14 +21,6 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     assert_nil body.first['filename']
   end
 
-  test 'should get index with only plays for user' do
-    create(:play, track: @track, user: create(:user))
-    get tracks_url
-    assert_response :success
-    body = ActiveSupport::JSON.decode response.body
-    assert_equal 0, body.first['play_count']
-  end
-
   test 'should not create track for user' do
     assert_difference('Track.count', 0) do
       post tracks_url, params: { track: { album_id: @track.album_id, number: @track.number, title: @track.title } }

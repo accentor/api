@@ -133,7 +133,7 @@ Rails.application.routes.draw do
       end
     end
     resources :locations, only: %i[index show create destroy]
-    resources :plays, only: %i[create]
+    resources :plays, only: %i[index create]
     resources :tracks do
       collection do
         post 'destroy_empty'

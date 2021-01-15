@@ -13,7 +13,7 @@
 #  audio_file_id    :bigint
 #
 class TrackSerializer < ActiveModel::Serializer
-  attributes :id, :title, :normalized_title, :number, :album_id, :review_comment, :created_at, :updated_at, :genre_ids, :codec_id, :length, :bitrate, :location_id, :play_count
+  attributes :id, :title, :normalized_title, :number, :album_id, :review_comment, :created_at, :updated_at, :genre_ids, :codec_id, :length, :bitrate, :location_id
 
   has_many :track_artists
 
@@ -31,10 +31,5 @@ class TrackSerializer < ActiveModel::Serializer
 
   def location_id
     object.audio_file&.location_id
-  end
-
-  def play_count
-    # This fallback will only be accessed if the track was just created
-    object.has_attribute?(:play_count) ? object.play_count : object.play_count_fallback
   end
 end
