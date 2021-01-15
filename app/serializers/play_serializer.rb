@@ -8,5 +8,5 @@
 #  user_id   :bigint           not null
 #
 class PlaySerializer < ActiveModel::Serializer
-  attributes :id, :played_at, :user_id
+  attributes :id, :played_at, :track_id, :user_id
 end

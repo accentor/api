@@ -35,5 +35,6 @@ module Accentor
     config.active_job.queue_adapter = :delayed_job
 
     config.transcode_cache_expiry = -> { 1.day.ago }
+    config.plays_are_public = false
   end
 end

@@ -7,6 +7,14 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     sign_in_as @user
   end
 
+  test 'should get index with only plays for user' do
+    create(:play, track: @track, user: create(:user))
+    get plays_url
+    assert_response :success
+    body = ActiveSupport::JSON.decode response.body
+    assert_equal [], body
+  end
+
   test 'should create play' do
     assert_difference('Play.count', 1) do
       post plays_url, params: { play: { played_at: DateTime.current, track_id: @track.id } }

@@ -23,8 +23,6 @@ class Track < ApplicationRecord
   has_many :artists, through: :track_artists, source: :artist
   has_many :plays, dependent: :destroy
 
-  attr_reader :play_count_fallback
-
   validates :title, presence: true
   validates :number, presence: true
 
