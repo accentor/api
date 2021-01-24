@@ -11,7 +11,7 @@
 #  codec_conversion_id :bigint           not null
 #
 class TranscodedItem < ApplicationRecord
-  BASE_PATH = Rails.root.join('storage/transcode_cache')
+  BASE_PATH = Rails.configuration.transcode_cache_path
 
   belongs_to :audio_file
   belongs_to :codec_conversion

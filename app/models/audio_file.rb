@@ -54,7 +54,7 @@ class AudioFile < ApplicationRecord
       *parameters,
       '-map_metadata', '-1',
       '-map', 'a', '-',
-      err: [Rails.root.join('log/ffmpeg.log').to_s, 'a']
+      err: [Rails.configuration.ffmpeg_log_location, 'a']
     )
     stdin.close
     stdout

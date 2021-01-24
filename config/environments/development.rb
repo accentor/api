@@ -53,4 +53,6 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.token_hash_rounds = 10
+  config.ffmpeg_log_location = Rails.root.join('log/ffmpeg.log').to_s
+  config.transcode_cache_path = Rails.root.join('storage/transcode_cache').to_s
 end

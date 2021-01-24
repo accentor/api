@@ -44,7 +44,6 @@ Rails.application.configure do
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 
-  config.token_hash_rounds = 1
 
   config.active_job.queue_adapter = :delayed_job
   Delayed::Worker.delay_jobs = false
@@ -52,4 +51,8 @@ Rails.application.configure do
   # For tests we want to be the transcode cache expiry setting to remain
   # the same, regardless of the configuration in application.rb
   config.transcode_cache_expiry = -> { 1.day.ago }
+
+  config.token_hash_rounds = 1
+  config.ffmpeg_log_location = Rails.root.join('tmp/log/ffmpeg.log').to_s
+  config.transcode_cache_path = Rails.root.join('tmp/storage/transcode_cache').to_s
 end
