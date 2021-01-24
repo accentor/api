@@ -20,11 +20,11 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: accentor
-  password: accentor
 
 development:
   <<: *default
+  username: accentor
+  password: accentor
   database: accentor_development
   url: <%= ENV['DATABASE_URL'] %>
 
@@ -60,6 +60,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
+  username: accentor
+  password: accentor
   database: accentor_test
   url: <%= ENV['DATABASE_URL'] ? "#{ENV['DATABASE_URL']}_test" : nil %>
 
@@ -86,3 +88,4 @@ production:
   <<: *default
   host: db
   database: accentor_production
+  url: <%= ENV['DATABASE_URL'] %>
