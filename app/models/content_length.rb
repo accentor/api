@@ -18,6 +18,14 @@ class ContentLength < ApplicationRecord
   validates :length, presence: true
 
   before_save :set_ffmpeg_version
+
+  def check_ffmpeg_version
+    return true if ffmpeg_version == Rails.application.config.FFMPEG_VERSION
+
+    destroy
+    false
+  end
+
   private
 
   def set_ffmpeg_version
