@@ -25,4 +25,22 @@ class ContentLengthTest < ActiveSupport::TestCase
     assert_equal Rails.application.config.FFMPEG_VERSION, @content_length.ffmpeg_version
   end
 
+  test 'should remain if ffmpeg version matches' do
+    @content_length.check_ffmpeg_version
+    @content_length.reload
+    assert_not_nil @content_length.id
+  end
+
+  test 'should destroy if ffmpeg version does not match' do
+    # rubocop:disable Rails/SkipsModelValidations
+    # We want to avoid our own before_save callback to manually set a wrong version
+    @content_length.update_column(:ffmpeg_version, Faker::App.semantic_version)
+    # rubocop:enable Rails/SkipsModelValidations
+    assert_not_equal Rails.application.config.FFMPEG_VERSION, @content_length.ffmpeg_version
+    @content_length.check_ffmpeg_version
+
+    assert_raises(ActiveRecord::RecordNotFound) do
+      @content_length.reload
+    end
+  end
 end
