@@ -3,6 +3,7 @@
 # Table name: content_lengths
 #
 #  id                  :bigint           not null, primary key
+#  ffmpeg_version      :string           not null
 #  length              :integer          not null
 #  audio_file_id       :bigint           not null
 #  codec_conversion_id :bigint           not null
