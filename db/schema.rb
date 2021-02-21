@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_12_115622) do
+ActiveRecord::Schema.define(version: 2021_02_21_102324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(version: 2020_12_12_115622) do
     t.bigint "audio_file_id", null: false
     t.bigint "codec_conversion_id", null: false
     t.integer "length", null: false
+    t.string "ffmpeg_version", null: false
     t.index ["audio_file_id", "codec_conversion_id"], name: "index_content_lengths_on_audio_file_id_and_codec_conversion_id", unique: true
     t.index ["audio_file_id"], name: "index_content_lengths_on_audio_file_id"
     t.index ["codec_conversion_id"], name: "index_content_lengths_on_codec_conversion_id"
