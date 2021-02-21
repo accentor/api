@@ -22,6 +22,8 @@ class ContentLength < ApplicationRecord
   def check_ffmpeg_version
     return true if ffmpeg_version == Rails.application.config.FFMPEG_VERSION
 
+    destroy
+
     if audio_file.length > Rails.application.config.recalculate_content_length_if_longer_than ||
        audio_file.track.created_at.after?(Rails.application.config.recalculate_content_length_if_newer_than.call)
       CodecConversion.find_each do |cc|
@@ -29,7 +31,6 @@ class ContentLength < ApplicationRecord
       end
     end
 
-    destroy
     false
   end
 
