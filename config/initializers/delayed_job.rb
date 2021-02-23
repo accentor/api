@@ -11,5 +11,6 @@ Delayed::Worker.queue_attributes = {
   transcodes: { priority: 5 },
   rescans: { priority: 10 },
   content_lengths: { priority: 20 },
+  content_lengths_backlog: { priority: 25 },
   transcode_cache_cleaner: { priority: 100 }
 }
