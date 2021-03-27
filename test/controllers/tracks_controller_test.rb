@@ -221,7 +221,8 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     mp3 = Codec.create(mimetype: 'audio/mpeg', extension: 'mp3')
     codec_conversion = CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
     location = Location.create(path: Rails.root.join('test/files'))
-    audio_file = create(:audio_file, location: location, filename: '/base.flac')
+    flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
+    audio_file = create(:audio_file, location: location, filename: '/base.flac', codec: flac)
     length = audio_file.content_lengths.find_by(codec_conversion: codec_conversion).length
     track = create(:track, audio_file: audio_file)
 
