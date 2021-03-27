@@ -204,6 +204,12 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+end
+
+class TracksControllerAudioTest < ActionDispatch::IntegrationTest
+  setup do
+    sign_in_as(create(:user))
+  end
 
   test 'should return not_found if codec_conversion does not exit ' do
     location = Location.create(path: Rails.root.join('test/files'))
