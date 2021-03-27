@@ -25,7 +25,7 @@ class TrackTest < ActiveSupport::TestCase
 
     assert_equal 1, AudioFile.count
     assert_equal audio_file_id, t1.reload.audio_file.id
-    assert 1, Track.count
+    assert_equal 1, Track.count
   end
 
   test 'should be able to merge two tracks with one resulting audio_file' do
@@ -36,7 +36,7 @@ class TrackTest < ActiveSupport::TestCase
 
     assert_equal 1, AudioFile.count
     assert t1.reload.audio_file.present?
-    assert 1, Track.count
+    assert_equal 1, Track.count
   end
 
   test 'merging a track with no audio_file should not change audio_file' do
@@ -47,7 +47,7 @@ class TrackTest < ActiveSupport::TestCase
 
     assert_equal 1, AudioFile.count
     assert t1.reload.audio_file.present?
-    assert 1, Track.count
+    assert_equal 1, Track.count
   end
 
   test 'should be able to merge two tracks with zero starting audio_files' do
@@ -58,7 +58,7 @@ class TrackTest < ActiveSupport::TestCase
 
     assert_equal 0, AudioFile.count
     assert t1.reload.audio_file.blank?
-    assert 1, Track.count
+    assert_equal 1, Track.count
   end
 
   test 'should be able to destroy track with genres' do

@@ -247,7 +247,8 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
     AudioFile.any_instance.stubs(:convert).returns(io)
     codec_conversion = create :codec_conversion
     location = Location.create(path: Rails.root.join('test/files'))
-    audio_file = create(:audio_file, location: location, filename: '/base.flac')
+    flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
+    audio_file = create(:audio_file, location: location, filename: '/base.flac', codec: flac)
     track = create(:track, audio_file: audio_file)
     get audio_track_url(track, codec_conversion_id: codec_conversion.id)
 
@@ -264,11 +265,12 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
     mp3 = Codec.create(mimetype: 'audio/mpeg', extension: 'mp3')
     codec_conversion = CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
     location = Location.create(path: Rails.root.join('test/files'))
-    audio_file = create(:audio_file, location: location, filename: '/base.flac')
+    flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
+    audio_file = create(:audio_file, location: location, filename: '/base.flac', codec: flac)
     length = audio_file.content_lengths.find_by(codec_conversion: codec_conversion).length
     track = create(:track, audio_file: audio_file)
 
-    get(audio_track_url(track, codec_conversion_id: codec_conversion.id), headers: { "range": 'bytes=150-500' })
+    get(audio_track_url(track, codec_conversion_id: codec_conversion.id), headers: { range: 'bytes=150-500' })
 
     assert_equal "bytes 150-500/#{length}", response.headers['content-range']
     assert_equal '351', response.headers['content-length']
@@ -283,11 +285,12 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
     mp3 = Codec.create(mimetype: 'audio/mpeg', extension: 'mp3')
     codec_conversion = CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
     location = Location.create(path: Rails.root.join('test/files'))
-    audio_file = create(:audio_file, location: location, filename: '/base.flac')
+    flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
+    audio_file = create(:audio_file, location: location, filename: '/base.flac', codec: flac)
     length = audio_file.content_lengths.find_by(codec_conversion: codec_conversion).length
     track = create(:track, audio_file: audio_file)
 
-    get(audio_track_url(track, codec_conversion_id: codec_conversion.id), headers: { "range": 'bytes=150-' })
+    get(audio_track_url(track, codec_conversion_id: codec_conversion.id), headers: { range: 'bytes=150-' })
 
     assert_equal "bytes 150-#{length - 1}/#{length}", response.headers['content-range']
     assert_equal (length - 150).to_s, response.headers['content-length']
