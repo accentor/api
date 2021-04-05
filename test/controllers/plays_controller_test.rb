@@ -12,7 +12,7 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     get plays_url
     assert_response :success
     body = ActiveSupport::JSON.decode response.body
-    assert_equal [], body
+    assert_empty body
   end
 
   test 'should create play' do
