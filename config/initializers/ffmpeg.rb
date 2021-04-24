@@ -1,8 +1,7 @@
 require 'open3'
 
 if Rails.env.test?
-  # We don't require test setups to have FFMPEG installed, so can jsut manually set a version
-  Rails.application.config.FFMPEG_VERSION = '0.0.1'
+  # We don't require test setups to have FFMPEG installed, so can just manually set a version
 else
   stdin, stdout, = Open3.popen2('ffmpeg -version')
   stdin.close
