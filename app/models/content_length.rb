@@ -16,8 +16,9 @@ class ContentLength < ApplicationRecord
   validates :audio_file, presence: true, uniqueness: { scope: :codec_conversion }
   validates :codec_conversion, presence: true
   validates :length, presence: true
+  validates :ffmpeg_version, presence: true
 
-  before_save :set_ffmpeg_version
+  before_validation :set_ffmpeg_version
 
   def check_ffmpeg_version
     return true if ffmpeg_version == Rails.application.config.FFMPEG_VERSION
