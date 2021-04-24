@@ -49,8 +49,7 @@ Rails.application.configure do
 
   # For tests we want these settings to remain the same, regardless of the configuration in application.rb
   config.transcode_cache_expiry = -> { 1.day.ago }
-  config.recalculate_content_length_if_longer_than = 299
-  config.recalculate_content_length_if_newer_than = -> { 1.month.ago }
+  config.recalculate_content_length_if = ->(af) { af.length > 299 || af.track.created_at.after?(1.month.ago) }
 
   config.token_hash_rounds = 1
   config.ffmpeg_log_location = Rails.root.join('tmp/log/ffmpeg.log').to_s

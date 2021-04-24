@@ -25,11 +25,10 @@ class ContentLength < ApplicationRecord
 
     destroy
 
-    if audio_file.length > Rails.application.config.recalculate_content_length_if_longer_than ||
-       audio_file.track.created_at.after?(Rails.application.config.recalculate_content_length_if_newer_than.call)
-      CodecConversion.find_each do |cc|
-        audio_file.delay(queue: :content_lengths_backlog).calc_audio_length(cc)
-      end
+    return unless Rails.application.config.recalculate_content_length_if.call audio_file
+
+    CodecConversion.find_each do |cc|
+      audio_file.delay(queue: :content_lengths_backlog).calc_audio_length(cc)
     end
   end
 

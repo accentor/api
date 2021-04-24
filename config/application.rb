@@ -35,7 +35,6 @@ module Accentor
     config.active_job.queue_adapter = :delayed_job
 
     config.transcode_cache_expiry = -> { 1.day.ago }
-    config.recalculate_content_length_if_longer_than = 299
-    config.recalculate_content_length_if_newer_than = -> { 1.month.ago }
+    config.recalculate_content_length_if = ->(af) { af.length > 299 || af.track.created_at.after?(1.month.ago) }
   end
 end
