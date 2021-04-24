@@ -31,8 +31,6 @@ class ContentLength < ApplicationRecord
         audio_file.delay(queue: :content_lengths_backlog).calc_audio_length(cc)
       end
     end
-
-    false
   end
 
   private
