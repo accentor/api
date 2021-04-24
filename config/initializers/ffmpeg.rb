@@ -6,5 +6,5 @@ if Rails.env.test?
 else
   stdin, stdout, = Open3.popen2('ffmpeg -version')
   stdin.close
-  Rails.application.config.FFMPEG_VERSION = stdout.gets.match(/ffmpeg version (\d+\.\d+\.\d+)/)[1]
+  Rails.application.config.FFMPEG_VERSION = stdout.gets.match(/ffmpeg version (\d+\.\d+\.?\d*)/)[1]
 end
