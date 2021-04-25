@@ -1,5 +1,8 @@
 require 'open3'
 
+# ffmpeg versions can be either x.x.x or x.x
+FFMPEG_REGEX = /ffmpeg version (\d+\.\d+\.?\d*)/.freeze
+
 namespace :ffmpeg do
   task check_version: :environment do
     path = ENV['FFMPEG_VERSION_LOCATION'] || Rails.root.join('log/ffmpeg_version.txt').to_s
@@ -11,8 +14,7 @@ namespace :ffmpeg do
 
     stdin, stdout, = Open3.popen2('ffmpeg -version')
     stdin.close
-    # ffmpeg versions can be either x.x.x or x.x
-    new_version = stdout.gets.match(/ffmpeg version (\d+\.\d+\.?\d*)/)[1]
+    new_version = stdout.gets.match(FFMPEG_REGEX)[1]
 
     exit if prev_version == new_version
 
@@ -23,12 +25,11 @@ namespace :ffmpeg do
 
   task init: :environment do
     path = ENV['FFMPEG_VERSION_LOCATION'] || Rails.root.join('log/ffmpeg_version.txt')
-    abort("The ffmpeg version file already exists: #{path}" ) if check_failed? if File.exist?(path)
+    abort("The ffmpeg version file already exists: #{path}") if File.exist?(path)
 
     stdin, stdout, = Open3.popen2('ffmpeg -version')
     stdin.close
-    # ffmpeg versions can be either x.x.x or x.x
-    version = stdout.gets.match(/ffmpeg version (\d+\.\d+\.?\d*)/)[1]
+    version = stdout.gets.match(FFMPEG_REGEX)[1]
     File.write(path, version)
   end
 end
