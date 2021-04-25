@@ -3,7 +3,11 @@ require 'open3'
 namespace :ffmpeg do
   task check_version: :environment do
     path = ENV['FFMPEG_VERSION_LOCATION'] || Rails.root.join('log/ffmpeg_version.txt').to_s
-    prev_version = File.read(path)
+    prev_version = begin
+      File.read(path)
+    rescue StandardError
+      '0.0.0'
+    end
 
     stdin, stdout, = Open3.popen2('ffmpeg -version')
     stdin.close
