@@ -23,7 +23,7 @@ namespace :ffmpeg do
 
   task init: :environment do
     path = ENV['FFMPEG_VERSION_LOCATION'] || Rails.root.join('log/ffmpeg_version.txt')
-    exit if File.exist?(path)
+    abort("The ffmpeg version file already exists: #{path}" ) if check_failed? if File.exist?(path)
 
     stdin, stdout, = Open3.popen2('ffmpeg -version')
     stdin.close
