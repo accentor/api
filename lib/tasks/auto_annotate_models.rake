@@ -6,7 +6,6 @@ if Rails.env.development?
   # rubocop:disable Rails/RakeEnvironment
   # We don't depend on the rails environment here (we don't use models/controllers/whatever)
   task :set_annotation_options do
-    
     # You can override any of these by setting an environment variable of the
     # same name.
     Annotate.set_defaults(
