@@ -10,7 +10,7 @@ gem 'rack', '~> 2.1.4'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.2.3', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 5.2'
+gem 'puma', '~> 5.3'
 # Use ActiveModelSerializer for serializing to JSON
 gem 'active_model_serializers', '~> 0.10'
 # Use Redis adapter to run Action Cable in production
