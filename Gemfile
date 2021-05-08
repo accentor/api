@@ -44,7 +44,7 @@ group :test do
 end
 
 group :development, :test do
-  gem 'factory_bot_rails', '~> 6.1'
+  gem 'factory_bot_rails', '~> 6.2'
   gem 'faker', '~> 2.17'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
