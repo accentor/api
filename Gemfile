@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.2'
+ruby '2.7.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1'
@@ -10,7 +10,7 @@ gem 'rack', '~> 2.1.4'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.2.3', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 5.2'
+gem 'puma', '~> 5.3'
 # Use ActiveModelSerializer for serializing to JSON
 gem 'active_model_serializers', '~> 0.10'
 # Use Redis adapter to run Action Cable in production
@@ -44,8 +44,8 @@ group :test do
 end
 
 group :development, :test do
-  gem 'factory_bot_rails', '~> 6.1'
-  gem 'faker', '~> 2.17'
+  gem 'factory_bot_rails', '~> 6.2'
+  gem 'faker', '~> 2.18'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -54,8 +54,8 @@ end
 group :development do
   gem 'annotate', '~> 3.1'
 
-  gem 'rubocop-minitest', '~> 0.11.1'
-  gem 'rubocop-rails', '~> 2.9'
+  gem 'rubocop-minitest', '~> 0.12.1'
+  gem 'rubocop-rails', '~> 2.10'
 
   gem 'listen', '>= 3.1.5', '< 3.6'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
