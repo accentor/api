@@ -47,7 +47,7 @@ Rails.application.configure do
   config.active_job.queue_adapter = :delayed_job
   Delayed::Worker.delay_jobs = false
 
-  # For tests we want to be the these settings to remain the same, regardless of the configuration in application.rb
+  # For tests we want these settings to remain the same, regardless of the configuration in application.rb
   config.transcode_cache_expiry = -> { 1.day.ago }
   config.recalculate_content_length_if = ->(af) { af.length > 299 || af.track.created_at.after?(1.month.ago) }
 
