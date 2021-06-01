@@ -6,7 +6,6 @@ if Rails.env.development?
   # rubocop:disable Rails/RakeEnvironment
   # We don't depend on the rails environment here (we don't use models/controllers/whatever)
   task :set_annotation_options do
-    # rubocop:enable Rails/RakeEnvironment
     # You can override any of these by setting an environment variable of the
     # same name.
     Annotate.set_defaults(
@@ -55,6 +54,16 @@ if Rails.env.development?
       'with_comment' => 'true'
     )
   end
+
+  # We manually fix the routes command until https://github.com/ctran/annotate_models/pull/843 is merged
+  task :routes do
+    require 'rails/commands/routes/routes_command'
+    Rails.application.require_environment!
+    cmd = Rails::Command::RoutesCommand.new
+    cmd.perform
+  end
+
+  # rubocop:enable Rails/RakeEnvironment
 
   Annotate.load_tasks
 end
