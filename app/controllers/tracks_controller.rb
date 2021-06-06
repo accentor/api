@@ -88,7 +88,7 @@ class TracksController < ApplicationController
 
   def audio_with_file(path, mimetype)
     file = File.open(path, 'rb')
-    audio_with_stream(file, mimetype, File.size?(path) || File.read(path))
+    audio_with_stream(file, mimetype, file.size)
   end
 
   def audio_with_stream(stream, mimetype, total_size)
