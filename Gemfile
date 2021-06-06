@@ -5,8 +5,6 @@ ruby '2.7.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1'
-# Remove workaround in tracks_controller when upgrading to 3.0.0
-gem 'rack', '~> 2.2.3'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.2.3', '< 2.0'
 # Use Puma as the app server
