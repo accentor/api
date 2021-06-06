@@ -87,19 +87,8 @@ class TracksController < ApplicationController
   private
 
   def audio_with_file(path, mimetype)
-    Rack::File.new(nil).serving(request, path).tap do |(status, headers, body)|
-      self.status = status
-      self.response_body = body
-
-      headers.each do |name, value|
-        response.headers[name] = value
-      end
-
-      response.content_type = mimetype
-      response.headers['accept-ranges'] = 'bytes'
-      # Workaround for https://github.com/rack/rack/issues/1619/. Remove when updating to Rack 3.0.0.
-      response.headers['last-modified'] = Time.now.httpdate
-    end
+    file = File.open(path, 'rb')
+    audio_with_stream(file, mimetype, File.size?(path) || File.read?(path))
   end
 
   def audio_with_stream(stream, mimetype, total_size)
