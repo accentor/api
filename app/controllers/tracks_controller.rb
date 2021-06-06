@@ -109,8 +109,6 @@ class TracksController < ApplicationController
     response.content_type = mimetype
     response.headers['accept-ranges'] = 'bytes'
     response.headers['content-length'] = (last_byte - first_byte + 1).to_s
-    # Workaround for https://github.com/rack/rack/issues/1619/. Remove when updating to Rack 3.0.0.
-    response.headers['last-modified'] = Time.now.httpdate
 
     to_skip = first_byte
     while to_skip.positive?
