@@ -10,11 +10,6 @@ updates:
   open-pull-requests-limit: 10
   reviewers:
   - charvp
-  ignore:
-  - dependency-name: rack
-    versions:
-    - ">= 2.2.a"
-    - "< 2.3"
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
