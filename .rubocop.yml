@@ -43,6 +43,9 @@ Metrics/ModuleLength:
 Metrics/PerceivedComplexity:
   Enabled: false
 
+Minitest/MultipleAssertions:
+  Enabled: false
+
 Naming/HeredocDelimiterNaming:
   Enabled: false
 Naming/MethodParameterName:
