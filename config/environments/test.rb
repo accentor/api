@@ -54,5 +54,4 @@ Rails.application.configure do
   config.token_hash_rounds = 1
   config.ffmpeg_log_location = Rails.root.join('tmp/log/ffmpeg.log').to_s
   config.transcode_cache_path = Rails.root.join('tmp/storage/transcode_cache').to_s
-  config.plays_are_public = false
 end
