@@ -11,7 +11,7 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     create(:play, track: @track, user: create(:user))
     get plays_url
     assert_response :success
-    body = ActiveSupport::JSON.decode response.body
+    body = JSON.parse response.body
     assert_empty body
   end
 
