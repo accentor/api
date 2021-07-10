@@ -88,6 +88,10 @@ en:
             path:
               blank: "location.path-blank"
               taken: "location.path-taken"
+        play:
+          attributes:
+            played_at:
+              blank: "play.played-at-blank"
         track:
           attributes:
             title:

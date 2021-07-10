@@ -61,6 +61,19 @@ class TrackTest < ActiveSupport::TestCase
     assert_equal 1, Track.count
   end
 
+  test 'should move plays on merge' do
+    t1 = create(:track)
+    t2 = create(:track)
+    create(:play, track: t2)
+
+    assert_no_difference('Play.count') do
+      t1.merge(t2)
+    end
+
+    assert_equal 1, Track.count
+    assert_equal 1, t1.plays.count
+  end
+
   test 'should be able to destroy track with genres' do
     g1 = create(:genre)
     g2 = create(:genre)
