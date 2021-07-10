@@ -61,7 +61,7 @@ class TrackTest < ActiveSupport::TestCase
     assert_equal 1, Track.count
   end
 
-  test 'should move plays on mere' do
+  test 'should move plays on merge' do
     t1 = create(:track)
     t2 = create(:track)
     create(:play, track: t2)
