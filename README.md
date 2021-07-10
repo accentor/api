@@ -40,6 +40,11 @@ you want.
     * RACK_ENV
     * RAILS_ENV
     * RAILS_LOG_TO_STDOUT
+1. This leaves you with a server running on port 3000. Use a reverse
+   proxy like Apache or nginx to route your traffic. If you are
+   deploying the web frontend an the same subdomain, you can match the
+   requested path on `/api` and `/rails` and only proxy those
+   requests.
 
 ## Local development
 To run and develop locally:
