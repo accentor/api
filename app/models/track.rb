@@ -60,6 +60,10 @@ class Track < ApplicationRecord
 
   def merge(other)
     af = other.audio_file
+    # rubocop:disable Rails/SkipsModelValidations
+    # Since we only update the track_id, there aren't any validations that could fail
+    other.plays.update_all(track_id: id)
+    # rubocop:enable Rails/SkipsModelValidations
     other.update(audio_file: nil)
     other.destroy
     return if af.blank?
