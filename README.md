@@ -28,17 +28,22 @@ you want.
    run `rails db:setup`.
 1. Make sure to perform migrations before starting the server. Also
    run the `ffmpeg:check_version` rake task.
-1. Run `puma -C config/puma.rb` to start the server. You probably want
-   to set the following environment variables:
+1. Run `puma -C config/puma.rb` to start the server. You can use any
+   other application server as well, but there is no configuration
+   provided.
+1. You probably want to set the following environment variables when
+   running:
     * DATABASE_URL
+    * RACK_ENV
+    * RAILS_ENV
+  Optionally set the following variables to control where Accentor
+  stores its files:
     * FFMPEG_LOG_LOCATION
     * RAILS_STORAGE_PATH
     * FFMPEG_VERSION_LOCATION
     * RAILS_TRANSCODE_CACHE
     * BOOTSNAP_CACHE_DIR
     * PIDFILE
-    * RACK_ENV
-    * RAILS_ENV
     * RAILS_LOG_TO_STDOUT
 1. This leaves you with a server running on port 3000. Use a reverse
    proxy like Apache or nginx to route your traffic. If you are
