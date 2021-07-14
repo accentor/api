@@ -22,6 +22,12 @@ assignees: ""
   2. Click on '....'
   3. Scroll down to '....'
   4. See error
+
+  Note that the GitHub ToS requires you to have the intellectual
+  property rights required to post copyrighted content, which you
+  might not have for cover art included in your screenshot depending
+  on your jurisdiction and the license of the cover art:
+  https://docs.github.com/en/github/site-policy/github-terms-of-service#d-user-generated-content
   --->
 
 ##### Expected behaviour
