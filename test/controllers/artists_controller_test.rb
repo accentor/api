@@ -175,7 +175,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     artist = create(:artist)
 
     assert_difference('Artist.count', 0) do
-      post merge_artist_url(@artist, old_id: artist.id)
+      post merge_artist_url(@artist, source_id: artist.id)
     end
 
     assert_response :forbidden
@@ -186,7 +186,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     artist = create(:artist)
 
     assert_difference('Artist.count', -1) do
-      post merge_artist_url(@artist, old_id: artist.id)
+      post merge_artist_url(@artist, source_id: artist.id)
     end
 
     assert_response :success
