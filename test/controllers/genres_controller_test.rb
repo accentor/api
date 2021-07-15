@@ -130,7 +130,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     genre = create(:genre)
 
     assert_difference('Genre.count', 0) do
-      post merge_genre_url(@genre, other_genre_id: genre.id)
+      post merge_genre_url(@genre, source_id: genre.id)
     end
 
     assert_response :forbidden
@@ -141,7 +141,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     genre = create(:genre)
 
     assert_difference('Genre.count', -1) do
-      post merge_genre_url(@genre, other_genre_id: genre.id)
+      post merge_genre_url(@genre, source_id: genre.id)
     end
 
     assert_response :success

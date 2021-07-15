@@ -130,7 +130,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     label = create(:label)
 
     assert_difference('Label.count', 0) do
-      post merge_label_url(@label, other_label_id: label.id)
+      post merge_label_url(@label, source_id: label.id)
     end
 
     assert_response :forbidden
@@ -141,7 +141,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     label = create(:label)
 
     assert_difference('Label.count', -1) do
-      post merge_label_url(@label, other_label_id: label.id)
+      post merge_label_url(@label, source_id: label.id)
     end
 
     assert_response :success

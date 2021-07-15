@@ -153,7 +153,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference('Track.count', 0) do
       assert_difference('AudioFile.count', 0) do
-        post merge_track_url(@track, other_track_id: track.id)
+        post merge_track_url(@track, source_id: track.id)
       end
     end
 
@@ -168,7 +168,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference('Track.count', -1) do
       assert_difference('AudioFile.count', -1) do
-        post merge_track_url(@track, other_track_id: track.id)
+        post merge_track_url(@track, source_id: track.id)
       end
     end
 

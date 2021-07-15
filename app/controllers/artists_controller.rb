@@ -48,7 +48,7 @@ class ArtistsController < ApplicationController
   end
 
   def merge
-    render json: @artist.errors, status: :unprocessable_entity unless @artist.merge(Artist.find(params[:other_artist_id]))
+    render json: @artist.errors, status: :unprocessable_entity unless @artist.merge(Artist.find(params[:source_id]))
   end
 
   private

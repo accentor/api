@@ -43,7 +43,7 @@ class LabelsController < ApplicationController
   end
 
   def merge
-    @label.merge(Label.find(params[:other_label_id]))
+    @label.merge(Label.find(params[:source_id]))
     # We don't do error handling here. The merge action isn't supposed to fail.
     render json: @label, status: :ok
   end
