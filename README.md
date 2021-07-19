@@ -36,8 +36,14 @@ you want.
     * DATABASE_URL
     * RACK_ENV
     * RAILS_ENV
-  Optionally set the following variables to control where Accentor
-  stores its files:
+    * SECRET_KEY_BASE
+    
+    You can generate a new `SECRET_KEY_BASE` using `bin/rails secret`.
+    For optimal caching, this key should be stable.
+    
+    Optionally set the following variables to control where Accentor
+    stores its files:
+    
     * FFMPEG_LOG_LOCATION
     * RAILS_STORAGE_PATH
     * FFMPEG_VERSION_LOCATION
