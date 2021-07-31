@@ -128,7 +128,7 @@ class RescanRunner < ApplicationRecord
       role: :main,
       order: 1
     }]
-    if t_composer.present? && t_composer != t_artist
+    if t_composer.present?
       composer = Artist.find_by(name: t_composer) || Artist.new(name: t_composer, review_comment: 'New artist')
       track_artists << {
         artist: composer,
