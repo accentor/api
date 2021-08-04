@@ -101,6 +101,25 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should destroy previous image when image is cleared' do
+    sign_in_as create(:moderator)
+    artist = create :artist, :with_image
+
+    image = {
+      data: nil,
+      filename: nil,
+      mimetype: nil
+    }
+
+    assert_difference('Image.count', -1) do
+      patch artist_url(artist), params: { artist: { image: image } }
+    end
+
+    assert_nil Artist.find(artist.id).image
+
+    assert_response :success
+  end
+
   test 'should not destroy artist for user' do
     assert_difference('Artist.count', 0) do
       delete artist_url(@artist)

@@ -157,6 +157,25 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should destroy previous image when image is cleared' do
+    sign_in_as create(:moderator)
+    album = create :album, :with_release, :with_image
+
+    image = {
+      data: nil,
+      filename: nil,
+      mimetype: nil
+    }
+
+    assert_difference('Image.count', -1) do
+      patch album_url(album), params: { album: { image: image } }
+    end
+
+    assert_nil Album.find(album.id).image
+
+    assert_response :success
+  end
+
   test 'should not destroy album for user' do
     assert_difference('Album.count', 0) do
       delete album_url(@album)
