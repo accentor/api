@@ -60,7 +60,9 @@ class ArtistsController < ApplicationController
 
   def transformed_attributes
     attributes = permitted_attributes(@artist || Artist)
-    if attributes[:image].present?
+    if attributes[:image].present? && attributes[:image][:data].nil?
+      attributes[:image] = nil
+    elsif attributes[:image].present?
       image_type = ImageType.find_by(extension: File.extname(attributes[:image][:filename])[1..].downcase) ||
                    ImageType.new(extension: File.extname(attributes[:image][:filename])[1..].downcase,
                                  mimetype: attributes[:image][:mimetype])
