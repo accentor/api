@@ -101,7 +101,7 @@ class TracksController < ApplicationController
       # (especially not for web audio).
       match = request.headers['range'].match(/bytes=(\d+)-(\d*)/)
       first_byte = match[1].to_i
-      last_byte = match[2].present? ? match[2].to_i : last_byte
+      last_byte = match[2].to_i if match[2].present?
       response.headers['content-range'] = "bytes #{first_byte}-#{last_byte}/#{total_size}"
     else
       response.status = 200
