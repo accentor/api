@@ -134,7 +134,7 @@ GEM
     pg (1.2.3)
     puma (5.4.0)
       nio4r (~> 2.0)
-    pundit (2.1.0)
+    pundit (2.1.1)
       activesupport (>= 3.0.0)
     racc (1.5.2)
     rack (2.2.3)
@@ -220,7 +220,7 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    will_paginate (3.3.0)
+    will_paginate (3.3.1)
     zeitwerk (2.4.2)
 
 PLATFORMS
