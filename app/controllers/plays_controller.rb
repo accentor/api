@@ -1,4 +1,6 @@
 class PlaysController < ApplicationController
+  has_scope :by_album, as: 'album_id'
+
   def index
     authorize Play
     @plays = apply_scopes(policy_scope(Play))
