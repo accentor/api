@@ -15,6 +15,16 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     assert_empty body
   end
 
+  test 'should get index with album scope' do
+    play1 = create(:play, track: @track, user: @user)
+    play2 = create(:play, user: @user)
+    get plays_url(album_id: @track.album_id)
+    assert_response :success
+    body = JSON.parse response.body
+    assert_includes body, play1.as_json
+    assert_not_includes body, play2.as_json
+  end
+
   test 'should create play' do
     assert_difference('Play.count', 1) do
       post plays_url, params: { play: { played_at: DateTime.current, track_id: @track.id } }
