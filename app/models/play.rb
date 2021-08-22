@@ -12,4 +12,6 @@ class Play < ApplicationRecord
   belongs_to :user
 
   validates :played_at, presence: true
+
+  scope :by_album, ->(album) { joins(:track).where(track: { album_id: album }) }
 end
