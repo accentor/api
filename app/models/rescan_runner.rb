@@ -22,6 +22,23 @@ class RescanRunner < ApplicationRecord
     delay(queue: :rescans).run
   end
 
+  def self.schedule_all
+    unless Location.count.positive?
+      update(error_text: 'No locations defined')
+      return
+    end
+
+    unless Codec.count.positive?
+      update(error_text: 'No codecs defined')
+      return
+    end
+
+    find_each { |r| r.delay(queue: :rescans).run }
+  rescue StandardError => e
+    backtrace = Rails.env.production? ? e.backtrace.first(5).join("\n") : e.backtrace.join("\n")
+    update(error_text: "#{error_text}A really unexpected error occurred while processing: #{e.message}\n#{backtrace}\n")
+  end
+
   def run
     # rubocop:disable Rails/SkipsModelValidations
     # RescanRunner doesn't have validations, and we need to use update_all to use it's atomicity
