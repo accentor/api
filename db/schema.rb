@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_05_090539) do
+ActiveRecord::Schema.define(version: 2021_01_04_190247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,8 +208,6 @@ ActiveRecord::Schema.define(version: 2021_09_05_090539) do
     t.integer "processed", default: 0, null: false
     t.boolean "running", default: false, null: false
     t.datetime "finished_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.bigint "location_id", null: false
-    t.index ["location_id"], name: "index_rescan_runners_on_location_id"
   end
 
   create_table "track_artists", force: :cascade do |t|
@@ -278,7 +276,6 @@ ActiveRecord::Schema.define(version: 2021_09_05_090539) do
   add_foreign_key "images", "image_types"
   add_foreign_key "plays", "tracks"
   add_foreign_key "plays", "users"
-  add_foreign_key "rescan_runners", "locations"
   add_foreign_key "track_artists", "artists"
   add_foreign_key "track_artists", "tracks"
   add_foreign_key "tracks", "albums"
