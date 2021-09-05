@@ -8,6 +8,9 @@
 
 class Location < ApplicationRecord
   has_many :audio_files, dependent: :destroy
+  has_one :rescan_runner, dependent: :destroy
+
+  after_create :create_location
 
   validates :path, presence: true, uniqueness: true
   validate :cant_be_subdir_of_other_location
@@ -21,5 +24,11 @@ class Location < ApplicationRecord
 
   def cant_be_parent_of_other_location
     errors.add(:path, 'path-is-parent') unless Location.where("? LIKE path || '%'", path).empty?
+
+  private
+
+  def create_location
+    runner = RescanRunner.create(finished_at: Date.new, location: self)
+    runner.schedule
   end
 end
