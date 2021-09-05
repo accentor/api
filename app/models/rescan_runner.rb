@@ -33,21 +33,14 @@ class RescanRunner < ApplicationRecord
     reload
 
     begin
-      unless Location.count.positive?
-        update(error_text: 'No locations defined')
-        return
-      end
-
       unless Codec.count.positive?
         update(error_text: 'No codecs defined')
         return
       end
 
-      Location.all.find_each do |l|
-        process_all_files(l, l.path)
-      end
+      process_all_files(location.path)
 
-      AudioFile.find_each do |af|
+      location.audio_files.find_each do |af|
         update(warning_text: "#{warning_text}File #{af.full_path} doesn't exist anymore.\n") unless af.check_self
       end
     rescue StandardError => e
@@ -60,7 +53,7 @@ class RescanRunner < ApplicationRecord
 
   private
 
-  def process_all_files(location, path)
+  def process_all_files(path)
     unless File.directory?(path)
       update(error_text: "#{error_text}#{path} (in #{location.path} is not a directory\n")
       return
@@ -68,13 +61,13 @@ class RescanRunner < ApplicationRecord
 
     Dir.each_child(path) do |child|
       if File.directory?(File.join(path, child))
-        process_all_files(location, File.join(path, child))
+        process_all_files(File.join(path, child))
       else
         Codec.all.find_each do |c|
           next unless File.extname(child)[1..]&.downcase == c.extension.downcase.to_s
 
           begin
-            process_file(location, c, File.join(path, child))
+            process_file(c, File.join(path, child))
             update(processed: processed + 1)
           rescue StandardError => e
             backtrace = Rails.env.production? ? e.backtrace.first(5).join("\n") : e.backtrace.join("\n")
@@ -85,7 +78,7 @@ class RescanRunner < ApplicationRecord
     end
   end
 
-  def process_file(location, codec, path)
+  def process_file(codec, path)
     relative_path = Pathname.new(path).relative_path_from(Pathname.new(location.path))
 
     return if AudioFile.exists?(location: location, filename: relative_path.to_s)
