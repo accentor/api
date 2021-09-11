@@ -1,6 +1,5 @@
 namespace :rescan do
   task start: :environment do
-    rescan = RescanRunner.first || RescanRunner.create
-    rescan.delay(queue: :rescans).run
+    RescanRunner.instance.start_delayed
   end
 end

@@ -11,6 +11,14 @@
 #
 
 class RescanRunner < ApplicationRecord
+  def self.instance
+    RescanRunner.first || RescanRunner.create
+  end
+
+  def schedule
+    delay(queue: :rescans).run
+  end
+
   def run
     # rubocop:disable Rails/SkipsModelValidations
     # RescanRunner doesn't have validations, and we need to use update_all to use it's atomicity
