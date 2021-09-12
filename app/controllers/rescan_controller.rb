@@ -6,14 +6,14 @@ class RescanController < ApplicationController
   end
 
   def start
-    @rescan.delay(queue: :rescans).run
+    @rescan.schedule
     render json: @rescan
   end
 
   private
 
   def set_rescan
-    @rescan = RescanRunner.first || RescanRunner.create
+    @rescan = RescanRunner.instance
     authorize @rescan
   end
 end
