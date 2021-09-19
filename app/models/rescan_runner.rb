@@ -23,21 +23,10 @@ class RescanRunner < ApplicationRecord
   end
 
   def self.schedule_all
-    unless Location.count.positive?
-      update(error_text: 'No locations defined')
-      return
-    end
-
-    unless Codec.count.positive?
-      update(error_text: 'No codecs defined')
-      return
-    end
-
     find_each { |r| r.delay(queue: :rescans).run }
-  rescue StandardError => e
-    backtrace = Rails.env.production? ? e.backtrace.first(5).join("\n") : e.backtrace.join("\n")
-    update(error_text: "#{error_text}A really unexpected error occurred while processing: #{e.message}\n#{backtrace}\n")
   end
+
+  private
 
   def run
     # rubocop:disable Rails/SkipsModelValidations
@@ -67,8 +56,6 @@ class RescanRunner < ApplicationRecord
       update(running: false, finished_at: DateTime.current)
     end
   end
-
-  private
 
   def process_all_files(path)
     unless File.directory?(path)
