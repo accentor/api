@@ -28,7 +28,7 @@ class Location < ApplicationRecord
   private
 
   def create_runner
-    runner = RescanRunner.create(finished_at: Date.new, location: self)
+    runner = RescanRunner.create(location: self)
     runner.schedule
   end
 end
