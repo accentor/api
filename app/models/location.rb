@@ -24,8 +24,7 @@ class Location < ApplicationRecord
 
   def cant_be_parent_of_other_location
     errors.add(:path, 'path-is-parent') unless Location.where("? LIKE path || '%'", path).empty?
-
-  private
+  end
 
   def create_runner
     runner = RescanRunner.create(location: self)

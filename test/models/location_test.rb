@@ -31,4 +31,10 @@ class LocationTest < ActiveSupport::TestCase
     child = build(:location, path: '/Var/parent/Music')
     assert child.valid?
   end
+
+  test 'should create a rescan runner' do
+    assert_difference('RescanRunner.count') do
+      create(:location)
+    end
+  end
 end
