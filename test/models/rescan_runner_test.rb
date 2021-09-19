@@ -15,34 +15,38 @@ require 'test_helper'
 class RescanRunnerTest < ActiveSupport::TestCase
   setup do
     @runner = create(:rescan_runner)
+    # We need to reload to get the default values set in the database
+    @runner.reload
     Codec.create(extension: 'flac', mimetype: 'audio/flac')
     Codec.create(extension: 'mp3', mimetype: 'audio/mpeg')
     ImageType.create(extension: 'png', mimetype: 'image/png')
     ImageType.create(extension: 'jpg', mimetype: 'image/png')
     CoverFilename.create(filename: 'image')
-
-    # We want to test whether jobs are created, so do want these jobs to be created
-    Delayed::Worker.delay_jobs = true
   end
 
-  test 'schedule should create a task' do
-    assert_difference('Delayed::Job.count') do
-      @runner.schedule
-    end
+  test 'schedule should create a job' do
+    prev = @runner.finished_at
+    @runner.schedule
+    @runner.reload
+    assert_not_equal prev, @runner.finished_at
   end
 
-  test 'should not schedule a second task if running' do
+  test 'should not schedule a second job if running' do
     @runner.update(running: true)
-    assert_no_difference('Delayed::Job.count') do
-      @runner.schedule
-    end
+    prev = @runner.finished_at
+    @runner.schedule
+    @runner.reload
+    assert_equal prev, @runner.finished_at
   end
 
   test 'schedule_all should create one task per runner' do
     3.times { create(:rescan_runner) }
 
-    assert_difference('Delayed::Job.count', RescanRunner.count) do
-      RescanRunner.schedule_all
+    prev = RescanRunner.all.map(&:finished_at)
+    RescanRunner.schedule_all
+    after = RescanRunner.all.map(&:finished_at)
+    prev.each_with_index do |time, i|
+      assert_not_equal time, after[i]
     end
   end
 
