@@ -14,28 +14,43 @@ require 'test_helper'
 
 class RescanRunnerTest < ActiveSupport::TestCase
   setup do
-    @runner = RescanRunner.create
+    @runner = create(:rescan_runner)
     Codec.create(extension: 'flac', mimetype: 'audio/flac')
     Codec.create(extension: 'mp3', mimetype: 'audio/mpeg')
     ImageType.create(extension: 'png', mimetype: 'image/png')
     ImageType.create(extension: 'jpg', mimetype: 'image/png')
     CoverFilename.create(filename: 'image')
+
+    # We want to test whether jobs are created, so do want these jobs to be created
+    Delayed::Worker.delay_jobs = true
   end
 
-  test 'should complain when there are no locations' do
-    @runner.run
-    @runner.reload
+  test 'schedule should create a task' do
+    assert_difference('Delayed::Job.count') do
+      @runner.schedule
+    end
+  end
 
-    assert_not @runner.error_text.empty?
-    assert_equal 0, @runner.processed
-    assert_not @runner.running
+  test 'should not schedule a second task if running' do
+    @runner.update(running: true)
+    assert_no_difference('Delayed::Job.count') do
+      @runner.schedule
+    end
+  end
+
+  test 'schedule_all should create one task per runner' do
+    3.times { create(:rescan_runner) }
+
+    assert_difference('Delayed::Job.count', RescanRunner.count) do
+      RescanRunner.schedule_all
+    end
   end
 
   test 'should complain when there are no codecs' do
-    Location.create(path: Rails.root.join('test/files/success-one-file'))
+    @runner.location.update(path: Rails.root.join('test/files/success-one-file'))
     Codec.destroy_all
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
 
     assert_not @runner.error_text.empty?
@@ -44,9 +59,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test "should complain when location doesn't exist" do
-    Location.create(path: Rails.root.join('test/files/doesnt-exist'))
+    @runner.location.update(path: Rails.root.join('test/files/doesnt-exist'))
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
 
     assert_not @runner.error_text.empty?
@@ -55,9 +70,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'should complain when location is a file' do
-    Location.create(path: Rails.root.join('test/files/base.flac'))
+    @runner.location.update(path: Rails.root.join('test/files/base.flac'))
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
 
     assert_not @runner.error_text.empty?
@@ -66,9 +81,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'should be able to read a file successfully' do
-    Location.create(path: Rails.root.join('test/files/success-one-file'))
+    @runner.location.update(path: Rails.root.join('test/files/success-one-file'))
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
 
     assert_equal '', @runner.error_text
@@ -116,9 +131,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'should be able to read a file from a nested directory successfully' do
-    Location.create(path: Rails.root.join('test/files/success-nested'))
+    @runner.location.update(path: Rails.root.join('test/files/success-nested'))
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
     assert_equal '', @runner.error_text
     assert_equal '', @runner.warning_text
@@ -140,9 +155,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'should be able to recover from catastrophic error' do
-    Location.stubs(:all).raises('Catastrophic error')
+    Codec.stubs(:all).raises('Catastrophic error')
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
     assert_not @runner.error_text.empty?
     assert_includes @runner.error_text, 'Catastrophic error'
@@ -151,11 +166,11 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'should be able to recover from bad files and proceed' do
-    Location.create(path: Rails.root.join('test/files/failure-bad-file'))
+    @runner.location.update(path: Rails.root.join('test/files/failure-bad-file'))
     # Make sure bad file is processed before good file
     Dir.stubs(:each_child).multiple_yields('empty.flac', 'all-tags.mp3')
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
 
     assert_not @runner.error_text.empty?
@@ -165,10 +180,10 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'should not do anything if runner is already running' do
-    Location.create(path: Rails.root.join('test/files/success-one-file'))
+    @runner.location.update(path: Rails.root.join('test/files/success-one-file'))
 
     @runner.update(running: true, warning_text: 'unchanged', error_text: 'unchanged', processed: 64)
-    @runner.run
+    @runner.send(:run)
     @runner.reload
     assert_equal 'unchanged', @runner.error_text
     assert_equal 'unchanged', @runner.warning_text
@@ -177,9 +192,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'artist tag should be required' do
-    Location.create(path: Rails.root.join('test/files/failure-no-artist'))
+    @runner.location.update(path: Rails.root.join('test/files/failure-no-artist'))
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
     assert_not @runner.error_text.empty?
     assert_includes @runner.error_text, 'no-artist.mp3'
@@ -188,9 +203,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'album tag should be required' do
-    Location.create(path: Rails.root.join('test/files/failure-no-album'))
+    @runner.location.update(path: Rails.root.join('test/files/failure-no-album'))
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
     assert_not @runner.error_text.empty?
     assert_includes @runner.error_text, 'no-album.mp3'
@@ -199,9 +214,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'title tag should be required' do
-    Location.create(path: Rails.root.join('test/files/failure-no-title'))
+    @runner.location.update(path: Rails.root.join('test/files/failure-no-title'))
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
     assert_not @runner.error_text.empty?
     assert_includes @runner.error_text, 'no-title.mp3'
@@ -210,9 +225,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'album artists should be empty if albumartist tag is Various Artists' do
-    Location.create(path: Rails.root.join('test/files/success-various-artists'))
+    @runner.location.update(path: Rails.root.join('test/files/success-various-artists'))
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
 
     assert_equal '', @runner.error_text
@@ -235,9 +250,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'album artists should fall back to artist if albumartist tag is empty string' do
-    Location.create(path: Rails.root.join('test/files/success-empty-albumartist'))
+    @runner.location.update(path: Rails.root.join('test/files/success-empty-albumartist'))
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
 
     assert_equal '', @runner.error_text
@@ -260,9 +275,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'only one artist should be created if artist and album_artist are equal' do
-    Location.create(path: Rails.root.join('test/files/success-equal-artists'))
+    @runner.location.update(path: Rails.root.join('test/files/success-equal-artists'))
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
 
     assert_equal '', @runner.error_text
@@ -286,11 +301,11 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'artist should not be created if they already exist' do
-    Location.create(path: Rails.root.join('test/files/success-equal-artists'))
+    @runner.location.update(path: Rails.root.join('test/files/success-equal-artists'))
     Artist.create(name: 'artist')
 
     assert_difference('Artist.count', 0) do
-      @runner.run
+      @runner.send(:run)
       @runner.reload
     end
 
@@ -315,11 +330,11 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'album should not be created if it already exists' do
-    Location.create(path: Rails.root.join('test/files/success-equal-artists'))
+    @runner.location.update(path: Rails.root.join('test/files/success-equal-artists'))
     Album.create(title: 'album', release: Date.new(1970, 1, 1))
 
     assert_difference('Album.count', 0) do
-      @runner.run
+      @runner.send(:run)
       @runner.reload
     end
 
@@ -340,11 +355,11 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'composer should not be created if they already exist' do
-    Location.create(path: Rails.root.join('test/files/success-one-file'))
+    @runner.location.update(path: Rails.root.join('test/files/success-one-file'))
     Artist.create(name: 'composer')
 
     assert_difference('Artist.count', 2) do
-      @runner.run
+      @runner.send(:run)
       @runner.reload
     end
 
@@ -367,12 +382,12 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'genre should not be created if it already exists' do
-    Location.create(path: Rails.root.join('test/files/success-one-file'))
+    @runner.location.update(path: Rails.root.join('test/files/success-one-file'))
     # Also checks that normalized version is used for matching
     Genre.create(name: 'Genré')
 
     assert_difference('Genre.count', 0) do
-      @runner.run
+      @runner.send(:run)
       @runner.reload
     end
 
@@ -394,10 +409,10 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'should create album with cover if applicable' do
-    Location.create(path: Rails.root.join('test/files/success-with-cover'))
+    @runner.location.update(path: Rails.root.join('test/files/success-with-cover'))
 
     assert_difference('Image.count', 1) do
-      @runner.run
+      @runner.send(:run)
     end
     @runner.reload
 
@@ -422,10 +437,10 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'should remove non-existent audio file afterwards' do
-    Location.create(path: Rails.root.join('test/files/success-one-file'))
+    @runner.location.update(path: Rails.root.join('test/files/success-one-file'))
     af = AudioFile.create(bitrate: 1, filename: 'non-existent.flac', length: 1, codec: Codec.first, location: Location.first, sample_rate: 44_100, bit_depth: 16)
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
 
     assert_nil AudioFile.find_by(id: af.id)
@@ -451,9 +466,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'should get full date from id3v2 tag' do
-    Location.create(path: Rails.root.join('test/files/success-full-date'))
+    @runner.location.update(path: Rails.root.join('test/files/success-full-date'))
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
 
     assert_equal '', @runner.error_text
@@ -475,9 +490,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'should be able to ignore time in id3v2 date tage' do
-    Location.create(path: Rails.root.join('test/files/success-ignore-time'))
+    @runner.location.update(path: Rails.root.join('test/files/success-ignore-time'))
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
 
     assert_equal '', @runner.error_text
@@ -499,9 +514,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'should not fail if date has incorrect format' do
-    Location.create(path: Rails.root.join('test/files/success-invalid-date'))
+    @runner.location.update(path: Rails.root.join('test/files/success-invalid-date'))
 
-    @runner.run
+    @runner.send(:run)
     @runner.reload
 
     assert_equal '', @runner.error_text
