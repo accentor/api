@@ -19,11 +19,13 @@ class RescanRunner < ApplicationRecord
   end
 
   def schedule
+    return if running?
+
     delay(queue: :rescans).run
   end
 
   def self.schedule_all
-    find_each { |r| r.delay(queue: :rescans).run }
+    find_each(&:schedule)
   end
 
   private
