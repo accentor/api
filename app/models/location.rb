@@ -10,7 +10,7 @@ class Location < ApplicationRecord
   has_many :audio_files, dependent: :destroy
   has_one :rescan_runner, dependent: :destroy
 
-  after_create :create_location
+  after_create :create_runner
 
   validates :path, presence: true, uniqueness: true
   validate :cant_be_subdir_of_other_location
@@ -27,7 +27,7 @@ class Location < ApplicationRecord
 
   private
 
-  def create_location
+  def create_runner
     runner = RescanRunner.create(finished_at: Date.new, location: self)
     runner.schedule
   end
