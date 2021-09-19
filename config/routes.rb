@@ -82,10 +82,10 @@
 #                                 PATCH  /api/users/:id(.:format)                                                                          users#update
 #                                 PUT    /api/users/:id(.:format)                                                                          users#update
 #                                 DELETE /api/users/:id(.:format)                                                                          users#destroy
-#                                 POST   /api/rescan(.:format)                                                                             rescan#start_all
-#                                 POST   /api/rescan/:id(.:format)                                                                         rescan#start
-#                    rescan_index GET    /api/rescan(.:format)                                                                             rescan#index
-#                          rescan GET    /api/rescan/:id(.:format)                                                                         rescan#show
+#                         rescans GET    /api/rescans(.:format)                                                                            rescans#index
+#                          rescan GET    /api/rescans/:id(.:format)                                                                        rescans#show
+#                                 POST   /api/rescans/:id(.:format)                                                                        rescans#start
+#                                 POST   /api/rescans(.:format)                                                                            rescans#start_all
 #              rails_service_blob GET    /rails/active_storage/blobs/redirect/:signed_id/*filename(.:format)                               active_storage/blobs/redirect#show
 #        rails_service_blob_proxy GET    /rails/active_storage/blobs/proxy/:signed_id/*filename(.:format)                                  active_storage/blobs/proxy#show
 #                                 GET    /rails/active_storage/blobs/:signed_id/*filename(.:format)                                        active_storage/blobs/redirect#show
@@ -147,9 +147,8 @@ Rails.application.routes.draw do
       end
     end
     resources :users
-    resources :rescan, only: %i[index show] do
-      post '', action: :start_all, on: :collection
-      post '', action: :start, on: :member
-    end
+    resources :rescans, only: %i[index show]
+    post 'rescans/:id', to: 'rescans#start'
+    post 'rescans', to: 'rescans#start_all'
   end
 end
