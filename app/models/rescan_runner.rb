@@ -14,10 +14,6 @@
 class RescanRunner < ApplicationRecord
   belongs_to :location
 
-  def self.instance
-    RescanRunner.first || RescanRunner.create
-  end
-
   def schedule
     return if running?
 
