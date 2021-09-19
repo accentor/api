@@ -8,6 +8,7 @@
 #  processed    :integer          default(0), not null
 #  running      :boolean          default(FALSE), not null
 #  warning_text :text
+#  location_id  :bigint           not null
 #
 
 class RescanRunner < ApplicationRecord
