@@ -1,8 +1,8 @@
-class RescanController < ApplicationController
+class RescansController < ApplicationController
   before_action :set_rescan, only: %i[show start]
 
   def index
-    authorize Rescan
+    authorize RescanRunner
     @rescans = policy_scope(RescanRunner).paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@rescans)
     render json: @rescans
@@ -18,7 +18,8 @@ class RescanController < ApplicationController
   end
 
   def start_all
-    RescanRunners.schedule_all
+    authorize RescanRunner
+    RescanRunner.schedule_all
   end
 
   private
