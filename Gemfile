@@ -18,7 +18,7 @@ gem 'bcrypt', '~> 3.1'
 
 gem 'delayed_job_active_record', '~> 4.1'
 
-gem 'delayed_cron_job', '~> 0.7'
+gem 'delayed_cron_job', '~> 0.8'
 
 gem 'wahwah', '~> 1.1.1'
 
