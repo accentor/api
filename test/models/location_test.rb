@@ -25,10 +25,10 @@ class LocationTest < ActiveSupport::TestCase
     assert_not_empty parent.errors[:path]
   end
 
-  test 'location should match parent/subdir regardless of case' do
+  test 'location should not match parent/subdir if different case' do
     parent = build(:location, path: '/Var')
-    assert_not parent.valid?
+    assert parent.valid?
     child = build(:location, path: '/Var/parent/Music')
-    assert_not child.valid?
+    assert child.valid?
   end
 end
