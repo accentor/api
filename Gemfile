@@ -8,7 +8,7 @@ gem 'rails', '~> 6.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.2.3', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 5.4'
+gem 'puma', '~> 5.5'
 # Use ActiveModelSerializer for serializing to JSON
 gem 'active_model_serializers', '~> 0.10'
 # Use Redis adapter to run Action Cable in production
@@ -18,7 +18,7 @@ gem 'bcrypt', '~> 3.1'
 
 gem 'delayed_job_active_record', '~> 4.1'
 
-gem 'delayed_cron_job', '~> 0.7'
+gem 'delayed_cron_job', '~> 0.8'
 
 gem 'wahwah', '~> 1.1.1'
 
