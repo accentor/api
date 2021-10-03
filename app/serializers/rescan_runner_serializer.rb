@@ -11,5 +11,5 @@
 #  location_id  :bigint           not null
 #
 class RescanRunnerSerializer < ActiveModel::Serializer
-  attributes :error_text, :warning_text, :processed, :running, :finished_at, :location_id
+  attributes :id, :error_text, :warning_text, :processed, :running, :finished_at, :location_id
 end
