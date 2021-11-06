@@ -89,6 +89,31 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal 'genre', Genre.first.name
   end
 
+  test 'should reuse artist if artist and composer are equal' do
+    Location.create(path: Rails.root.join('test/files/success-same-artist-composer'))
+
+    @runner.run
+    @runner.reload
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 1, @runner.processed
+    assert_not @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 2, Artist.count
+    assert_equal 1, Track.count
+    assert_equal 1, AudioFile.count
+    assert_equal 1, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal %w[artist artist], Track.first.artists.map(&:name).sort
+    assert_equal 'album', Album.first.title
+    assert_equal 'albumartist', Album.first.artists.first.name
+    assert_equal 1970, Album.first.release.year
+    assert_equal 'genre', Genre.first.name
+  end
+
   test 'should be able to read a file from a nested directory successfully' do
     Location.create(path: Rails.root.join('test/files/success-nested'))
 
