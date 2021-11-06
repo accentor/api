@@ -110,7 +110,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'should reuse artist if artist and composer are equal' do
-    Location.create(path: Rails.root.join('test/files/success-same-artist-composer'))
+    @runner.location.update(path: Rails.root.join('test/files/success-same-artist-composer'))
 
     @runner.send(:run)
     @runner.reload
