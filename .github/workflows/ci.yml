@@ -23,7 +23,7 @@ jobs:
         - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
-    - uses: actions/checkout@v2.3.5
+    - uses: actions/checkout@v2.4.0
     - name: Setup ruby from /.ruby_version
       uses: ruby/setup-ruby@v1
       with:
@@ -38,7 +38,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2.3.5
+    - uses: actions/checkout@v2.4.0
     - name: Setup ruby from /.ruby_version
       uses: ruby/setup-ruby@v1
       with:
