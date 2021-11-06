@@ -25,6 +25,11 @@ class LocationTest < ActiveSupport::TestCase
     assert_not_empty parent.errors[:path]
   end
 
+  test 'should be able to add similar siblings' do
+    sibling = build(:location, path: '/var/parent2')
+    assert sibling.valid?
+  end
+
   test 'location should not match parent/subdir if different case' do
     parent = build(:location, path: '/Var')
     assert parent.valid?
