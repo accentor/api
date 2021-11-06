@@ -33,7 +33,7 @@ class LocationTest < ActiveSupport::TestCase
   end
 
   test 'should create a rescan runner' do
-    assert_difference('RescanRunner.count') do
+    assert_difference('RescanRunner.count', 1) do
       create(:location)
     end
   end
