@@ -137,7 +137,11 @@ class RescanRunner < ApplicationRecord
       order: 1
     }]
     if t_composer.present?
-      composer = Artist.find_by(name: t_composer) || Artist.new(name: t_composer, review_comment: 'New artist')
+      composer = if t_composer == t_artist
+                   artist
+                 else
+                   Artist.find_by(name: t_composer) || Artist.new(name: t_composer, review_comment: 'New artist')
+                 end
       track_artists << {
         artist: composer,
         name: t_composer,
