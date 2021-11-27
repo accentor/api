@@ -3,6 +3,7 @@
 # Table name: track_artists
 #
 #  id              :bigint           not null, primary key
+#  hidden          :boolean          default(FALSE)
 #  name            :string           not null
 #  normalized_name :string           not null
 #  order           :integer          not null
