@@ -140,7 +140,7 @@ class TracksController < ApplicationController
 
     if attributes[:track_artists].present?
       attributes[:track_artists] = attributes[:track_artists].map do |ta|
-        TrackArtist.new(artist_id: ta[:artist_id], name: ta[:name], role: ta[:role], order: ta[:order] || 0, hidden: ta[:hidden])
+        TrackArtist.new(artist_id: ta[:artist_id], name: ta[:name], role: ta[:role], order: ta[:order] || 0, hidden: ta[:hidden] || false)
       end
     end
 
