@@ -219,7 +219,7 @@ ActiveRecord::Schema.define(version: 2021_11_27_114919) do
     t.integer "role", null: false
     t.integer "order", null: false
     t.string "normalized_name", null: false
-    t.boolean "hidden", default: false
+    t.boolean "hidden", default: false, null: false
     t.index ["artist_id"], name: "index_track_artists_on_artist_id"
     t.index ["normalized_name"], name: "index_track_artists_on_normalized_name"
     t.index ["track_id", "artist_id", "name", "role"], name: "index_track_artists_on_track_id_and_artist_id_and_name_and_role", unique: true
