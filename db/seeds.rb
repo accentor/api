@@ -21,10 +21,10 @@ CodecConversion.create(name: 'MP3 (V2)', ffmpeg_params: '-acodec mp3 -q:a 2', re
 
 if File.directory? File.expand_path('~/music')
   Location.create(path: File.expand_path('~/music'))
-  RescanRunner.create.run
 elsif File.directory? File.expand_path('~/Music')
   Location.create(path: File.expand_path('~/Music'))
-  RescanRunner.create.run
 end
+
+RescanRunner.schedule_all
 
 Delayed::Job.enqueue(TranscodeCacheCleanJob.new, cron: '0 4 * * *')

@@ -65,7 +65,8 @@
 #                                 POST   /api/locations(.:format)                                                                          locations#create
 #                        location GET    /api/locations/:id(.:format)                                                                      locations#show
 #                                 DELETE /api/locations/:id(.:format)                                                                      locations#destroy
-#                           plays POST   /api/plays(.:format)                                                                              plays#create
+#                           plays GET    /api/plays(.:format)                                                                              plays#index
+#                                 POST   /api/plays(.:format)                                                                              plays#create
 #            destroy_empty_tracks POST   /api/tracks/destroy_empty(.:format)                                                               tracks#destroy_empty
 #                     audio_track GET    /api/tracks/:id/audio(.:format)                                                                   tracks#audio
 #                     merge_track POST   /api/tracks/:id/merge(.:format)                                                                   tracks#merge
@@ -81,8 +82,10 @@
 #                                 PATCH  /api/users/:id(.:format)                                                                          users#update
 #                                 PUT    /api/users/:id(.:format)                                                                          users#update
 #                                 DELETE /api/users/:id(.:format)                                                                          users#destroy
-#                          rescan GET    /api/rescan(.:format)                                                                             rescan#show
-#                                 POST   /api/rescan(.:format)                                                                             rescan#start
+#                         rescans GET    /api/rescans(.:format)                                                                            rescans#index
+#                          rescan GET    /api/rescans/:id(.:format)                                                                        rescans#show
+#                                 POST   /api/rescans/:id(.:format)                                                                        rescans#start
+#                                 POST   /api/rescans(.:format)                                                                            rescans#start_all
 #              rails_service_blob GET    /rails/active_storage/blobs/redirect/:signed_id/*filename(.:format)                               active_storage/blobs/redirect#show
 #        rails_service_blob_proxy GET    /rails/active_storage/blobs/proxy/:signed_id/*filename(.:format)                                  active_storage/blobs/proxy#show
 #                                 GET    /rails/active_storage/blobs/:signed_id/*filename(.:format)                                        active_storage/blobs/redirect#show
@@ -144,8 +147,8 @@ Rails.application.routes.draw do
       end
     end
     resources :users
-
-    get '/rescan' => 'rescan#show'
-    post '/rescan' => 'rescan#start'
+    resources :rescans, only: %i[index show]
+    post 'rescans/:id', to: 'rescans#start'
+    post 'rescans', to: 'rescans#start_all'
   end
 end
