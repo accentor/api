@@ -15,7 +15,6 @@ class CodecConversion < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
   validates :ffmpeg_params, presence: true
-  validates :resulting_codec, presence: true
 
   scope :by_codec, ->(codec) { where(resulting_codec: codec) }
 

@@ -14,5 +14,4 @@ class Image < ApplicationRecord
   has_one :artist, required: false, dependent: :nullify
 
   validates :image, presence: true
-  validates :image_type, presence: true
 end

@@ -21,8 +21,6 @@ class AudioFile < ApplicationRecord
   has_many :content_lengths, dependent: :destroy
   has_many :transcoded_items, dependent: :destroy
 
-  validates :location, presence: true
-  validates :codec, presence: true
   validates :filename, presence: true, uniqueness: { scope: :location }
   validates :length, presence: true
   validates :bitrate, presence: true
