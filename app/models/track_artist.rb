@@ -22,8 +22,6 @@ class TrackArtist < ApplicationRecord
 
   validates :role, presence: true
   validates :name, presence: true, uniqueness: { scope: %i[track artist role] }
-  validates :track, presence: true
-  validates :artist, presence: true
   validates :order, presence: true
 
   normalized_col_generator :name
