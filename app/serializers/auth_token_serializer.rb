@@ -10,5 +10,5 @@
 #  user_id       :bigint           not null
 #
 class AuthTokenSerializer < ActiveModel::Serializer
-  attributes :id, :device_id, :user_id, :user_agent
+  attributes :id, :device_id, :user_id, :user_agent, :play_token
 end
