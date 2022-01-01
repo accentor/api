@@ -4,6 +4,7 @@
 #
 #  id            :bigint           not null, primary key
 #  hashed_secret :string           not null
+#  play_token    :string           not null
 #  user_agent    :string           not null
 #  device_id     :string           not null
 #  user_id       :bigint           not null
@@ -14,9 +15,11 @@ class AuthToken < ApplicationRecord
 
   validates :device_id, presence: true, uniqueness: true
   validates :hashed_secret, presence: true
+  validates :play_token, presence: true
   validates :user_agent, presence: true
   before_validation :generate_device_id, unless: :device_id?
   before_validation :generate_secret, unless: :hashed_secret?
+  before_validation :generate_play_token, unless: :play_token?
 
   attr_accessor :secret
 
@@ -41,5 +44,12 @@ class AuthToken < ApplicationRecord
   def generate_secret
     self.secret = SecureRandom.urlsafe_base64(48)
     self.hashed_secret = BCrypt::Password.create(secret, cost: Rails.configuration.token_hash_rounds)
+  end
+
+  def generate_play_token
+    loop do
+      self.play_token = SecureRandom.urlsafe_base64(48)
+      break unless AuthToken.exists?(play_token: play_token)
+    end
   end
 end

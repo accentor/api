@@ -4,6 +4,7 @@
 #
 #  id            :bigint           not null, primary key
 #  hashed_secret :string           not null
+#  play_token    :string           not null
 #  user_agent    :string           not null
 #  device_id     :string           not null
 #  user_id       :bigint           not null
