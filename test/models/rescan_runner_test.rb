@@ -412,6 +412,58 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal Date.new(1970, 1, 1), Album.first.release
   end
 
+  test 'list of genres should be created if genre does not exist' do
+    @runner.location.update(path: Rails.root.join('test/files/success-multiple-genres'))
+
+    assert_difference('Genre.count', 3) do
+      @runner.send(:run)
+      @runner.reload
+    end
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 1, @runner.processed
+    assert_not @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 3, Artist.count
+    assert_equal 1, Track.count
+    assert_equal 1, AudioFile.count
+    assert_equal 3, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal 'album', Album.first.title
+    assert_equal 1, Album.first.artists.count
+    assert_equal Date.new(1970, 1, 1), Album.first.release
+  end
+
+  test 'list of genres should only create genres if they do not exist' do
+    @runner.location.update(path: Rails.root.join('test/files/success-multiple-genres'))
+    # Also checks that normalized version is used for matching and whitespace before/after part is stripped
+    Genre.create(name: 'Genré 2')
+
+    assert_difference('Genre.count', 2) do
+      @runner.send(:run)
+      @runner.reload
+    end
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 1, @runner.processed
+    assert_not @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 3, Artist.count
+    assert_equal 1, Track.count
+    assert_equal 1, AudioFile.count
+    assert_equal 3, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal 'album', Album.first.title
+    assert_equal 1, Album.first.artists.count
+    assert_equal Date.new(1970, 1, 1), Album.first.release
+  end
+
   test 'should create album with cover if applicable' do
     @runner.location.update(path: Rails.root.join('test/files/success-with-cover'))
 

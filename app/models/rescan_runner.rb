@@ -150,8 +150,7 @@ class RescanRunner < ApplicationRecord
 
     track_artists = track_artists.map { |ta| TrackArtist.new(artist: ta[:artist], name: ta[:name], role: ta[:role], order: ta[:order]) }
 
-    genre = (Genre.find_by(normalized_name: Genre.normalize(t_genre)) || Genre.new(name: t_genre) if t_genre.present?)
-    genres = genre.present? ? [genre] : []
+    genres = match_genres(t_genre)
 
     track = Track.new(title: t_title,
                       number: t_number,
@@ -182,6 +181,19 @@ class RescanRunner < ApplicationRecord
       end
     end
     nil
+  end
+
+  def match_genres(tag)
+    return [] if tag.blank?
+
+    # If the exact genre can be found, we always use that
+    genre = Genre.find_by(normalized_name: Genre.normalize(tag))
+    return [genre] if genre.present?
+
+    # Split tag by comma or dash and match or create genre for each part
+    tag.split(%r{[,/]}).map do |part|
+      Genre.find_by(normalized_name: Genre.normalize(part).strip) || Genre.new(name: part.strip)
+    end
   end
 
   def convert_year(tag)
