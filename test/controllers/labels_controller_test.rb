@@ -20,6 +20,16 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
+  test 'should not create label with empty name' do
+    sign_in_as(create(:moderator))
+
+    assert_difference('Label.count', 0) do
+      post labels_url, params: { label: { name: '' } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
   test 'should create label for moderator' do
     sign_in_as(create(:moderator))
     label = build(:label)
@@ -48,6 +58,14 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
   test 'should not update label for user' do
     patch label_url(@label), params: { label: { name: @label.name } }
     assert_response :forbidden
+  end
+
+  test 'should not update label to empty name' do
+    sign_in_as(create(:moderator))
+    patch label_url(@label), params: { label: { name: '' } }
+    assert_response :unprocessable_entity
+    @label.reload
+    assert_not_equal '', @label.name
   end
 
   test 'should update label for moderator' do
