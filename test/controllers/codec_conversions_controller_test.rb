@@ -46,6 +46,70 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :created
   end
 
+  test 'should not create duplicate codec_conversion' do
+    sign_in_as(create(:moderator))
+    codec_conversion = build(:codec_conversion, resulting_codec: create(:codec))
+    assert_difference('CodecConversion.count', 1) do
+      post codec_conversions_url, params: { codec_conversion: {
+        ffmpeg_params: codec_conversion.ffmpeg_params,
+        name: codec_conversion.name,
+        resulting_codec_id: codec_conversion.resulting_codec_id
+      } }
+    end
+
+    assert_response :created
+
+    assert_difference('CodecConversion.count', 0) do
+      post codec_conversions_url, params: { codec_conversion: {
+        ffmpeg_params: codec_conversion.ffmpeg_params,
+        name: codec_conversion.name,
+        resulting_codec_id: codec_conversion.resulting_codec_id
+      } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
+  test 'should not create codec_conversion with empty ffmpeg_params' do
+    sign_in_as(create(:moderator))
+    codec_conversion = build(:codec_conversion, resulting_codec: create(:codec))
+    assert_difference('CodecConversion.count', 0) do
+      post codec_conversions_url, params: { codec_conversion: {
+        name: codec_conversion.name,
+        resulting_codec_id: codec_conversion.resulting_codec_id
+      } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
+  test 'should not create codec_conversion with empty name' do
+    sign_in_as(create(:moderator))
+    codec_conversion = build(:codec_conversion, resulting_codec: create(:codec))
+    assert_difference('CodecConversion.count', 0) do
+      post codec_conversions_url, params: { codec_conversion: {
+        ffmpeg_params: codec_conversion.ffmpeg_params,
+        resulting_codec_id: codec_conversion.resulting_codec_id
+      } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
+  test 'should not create codec_conversion with non-existing resulting_codec' do
+    sign_in_as(create(:moderator))
+    codec_conversion = build(:codec_conversion, resulting_codec: create(:codec))
+    assert_difference('CodecConversion.count', 0) do
+      post codec_conversions_url, params: { codec_conversion: {
+        ffmpeg_params: codec_conversion.ffmpeg_params,
+        name: codec_conversion.name,
+        resulting_codec_id: codec_conversion.resulting_codec_id + 1
+      } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
   test 'should create codec_conversion for admin' do
     sign_in_as(create(:admin))
     codec_conversion = build(:codec_conversion, resulting_codec: create(:codec))
@@ -82,6 +146,14 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
       resulting_codec_id: @codec_conversion.resulting_codec_id
     } }
     assert_response :success
+  end
+
+  test 'should not update codec_conversion to empty name' do
+    sign_in_as(create(:moderator))
+    patch codec_conversion_url(@codec_conversion), params: { codec_conversion: {
+      name: ''
+    } }
+    assert_response :unprocessable_entity
   end
 
   test 'should update codec_conversion for admin' do
