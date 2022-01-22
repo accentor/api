@@ -266,6 +266,31 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should not create transcoded_item if it already exists but should queue if file is gone' do
+    io = StringIO.new File.read(Rails.root.join('test/files/base.flac'))
+    AudioFile.any_instance.stubs(:convert).returns(io)
+    codec_conversion = create :codec_conversion
+    location = Location.create(path: Rails.root.join('test/files'))
+    flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
+    audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
+    track = create(:track, audio_file:)
+    get audio_track_url(track, codec_conversion_id: codec_conversion.id)
+    File.delete(TranscodedItem.last.path)
+
+    begin
+      Delayed::Worker.delay_jobs = true
+      assert_difference('TranscodedItem.count', 0) do
+        assert_difference('Delayed::Job.count', 1) do
+          get audio_track_url(track, codec_conversion_id: codec_conversion.id)
+        end
+      end
+    ensure
+      Delayed::Worker.delay_jobs = false
+    end
+
+    assert_response :success
+  end
+
   test 'should not create transcoded_item if it already exists' do
     io = StringIO.new File.read(Rails.root.join('test/files/base.flac'))
     AudioFile.any_instance.stubs(:convert).returns(io)
@@ -283,7 +308,7 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should return correct headers for  range request' do
+  test 'should return correct headers for range request' do
     io = StringIO.new File.read(Rails.root.join('test/files/base.flac'))
     AudioFile.any_instance.stubs(:convert).returns(io)
     mp3 = Codec.create(mimetype: 'audio/mpeg', extension: 'mp3')
