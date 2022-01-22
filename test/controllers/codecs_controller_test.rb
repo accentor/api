@@ -20,6 +20,26 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
+  test 'should not create codec with missing extension' do
+    sign_in_as(create(:moderator))
+    codec = build(:codec)
+    assert_difference('Codec.count', 0) do
+      post codecs_url, params: { codec: { mimetype: codec.mimetype } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
+  test 'should not create codec with missing mimetype' do
+    sign_in_as(create(:moderator))
+    codec = build(:codec)
+    assert_difference('Codec.count', 0) do
+      post codecs_url, params: { codec: { extension: codec.extension } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
   test 'should create codec for moderator' do
     sign_in_as(create(:moderator))
     codec = build(:codec)
@@ -50,16 +70,22 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
+  test 'should not update codec when clearing mimetype' do
+    sign_in_as(create(:moderator))
+    patch codec_url(@codec), params: { codec: { mimetype: '' } }
+    assert_response :unprocessable_entity
+  end
+
   test 'should update codec for moderator' do
     sign_in_as(create(:moderator))
-    patch codec_url(@codec), params: { codec: { extension: @codec.extension, mimetype: @codec.mimetype } }
-    assert_response :ok
+    patch codec_url(@codec), params: { codec: { mimetype: @codec.mimetype } }
+    assert_response :success
   end
 
   test 'should update codec for admin' do
     sign_in_as(create(:admin))
-    patch codec_url(@codec), params: { codec: { extension: @codec.extension, mimetype: @codec.mimetype } }
-    assert_response :ok
+    patch codec_url(@codec), params: { codec: { mimetype: @codec.mimetype } }
+    assert_response :success
   end
 
   test 'should not destroy codec for user' do
