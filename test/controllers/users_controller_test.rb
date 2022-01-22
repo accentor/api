@@ -20,6 +20,16 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
+  test 'should not create user without name' do
+    sign_in_as(create(:admin))
+    user = build(:user)
+    assert_difference('User.count', 0) do
+      post users_url, params: { user: { password: 'password', permission: user.permission } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
   test 'should create user for admin' do
     sign_in_as(create(:admin))
     user = build(:user)
@@ -54,6 +64,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:admin))
     patch user_url(@user), params: { user: { password: 'new password' } }
     assert_response :ok
+  end
+
+  test 'should not update user to empty name' do
+    sign_in_as(create(:admin))
+    patch user_url(@user), params: { user: { name: '' } }
+    assert_response :unprocessable_entity
+    @user.reload
+    assert_not_equal '', @user.name
   end
 
   test 'should not update own permission if not admin' do
