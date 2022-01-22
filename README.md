@@ -1,5 +1,8 @@
 # Accentor API
 
+[![CI](https://github.com/accentor/api/actions/workflows/ci.yml/badge.svg)](https://github.com/accentor/api/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/accentor/api/branch/main/graph/badge.svg?token=9NQX5904SK)](https://codecov.io/gh/accentor/api)
+
 API for Accentor, a modern music server focusing on metadata.
 
 ## Why use Accentor?
