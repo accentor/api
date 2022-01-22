@@ -59,7 +59,7 @@ class AudioFile < ApplicationRecord
   end
 
   def calc_audio_length(codec_conversion)
-    existing = ContentLength.find_by(audio_file: self, codec_conversion: codec_conversion)
+    existing = ContentLength.find_by(audio_file: self, codec_conversion:)
     return existing if existing.present?
 
     stdout = convert(codec_conversion)
@@ -68,7 +68,7 @@ class AudioFile < ApplicationRecord
       length += bytes.length
     end
 
-    ContentLength.find_or_create_by(audio_file: self, codec_conversion: codec_conversion) do |cl|
+    ContentLength.find_or_create_by(audio_file: self, codec_conversion:) do |cl|
       cl.length = length
     end
   end

@@ -32,7 +32,7 @@ FactoryBot.define do
     end
 
     after(:build) do |album, evaluator|
-      build_list(:album_label, evaluator.label_count, album: album)
+      build_list(:album_label, evaluator.label_count, album:)
     end
   end
 end

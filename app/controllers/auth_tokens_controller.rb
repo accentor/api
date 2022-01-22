@@ -27,7 +27,7 @@ class AuthTokensController < ApplicationController
     @auth_token = AuthToken.new(
       { user_agent: request.headers[:'user-agent'] }
           .merge(params[:auth_token].present? ? permitted_attributes(AuthToken) : {})
-          .merge(user: user)
+          .merge(user:)
     )
 
     if @auth_token.save

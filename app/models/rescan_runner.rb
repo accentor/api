@@ -29,7 +29,7 @@ class RescanRunner < ApplicationRecord
   def run
     # rubocop:disable Rails/SkipsModelValidations
     # RescanRunner doesn't have validations, and we need to use update_all to use it's atomicity
-    return if RescanRunner.where(id: id, running: false).update_all(running: true, processed: 0, warning_text: '', error_text: '').zero?
+    return if RescanRunner.where(id:, running: false).update_all(running: true, processed: 0, warning_text: '', error_text: '').zero?
 
     # rubocop:enable Rails/SkipsModelValidations
 
@@ -83,7 +83,7 @@ class RescanRunner < ApplicationRecord
   def process_file(codec, path)
     relative_path = Pathname.new(path).relative_path_from(Pathname.new(location.path))
 
-    return if AudioFile.exists?(location: location, filename: relative_path.to_s)
+    return if AudioFile.exists?(location:, filename: relative_path.to_s)
 
     tag = WahWah.open(path)
     t_artist = tag.artist&.unicode_normalize
@@ -121,7 +121,7 @@ class RescanRunner < ApplicationRecord
                       review_comment: 'New album',
                       album_artists: albumartists)
 
-    audio_file = AudioFile.new(location: location, codec: codec, filename: relative_path.to_s, length: length, bitrate: bitrate, sample_rate: sample_rate, bit_depth: bit_depth)
+    audio_file = AudioFile.new(location:, codec:, filename: relative_path.to_s, length:, bitrate:, sample_rate:, bit_depth:)
 
     artist = if t_albumartist == t_artist
                albumartist
@@ -129,7 +129,7 @@ class RescanRunner < ApplicationRecord
                Artist.find_by(name: t_artist) || Artist.new(name: t_artist, review_comment: 'New artist')
              end
     track_artists = [{
-      artist: artist,
+      artist:,
       name: t_artist,
       role: :main,
       order: 1
@@ -154,10 +154,10 @@ class RescanRunner < ApplicationRecord
 
     track = Track.new(title: t_title,
                       number: t_number,
-                      track_artists: track_artists,
-                      genres: genres,
-                      audio_file: audio_file,
-                      album: album,
+                      track_artists:,
+                      genres:,
+                      audio_file:,
+                      album:,
                       review_comment: 'New track')
     track.save
   end

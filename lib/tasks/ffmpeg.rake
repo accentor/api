@@ -1,7 +1,7 @@
 require 'open3'
 
 # ffmpeg versions can be either x.x.x or x.x
-FFMPEG_REGEX = /ffmpeg version (\d+\.\d+\.?\d*)/.freeze
+FFMPEG_REGEX = /ffmpeg version (\d+\.\d+\.?\d*)/
 
 namespace :ffmpeg do
   task check_version: :environment do

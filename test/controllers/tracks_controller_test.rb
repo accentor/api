@@ -47,7 +47,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
         number: track.number,
         title: track.title,
         genre_ids: genres.map(&:id),
-        track_artists: track_artists
+        track_artists:
       } }
     end
 
@@ -189,7 +189,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     audio_file = create(:audio_file, filename: '/does-not-exist.flac')
 
     assert_difference('AudioFile.count', -1) do
-      get audio_track_url(create(:track, audio_file: audio_file))
+      get audio_track_url(create(:track, audio_file:))
     end
 
     assert_response :not_found
@@ -197,8 +197,8 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
 
   test 'should serve audio to user' do
     location = Location.create(path: Rails.root.join('test/files'))
-    audio_file = create(:audio_file, location: location, filename: '/base.flac')
-    track = create(:track, audio_file: audio_file)
+    audio_file = create(:audio_file, location:, filename: '/base.flac')
+    track = create(:track, audio_file:)
 
     get audio_track_url(track)
 
@@ -213,8 +213,8 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
 
   test 'should return not_found if codec_conversion does not exit ' do
     location = Location.create(path: Rails.root.join('test/files'))
-    audio_file = create(:audio_file, location: location, filename: '/base.flac')
-    track = create(:track, audio_file: audio_file)
+    audio_file = create(:audio_file, location:, filename: '/base.flac')
+    track = create(:track, audio_file:)
 
     get audio_track_url(track, codec_conversion_id: 0)
 
@@ -228,9 +228,9 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
     codec_conversion = CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
     location = Location.create(path: Rails.root.join('test/files'))
     flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
-    audio_file = create(:audio_file, location: location, filename: '/base.flac', codec: flac)
-    length = audio_file.content_lengths.find_by(codec_conversion: codec_conversion).length
-    track = create(:track, audio_file: audio_file)
+    audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
+    length = audio_file.content_lengths.find_by(codec_conversion:).length
+    track = create(:track, audio_file:)
 
     assert_difference('TranscodedItem.count', 1) do
       get audio_track_url(track, codec_conversion_id: codec_conversion.id)
@@ -248,8 +248,8 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
     codec_conversion = create :codec_conversion
     location = Location.create(path: Rails.root.join('test/files'))
     flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
-    audio_file = create(:audio_file, location: location, filename: '/base.flac', codec: flac)
-    track = create(:track, audio_file: audio_file)
+    audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
+    track = create(:track, audio_file:)
     get audio_track_url(track, codec_conversion_id: codec_conversion.id)
 
     assert_difference('TranscodedItem.count', 0) do
@@ -266,9 +266,9 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
     codec_conversion = CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
     location = Location.create(path: Rails.root.join('test/files'))
     flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
-    audio_file = create(:audio_file, location: location, filename: '/base.flac', codec: flac)
-    length = audio_file.content_lengths.find_by(codec_conversion: codec_conversion).length
-    track = create(:track, audio_file: audio_file)
+    audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
+    length = audio_file.content_lengths.find_by(codec_conversion:).length
+    track = create(:track, audio_file:)
 
     get(audio_track_url(track, codec_conversion_id: codec_conversion.id), headers: { range: 'bytes=150-500' })
 
@@ -286,9 +286,9 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
     codec_conversion = CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
     location = Location.create(path: Rails.root.join('test/files'))
     flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
-    audio_file = create(:audio_file, location: location, filename: '/base.flac', codec: flac)
-    length = audio_file.content_lengths.find_by(codec_conversion: codec_conversion).length
-    track = create(:track, audio_file: audio_file)
+    audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
+    length = audio_file.content_lengths.find_by(codec_conversion:).length
+    track = create(:track, audio_file:)
 
     get(audio_track_url(track, codec_conversion_id: codec_conversion.id), headers: { range: 'bytes=150-' })
 

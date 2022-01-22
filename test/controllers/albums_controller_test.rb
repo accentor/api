@@ -33,7 +33,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
       post albums_url, params: { album: {
         release: album.release,
         title: album.title,
-        image: image
+        image:
       } }
     end
 
@@ -58,7 +58,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
       post albums_url, params: { album: {
         release: album.release,
         title: album.title,
-        album_labels: album_labels
+        album_labels:
       } }
     end
 
@@ -85,7 +85,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
       post albums_url, params: { album: {
         release: album.release,
         title: album.title,
-        album_artists: album_artists
+        album_artists:
       } }
     end
 
@@ -129,7 +129,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
       mimetype: 'image/jpeg'
     }
 
-    patch album_url(album), params: { album: { image: image } }
+    patch album_url(album), params: { album: { image: } }
 
     assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
                  Album.find(album.id).image.image.download.bytes
@@ -148,7 +148,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_difference('Image.count', 0) do
-      patch album_url(album), params: { album: { image: image } }
+      patch album_url(album), params: { album: { image: } }
     end
 
     assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
@@ -168,7 +168,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_difference('Image.count', -1) do
-      patch album_url(album), params: { album: { image: image } }
+      patch album_url(album), params: { album: { image: } }
     end
 
     assert_nil Album.find(album.id).image

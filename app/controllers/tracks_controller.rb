@@ -19,7 +19,7 @@ class TracksController < ApplicationController
   end
 
   def show
-    render json: @track, serializer: serializer
+    render json: @track, serializer:
   end
 
   def create
@@ -57,7 +57,7 @@ class TracksController < ApplicationController
     raise ActiveRecord::RecordNotFound.new('codec_conversion does not exist', 'codec_conversion') if conversion.nil? && params[:codec_conversion_id].present?
 
     if conversion.present?
-      item = TranscodedItem.find_by(audio_file: audio_file, codec_conversion: conversion)
+      item = TranscodedItem.find_by(audio_file:, codec_conversion: conversion)
       if item.present? && File.exist?(item.path)
         item.update(last_used: Time.current)
         audio_with_file(item.path, item.codec_conversion.resulting_codec.mimetype)
@@ -67,7 +67,7 @@ class TracksController < ApplicationController
           # yet. Anyway, doing the transcode again doesn't really hurt.
           item.do_delayed_conversion
         else
-          TranscodedItem.create(audio_file: audio_file, codec_conversion: conversion)
+          TranscodedItem.create(audio_file:, codec_conversion: conversion)
         end
         # AudioFile will only do the conversion if the `ContentLength` doesn't exist yet.
         content_length = audio_file.calc_audio_length(conversion)
