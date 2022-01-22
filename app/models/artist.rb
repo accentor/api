@@ -26,14 +26,6 @@ class Artist < ApplicationRecord
   normalized_col_generator :name
 
   scope :by_filter, ->(filter) { where('normalized_name LIKE ?', "%#{Artist.normalize(filter)}%") }
-  scope :sorted, lambda { |key, direction|
-    case key
-    when 'name'
-      order(normalized_name: direction || :asc).order(id: :desc)
-    else
-      order(id: direction || :desc)
-    end
-  }
 
   def merge(other)
     # we check if the artist to be merged have some overlap. If they do, we tell the user that they should resolve this first.

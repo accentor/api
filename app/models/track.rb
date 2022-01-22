@@ -34,29 +34,6 @@ class Track < ApplicationRecord
   scope :by_artist, ->(artist) { joins(:artists).where(artists: { id: artist }) }
   scope :by_album, ->(album) { where(album:) }
   scope :by_genre, ->(genre) { joins(:genres).where(genres: { id: genre }) }
-  scope :sorted, lambda { |key, direction|
-    case key
-    when 'album_title'
-      joins(:album)
-        .order('albums.normalized_title': direction || :asc)
-        .order('albums.id': :desc)
-        .order(number: :asc)
-        .order(id: :desc)
-    when 'album_added'
-      joins(:album)
-        .order('albums.id': direction || :desc)
-        .order(number: :asc)
-        .order(id: :desc)
-    when 'album_released'
-      joins(:album)
-        .order('albums.release': direction || :desc)
-        .order('albums.id': :desc)
-        .order(number: :asc)
-        .order(id: :desc)
-    else
-      order(id: direction || :desc)
-    end
-  }
 
   def merge(other)
     af = other.audio_file
