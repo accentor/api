@@ -29,6 +29,24 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
+  test 'should not create track without title' do
+    sign_in_as(create(:moderator))
+    assert_difference('Track.count', 0) do
+      post tracks_url, params: { track: { album_id: @track.album_id, number: @track.number + 1 } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
+  test 'should not create track without album_id' do
+    sign_in_as(create(:moderator))
+    assert_difference('Track.count', 0) do
+      post tracks_url, params: { track: { number: @track.number + 1, title: 'Title' } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
   test 'should create track for moderator' do
     sign_in_as(create(:moderator))
     track = build(:track, album: @track.album)
@@ -87,8 +105,14 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   test 'should not update track metadata for user' do
     patch track_url(@track), params: { track: { album_id: @track.album_id, number: @track.number, title: @track.title } }
     assert_response :success
+  end
+
+  test 'should not update track metadata to empty title' do
+    sign_in_as(create(:moderator))
+    patch track_url(@track), params: { track: { title: '' } }
+    assert_response :unprocessable_entity
     @track.reload
-    assert_not_equal :album_id, @track.album_id
+    assert_not_equal '', @track.title
   end
 
   test 'should clear review comment' do
