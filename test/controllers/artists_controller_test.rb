@@ -39,6 +39,16 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     assert_response :created
   end
 
+  test 'should not create artist with no name' do
+    sign_in_as create(:moderator)
+
+    assert_difference('Artist.count', 0) do
+      post artists_url, params: { artist: { name: '' } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
   test 'should show artist' do
     get artist_url(@artist)
     assert_response :success
@@ -46,8 +56,17 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update review_comment for user' do
     patch artist_url(@artist), params: { artist: { review_comment: 'Comment' } }
+    assert_response :success
     @artist.reload
     assert_equal 'Comment', @artist.review_comment
+  end
+
+  test 'should not update artist metadata when removing name' do
+    sign_in_as create(:moderator)
+    patch artist_url(@artist), params: { artist: { name: '' } }
+    assert_response :unprocessable_entity
+    @artist.reload
+    assert_not_equal '', @artist.name
   end
 
   test 'should not update artist metadata for user' do
@@ -59,6 +78,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
   test 'should clear review_comment' do
     @artist.update(review_comment: 'test')
     patch artist_url(@artist), params: { artist: { review_comment: nil } }
+    assert_response :success
     @artist.reload
     assert_nil @artist.review_comment
   end

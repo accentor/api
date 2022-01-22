@@ -43,6 +43,17 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     assert_response :created
   end
 
+  test 'should not create album without title' do
+    sign_in_as create(:moderator)
+    album = build :album, :with_release
+
+    assert_difference('Album.count', 0) do
+      post albums_url, params: { album: { release: album.release } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
   test 'should create dependent album_labels' do
     sign_in_as create(:moderator)
     album = build :album, :with_release
@@ -109,7 +120,15 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
   test 'should not update album metadata for user' do
     patch album_url(@album), params: { album: { release: @album.release, title: 'Titel' } }
     @album.reload
-    assert_not_equal 'Titel', @album.review_comment
+    assert_not_equal 'Titel', @album.title
+  end
+
+  test 'should not update album metadata to empty title' do
+    sign_in_as create(:moderator)
+    patch album_url(@album), params: { album: { release: @album.release, title: '' } }
+    assert_response :unprocessable_entity
+    @album.reload
+    assert_not_equal '', @album.title
   end
 
   test 'should clear review comment' do

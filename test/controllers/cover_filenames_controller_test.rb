@@ -32,6 +32,15 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
+  test 'should not create cover_filename with empty filename' do
+    sign_in_as create(:moderator)
+    assert_difference('CoverFilename.count', 0) do
+      post cover_filenames_url, params: { cover_filename: { filename: '' } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
   test 'should create cover_filename for moderator' do
     sign_in_as create(:moderator)
     cover_filename = build :cover_filename

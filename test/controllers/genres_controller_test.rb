@@ -20,6 +20,15 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
+  test 'should not create genre with empty name' do
+    sign_in_as(create(:moderator))
+    assert_difference('Genre.count', 0) do
+      post genres_url, params: { genre: { name: '' } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
   test 'should create genre for moderator' do
     sign_in_as(create(:moderator))
     genre = build(:genre)
@@ -48,6 +57,14 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
   test 'should not update genre for user' do
     patch genre_url(@genre), params: { genre: { name: @genre.name } }
     assert_response :forbidden
+  end
+
+  test 'should not update genre to empty name' do
+    sign_in_as(create(:moderator))
+    patch genre_url(@genre), params: { genre: { name: '' } }
+    assert_response :unprocessable_entity
+    @genre.reload
+    assert_not_equal '', @genre.name
   end
 
   test 'should update genre for moderator' do

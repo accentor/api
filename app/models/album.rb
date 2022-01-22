@@ -36,16 +36,6 @@ class Album < ApplicationRecord
   scope :by_artist, ->(artist) { joins(:artists).where(artists: { id: artist }) }
   scope :by_label, ->(label) { joins(:album_labels).where(album_labels: { label_id: label }) }
   scope :by_labels, ->(labels) { joins(:album_labels).where(album_labels: { label_id: labels }) }
-  scope :sorted, lambda { |key, direction|
-    case key
-    when 'title'
-      order(normalized_title: direction || :asc).order(id: :desc)
-    when 'released'
-      order(release: direction || :desc).order(id: :desc)
-    else
-      order(id: :desc)
-    end
-  }
 
   private
 

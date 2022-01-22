@@ -29,6 +29,24 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
+  test 'should not create track without title' do
+    sign_in_as(create(:moderator))
+    assert_difference('Track.count', 0) do
+      post tracks_url, params: { track: { album_id: @track.album_id, number: @track.number + 1 } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
+  test 'should not create track without album_id' do
+    sign_in_as(create(:moderator))
+    assert_difference('Track.count', 0) do
+      post tracks_url, params: { track: { number: @track.number + 1, title: 'Title' } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
   test 'should create track for moderator' do
     sign_in_as(create(:moderator))
     track = build(:track, album: @track.album)
@@ -87,8 +105,14 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   test 'should not update track metadata for user' do
     patch track_url(@track), params: { track: { album_id: @track.album_id, number: @track.number, title: @track.title } }
     assert_response :success
+  end
+
+  test 'should not update track metadata to empty title' do
+    sign_in_as(create(:moderator))
+    patch track_url(@track), params: { track: { title: '' } }
+    assert_response :unprocessable_entity
     @track.reload
-    assert_not_equal :album_id, @track.album_id
+    assert_not_equal '', @track.title
   end
 
   test 'should clear review comment' do
@@ -242,6 +266,31 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should not create transcoded_item if it already exists but should queue if file is gone' do
+    io = StringIO.new File.read(Rails.root.join('test/files/base.flac'))
+    AudioFile.any_instance.stubs(:convert).returns(io)
+    codec_conversion = create :codec_conversion
+    location = Location.create(path: Rails.root.join('test/files'))
+    flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
+    audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
+    track = create(:track, audio_file:)
+    get audio_track_url(track, codec_conversion_id: codec_conversion.id)
+    File.delete(TranscodedItem.last.path)
+
+    begin
+      Delayed::Worker.delay_jobs = true
+      assert_difference('TranscodedItem.count', 0) do
+        assert_difference('Delayed::Job.count', 1) do
+          get audio_track_url(track, codec_conversion_id: codec_conversion.id)
+        end
+      end
+    ensure
+      Delayed::Worker.delay_jobs = false
+    end
+
+    assert_response :success
+  end
+
   test 'should not create transcoded_item if it already exists' do
     io = StringIO.new File.read(Rails.root.join('test/files/base.flac'))
     AudioFile.any_instance.stubs(:convert).returns(io)
@@ -259,7 +308,7 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should return correct headers for  range request' do
+  test 'should return correct headers for range request' do
     io = StringIO.new File.read(Rails.root.join('test/files/base.flac'))
     AudioFile.any_instance.stubs(:convert).returns(io)
     mp3 = Codec.create(mimetype: 'audio/mpeg', extension: 'mp3')

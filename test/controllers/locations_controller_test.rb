@@ -32,6 +32,15 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
+  test 'should not create location with empty path' do
+    sign_in_as create(:moderator)
+    assert_difference('Location.count', 0) do
+      post locations_url, params: { location: { path: '' } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
   test 'should create location for moderator' do
     sign_in_as create(:moderator)
     location = build :location
