@@ -34,7 +34,7 @@ class ArtistTest < ActiveSupport::TestCase
     artist1 = create(:artist)
     artist2 = create(:artist)
     track = create(:track)
-    create(:track_artist, track: track, artist: artist1)
+    create(:track_artist, track:, artist: artist1)
     assert_not artist2.track_artists.present?
 
     assert_difference('Artist.count', -1) do
@@ -50,8 +50,8 @@ class ArtistTest < ActiveSupport::TestCase
     artist1 = create(:artist)
     artist2 = create(:artist)
     track = create(:track)
-    create(:track_artist, track: track, artist: artist1, role: :main)
-    create(:track_artist, track: track, artist: artist2, role: :main)
+    create(:track_artist, track:, artist: artist1, role: :main)
+    create(:track_artist, track:, artist: artist2, role: :main)
 
     assert_difference('Artist.count', 0) do
       artist2.merge(artist1)
@@ -63,8 +63,8 @@ class ArtistTest < ActiveSupport::TestCase
     artist1 = create(:artist)
     artist2 = create(:artist)
     track = create(:track)
-    create(:track_artist, track: track, artist: artist1, role: :main)
-    create(:track_artist, track: track, artist: artist2, role: :performer)
+    create(:track_artist, track:, artist: artist1, role: :main)
+    create(:track_artist, track:, artist: artist2, role: :performer)
 
     assert_difference('Artist.count', -1) do
       artist2.merge(artist1)
@@ -77,7 +77,7 @@ class ArtistTest < ActiveSupport::TestCase
     artist1 = create(:artist)
     artist2 = create(:artist)
     album = create(:album)
-    create(:album_artist, album: album, artist: artist1)
+    create(:album_artist, album:, artist: artist1)
 
     assert_difference('Artist.count', -1) do
       artist2.merge(artist1)
@@ -90,8 +90,8 @@ class ArtistTest < ActiveSupport::TestCase
     artist1 = create(:artist)
     artist2 = create(:artist)
     album = create(:album)
-    create(:album_artist, album: album, artist: artist1)
-    create(:album_artist, album: album, artist: artist2)
+    create(:album_artist, album:, artist: artist1)
+    create(:album_artist, album:, artist: artist2)
 
     assert_difference('Artist.count', 0) do
       artist2.merge(artist1)

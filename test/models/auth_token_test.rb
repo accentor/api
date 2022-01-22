@@ -14,7 +14,7 @@ require 'test_helper'
 class AuthTokenTest < ActiveSupport::TestCase
   test 'auth_token should have secret after creation' do
     user = create(:user)
-    a = AuthToken.create(user: user, user_agent: '')
+    a = AuthToken.create(user:, user_agent: '')
     assert_not_nil a.secret
   end
 

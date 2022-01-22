@@ -32,7 +32,7 @@ class Track < ApplicationRecord
 
   scope :by_filter, ->(filter) { where('"tracks"."normalized_title" LIKE ?', "%#{Track.normalize(filter)}%") }
   scope :by_artist, ->(artist) { joins(:artists).where(artists: { id: artist }) }
-  scope :by_album, ->(album) { where(album: album) }
+  scope :by_album, ->(album) { where(album:) }
   scope :by_genre, ->(genre) { joins(:genres).where(genres: { id: genre }) }
   scope :sorted, lambda { |key, direction|
     case key

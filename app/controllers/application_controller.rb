@@ -48,7 +48,7 @@ class ApplicationController < ActionController::API
     render json: { status => [I18n.t("#{policy_name}.#{exc.query}",
                                      scope: 'pundit',
                                      default: :default)] },
-           status: status
+           status:
   end
 
   def model_not_found(exc)

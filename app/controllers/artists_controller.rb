@@ -67,7 +67,7 @@ class ArtistsController < ApplicationController
                    ImageType.new(extension: File.extname(attributes[:image][:filename])[1..].downcase,
                                  mimetype: attributes[:image][:mimetype])
 
-      image = Image.new(image_type: image_type)
+      image = Image.new(image_type:)
       image.image.attach(io: StringIO.new(Base64.decode64(attributes[:image][:data])),
                          filename: attributes[:image][:filename],
                          content_type: attributes[:image][:mimetype])

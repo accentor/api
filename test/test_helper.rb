@@ -38,7 +38,7 @@ module SignInHelper
   attr_accessor :credentials
 
   def sign_in_as(user)
-    auth_token = create(:auth_token, user: user)
+    auth_token = create(:auth_token, user:)
     self.credentials = { 'x-device-id': auth_token.device_id, 'x-secret': auth_token.secret }
   end
 

@@ -30,7 +30,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_difference('Artist.count', 1) do
-      post artists_url, params: { artist: { name: artist.name, image: image } }
+      post artists_url, params: { artist: { name: artist.name, image: } }
     end
 
     assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
@@ -73,7 +73,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
       mimetype: 'image/jpeg'
     }
 
-    patch artist_url(artist), params: { artist: { image: image } }
+    patch artist_url(artist), params: { artist: { image: } }
 
     assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
                  Artist.find(artist.id).image.image.download.bytes
@@ -92,7 +92,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_difference('Image.count', 0) do
-      patch artist_url(artist), params: { artist: { image: image } }
+      patch artist_url(artist), params: { artist: { image: } }
     end
 
     assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
@@ -112,7 +112,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_difference('Image.count', -1) do
-      patch artist_url(artist), params: { artist: { image: image } }
+      patch artist_url(artist), params: { artist: { image: } }
     end
 
     assert_nil Artist.find(artist.id).image

@@ -30,7 +30,7 @@ class LabelTest < ActiveSupport::TestCase
     label1 = create(:label)
     label2 = create(:label)
     album = create(:album)
-    create(:album_label, album: album, label: label1)
+    create(:album_label, album:, label: label1)
 
     assert_difference('Label.count', -1) do
       label2.merge(label1)
@@ -43,8 +43,8 @@ class LabelTest < ActiveSupport::TestCase
     label1 = create(:label)
     label2 = create(:label)
     album = create(:album)
-    create(:album_label, album: album, label: label1)
-    create(:album_label, album: album, label: label2)
+    create(:album_label, album:, label: label1)
+    create(:album_label, album:, label: label2)
 
     assert_difference('Label.count', -1) do
       label2.merge(label1)
