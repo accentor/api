@@ -230,6 +230,31 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   end
 end
 
+class TracksControllerPlayTokenTest < ActionDispatch::IntegrationTest
+  test 'should not serve audio to user without tokens' do
+    location = Location.create(path: Rails.root.join('test/files'))
+    audio_file = create(:audio_file, location: location, filename: '/base.flac')
+    track = create(:track, audio_file: audio_file)
+
+    get audio_track_url(track)
+
+    assert_response :unauthorized
+  end
+
+  test 'should serve audio to user with play token' do
+    token = create(:auth_token)
+    user = token.user
+
+    location = Location.create(path: Rails.root.join('test/files'))
+    audio_file = create(:audio_file, location: location, filename: '/base.flac')
+    track = create(:track, audio_file: audio_file)
+
+    get audio_track_url(track, play_token: token.play_token)
+
+    assert_response :success
+  end
+end
+
 class TracksControllerAudioTest < ActionDispatch::IntegrationTest
   setup do
     sign_in_as(create(:user))

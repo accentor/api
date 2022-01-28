@@ -1,6 +1,7 @@
 class TracksController < ApplicationController
   include ActionController::Live
 
+  before_action :authenticate_from_play_token, only: %i[audio]
   before_action :set_track, only: %i[show update destroy audio merge]
 
   has_scope :by_filter, as: 'filter'
@@ -85,6 +86,13 @@ class TracksController < ApplicationController
   end
 
   private
+
+  def authenticate_from_play_token
+    return if current_user.present?
+
+    token = AuthToken.find_by(play_token: params[:play_token])
+    self.current_user = token&.user
+  end
 
   def audio_with_file(path, mimetype)
     file = File.open(path, 'rb')
