@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_27_114919) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_02_19_105635) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,7 +19,7 @@ ActiveRecord::Schema.define(version: 2021_11_27_114919) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -31,8 +30,8 @@ ActiveRecord::Schema.define(version: 2021_11_27_114919) do
     t.string "content_type"
     t.text "metadata"
     t.bigint "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.string "checksum"
+    t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
@@ -69,8 +68,8 @@ ActiveRecord::Schema.define(version: 2021_11_27_114919) do
     t.string "title", null: false
     t.bigint "image_id"
     t.date "release"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "review_comment"
     t.date "edition"
     t.string "edition_description"
@@ -82,8 +81,8 @@ ActiveRecord::Schema.define(version: 2021_11_27_114919) do
   create_table "artists", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "image_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "review_comment"
     t.string "normalized_name", null: false
     t.index ["image_id"], name: "index_artists_on_image_id", unique: true
@@ -145,13 +144,13 @@ ActiveRecord::Schema.define(version: 2021_11_27_114919) do
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
     t.text "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
+    t.datetime "run_at", precision: nil
+    t.datetime "locked_at", precision: nil
+    t.datetime "failed_at", precision: nil
     t.string "locked_by"
     t.string "queue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "cron"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
@@ -196,7 +195,7 @@ ActiveRecord::Schema.define(version: 2021_11_27_114919) do
   create_table "plays", force: :cascade do |t|
     t.bigint "track_id", null: false
     t.bigint "user_id", null: false
-    t.datetime "played_at", null: false
+    t.datetime "played_at", precision: nil, null: false
     t.index ["track_id"], name: "index_plays_on_track_id"
     t.index ["user_id", "track_id"], name: "index_plays_on_user_id_and_track_id"
     t.index ["user_id"], name: "index_plays_on_user_id"
@@ -207,7 +206,7 @@ ActiveRecord::Schema.define(version: 2021_11_27_114919) do
     t.text "error_text"
     t.integer "processed", default: 0, null: false
     t.boolean "running", default: false, null: false
-    t.datetime "finished_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "finished_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.bigint "location_id", null: false
     t.index ["location_id"], name: "index_rescan_runners_on_location_id"
   end
@@ -231,8 +230,8 @@ ActiveRecord::Schema.define(version: 2021_11_27_114919) do
     t.integer "number", null: false
     t.bigint "audio_file_id"
     t.bigint "album_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "review_comment"
     t.string "normalized_title", null: false
     t.index ["album_id"], name: "index_tracks_on_album_id"
@@ -242,11 +241,11 @@ ActiveRecord::Schema.define(version: 2021_11_27_114919) do
 
   create_table "transcoded_items", force: :cascade do |t|
     t.string "path", null: false
-    t.datetime "last_used", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "last_used", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.bigint "audio_file_id", null: false
     t.bigint "codec_conversion_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["audio_file_id", "codec_conversion_id"], name: "index_transcoded_items_on_audio_file_id_and_codec_conversion_id", unique: true
     t.index ["audio_file_id"], name: "index_transcoded_items_on_audio_file_id"
     t.index ["codec_conversion_id"], name: "index_transcoded_items_on_codec_conversion_id"
