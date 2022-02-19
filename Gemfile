@@ -11,8 +11,6 @@ gem 'pg', '>= 1.2.3', '< 2.0'
 gem 'puma', '~> 5.6'
 # Use ActiveModelSerializer for serializing to JSON
 gem 'active_model_serializers', '~> 0.10'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1'
 
@@ -30,10 +28,13 @@ gem 'will_paginate', '~> 3.3'
 gem 'image_processing', '~> 1.12.1'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.4.6', require: false
+gem 'bootsnap', '~> 1.10.3', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors', '~> 1.1'
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :test do
   gem 'codecov', '~> 0.6.0', require: false
@@ -53,9 +54,4 @@ group :development do
   gem 'annotate', '~> 3.2' # Remove workaround in lib/tasks/annotate.rb when https://github.com/ctran/annotate_models/issues/696 is fixed
   gem 'rubocop-minitest', '~> 0.17.2'
   gem 'rubocop-rails', '~> 2.13'
-
-  gem 'listen', '>= 3.1.5', '< 3.8'
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
