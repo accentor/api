@@ -1,5 +1,5 @@
 class ApplicationRecord < ActiveRecord::Base
-  self.abstract_class = true
+  primary_abstract_class
   self.per_page = 500
 
   scope :sorted, ->(_) { order(id: :desc) }
