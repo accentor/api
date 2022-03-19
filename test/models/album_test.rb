@@ -26,7 +26,7 @@ class AlbumTest < ActiveSupport::TestCase
 
   test 'should pass if all but last album artists have separator' do
     album = build(:album, album_artists: [build(:album_artist, separator: ' / ', order: 1), build(:album_artist, separator: nil, order: 2)])
-    assert album.valid?
+    assert_predicate album, :valid?
   end
 
   test 'should reject if album artists except last has no separator' do
@@ -37,7 +37,7 @@ class AlbumTest < ActiveSupport::TestCase
 
   test 'should allow album artists with empty string as separator' do
     album = build(:album, album_artists: [build(:album_artist, separator: '', order: 1), build(:album_artist, separator: nil, order: 2)])
-    assert album.valid?
+    assert_predicate album, :valid?
   end
 
   test 'should reject if last album artists has separator' do
