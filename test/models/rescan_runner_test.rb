@@ -488,7 +488,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal 'album', Album.first.title
     assert_equal 'albumartist', Album.first.artists.first.name
     assert_equal Date.new(1970, 1, 1), Album.first.release
-    assert Album.first.image.present?
+    assert_predicate Album.first.image, :present?
     assert_equal 'genre', Genre.first.name
   end
 

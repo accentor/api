@@ -27,14 +27,14 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'should be able to add similar siblings' do
     sibling = build(:location, path: '/var/parent2')
-    assert sibling.valid?
+    assert_predicate sibling, :valid?
   end
 
   test 'location should not match parent/subdir if different case' do
     parent = build(:location, path: '/Var')
-    assert parent.valid?
+    assert_predicate parent, :valid?
     child = build(:location, path: '/Var/parent/Music')
-    assert child.valid?
+    assert_predicate child, :valid?
   end
 
   test 'should create a rescan runner' do

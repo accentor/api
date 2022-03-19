@@ -35,7 +35,7 @@ class TrackTest < ActiveSupport::TestCase
     t1.merge(t2)
 
     assert_equal 1, AudioFile.count
-    assert t1.reload.audio_file.present?
+    assert_predicate t1.reload.audio_file, :present?
     assert_equal 1, Track.count
   end
 
@@ -46,7 +46,7 @@ class TrackTest < ActiveSupport::TestCase
     t1.merge(t2)
 
     assert_equal 1, AudioFile.count
-    assert t1.reload.audio_file.present?
+    assert_predicate t1.reload.audio_file, :present?
     assert_equal 1, Track.count
   end
 
@@ -57,7 +57,7 @@ class TrackTest < ActiveSupport::TestCase
     t1.merge(t2)
 
     assert_equal 0, AudioFile.count
-    assert t1.reload.audio_file.blank?
+    assert_predicate t1.reload.audio_file, :blank?
     assert_equal 1, Track.count
   end
 
