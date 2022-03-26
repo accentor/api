@@ -17,7 +17,7 @@ class PlayCountTest < ActiveSupport::TestCase
 
   test 'should be readonly' do
     assert_raise ActiveRecord::ReadOnlyRecord do
-      PlayCount.first.update(count: 20)
+      PlayCount.first.update(play_count: 20)
     end
   end
 
