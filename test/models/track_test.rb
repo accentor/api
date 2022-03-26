@@ -132,4 +132,19 @@ class TrackTest < ActiveSupport::TestCase
     assert_equal 1, ta1.order
     assert_equal 2, ta2.order
   end
+
+  test 'reports play_count for user' do
+    track = create(:track)
+    user = create(:user)
+    create(:play, track:, user:)
+
+    assert_equal 1, track.play_count(user)
+  end
+
+  test 'reports play_count for user if no plays exist' do
+    track = create(:track)
+    user = create(:user)
+
+    assert_equal 0, track.play_count(user)
+  end
 end

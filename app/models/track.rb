@@ -36,6 +36,11 @@ class Track < ApplicationRecord
   scope :by_album, ->(album) { where(album:) }
   scope :by_genre, ->(genre) { joins(:genres).where(genres: { id: genre }) }
 
+  def play_count(user)
+    # To avoid N+1 queries, we check whether we have already loaded the associated play_counts
+    play_counts.loaded? ? play_counts.find { |c| c.user_id == user.id }.play_count : play_counts.find_by(user:).play_count
+  end
+
   def merge(other)
     af = other.audio_file
     # rubocop:disable Rails/SkipsModelValidations

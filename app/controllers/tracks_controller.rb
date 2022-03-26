@@ -1,4 +1,6 @@
 class TracksController < ApplicationController
+  serialization_scope :current_user
+
   include ActionController::Live
 
   before_action :set_track, only: %i[show update destroy audio merge]
@@ -11,7 +13,7 @@ class TracksController < ApplicationController
   def index
     authorize Track
     @tracks = apply_scopes(policy_scope(Track))
-              .includes(:track_artists, :genres, audio_file: %i[location codec])
+              .includes(:track_artists, :genres, :play_counts, audio_file: %i[location codec])
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@tracks)
 

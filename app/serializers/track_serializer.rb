@@ -13,9 +13,13 @@
 #  audio_file_id    :bigint
 #
 class TrackSerializer < ActiveModel::Serializer
-  attributes :id, :title, :normalized_title, :number, :album_id, :review_comment, :created_at, :updated_at, :genre_ids, :codec_id, :length, :bitrate, :location_id
+  attributes :id, :title, :normalized_title, :number, :album_id, :review_comment, :created_at, :updated_at, :genre_ids, :play_count, :codec_id, :length, :bitrate, :location_id
 
   has_many :track_artists
+
+  def play_count
+    object.play_count(scope)
+  end
 
   def codec_id
     object.audio_file&.codec_id
