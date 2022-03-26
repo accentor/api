@@ -22,6 +22,7 @@ class Track < ApplicationRecord
   has_many :track_artists, dependent: :destroy
   has_many :artists, through: :track_artists, source: :artist
   has_many :plays, dependent: :destroy
+  has_many :play_counts, dependent: nil
 
   validates :title, presence: true
   validates :number, presence: true

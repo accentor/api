@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_19_105635) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_26_090719) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -285,4 +285,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_19_105635) do
   add_foreign_key "tracks", "audio_files"
   add_foreign_key "transcoded_items", "audio_files"
   add_foreign_key "transcoded_items", "codec_conversions"
+
+  create_view "play_counts", sql_definition: <<-SQL
+      SELECT users.id AS user_id,
+      tracks.id AS track_id,
+      count(plays.id) AS play_count
+     FROM ((tracks
+       LEFT JOIN users ON ((true = true)))
+       LEFT JOIN plays ON (((tracks.id = plays.track_id) AND (users.id = plays.user_id))))
+    GROUP BY users.id, tracks.id;
+  SQL
 end

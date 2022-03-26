@@ -15,6 +15,7 @@ class User < ApplicationRecord
 
   has_many :auth_tokens, dependent: :destroy
   has_many :plays, dependent: :destroy
+  has_many :play_counts, dependent: nil
 
   validates :name, presence: true, uniqueness: true
   validates :password_digest, presence: true
