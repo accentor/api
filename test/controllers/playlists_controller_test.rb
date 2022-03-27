@@ -31,7 +31,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :created
-    assert_equal 2, Playlist.last.items.length
+    assert_equal t1, Playlist.last.items.order(:order).first.item
   end
 
   test 'should not create playlist with empty name' do
@@ -60,6 +60,24 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
   test 'should update playlist for user' do
     patch playlist_url(@playlist), params: { playlist: { name: 'My playlist' } }
     assert_response :success
+  end
+
+  test 'should not update playlist with empty name' do
+    patch playlist_url(@playlist), params: { playlist: { name: '' } }
+    assert_response :success
+  end
+
+  test 'should create playlist items during update' do
+    @playlist.update(playlist_type: :track)
+    t1 = create(:track)
+    t2 = create(:track)
+
+    assert_difference('PlaylistItem.count', 2) do
+      patch playlist_url(@playlist), params: { playlist: { name: 'My list', item_ids: [t1.id, t2.id] } }
+    end
+
+    assert_response :success
+    assert_equal t1, Playlist.last.items.order(:order).first.item
   end
 
   test 'should not update personal playlist for different user' do
