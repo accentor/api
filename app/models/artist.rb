@@ -20,6 +20,8 @@ class Artist < ApplicationRecord
   has_many :tracks, through: :track_artists, source: :track
   has_many :album_artists, dependent: :destroy
   has_many :albums, through: :album_artists, source: :album
+  has_many :playlist_items, as: :item, dependent: :destroy
+  has_many :playlists, through: :playlist_items, source: :playlist
 
   validates :name, presence: true
 

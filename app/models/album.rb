@@ -23,6 +23,8 @@ class Album < ApplicationRecord
   has_many :tracks, dependent: :restrict_with_error
   has_many :album_artists, dependent: :destroy
   has_many :artists, through: :album_artists, source: :artist
+  has_many :playlist_items, as: :item, dependent: :destroy
+  has_many :playlists, through: :playlist_items, source: :playlist
   belongs_to :image, optional: true, dependent: :destroy
 
   before_validation :normalize_artist_order
