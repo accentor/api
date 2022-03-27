@@ -43,6 +43,7 @@ class Track < ApplicationRecord
     # rubocop:disable Rails/SkipsModelValidations
     # Since we only update the track_id, there aren't any validations that could fail
     other.plays.update_all(track_id: id)
+    other.playlist_items.update_all(item_id: id)
     # rubocop:enable Rails/SkipsModelValidations
     other.update(audio_file: nil)
     other.destroy

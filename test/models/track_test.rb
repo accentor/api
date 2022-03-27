@@ -74,6 +74,19 @@ class TrackTest < ActiveSupport::TestCase
     assert_equal 1, t1.plays.count
   end
 
+  test 'should move playlist_items on merge' do
+    t1 = create(:track)
+    t2 = create(:track)
+    create(:playlist_item, item: t2)
+
+    assert_no_difference('PlaylistItem.count') do
+      t1.merge(t2)
+    end
+
+    assert_equal 1, Track.count
+    assert_equal 1, t1.playlist_items.count
+  end
+
   test 'should be able to destroy track with genres' do
     g1 = create(:genre)
     g2 = create(:genre)

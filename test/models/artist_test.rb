@@ -104,4 +104,17 @@ class ArtistTest < ActiveSupport::TestCase
     track.save
     assert_nil track.review_comment
   end
+
+  test 'should move playlist_items on merge' do
+    t1 = create(:artist)
+    t2 = create(:artist)
+    create(:playlist_item, :for_artist, item: t2)
+
+    assert_no_difference('PlaylistItem.count') do
+      t1.merge(t2)
+    end
+
+    assert_equal 1, Artist.count
+    assert_equal 1, t1.playlist_items.count
+  end
 end

@@ -44,6 +44,11 @@ class Artist < ApplicationRecord
       ta.update(artist_id: id)
     end
 
+    # rubocop:disable Rails/SkipsModelValidations
+    # Since we only update the item_id, there aren't any validations that could fail
+    other.playlist_items.update_all(item_id: id)
+    # rubocop:enable Rails/SkipsModelValidations
+
     # we have to reload to make sure the track_artists and album_artists relation isn't cached anymore
     other.reload.destroy
   end
