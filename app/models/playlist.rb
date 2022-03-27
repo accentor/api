@@ -18,11 +18,22 @@ class Playlist < ApplicationRecord
 
   validates :name, presence: true
 
+  before_save :normalize_item_order
+
   def shared?
     user_id.nil?
   end
 
   def personal?
     user_id.present?
+  end
+
+  private
+
+  def normalize_item_order
+    items.sort { |i1, i2| i1.order <=> i2.order }.map.with_index(1) do |item, index|
+      item.order = index
+      item.save unless item.new_record?
+    end
   end
 end
