@@ -15,7 +15,7 @@ require 'test_helper'
 class PlaylistTest < ActiveSupport::TestCase
   test 'should have name' do
     list = build(:playlist, name: '')
-    assert_not_predicate list, valid?
+    assert_not_predicate list, :valid?
     assert_not_empty list.errors[:name]
   end
 

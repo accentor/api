@@ -106,15 +106,15 @@ class ArtistTest < ActiveSupport::TestCase
   end
 
   test 'should move playlist_items on merge' do
-    t1 = create(:artist)
-    t2 = create(:artist)
-    create(:playlist_item, :for_artist, item: t2)
+    a1 = create(:artist)
+    a2 = create(:artist)
+    create(:playlist_item, :for_artist, item: a2)
 
     assert_no_difference('PlaylistItem.count') do
-      t1.merge(t2)
+      a1.merge(a2)
     end
 
     assert_equal 1, Artist.count
-    assert_equal 1, t1.playlist_items.count
+    assert_equal 1, a1.playlist_items.count
   end
 end
