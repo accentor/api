@@ -65,6 +65,12 @@
 #                                 POST   /api/locations(.:format)                                                                          locations#create
 #                        location GET    /api/locations/:id(.:format)                                                                      locations#show
 #                                 DELETE /api/locations/:id(.:format)                                                                      locations#destroy
+#                       playlists GET    /api/playlists(.:format)                                                                          playlists#index
+#                                 POST   /api/playlists(.:format)                                                                          playlists#create
+#                        playlist GET    /api/playlists/:id(.:format)                                                                      playlists#show
+#                                 PATCH  /api/playlists/:id(.:format)                                                                      playlists#update
+#                                 PUT    /api/playlists/:id(.:format)                                                                      playlists#update
+#                                 DELETE /api/playlists/:id(.:format)                                                                      playlists#destroy
 #                           plays GET    /api/plays(.:format)                                                                              plays#index
 #                                 POST   /api/plays(.:format)                                                                              plays#create
 #            destroy_empty_tracks POST   /api/tracks/destroy_empty(.:format)                                                               tracks#destroy_empty
@@ -136,6 +142,7 @@ Rails.application.routes.draw do
       end
     end
     resources :locations, only: %i[index show create destroy]
+    resources :playlists
     resources :plays, only: %i[index create]
     resources :tracks do
       collection do
