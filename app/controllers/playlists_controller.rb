@@ -48,8 +48,9 @@ class PlaylistsController < ApplicationController
   def transformed_attributes
     attributes = permitted_attributes(@playlist || Playlist)
 
-    if attributes[:personal].present?
-      attributes[:user_id] = attributes.delete(:personal) ? current_user.id : nil
+    if attributes.key?(:personal)
+      attributes[:user_id] = attributes[:personal] ? current_user.id : nil
+      attributes.delete :personal
     end
 
     attributes

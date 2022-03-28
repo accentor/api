@@ -62,6 +62,11 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should update personal for user' do
+    patch playlist_url(@playlist), params: { playlist: { name: 'My playlist', personal: false} }
+    assert_response :success
+  end
+
   test 'should not update playlist with empty name' do
     patch playlist_url(@playlist), params: { playlist: { name: '' } }
     assert_response :unprocessable_entity
