@@ -64,7 +64,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not update playlist with empty name' do
     patch playlist_url(@playlist), params: { playlist: { name: '' } }
-    assert_response :success
+    assert_response :unprocessable_entity
   end
 
   test 'should create playlist items during update' do
