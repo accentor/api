@@ -199,6 +199,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_30_121719) do
     t.integer "order", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["playlist_id", "item_id"], name: "index_playlist_items_on_playlist_id_and_item_id", unique: true
     t.index ["playlist_id"], name: "index_playlist_items_on_playlist_id"
   end
 

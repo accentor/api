@@ -15,6 +15,7 @@ class PlaylistItem < ApplicationRecord
   belongs_to :item, polymorphic: true
 
   validates :order, presence: true
+  validates :item_id, uniqueness: { scope: %i[playlist_id] }
   validate :item_type_should_match_playlist_type
 
   private

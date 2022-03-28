@@ -7,6 +7,8 @@ class CreatePlaylistItems < ActiveRecord::Migration[7.0]
       t.integer :order, null: false
 
       t.timestamps
+
+      t.index [:playlist_id, :item_id], unique: true
     end
   end
 end
