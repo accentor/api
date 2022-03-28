@@ -63,7 +63,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update personal for user' do
-    patch playlist_url(@playlist), params: { playlist: { name: 'My playlist', personal: false} }
+    patch playlist_url(@playlist), params: { playlist: { name: 'My playlist', personal: false } }
     assert_response :success
   end
 
