@@ -45,4 +45,24 @@ class PlaylistTest < ActiveSupport::TestCase
     assert_equal 1, i1.order
     assert_equal 2, i2.order
   end
+
+  test 'should get item_ids' do
+    i1 = build(:playlist_item, order: 2)
+    i2 = build(:playlist_item, order: 1)
+    list = build(:playlist, playlist_type: :track, items: [i1, i2])
+    list.save
+
+    assert_equal [i2.item_id, i1.item_id], list.item_ids
+  end
+
+  test 'should set item_ids' do
+    t1 = create(:track)
+    t2 = create(:track)
+    list = build(:playlist, playlist_type: :track)
+    list.item_ids = [t1.id, t2.id]
+
+    assert_equal 2, list.items.length
+    assert_equal t1, list.items.first.item
+    assert_equal t2, list.items.second.item
+  end
 end

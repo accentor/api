@@ -28,6 +28,15 @@ class Playlist < ApplicationRecord
     user_id.present?
   end
 
+  def item_ids
+    items.order(:order).pluck(:item_id)
+  end
+
+  def item_ids=(ids)
+    item_type = playlist_type.capitalize
+    self.items = ids.map.with_index(1) { |id, i| PlaylistItem.new(item_id: id, item_type:, order: i) }
+  end
+
   private
 
   def normalize_item_order

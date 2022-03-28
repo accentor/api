@@ -12,8 +12,4 @@
 #
 class PlaylistSerializer < ActiveModel::Serializer
   attributes :id, :name, :description, :user_id, :playlist_type, :created_at, :updated_at, :item_ids
-
-  def item_ids
-    object.items.order(:order).pluck(:item_id)
-  end
 end

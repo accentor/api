@@ -52,11 +52,6 @@ class PlaylistsController < ApplicationController
       attributes[:user_id] = attributes.delete(:personal) ? current_user.id : nil
     end
 
-    if attributes[:item_ids].present?
-      item_type = (attributes[:playlist_type] || @playlist&.playlist_type).capitalize
-      attributes[:items] = attributes.delete(:item_ids).map.with_index(1) { |id, i| PlaylistItem.new(item_id: id, item_type:, order: i) }
-    end
-
     attributes
   end
 end
