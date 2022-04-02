@@ -24,6 +24,7 @@ class Artist < ApplicationRecord
   validates :name, presence: true
 
   normalized_col_generator :name
+  normalize_blank_values :review_comment
 
   scope :by_filter, ->(filter) { where('normalized_name LIKE ?', "%#{Artist.normalize(filter)}%") }
 

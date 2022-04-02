@@ -31,6 +31,7 @@ class Album < ApplicationRecord
   validate :album_artist_separators
 
   normalized_col_generator :title
+  normalize_blank_values :edition_description, :review_comment
 
   scope :by_filter, ->(filter) { where('"albums"."normalized_title" LIKE ?', "%#{Album.normalize(filter)}%") }
   scope :by_artist, ->(artist) { joins(:artists).where(artists: { id: artist }) }

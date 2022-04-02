@@ -132,4 +132,10 @@ class TrackTest < ActiveSupport::TestCase
     assert_equal 1, ta1.order
     assert_equal 2, ta2.order
   end
+
+  test 'should normalize blank review_comment' do
+    track = build(:track, review_comment: '')
+    track.save
+    assert_nil track.review_comment
+  end
 end
