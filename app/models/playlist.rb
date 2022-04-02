@@ -6,6 +6,7 @@
 #  description   :string
 #  name          :string           not null
 #  playlist_type :integer          not null
+#  private       :boolean          default(FALSE)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  user_id       :bigint
@@ -17,6 +18,7 @@ class Playlist < ApplicationRecord
   enum playlist_type: { album: 1, artist: 2, track: 3 }
 
   validates :name, presence: true
+  validates :user_id, presence: true, if: :private?
 
   before_save :normalize_item_order
 

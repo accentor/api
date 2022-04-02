@@ -6,6 +6,7 @@
 #  description   :string
 #  name          :string           not null
 #  playlist_type :integer          not null
+#  private       :boolean          default(FALSE)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  user_id       :bigint
@@ -17,6 +18,11 @@ FactoryBot.define do
 
     trait :personal do
       user
+    end
+
+    trait :private do
+      user
+      private { true }
     end
   end
 end

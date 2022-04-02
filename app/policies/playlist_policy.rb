@@ -1,7 +1,7 @@
 class PlaylistPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(user_id: [nil, user.id])
+      scope.where(private: false).or(scope.where(private: true, user_id: user.id))
     end
   end
 
@@ -26,6 +26,6 @@ class PlaylistPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, :description, :playlist_type, { item_ids: [] }, :personal]
+    [:name, :description, :playlist_type, { item_ids: [] }, :personal, :private]
   end
 end
