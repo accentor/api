@@ -73,13 +73,13 @@ class AlbumTest < ActiveSupport::TestCase
     assert_equal 2, aa2.order
   end
 
-  test 'should normalize blank edition descriptions' do
+  test 'should nilify blank edition descriptions' do
     album = build(:album, edition_description: '')
     album.save
     assert_nil album.edition_description
   end
 
-  test 'should normalize blank review_comment' do
+  test 'should nilify blank review_comment' do
     album = build(:album, review_comment: '')
     album.save
     assert_nil album.review_comment

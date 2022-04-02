@@ -99,7 +99,7 @@ class ArtistTest < ActiveSupport::TestCase
     assert_not_empty artist2.errors[:album_artists]
   end
 
-  test 'should normalize blank review_comment' do
+  test 'should nilify blank review_comment' do
     track = build(:track, review_comment: '')
     track.save
     assert_nil track.review_comment
