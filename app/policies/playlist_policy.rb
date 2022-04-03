@@ -10,7 +10,7 @@ class PlaylistPolicy < ApplicationPolicy
   end
 
   def show?
-    user.present?
+    user.present? && (!record.private? || user.id == record.user_id)
   end
 
   def create?
