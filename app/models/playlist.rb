@@ -3,32 +3,24 @@
 # Table name: playlists
 #
 #  id            :bigint           not null, primary key
+#  access        :integer          default("shared")
 #  description   :string
 #  name          :string           not null
 #  playlist_type :integer          not null
-#  private       :boolean          default(FALSE)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  user_id       :bigint
+#  user_id       :bigint           not null
 #
 class Playlist < ApplicationRecord
-  belongs_to :user, optional: true
+  belongs_to :user
   has_many :items, class_name: 'PlaylistItem', dependent: :destroy
 
+  enum access: { shared: 0, personal: 1, secret: 2 }
   enum playlist_type: { album: 1, artist: 2, track: 3 }
 
   validates :name, presence: true
-  validates :user_id, presence: true, if: :private?
 
   before_save :normalize_item_order
-
-  def shared?
-    user_id.nil?
-  end
-
-  def personal?
-    user_id.present?
-  end
 
   def item_ids
     items.order(:order).pluck(:item_id)

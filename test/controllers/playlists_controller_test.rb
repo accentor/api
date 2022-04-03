@@ -2,8 +2,9 @@ require 'test_helper'
 
 class PlaylistsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @playlist = create(:playlist)
-    sign_in_as(create(:user))
+    @user = create(:user)
+    sign_in_as(@user)
+    @playlist = create(:playlist, access: :shared)
   end
 
   test 'should get index' do
@@ -44,12 +45,12 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create personal playlist for current user if specified' do
     assert_difference('Playlist.count', 1) do
-      post playlists_url, params: { playlist: { name: 'My favorite songs', playlist_type: :track, personal: true } }
+      post playlists_url, params: { playlist: { name: 'My favorite songs', playlist_type: :track, access: :personal } }
     end
 
     assert_response :created
     assert_predicate Playlist.last, :personal?
-    assert_equal User.first.id, Playlist.last.user_id
+    assert_equal @user.id, Playlist.last.user_id
   end
 
   test 'should show playlist' do
@@ -63,7 +64,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update personal for user' do
-    patch playlist_url(@playlist), params: { playlist: { name: 'My playlist', personal: false } }
+    patch playlist_url(@playlist), params: { playlist: { name: 'My playlist', access: :personal } }
     assert_response :success
   end
 
@@ -86,13 +87,20 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not update personal playlist for different user' do
-    @playlist.update(user: create(:user))
+    @playlist.update(access: :personal)
 
     patch playlist_url(@playlist), params: { playlist: { name: 'My playlist' } }
     assert_response :forbidden
   end
 
-  test 'should destroy playlist for user' do
+  test 'should not update secret playlist for different user' do
+    @playlist.update(access: :secret)
+
+    patch playlist_url(@playlist), params: { playlist: { name: 'My playlist' } }
+    assert_response :forbidden
+  end
+
+  test 'should destroy shared playlist for user' do
     assert_difference('Playlist.count', -1) do
       delete playlist_url(@playlist)
     end
@@ -101,7 +109,17 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not destroy personal playlist for different user' do
-    @playlist.update(user: create(:user))
+    @playlist.update(access: :personal)
+
+    assert_no_difference('Playlist.count') do
+      delete playlist_url(@playlist)
+    end
+
+    assert_response :forbidden
+  end
+
+  test 'should not destroy secret playlist for different user' do
+    @playlist.update(access: :secret)
 
     assert_no_difference('Playlist.count') do
       delete playlist_url(@playlist)

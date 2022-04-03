@@ -4,8 +4,8 @@ class CreatePlaylists < ActiveRecord::Migration[7.0]
       t.string :name, null: false
       t.string :description
       t.integer :playlist_type, null: false
-      t.references :user, null: true, foreign_key: true
-      t.boolean :private, default: false
+      t.references :user, null: false, foreign_key: true
+      t.integer :access, default: 0
 
       t.timestamps
     end

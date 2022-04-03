@@ -17,7 +17,7 @@ class PlaylistsController < ApplicationController
 
   def create
     authorize Playlist
-    @playlist = Playlist.new(transformed_attributes)
+    @playlist = Playlist.new(permitted_attributes(Playlist).merge({ user: current_user }))
 
     if @playlist.save
       render json: @playlist, status: :created
@@ -27,7 +27,7 @@ class PlaylistsController < ApplicationController
   end
 
   def update
-    if @playlist.update(transformed_attributes)
+    if @playlist.update(permitted_attributes(@playlist))
       render json: @playlist, status: :ok
     else
       render json: @playlist.errors, status: :unprocessable_entity
@@ -43,16 +43,5 @@ class PlaylistsController < ApplicationController
   def set_playlist
     @playlist = Playlist.find(params[:id])
     authorize @playlist
-  end
-
-  def transformed_attributes
-    attributes = permitted_attributes(@playlist || Playlist)
-
-    if attributes.key?(:personal)
-      attributes[:user_id] = attributes[:personal] ? current_user.id : nil
-      attributes.delete :personal
-    end
-
-    attributes
   end
 end

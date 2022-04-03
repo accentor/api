@@ -1,7 +1,7 @@
 class PlaylistPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(private: false).or(scope.where(private: true, user_id: user.id))
+      scope.where.not(access: :secret).or(scope.where(access: :secret, user_id: user.id))
     end
   end
 
@@ -10,7 +10,7 @@ class PlaylistPolicy < ApplicationPolicy
   end
 
   def show?
-    user.present? && (!record.private? || user.id == record.user_id)
+    user.present? && (!record.secret? || user.id == record.user_id)
   end
 
   def create?
@@ -26,6 +26,6 @@ class PlaylistPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, :description, :playlist_type, { item_ids: [] }, :personal, :private]
+    [:name, :description, :playlist_type, { item_ids: [] }, :access]
   end
 end

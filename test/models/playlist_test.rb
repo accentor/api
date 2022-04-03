@@ -3,13 +3,13 @@
 # Table name: playlists
 #
 #  id            :bigint           not null, primary key
+#  access        :integer          default("shared")
 #  description   :string
 #  name          :string           not null
 #  playlist_type :integer          not null
-#  private       :boolean          default(FALSE)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  user_id       :bigint
+#  user_id       :bigint           not null
 #
 require 'test_helper'
 
@@ -18,12 +18,6 @@ class PlaylistTest < ActiveSupport::TestCase
     list = build(:playlist, name: '')
     assert_not_predicate list, :valid?
     assert_not_empty list.errors[:name]
-  end
-
-  test 'can only be private if user id is present' do
-    list = build(:playlist, user_id: nil, private: true)
-    assert_not_predicate list, :valid?
-    assert_not_empty list.errors[:user_id]
   end
 
   test 'should normalize order of items' do
