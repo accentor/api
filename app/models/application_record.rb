@@ -16,7 +16,7 @@ class ApplicationRecord < ActiveRecord::Base
       set_callback :validation, :before, method_name, if: col_changed
 
       define_method method_name do
-        self[col].present? || self[col] = nil
+        self[col] = nil if self[col].blank?
       end
     end
   end
