@@ -23,7 +23,7 @@ class Playlist < ApplicationRecord
   before_save :normalize_item_order
 
   def item_ids
-    items.order(:order).pluck(:item_id)
+    items.loaded? ? items.sort_by(&:order).collect(&:item_id) : items.order(:order).pluck(:item_id)
   end
 
   def item_ids=(ids)
