@@ -29,6 +29,7 @@ class Track < ApplicationRecord
   normalized_col_generator :title
 
   before_save :normalize_artist_order
+  nilify_blank_values :review_comment
 
   scope :by_filter, ->(filter) { where('"tracks"."normalized_title" LIKE ?', "%#{Track.normalize(filter)}%") }
   scope :by_artist, ->(artist) { joins(:artists).where(artists: { id: artist }) }
