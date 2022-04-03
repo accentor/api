@@ -4,7 +4,7 @@ class PlaylistsController < ApplicationController
   def index
     authorize Playlist
     @playlists = apply_scopes(policy_scope(Playlist))
-                 .includes(:items)
+                 .with_item_ids
                  .order(id: :asc)
                  .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@playlists)
