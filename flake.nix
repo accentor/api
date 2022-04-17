@@ -53,6 +53,7 @@
             gems
             (pkgs.lowPrio gems.wrappedRuby)
             pkgs.bundix
+            pkgs.ffmpeg
             pkgs.postgresql_14
           ];
           env = [
