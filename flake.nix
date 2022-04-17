@@ -1,0 +1,109 @@
+{
+  description = "Accentor API";
+    
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs = {
+        flake-utils.follows = "flake-utils";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+  };
+
+  outputs = inputs@{ self, nixpkgs, flake-utils, ... }:
+    let
+      inherit (flake-utils.lib) eachDefaultSystem;
+    in
+    eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ inputs.devshell.overlay ];
+        };
+        gems = pkgs.bundlerEnv rec {
+          name = "accentor-api-env";
+          ruby = pkgs.ruby_3_1;
+          gemfile = ./Gemfile;
+          lockfile = ./Gemfile.lock;
+          gemset = ./gemset.nix;
+          groups = [ "default" "development" "test" "production" ];
+        };
+      in
+      {
+        defaultPackage = pkgs.stdenv.mkDerivation rec {
+          pname = "accentor-api";
+          version = "0.17.1";
+
+          src = pkgs.lib.cleanSourceWith { filter = name: type: !(builtins.elem name [ ".github" "flake.lock" "flake.nix" ]); src = ./.; name = "source"; };
+
+          installPhase = ''
+            mkdir $out
+            cp -r * $out
+          '';
+
+          passthru.env = gems;
+        };
+
+        devShell = pkgs.devshell.mkShell {
+          name = "Accentor API";
+          packages = [
+            gems
+            (pkgs.lowPrio gems.wrappedRuby)
+            pkgs.bundix
+            pkgs.postgresql_14
+          ];
+          env = [
+            {
+              name = "PGDATA";
+              eval = "$PWD/tmp/postgres";
+            }
+            {
+              name = "DATABASE_HOST";
+              eval = "$PGDATA";
+            }
+          ];
+          commands = [
+            {
+              name = "pg:setup";
+              category = "database";
+              help = "Setup postgres in project folder";
+              command = ''
+                initdb --encoding=UTF8 --no-locale --no-instructions -U postgres
+                echo "listen_addresses = ${"'"}${"'"}" >> $PGDATA/postgresql.conf
+                echo "unix_socket_directories = '$PGDATA'" >> $PGDATA/postgresql.conf
+                echo "CREATE USER accentor WITH PASSWORD 'accentor' CREATEDB;" | postgres --single -E postgres
+              '';
+            }
+            {
+              name = "pg:start";
+              category = "database";
+              help = "Start postgres instance";
+              command = ''
+                [ ! -d $PGDATA ] && setup-db
+                pg_ctl -D $PGDATA -U postgres start -l log/postgres.log
+              '';
+            }
+            {
+              name = "pg:stop";
+              category = "database";
+              help = "Stop postgres instance";
+              command = ''
+                pg_ctl -D $PGDATA -U postgres stop
+              '';
+            }
+            {
+              name = "pg:console";
+              category = "database";
+              help = "Open database console";
+              command = ''
+                psql --host $PGDATA -U postgres 
+              '';
+            }
+          ];
+        };
+      }
+    );
+}
