@@ -78,6 +78,8 @@ To run and develop locally:
 
 Once you've done this, you can always run a local server with `rails server`
 
+If you use nix on your local machine, you can also use the devShell provided by [`flake.nix`](./flake.nix).
+
 ## Help
 
 Have a question? You can ask it through [GitHub
