@@ -20,13 +20,13 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
 
 development:
   <<: *default
   username: accentor
   password: accentor
   database: accentor_development
+  host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
   url: <%= ENV['DATABASE_URL'] %>
 
   # The specified database role being used to connect to postgres.
@@ -64,6 +64,7 @@ test:
   username: accentor
   password: accentor
   database: accentor_test
+  host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
   url: <%= ENV['DATABASE_URL'] ? "#{ENV['DATABASE_URL']}_test" : nil %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
