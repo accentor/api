@@ -6,7 +6,7 @@
 #  edition             :date
 #  edition_description :string
 #  normalized_title    :string           not null
-#  release             :date
+#  release             :date             default(Thu, 01 Jan 0000), not null
 #  review_comment      :string
 #  title               :string           not null
 #  created_at          :datetime         not null

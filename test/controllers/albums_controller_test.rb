@@ -2,7 +2,7 @@ require 'test_helper'
 
 class AlbumsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @album = create :album, :with_image, :with_release
+    @album = create :album, :with_image
     sign_in_as create(:user)
   end
 
@@ -21,7 +21,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create album for moderator' do
     sign_in_as create(:moderator)
-    album = build :album, :with_release
+    album = build :album
 
     image = {
       data: Base64.encode64(File.read(Rails.root.join('test/files/image.jpg'))),
@@ -45,7 +45,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not create album without title' do
     sign_in_as create(:moderator)
-    album = build :album, :with_release
+    album = build :album
 
     assert_difference('Album.count', 0) do
       post albums_url, params: { album: { release: album.release } }
@@ -56,7 +56,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create dependent album_labels' do
     sign_in_as create(:moderator)
-    album = build :album, :with_release
+    album = build :album
 
     album_labels = (1..5).map do |_|
       {
@@ -81,7 +81,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create dependent album_artists' do
     sign_in_as create(:moderator)
-    album = build :album, :with_release
+    album = build :album
 
     album_artists = (1..5).map do |i|
       {
@@ -140,7 +140,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update album for moderator' do
     sign_in_as create(:moderator)
-    album = create :album, :with_release
+    album = create :album
 
     image = {
       data: Base64.encode64(File.read(Rails.root.join('test/files/image.jpg'))),
@@ -158,7 +158,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should destroy previous image when image is replaced' do
     sign_in_as create(:moderator)
-    album = create :album, :with_release, :with_image
+    album = create :album, :with_image
 
     image = {
       data: Base64.encode64(File.read(Rails.root.join('test/files/image.jpg'))),
@@ -178,7 +178,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should destroy previous image when image is cleared' do
     sign_in_as create(:moderator)
-    album = create :album, :with_release, :with_image
+    album = create :album, :with_image
 
     image = {
       data: nil,

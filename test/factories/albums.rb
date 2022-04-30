@@ -6,7 +6,7 @@
 #  edition             :date
 #  edition_description :string
 #  normalized_title    :string           not null
-#  release             :date
+#  release             :date             default(Thu, 01 Jan 0000), not null
 #  review_comment      :string
 #  title               :string           not null
 #  created_at          :datetime         not null
@@ -18,10 +18,7 @@ FactoryBot.define do
   factory :album do
     title { Faker::Music.album }
     review_comment { Faker::Lorem.word }
-
-    trait :with_release do
-      release { Faker::Date.backward(days: 365 * 100) }
-    end
+    release { Faker::Date.backward(days: 365 * 100) }
 
     trait :with_image do
       association :image, factory: :image
