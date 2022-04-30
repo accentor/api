@@ -1,0 +1,5 @@
+# See https://git-scm.com/docs/gitattributes for more about git attribute files.
+
+# Mark the lockfiles file as having been generated.
+flake.lock linguist-generated
+gemset.nix linguist-generated
