@@ -48,22 +48,33 @@
           default = accentor-api;
           accentor-api = pkgs.devshell.mkShell {
             name = "Accentor API";
-            packages = [
-              gems
-              (pkgs.lowPrio gems.wrappedRuby)
-              pkgs.bundix
-              pkgs.ffmpeg
-              pkgs.nixpkgs-fmt
-              pkgs.postgresql_14
+            imports = [ "${devshell}/extra/language/c.nix" ];
+            packages = with pkgs; [
+              (lowprio binutils)
+              findutils
+              gnumake
+              ruby_3_1
+              bundix
+              ffmpeg
+              nixpkgs-fmt
+              postgresql_14
             ];
             env = [
               {
+                name = "GEM_HOME";
+                eval = "$PRJ_DATA_DIR/bundle/$(ruby -e 'puts RUBY_VERSION')";
+              }
+              {
                 name = "PGDATA";
-                eval = "$PWD/tmp/postgres";
+                eval = "$PRJ_DATA_DIR/postgres";
               }
               {
                 name = "DATABASE_HOST";
                 eval = "$PGDATA";
+              }
+              {
+                name = "PATH";
+                prefix = "$GEM_HOME/bin";
               }
             ];
             commands = [
@@ -104,6 +115,7 @@
                 '';
               }
             ];
+            language.c.compiler = pkgs.gcc;
           };
         };
       }
