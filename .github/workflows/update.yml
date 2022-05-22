@@ -1,0 +1,57 @@
+name: Update
+
+on:
+  schedule:
+    - cron: '30 */2 * * *'
+  workflow_dispatch:
+
+jobs:
+  packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v17
+      - name: Cachix
+        uses: cachix/cachix-action@v10
+        with:
+          name: accentor
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          skipPush: true
+      - run: nix flake update
+      - run: nix build -L --no-link .#accentor-api
+      - run: nix build -L --no-link .#accentor-api.env
+      - run: nix eval --json ".#accentor-api.outPath" | sed 's/"\(.*\)"/\1/' | cachix push accentor
+      - run: nix eval --json ".#accentor-api.env.outPath" | sed 's/"\(.*\)"/\1/' | cachix push accentor
+  shell:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v17
+      - name: Cachix
+        uses: cachix/cachix-action@v10
+        with:
+          name: accentor
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          skipPush: true
+      - run: nix flake update
+      - run: nix build -L --no-link .#devShells.$(nix eval --impure --expr "builtins.currentSystem").accentor-api
+      - run: nix eval --json ".#devShells.$(nix eval --impure --expr 'builtins.currentSystem').accentor-api.outPath" | sed 's/"\(.*\)"/\1/' | cachix push accentor
+  commit:
+    runs-on: ubuntu-latest
+    needs: [packages, shell]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v17
+      - name: Cachix
+        uses: cachix/cachix-action@v10
+        with:
+          name: accentor
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          skipPush: true
+      - run: nix flake update
+      - uses: stefanzweifel/git-auto-commit-action@v4.14.1
+        with:
+          commit_message: "Update flake dependencies"
