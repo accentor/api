@@ -55,3 +55,6 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4.14.1
         with:
           commit_message: "Update flake dependencies"
+          commit_user_name:  Accentor Bot
+          commit_user_email: accentor-bot@users.noreply.github.com
+          commit_author: Accentor Bot <accentor-bot@users.noreply.github.com>
