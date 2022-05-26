@@ -14,7 +14,7 @@ class ApplicationController < ActionController::API
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from ActiveRecord::RecordNotFound, with: :model_not_found
 
-  # has_scope :sorted, default: nil, allow_blank: true
+  has_scope :sorted, default: nil, allow_blank: true, except: :stats
 
   serialization_scope :url_options
 
