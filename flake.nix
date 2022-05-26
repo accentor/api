@@ -51,7 +51,6 @@
             packages = [
               gems
               (pkgs.lowPrio gems.wrappedRuby)
-              pkgs.bundix
               pkgs.ffmpeg
               pkgs.nixpkgs-fmt
               pkgs.postgresql_14
@@ -101,6 +100,15 @@
                 help = "Open database console";
                 command = ''
                   psql --host $PGDATA -U postgres
+                '';
+              }
+              {
+                name = "gems:update";
+                category = "dependencies";
+                help = "Update the `Gemfile.lock` and `gemset.nix` files";
+                command = ''
+                  ${pkgs.ruby_3_1}/bin/bundle lock
+                  ${pkgs.bundix}/bin/bundix
                 '';
               }
             ];
