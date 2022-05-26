@@ -13,5 +13,8 @@ class Play < ApplicationRecord
 
   validates :played_at, presence: true
 
-  scope :by_album, ->(album) { joins(:track).where(track: { album_id: album }) }
+  scope :by_album, ->(album) { where(track_id: Track.by_album(album)) }
+  scope :by_artist, ->(artist) { where(track_id: Track.by_artist(artist)) }
+  scope :played_before, ->(date) { where('played_at < ?', date) }
+  scope :played_after, ->(date) { where('played_at > ?', date) }
 end

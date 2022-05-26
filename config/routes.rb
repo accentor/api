@@ -71,6 +71,7 @@
 #                                 PATCH  /api/playlists/:id(.:format)                                                                      playlists#update
 #                                 PUT    /api/playlists/:id(.:format)                                                                      playlists#update
 #                                 DELETE /api/playlists/:id(.:format)                                                                      playlists#destroy
+#                     stats_plays GET    /api/plays/stats(.:format)                                                                        plays#stats
 #                           plays GET    /api/plays(.:format)                                                                              plays#index
 #                                 POST   /api/plays(.:format)                                                                              plays#create
 #            destroy_empty_tracks POST   /api/tracks/destroy_empty(.:format)                                                               tracks#destroy_empty
@@ -143,7 +144,11 @@ Rails.application.routes.draw do
     end
     resources :locations, only: %i[index show create destroy]
     resources :playlists
-    resources :plays, only: %i[index create]
+    resources :plays, only: %i[index create] do
+      collection do
+        get 'stats'
+      end
+    end
     resources :tracks do
       collection do
         post 'destroy_empty'
