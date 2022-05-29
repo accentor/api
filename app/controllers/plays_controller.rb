@@ -27,7 +27,8 @@ class PlaysController < ApplicationController
   def stats
     authorize Play
     @stats = apply_scopes(policy_scope(Play))
-             .select('COUNT(*)', 'MAX(played_at) as last_played_at', :track_id, :user_id)
+             .left_joins(track: :audio_file)
+             .select('COUNT(*)', 'MAX(played_at) as last_played_at', 'SUM(COALESCE("audio_files"."length", 0)) as total_length', :track_id, :user_id)
              .group(:track_id, :user_id)
              .order(track_id: :desc)
              .paginate(page: params[:page], per_page: params[:per_page])
