@@ -168,10 +168,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0bjhh8pngmvnrsri2h6a753pgv0xdkbbgi1bmv6c7q137sp37jbg";
+      sha256 = "0yza43f42v0ys81y6jzbqfkdykf40h6l3yyvadwq32fswrbpwvbc";
       type = "gem";
     };
-    version = "1.11.1";
+    version = "1.12.0";
   };
   builder = {
     groups = ["default" "development" "test"];
@@ -522,10 +522,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1cshgsx3hmpgx639xyqjqa2q3hgrhlyr9rpwhsglsx529alqq125";
+      sha256 = "1hpj9mm31a5aw5qys2kglfl8jv74bkwkc5pfrpp3als89hgkznqy";
       type = "gem";
     };
-    version = "1.4.5";
+    version = "1.5.2";
   };
   net-imap = {
     dependencies = ["digest" "net-protocol" "strscan"];
