@@ -5,7 +5,7 @@ FFMPEG_REGEX = /ffmpeg version (\d+\.\d+\.?\d*)/
 
 namespace :ffmpeg do
   task check_version: :environment do
-    path = ENV['FFMPEG_VERSION_LOCATION'] || Rails.root.join('log/ffmpeg_version.txt').to_s
+    path = ENV.fetch('FFMPEG_VERSION_LOCATION') { Rails.root.join('log/ffmpeg_version.txt').to_s }
     prev_version = begin
       File.read(path)
     rescue StandardError
@@ -24,7 +24,7 @@ namespace :ffmpeg do
   end
 
   task init: :environment do
-    path = ENV['FFMPEG_VERSION_LOCATION'] || Rails.root.join('log/ffmpeg_version.txt')
+    path = ENV.fetch('FFMPEG_VERSION_LOCATION') { Rails.root.join('log/ffmpeg_version.txt') }
     abort("The ffmpeg version file already exists: #{path}") if File.exist?(path)
 
     stdin, stdout, = Open3.popen2('ffmpeg -version')
