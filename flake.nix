@@ -58,7 +58,7 @@
             env = [
               {
                 name = "PGDATA";
-                eval = "$PWD/tmp/postgres";
+                eval = "$PRJ_DATA_DIR/postgres";
               }
               {
                 name = "DATABASE_HOST";
@@ -82,7 +82,7 @@
                 category = "database";
                 help = "Start postgres instance";
                 command = ''
-                  [ ! -d $PGDATA ] && setup-db
+                  [ ! -d $PGDATA ] && pg:setup
                   pg_ctl -D $PGDATA -U postgres start -l log/postgres.log
                 '';
               }
