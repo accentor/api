@@ -16,7 +16,7 @@ class Playlist < ApplicationRecord
   has_many :items, class_name: 'PlaylistItem', dependent: :destroy
 
   enum access: { shared: 0, personal: 1, secret: 2 }
-  enum playlist_type: { album: 1, artist: 2, track: 3 }
+  enum playlist_type: { album: 0, artist: 1, track: 2 }
 
   scope :with_item_ids, -> { left_joins(:items).select('playlists.*', 'array_agg(playlist_items.item_id ORDER BY playlist_items.order ASC) as item_ids').group(:id) }
 
