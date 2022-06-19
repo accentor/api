@@ -151,4 +151,33 @@ class TrackTest < ActiveSupport::TestCase
     track.save
     assert_nil track.review_comment
   end
+
+  test 'should be able to merge tracks if one belongs to playlist' do
+    track1 = create(:track)
+    track2 = create(:track)
+    playlist = create(:playlist, playlist_type: :track)
+    create(:playlist_item, item: track1, playlist:)
+
+    assert_difference('Track.count', -1) do
+      track2.merge(track1)
+    end
+
+    assert_not playlist.reload.item_ids.include? track1.id
+    assert_includes playlist.reload.item_ids, track2.id
+  end
+
+  test 'should be able to merge tracks if they belong to the same playlist' do
+    track1 = create(:track)
+    track2 = create(:track)
+    playlist = create(:playlist, playlist_type: :track)
+    create(:playlist_item, item: track1, playlist:)
+    create(:playlist_item, item: track2, playlist:)
+
+    assert_difference(['Track.count', 'PlaylistItem.count'], -1) do
+      track2.merge(track1)
+    end
+
+    assert_not playlist.reload.item_ids.include? track1.id
+    assert_includes playlist.reload.item_ids, track2.id
+  end
 end
