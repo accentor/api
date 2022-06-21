@@ -111,7 +111,7 @@ class TracksController < ApplicationController
     response.headers['content-length'] = (last_byte - first_byte + 1).to_s
     # Workaround for https://github.com/rack/rack/issues/1619
     # Remove when rack 3.0 is released
-    response.headers['last-modified'] = Time.now.httpdate
+    response.headers['Last-Modified'] = Time.now.httpdate
 
     to_skip = first_byte
     while to_skip.positive?
