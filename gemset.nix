@@ -618,10 +618,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "10ryzmc3r5ja6g90a9ycsxcxsy5872xa1vf01jam0bm74zq3zmi6";
+      sha256 = "11q4zw8n0lmff5k514ip30yizr38jb2x5nh3m7fy3k13sbxbysrq";
       type = "gem";
     };
-    version = "1.3.5";
+    version = "1.4.1";
   };
   puma = {
     dependencies = ["nio4r"];
