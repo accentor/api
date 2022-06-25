@@ -66,4 +66,9 @@ class PlaylistTest < ActiveSupport::TestCase
     assert_equal t1, list.items.first.item
     assert_equal t2, list.items.second.item
   end
+
+  test 'should return empty item_ids when using `with_item_ids` if there are no items' do
+    create(:playlist, playlist_type: :track)
+    assert_empty Playlist.with_item_ids.first.item_ids
+  end
 end

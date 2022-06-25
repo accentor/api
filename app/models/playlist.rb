@@ -18,7 +18,7 @@ class Playlist < ApplicationRecord
   enum access: { shared: 0, personal: 1, secret: 2 }
   enum playlist_type: { album: 0, artist: 1, track: 2 }
 
-  scope :with_item_ids, -> { left_joins(:items).select('playlists.*', 'array_agg(playlist_items.item_id ORDER BY playlist_items.order ASC) as item_ids').group(:id) }
+  scope :with_item_ids, -> { left_joins(:items).select('playlists.*', 'array_remove(array_agg(playlist_items.item_id ORDER BY playlist_items.order ASC), NULL) as item_ids').group(:id) }
 
   validates :name, presence: true
 
@@ -26,7 +26,7 @@ class Playlist < ApplicationRecord
 
   def item_ids
     # If with_item_ids was used, we use the output from the SQL query
-    return read_attribute(:item_ids) if has_attribute?(:item_ids)
+    return read_attribute(:item_ids) || [] if has_attribute?(:item_ids)
 
     # Otherwise we check if the items are loaded and either collect the ids with ruby or with SQL
     items.loaded? ? items.sort_by(&:order).collect(&:item_id) : items.order(:order).pluck(:item_id)
