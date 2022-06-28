@@ -18,10 +18,14 @@ class Playlist < ApplicationRecord
   enum access: { shared: 0, personal: 1, secret: 2 }
   enum playlist_type: { album: 0, artist: 1, track: 2 }
 
-  # We gather the item_ids using `array_agg`, but this results in `[null]` if there are no playlist_items
-  # to filter these occurences out we first remove null values with `array_remove` (since `playlist_items.item_id` can never be null)
-  # and the coalesce with an empty array so we always have a value to return
-  scope :with_item_ids, -> { left_joins(:items).select('playlists.*', "COALESCE(array_remove(array_agg(playlist_items.item_id ORDER BY playlist_items.order ASC), NULL), ARRAY[]::bigint[]) as item_ids").group(:id) }
+  scope :with_item_ids, lambda {
+    left_joins(:items)
+      # We gather the item_ids using `array_agg`, but this results in `[null]` if there are no playlist_items
+      # to filter these occurences out we first remove null values with `array_remove` (since `playlist_items.item_id` can never be null)
+      # and the coalesce with an empty array so we always have a value to return
+      .select('playlists.*', 'COALESCE(array_remove(array_agg(playlist_items.item_id ORDER BY playlist_items.order ASC), NULL), ARRAY[]::bigint[]) as item_ids')
+      .group(:id)
+  }
 
   validates :name, presence: true
 
