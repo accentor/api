@@ -31,7 +31,7 @@
           default = accentor-api;
           accentor-api = pkgs.stdenv.mkDerivation rec {
             pname = "accentor-api";
-            version = "0.17.2";
+            version = "0.18.1";
 
             src = pkgs.lib.cleanSourceWith { filter = name: type: !(builtins.elem name [ ".github" "flake.lock" "flake.nix" ]); src = ./.; name = "source"; };
 
