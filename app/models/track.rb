@@ -22,6 +22,8 @@ class Track < ApplicationRecord
   has_many :track_artists, dependent: :destroy
   has_many :artists, through: :track_artists, source: :artist
   has_many :plays, dependent: :destroy
+  has_many :playlist_items, as: :item, dependent: :destroy
+  has_many :playlists, through: :playlist_items, source: :playlist
 
   validates :title, presence: true
   validates :number, presence: true
@@ -42,6 +44,11 @@ class Track < ApplicationRecord
     # Since we only update the track_id, there aren't any validations that could fail
     other.plays.update_all(track_id: id)
     # rubocop:enable Rails/SkipsModelValidations
+
+    other.playlist_items.find_each do |item|
+      item.update(item_id: id) unless playlist_items.where(playlist_id: item.playlist_id).any?
+    end
+
     other.update(audio_file: nil)
     other.destroy
     return if af.blank?

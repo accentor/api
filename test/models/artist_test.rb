@@ -86,6 +86,35 @@ class ArtistTest < ActiveSupport::TestCase
     assert_includes album.reload.artists, artist2
   end
 
+  test 'should be able to merge artists if one belongs to playlist' do
+    artist1 = create(:artist)
+    artist2 = create(:artist)
+    playlist = create(:playlist, playlist_type: :artist)
+    create(:playlist_item, item: artist1, playlist:)
+
+    assert_difference('Artist.count', -1) do
+      artist2.merge(artist1)
+    end
+
+    assert_not playlist.reload.item_ids.include? artist1.id
+    assert_includes playlist.reload.item_ids, artist2.id
+  end
+
+  test 'should be able to merge artists if they belong to the same playlist' do
+    artist1 = create(:artist)
+    artist2 = create(:artist)
+    playlist = create(:playlist, playlist_type: :artist)
+    create(:playlist_item, item: artist1, playlist:)
+    create(:playlist_item, item: artist2, playlist:)
+
+    assert_difference(['Artist.count', 'PlaylistItem.count'], -1) do
+      artist2.merge(artist1)
+    end
+
+    assert_not playlist.reload.item_ids.include? artist1.id
+    assert_includes playlist.reload.item_ids, artist2.id
+  end
+
   test 'should not be able to merge artists if they share album_artist' do
     artist1 = create(:artist)
     artist2 = create(:artist)
@@ -103,5 +132,18 @@ class ArtistTest < ActiveSupport::TestCase
     track = build(:track, review_comment: '')
     track.save
     assert_nil track.review_comment
+  end
+
+  test 'should move playlist_items on merge' do
+    a1 = create(:artist)
+    a2 = create(:artist)
+    create(:playlist_item, :for_artist, item: a2)
+
+    assert_no_difference('PlaylistItem.count') do
+      a1.merge(a2)
+    end
+
+    assert_equal 1, Artist.count
+    assert_equal 1, a1.playlist_items.count
   end
 end

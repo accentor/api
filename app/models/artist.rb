@@ -20,6 +20,8 @@ class Artist < ApplicationRecord
   has_many :tracks, through: :track_artists, source: :track
   has_many :album_artists, dependent: :destroy
   has_many :albums, through: :album_artists, source: :album
+  has_many :playlist_items, as: :item, dependent: :destroy
+  has_many :playlists, through: :playlist_items, source: :playlist
 
   validates :name, presence: true
 
@@ -40,6 +42,10 @@ class Artist < ApplicationRecord
 
     other.track_artists.find_each do |ta|
       ta.update(artist_id: id)
+    end
+
+    other.playlist_items.find_each do |item|
+      item.update(item_id: id) unless playlist_items.where(playlist_id: item.playlist_id).any?
     end
 
     # we have to reload to make sure the track_artists and album_artists relation isn't cached anymore
