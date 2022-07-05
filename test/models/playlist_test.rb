@@ -21,18 +21,17 @@ class PlaylistTest < ActiveSupport::TestCase
   end
 
   test 'should normalize order of items' do
-    i1 = build(:playlist_item, order: 5)
-    i2 = build(:playlist_item, order: 2)
+    i1 = build(:playlist_item, order: 5, item: create(:track))
+    i2 = build(:playlist_item, order: 2, item: create(:track))
     list = build(:playlist, playlist_type: :track, items: [i1, i2])
-    print list.items
     list.save
     assert_equal 2, i1.order
     assert_equal 1, i2.order
   end
 
   test 'should leave order of track items alone if normalized' do
-    i1 = build(:playlist_item, order: 1)
-    i2 = build(:playlist_item, order: 2)
+    i1 = build(:playlist_item, order: 1, item: create(:track))
+    i2 = build(:playlist_item, order: 2, item: create(:track))
     list = build(:playlist, playlist_type: :track, items: [i1, i2])
     list.save
     assert_equal 1, i1.order
@@ -40,8 +39,8 @@ class PlaylistTest < ActiveSupport::TestCase
   end
 
   test 'should normalize order of items in order provided if equal' do
-    i1 = build(:playlist_item, order: 0)
-    i2 = build(:playlist_item, order: 0)
+    i1 = build(:playlist_item, order: 0, item: create(:track))
+    i2 = build(:playlist_item, order: 0, item: create(:track))
     list = build(:playlist, playlist_type: :track, items: [i1, i2])
     list.save
     assert_equal 1, i1.order
