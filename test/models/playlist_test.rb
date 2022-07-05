@@ -24,6 +24,7 @@ class PlaylistTest < ActiveSupport::TestCase
     i1 = build(:playlist_item, order: 5)
     i2 = build(:playlist_item, order: 2)
     list = build(:playlist, playlist_type: :track, items: [i1, i2])
+    print list.items
     list.save
     assert_equal 2, i1.order
     assert_equal 1, i2.order
@@ -65,6 +66,14 @@ class PlaylistTest < ActiveSupport::TestCase
     assert_equal 2, list.items.length
     assert_equal t1, list.items.first.item
     assert_equal t2, list.items.second.item
+  end
+
+  test 'should not be valid if double item_id is present' do
+    track = create(:track)
+    list = build(:playlist, playlist_type: :track, item_ids: [track.id, track.id])
+
+    assert_not list.valid?
+    assert_not_empty list.errors['items']
   end
 
   test 'should return empty item_ids when using `with_item_ids` if there are no items' do

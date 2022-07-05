@@ -28,6 +28,7 @@ class Playlist < ApplicationRecord
   }
 
   validates :name, presence: true
+  validate :item_ids_should_be_unique
 
   before_save :normalize_item_order
 
@@ -40,8 +41,13 @@ class Playlist < ApplicationRecord
   end
 
   def item_ids=(ids)
+    # Reset the items
+    self.items = []
     item_type = playlist_type.capitalize
-    self.items = ids.map.with_index(1) { |id, i| PlaylistItem.new(item_id: id, item_type:, order: i) }
+
+    # Use `self.items.build` to make sure we first fully validate the playlist and items before saving
+    # This makes sure that we correctly validate and return errors for double items
+    ids.map.with_index(1) { |id, i| self.items.build(item_id: id, item_type:, order: i) }
   end
 
   private
@@ -51,5 +57,14 @@ class Playlist < ApplicationRecord
       item.order = index
       item.save unless item.new_record?
     end
+  end
+
+  def item_ids_should_be_unique
+    # When validating, we use `collect(&:item_id)` so we get the correct data
+    # Regardless of whether the items were already saved
+    doubles = items.collect(&:item_id).uniq!
+
+    return if doubles.nil?
+    errors.add(:items, 'item-ids-contains-double')
   end
 end
