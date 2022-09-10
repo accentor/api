@@ -33,7 +33,7 @@ class AudioFileTest < ActiveSupport::TestCase
 
   test 'convert should not crash' do
     stdin = StringIO.new
-    stdout = StringIO.new File.read(Rails.root.join('test/files/base.flac'))
+    stdout = StringIO.new Rails.root.join('test/files/base.flac').read
     Open3.stubs(:popen2).returns([stdin, stdout, 0])
     ret_out = @audio_file.convert(create(:codec_conversion))
     assert_predicate stdin, :closed?
@@ -42,7 +42,7 @@ class AudioFileTest < ActiveSupport::TestCase
 
   test 'convert should not write to stdin' do
     stdin = StringIO.new
-    stdout = StringIO.new File.read(Rails.root.join('test/files/base.flac'))
+    stdout = StringIO.new Rails.root.join('test/files/base.flac').read
     Open3.stubs(:popen2).returns([stdin, stdout, 0])
     ret_out = @audio_file.convert(create(:codec_conversion))
     assert_predicate stdin, :closed?

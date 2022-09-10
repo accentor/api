@@ -13,7 +13,7 @@ require 'test_helper'
 class ContentLengthTest < ActiveSupport::TestCase
   def setup
     # ContentLengths are automatically created when we create an AudioFile and CodecConversion. Manually creating one would result in an error due to uniqueness contraints.
-    io = StringIO.new File.read(Rails.root.join('test/files/base.flac'))
+    io = StringIO.new Rails.root.join('test/files/base.flac').read
     AudioFile.any_instance.stubs(:convert).returns(io)
     @audio_file = create(:audio_file)
     @codec_conversion = create(:codec_conversion)
@@ -34,7 +34,7 @@ class ContentLengthTest < ActiveSupport::TestCase
   end
 
   test 'should create new ContentLength if audio is longer than config' do
-    io = StringIO.new File.read(Rails.root.join('test/files/base.flac'))
+    io = StringIO.new Rails.root.join('test/files/base.flac').read
     AudioFile.any_instance.stubs(:convert).returns(io)
     @track = create(:track, audio_file: @audio_file)
 
@@ -50,7 +50,7 @@ class ContentLengthTest < ActiveSupport::TestCase
   end
 
   test 'should create new ContentLength if track is newer than config' do
-    io = StringIO.new File.read(Rails.root.join('test/files/base.flac'))
+    io = StringIO.new Rails.root.join('test/files/base.flac').read
     AudioFile.any_instance.stubs(:convert).returns(io)
     @track = create(:track, audio_file: @audio_file)
 
