@@ -24,7 +24,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     artist = build :artist
 
     image = {
-      data: Base64.encode64(File.read(Rails.root.join('test/files/image.jpg'))),
+      data: Base64.encode64(Rails.root.join('test/files/image.jpg').read),
       filename: 'image.jpg',
       mimetype: 'image/jpeg'
     }
@@ -33,7 +33,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
       post artists_url, params: { artist: { name: artist.name, image: } }
     end
 
-    assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
+    assert_equal Rails.root.join('test/files/image.jpg').read.bytes,
                  Artist.find(JSON.parse(@response.body)['id']).image.image.download.bytes
 
     assert_response :created
@@ -88,14 +88,14 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     artist = create :artist
 
     image = {
-      data: Base64.encode64(File.read(Rails.root.join('test/files/image.jpg'))),
+      data: Base64.encode64(Rails.root.join('test/files/image.jpg').read),
       filename: 'image.jpg',
       mimetype: 'image/jpeg'
     }
 
     patch artist_url(artist), params: { artist: { image: } }
 
-    assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
+    assert_equal Rails.root.join('test/files/image.jpg').read.bytes,
                  Artist.find(artist.id).image.image.download.bytes
 
     assert_response :success
@@ -106,7 +106,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     artist = create :artist, :with_image
 
     image = {
-      data: Base64.encode64(File.read(Rails.root.join('test/files/image.jpg'))),
+      data: Base64.encode64(Rails.root.join('test/files/image.jpg').read),
       filename: 'image.jpg',
       mimetype: 'image/jpeg'
     }
@@ -115,7 +115,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
       patch artist_url(artist), params: { artist: { image: } }
     end
 
-    assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
+    assert_equal Rails.root.join('test/files/image.jpg').read.bytes,
                  Artist.find(artist.id).image.image.download.bytes
 
     assert_response :success

@@ -24,7 +24,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     album = build :album
 
     image = {
-      data: Base64.encode64(File.read(Rails.root.join('test/files/image.jpg'))),
+      data: Base64.encode64(Rails.root.join('test/files/image.jpg').read),
       filename: 'image.jpg',
       mimetype: 'image/jpeg'
     }
@@ -37,7 +37,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
       } }
     end
 
-    assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
+    assert_equal Rails.root.join('test/files/image.jpg').read.bytes,
                  Album.find(JSON.parse(@response.body)['id']).image.image.download.bytes
 
     assert_response :created
@@ -143,14 +143,14 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     album = create :album
 
     image = {
-      data: Base64.encode64(File.read(Rails.root.join('test/files/image.jpg'))),
+      data: Base64.encode64(Rails.root.join('test/files/image.jpg').read),
       filename: 'image.jpg',
       mimetype: 'image/jpeg'
     }
 
     patch album_url(album), params: { album: { image: } }
 
-    assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
+    assert_equal Rails.root.join('test/files/image.jpg').read.bytes,
                  Album.find(album.id).image.image.download.bytes
 
     assert_response :success
@@ -161,7 +161,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     album = create :album, :with_image
 
     image = {
-      data: Base64.encode64(File.read(Rails.root.join('test/files/image.jpg'))),
+      data: Base64.encode64(Rails.root.join('test/files/image.jpg').read),
       filename: 'image.jpg',
       mimetype: 'image/jpeg'
     }
@@ -170,7 +170,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
       patch album_url(album), params: { album: { image: } }
     end
 
-    assert_equal File.read(Rails.root.join('test/files/image.jpg')).bytes,
+    assert_equal Rails.root.join('test/files/image.jpg').read.bytes,
                  Album.find(album.id).image.image.download.bytes
 
     assert_response :success

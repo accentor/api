@@ -39,7 +39,7 @@ class GenresController < ApplicationController
 
   def destroy_empty
     authorize Genre
-    Genre.left_outer_joins(:tracks).where(tracks: { id: nil }).destroy_all
+    Genre.where.missing(:tracks).destroy_all
   end
 
   def merge
