@@ -55,5 +55,5 @@ end
 group :development do
   gem 'annotate', '~> 3.2' # Remove workaround in lib/tasks/annotate.rb when https://github.com/ctran/annotate_models/issues/696 is fixed
   gem 'rubocop-minitest', '~> 0.22.0'
-  gem 'rubocop-rails', '~> 2.15'
+  gem 'rubocop-rails', '~> 2.16'
 end
