@@ -197,7 +197,7 @@ class RescanRunner < ApplicationRecord
   end
 
   def convert_year(tag)
-    return if tag.blank? # WahWah returns nil if the file doesn't have a date tag
+    return Date.new(0) if tag.blank? # WahWah returns nil if the file doesn't have a date tag
 
     date = tag.split('-').map(&:to_i)
     Date.new(date[0], date[1] || 1, date[2] || 1)
