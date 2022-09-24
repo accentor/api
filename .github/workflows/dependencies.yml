@@ -20,7 +20,7 @@ jobs:
           nix_path: nixpkgs=channel:nixpkgs-unstable
       - name: Run bundix
         run: nix-shell -p bundix --run "bundix"
-      - uses: stefanzweifel/git-auto-commit-action@v4.14.1
+      - uses: stefanzweifel/git-auto-commit-action@v4.15.0
         with:
           commit_message: "Update gemset.nix"
 
