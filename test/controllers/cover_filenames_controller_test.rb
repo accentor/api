@@ -8,18 +8,21 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not get index for user' do
     get cover_filenames_url
+
     assert_response :forbidden
   end
 
   test 'should get index for moderator' do
     sign_in_as create(:moderator)
     get cover_filenames_url
+
     assert_response :success
   end
 
   test 'should get index for admin' do
     sign_in_as create(:admin)
     get cover_filenames_url
+
     assert_response :success
   end
 
@@ -63,18 +66,21 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not show cover_filename for user' do
     get cover_filename_url(@cover_filename)
+
     assert_response :forbidden
   end
 
   test 'should show cover_filename for moderator' do
     sign_in_as create(:moderator)
     get cover_filename_url(@cover_filename)
+
     assert_response :success
   end
 
   test 'should show cover_filename for admin' do
     sign_in_as create(:admin)
     get cover_filename_url(@cover_filename)
+
     assert_response :success
   end
 

@@ -9,15 +9,19 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   test 'should get index with filenames for moderator' do
     sign_in_as(create(:moderator))
     get tracks_url
+
     assert_response :success
     body = ActiveSupport::JSON.decode response.body
+
     assert_equal @track.audio_file&.filename, body.first['filename']
   end
 
   test 'should get index without filenames for user' do
     get tracks_url
+
     assert_response :success
     body = ActiveSupport::JSON.decode response.body
+
     assert_nil body.first['filename']
   end
 
@@ -77,49 +81,61 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show track' do
     get track_url(@track)
+
     assert_response :success
   end
 
   test 'should show track with filename for moderator' do
     sign_in_as(create(:moderator))
     get track_url(@track)
+
     assert_response :success
     body = ActiveSupport::JSON.decode response.body
+
     assert_equal @track.audio_file&.filename, body['filename']
   end
 
   test 'should show track without filename for user' do
     get track_url(@track)
+
     assert_response :success
     body = ActiveSupport::JSON.decode response.body
+
     assert_nil body['filename']
   end
 
   test 'user should be able to update review_comment' do
     patch track_url(@track), params: { track: { review_comment: 'comment' } }
+
     assert_response :success
     @track.reload
+
     assert_equal 'comment', @track.review_comment
   end
 
   test 'should not update track metadata for user' do
     patch track_url(@track), params: { track: { album_id: @track.album_id, number: @track.number, title: @track.title } }
+
     assert_response :success
   end
 
   test 'should not update track metadata to empty title' do
     sign_in_as(create(:moderator))
     patch track_url(@track), params: { track: { title: '' } }
+
     assert_response :unprocessable_entity
     @track.reload
+
     assert_not_equal '', @track.title
   end
 
   test 'should clear review comment' do
     @track.update(review_comment: 'test')
     patch track_url(@track), params: { track: { review_comment: nil } }
+
     assert_response :success
     @track.reload
+
     assert_nil @track.review_comment
   end
 
@@ -129,6 +145,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     album = create(:album)
 
     patch track_url(@track), params: { track: { album_id: album.id, number: track.number, title: track.title } }
+
     assert_response :success
   end
 

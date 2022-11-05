@@ -8,6 +8,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get index' do
     get labels_url
+
     assert_response :success
   end
 
@@ -52,31 +53,37 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show label' do
     get label_url(@label)
+
     assert_response :success
   end
 
   test 'should not update label for user' do
     patch label_url(@label), params: { label: { name: @label.name } }
+
     assert_response :forbidden
   end
 
   test 'should not update label to empty name' do
     sign_in_as(create(:moderator))
     patch label_url(@label), params: { label: { name: '' } }
+
     assert_response :unprocessable_entity
     @label.reload
+
     assert_not_equal '', @label.name
   end
 
   test 'should update label for moderator' do
     sign_in_as(create(:moderator))
     patch label_url(@label), params: { label: { name: @label.name } }
+
     assert_response :ok
   end
 
   test 'should update label for admin' do
     sign_in_as(create(:admin))
     patch label_url(@label), params: { label: { name: @label.name } }
+
     assert_response :ok
   end
 

@@ -8,6 +8,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get index' do
     get image_types_url
+
     assert_response :success
   end
 
@@ -62,31 +63,37 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show image_type' do
     get image_type_url(@image_type)
+
     assert_response :success
   end
 
   test 'should not update image_type for user' do
     patch image_type_url(@image_type), params: { image_type: { mimetype: @image_type.mimetype } }
+
     assert_response :forbidden
   end
 
   test 'should not update image_type to empty mimetype' do
     sign_in_as(create(:moderator))
     patch image_type_url(@image_type), params: { image_type: { mimetype: '' } }
+
     assert_response :unprocessable_entity
     @image_type.reload
+
     assert_not_equal '', @image_type.mimetype
   end
 
   test 'should update image_type for moderator' do
     sign_in_as(create(:moderator))
     patch image_type_url(@image_type), params: { image_type: { mimetype: @image_type.mimetype } }
+
     assert_response :success
   end
 
   test 'should update image_type for admin' do
     sign_in_as(create(:admin))
     patch image_type_url(@image_type), params: { image_type: { mimetype: @image_type.mimetype } }
+
     assert_response :success
   end
 

@@ -16,6 +16,7 @@ require 'test_helper'
 class PlaylistTest < ActiveSupport::TestCase
   test 'should have name' do
     list = build(:playlist, name: '')
+
     assert_not_predicate list, :valid?
     assert_not_empty list.errors[:name]
   end
@@ -25,6 +26,7 @@ class PlaylistTest < ActiveSupport::TestCase
     i2 = build(:playlist_item, order: 2, item: create(:track))
     list = build(:playlist, playlist_type: :track, items: [i1, i2])
     list.save
+
     assert_equal 2, i1.order
     assert_equal 1, i2.order
   end
@@ -34,6 +36,7 @@ class PlaylistTest < ActiveSupport::TestCase
     i2 = build(:playlist_item, order: 2, item: create(:track))
     list = build(:playlist, playlist_type: :track, items: [i1, i2])
     list.save
+
     assert_equal 1, i1.order
     assert_equal 2, i2.order
   end
@@ -43,6 +46,7 @@ class PlaylistTest < ActiveSupport::TestCase
     i2 = build(:playlist_item, order: 0, item: create(:track))
     list = build(:playlist, playlist_type: :track, items: [i1, i2])
     list.save
+
     assert_equal 1, i1.order
     assert_equal 2, i2.order
   end
@@ -77,6 +81,7 @@ class PlaylistTest < ActiveSupport::TestCase
 
   test 'should return empty item_ids when using `with_item_ids` if there are no items' do
     create(:playlist, playlist_type: :track)
+
     assert_empty Playlist.with_item_ids.first.item_ids
   end
 end

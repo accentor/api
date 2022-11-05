@@ -13,6 +13,7 @@ class LabelTest < ActiveSupport::TestCase
   test 'should automatically generate normalized_name' do
     label = build(:label, name: 'ïóùåAÁ')
     label.save
+
     assert_not label.normalized_name.nil?
     assert_equal 'iouaaa', label.normalized_name
   end
@@ -35,6 +36,7 @@ class LabelTest < ActiveSupport::TestCase
     assert_difference('Label.count', -1) do
       label2.merge(label1)
     end
+
     assert_not album.reload.labels.include?(label1)
     assert_includes album.reload.labels, label2
   end
@@ -49,6 +51,7 @@ class LabelTest < ActiveSupport::TestCase
     assert_difference('Label.count', -1) do
       label2.merge(label1)
     end
+
     assert_not album.reload.labels.include?(label1)
     assert_includes album.reload.labels, label2
   end

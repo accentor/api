@@ -10,8 +10,10 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
   test 'should get index with only plays for user' do
     create(:play, track: @track, user: create(:user))
     get plays_url
+
     assert_response :success
     body = JSON.parse response.body
+
     assert_empty body
   end
 
@@ -19,8 +21,10 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     play1 = create(:play, track: @track, user: @user)
     play2 = create(:play, user: @user)
     get plays_url(album_id: @track.album_id)
+
     assert_response :success
     body = JSON.parse response.body
+
     assert_includes body, play1.as_json
     assert_not_includes body, play2.as_json
   end
@@ -45,16 +49,20 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
   test 'should get stats and  not return play stats for other users' do
     create(:play, track: @track, user: create(:user))
     get stats_plays_url
+
     assert_response :success
     body = JSON.parse response.body
+
     assert_empty body
   end
 
   test 'should get stats and  return play stats for users' do
     create(:play, track: @track, user: @user, played_at: DateTime.new(2022, 0o1, 0o2, 0o3, 0o4, 0o5))
     get stats_plays_url
+
     assert_response :success
     body = JSON.parse response.body
+
     assert_equal 1, body[0]['count']
     assert_equal '2022-01-02T03:04:05.000Z', body[0]['last_played_at']
   end
@@ -63,8 +71,10 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     create(:play, track: @track, user: @user)
     create(:play, track: create(:track), user: @user)
     get stats_plays_url(album_id: @track.album_id)
+
     assert_response :success
     body = JSON.parse response.body
+
     assert_equal 1, body.length
   end
 
@@ -74,8 +84,10 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     create(:play, track: @track, user: @user, played_at: DateTime.current)
     create(:play, track: @track, user: @user)
     get stats_plays_url(played_before: 2.days.ago, played_after: 4.days.ago)
+
     assert_response :success
     body = JSON.parse response.body
+
     assert_equal 1, body[0]['count']
   end
 
@@ -84,8 +96,10 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     create(:play, track: @track, user: @user)
     create(:play, track: create(:track_artist).track, user: @user)
     get stats_plays_url(artist_id: ta.artist_id)
+
     assert_response :success
     body = JSON.parse response.body
+
     assert_equal 1, body.length
   end
 end

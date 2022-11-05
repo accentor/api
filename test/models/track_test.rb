@@ -115,6 +115,7 @@ class TrackTest < ActiveSupport::TestCase
   test 'should automatically generate normalized_title' do
     track = build(:track, title: 'ïóùåAÁ')
     track.save
+
     assert_not track.normalized_title.nil?
     assert_equal 'iouaaa', track.normalized_title
   end
@@ -124,6 +125,7 @@ class TrackTest < ActiveSupport::TestCase
     ta2 = build(:track_artist, order: 2)
     track = build(:track, track_artists: [ta1, ta2])
     track.save
+
     assert_equal 2, ta1.order
     assert_equal 1, ta2.order
   end
@@ -133,6 +135,7 @@ class TrackTest < ActiveSupport::TestCase
     ta2 = build(:track_artist, order: 2)
     track = build(:track, track_artists: [ta1, ta2])
     track.save
+
     assert_equal 1, ta1.order
     assert_equal 2, ta2.order
   end
@@ -142,6 +145,7 @@ class TrackTest < ActiveSupport::TestCase
     ta2 = build(:track_artist, order: 0)
     track = build(:track, track_artists: [ta1, ta2])
     track.save
+
     assert_equal 1, ta1.order
     assert_equal 2, ta2.order
   end
@@ -149,6 +153,7 @@ class TrackTest < ActiveSupport::TestCase
   test 'should nilify blank review_comment' do
     track = build(:track, review_comment: '')
     track.save
+
     assert_nil track.review_comment
   end
 

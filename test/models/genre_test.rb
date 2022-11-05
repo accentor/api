@@ -13,6 +13,7 @@ class GenreTest < ActiveSupport::TestCase
   test 'should automatically generate normalized_name' do
     genre = build(:genre, name: 'ïóùåAÁ')
     genre.save
+
     assert_not genre.normalized_name.nil?
     assert_equal 'iouaaa', genre.normalized_name
   end
@@ -34,6 +35,7 @@ class GenreTest < ActiveSupport::TestCase
     assert_difference('Genre.count', -1) do
       genre2.merge(genre1)
     end
+
     assert_not track.reload.genres.include?(genre1)
     assert_includes track.reload.genres, genre2
   end
@@ -46,6 +48,7 @@ class GenreTest < ActiveSupport::TestCase
     assert_difference('Genre.count', -1) do
       genre2.merge(genre1)
     end
+
     assert_not track.reload.genres.include?(genre1)
     assert_includes track.reload.genres, genre2
   end
