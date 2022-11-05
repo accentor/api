@@ -518,14 +518,15 @@
     version = "5.16.3";
   };
   mocha = {
+    dependencies = ["ruby2_keywords"];
     groups = ["test"];
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "155asp0lxm7qbj3bvsg6zghzs127w4hd86djg8m3nkbksqrzxmpn";
+      sha256 = "1nfn5dcz4yyqjz1885pz1gbqgbjzqlhic8j5c0mxk4wnkk1lkcvn";
       type = "gem";
     };
-    version = "1.16.0";
+    version = "2.0.1";
   };
   msgpack = {
     groups = ["default"];
@@ -855,6 +856,16 @@
       type = "gem";
     };
     version = "2.1.4";
+  };
+  ruby2_keywords = {
+    groups = ["default" "test"];
+    platforms = [];
+    source = {
+      remotes = ["https://rubygems.org"];
+      sha256 = "1vz322p8n39hz3b4a9gkmz9y7a5jaz41zrm2ywf31dvkqm03glgz";
+      type = "gem";
+    };
+    version = "0.0.5";
   };
   simplecov = {
     dependencies = ["docile" "simplecov-html" "simplecov_json_formatter"];
