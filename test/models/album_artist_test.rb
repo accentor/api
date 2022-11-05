@@ -17,6 +17,7 @@ class AlbumArtistTest < ActiveSupport::TestCase
   test 'should automatically generate normalized_name' do
     album_artist = build(:album_artist, name: 'ïóùåAÁ')
     album_artist.save
+
     assert_not album_artist.normalized_name.nil?
     assert_equal 'iouaaa', album_artist.normalized_name
   end

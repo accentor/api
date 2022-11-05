@@ -15,11 +15,13 @@ class AuthTokenTest < ActiveSupport::TestCase
   test 'auth_token should have secret after creation' do
     user = create(:user)
     a = AuthToken.create(user:, user_agent: '')
+
     assert_not_nil a.secret
   end
 
   test 'auth_token should not have secret when fetched from database' do
     create(:auth_token)
+
     assert_nil AuthToken.first.secret
   end
 end

@@ -8,6 +8,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get index' do
     get genres_url
+
     assert_response :success
   end
 
@@ -51,31 +52,37 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show genre' do
     get genre_url(@genre)
+
     assert_response :success
   end
 
   test 'should not update genre for user' do
     patch genre_url(@genre), params: { genre: { name: @genre.name } }
+
     assert_response :forbidden
   end
 
   test 'should not update genre to empty name' do
     sign_in_as(create(:moderator))
     patch genre_url(@genre), params: { genre: { name: '' } }
+
     assert_response :unprocessable_entity
     @genre.reload
+
     assert_not_equal '', @genre.name
   end
 
   test 'should update genre for moderator' do
     sign_in_as(create(:moderator))
     patch genre_url(@genre), params: { genre: { name: @genre.name } }
+
     assert_response :success
   end
 
   test 'should update genre for admin' do
     sign_in_as(create(:admin))
     patch genre_url(@genre), params: { genre: { name: @genre.name } }
+
     assert_response :success
   end
 

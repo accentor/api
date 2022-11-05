@@ -36,6 +36,7 @@ class AudioFileTest < ActiveSupport::TestCase
     stdout = StringIO.new Rails.root.join('test/files/base.flac').read
     Open3.stubs(:popen2).returns([stdin, stdout, 0])
     ret_out = @audio_file.convert(create(:codec_conversion))
+
     assert_predicate stdin, :closed?
     assert_equal stdout, ret_out
   end
@@ -45,6 +46,7 @@ class AudioFileTest < ActiveSupport::TestCase
     stdout = StringIO.new Rails.root.join('test/files/base.flac').read
     Open3.stubs(:popen2).returns([stdin, stdout, 0])
     ret_out = @audio_file.convert(create(:codec_conversion))
+
     assert_predicate stdin, :closed?
     assert_equal '', stdin.string
     assert_equal stdout, ret_out

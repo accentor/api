@@ -8,18 +8,21 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not get index for user' do
     get locations_url
+
     assert_response :forbidden
   end
 
   test 'should get index for moderator' do
     sign_in_as create(:moderator)
     get locations_url
+
     assert_response :success
   end
 
   test 'should get index for admin' do
     sign_in_as create(:admin)
     get locations_url
+
     assert_response :success
   end
 
@@ -63,18 +66,21 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not show location for user' do
     get location_url(@location)
+
     assert_response :forbidden
   end
 
   test 'should show location for moderator' do
     sign_in_as create(:moderator)
     get location_url(@location)
+
     assert_response :success
   end
 
   test 'should show location for admin' do
     sign_in_as create(:admin)
     get location_url(@location)
+
     assert_response :success
   end
 

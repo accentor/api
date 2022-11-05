@@ -28,6 +28,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     prev = @runner.finished_at
     @runner.schedule
     @runner.reload
+
     assert_not_equal prev, @runner.finished_at
   end
 
@@ -36,6 +37,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     prev = @runner.finished_at
     @runner.schedule
     @runner.reload
+
     assert_equal prev, @runner.finished_at
   end
 
@@ -139,6 +141,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
 
     @runner.send(:run)
     @runner.reload
+
     assert_equal '', @runner.error_text
     assert_equal '', @runner.warning_text
     assert_equal 1, @runner.processed
@@ -163,6 +166,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
 
     @runner.send(:run)
     @runner.reload
+
     assert_not @runner.error_text.empty?
     assert_includes @runner.error_text, 'Catastrophic error'
     assert_equal 0, @runner.processed
@@ -189,6 +193,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     @runner.update(running: true, warning_text: 'unchanged', error_text: 'unchanged', processed: 64)
     @runner.send(:run)
     @runner.reload
+
     assert_equal 'unchanged', @runner.error_text
     assert_equal 'unchanged', @runner.warning_text
     assert_equal 64, @runner.processed
@@ -200,6 +205,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
 
     @runner.send(:run)
     @runner.reload
+
     assert_not @runner.error_text.empty?
     assert_includes @runner.error_text, 'no-artist.mp3'
     assert_equal 1, @runner.processed
@@ -211,6 +217,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
 
     @runner.send(:run)
     @runner.reload
+
     assert_not @runner.error_text.empty?
     assert_includes @runner.error_text, 'no-album.mp3'
     assert_equal 1, @runner.processed
@@ -222,6 +229,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
 
     @runner.send(:run)
     @runner.reload
+
     assert_not @runner.error_text.empty?
     assert_includes @runner.error_text, 'no-title.mp3'
     assert_equal 1, @runner.processed

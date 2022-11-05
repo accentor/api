@@ -8,6 +8,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get index' do
     get codec_conversions_url
+
     assert_response :success
   end
 
@@ -126,6 +127,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show codec_conversion' do
     get codec_conversion_url(@codec_conversion)
+
     assert_response :success
   end
 
@@ -135,6 +137,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
       name: @codec_conversion.name,
       resulting_codec_id: @codec_conversion.resulting_codec_id
     } }
+
     assert_response :forbidden
   end
 
@@ -145,6 +148,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
       name: @codec_conversion.name,
       resulting_codec_id: @codec_conversion.resulting_codec_id
     } }
+
     assert_response :success
   end
 
@@ -153,6 +157,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     patch codec_conversion_url(@codec_conversion), params: { codec_conversion: {
       name: ''
     } }
+
     assert_response :unprocessable_entity
   end
 
@@ -163,6 +168,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
       name: @codec_conversion.name,
       resulting_codec_id: @codec_conversion.resulting_codec_id
     } }
+
     assert_response :success
   end
 

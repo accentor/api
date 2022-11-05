@@ -8,6 +8,7 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
   test 'should get index' do
     sign_in_as(@user)
     get auth_tokens_url
+
     assert_response :success
   end
 
@@ -50,6 +51,7 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@user)
     auth_token = create :auth_token, user: @user
     get auth_token_url(auth_token)
+
     assert_response :success
   end
 

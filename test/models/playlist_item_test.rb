@@ -16,6 +16,7 @@ class PlayListItemTest < ActiveSupport::TestCase
   test 'item should match playlist type' do
     playlist = create(:playlist, playlist_type: :album)
     item = build(:playlist_item, :for_album, playlist:)
+
     assert_predicate item, :valid?
     assert_empty item.errors[:item]
   end
@@ -23,6 +24,7 @@ class PlayListItemTest < ActiveSupport::TestCase
   test 'item type cant be different from playlist type' do
     playlist = create(:playlist, playlist_type: :album)
     item = build(:playlist_item, :for_track, playlist:)
+
     assert_not_predicate item, :valid?
     assert_not_empty item.errors[:item]
   end

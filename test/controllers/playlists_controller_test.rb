@@ -9,6 +9,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get index' do
     get playlists_url
+
     assert_response :success
   end
 
@@ -55,21 +56,25 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show playlist' do
     get playlist_url(@playlist)
+
     assert_response :success
   end
 
   test 'should update playlist for user' do
     patch playlist_url(@playlist), params: { playlist: { name: 'My playlist' } }
+
     assert_response :success
   end
 
   test 'should update personal for user' do
     patch playlist_url(@playlist), params: { playlist: { name: 'My playlist', access: :personal } }
+
     assert_response :success
   end
 
   test 'should not update playlist with empty name' do
     patch playlist_url(@playlist), params: { playlist: { name: '' } }
+
     assert_response :unprocessable_entity
   end
 
@@ -90,6 +95,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     @playlist.update(access: :personal)
 
     patch playlist_url(@playlist), params: { playlist: { name: 'My playlist' } }
+
     assert_response :forbidden
   end
 
@@ -97,6 +103,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     @playlist.update(access: :secret)
 
     patch playlist_url(@playlist), params: { playlist: { name: 'My playlist' } }
+
     assert_response :forbidden
   end
 

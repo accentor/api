@@ -17,6 +17,7 @@ class ArtistTest < ActiveSupport::TestCase
   test 'should automatically generate normalized_name' do
     artist = build(:artist, name: 'ïóùåAÁ')
     artist.save
+
     assert_not artist.normalized_name.nil?
     assert_equal 'iouaaa', artist.normalized_name
   end
@@ -35,6 +36,7 @@ class ArtistTest < ActiveSupport::TestCase
     artist2 = create(:artist)
     track = create(:track)
     create(:track_artist, track:, artist: artist1)
+
     assert_not artist2.track_artists.present?
 
     assert_difference('Artist.count', -1) do
@@ -42,6 +44,7 @@ class ArtistTest < ActiveSupport::TestCase
         artist2.merge(artist1)
       end
     end
+
     assert_not track.reload.artists.include?(artist1)
     assert_includes track.reload.artists, artist2
   end
@@ -56,6 +59,7 @@ class ArtistTest < ActiveSupport::TestCase
     assert_difference('Artist.count', 0) do
       artist2.merge(artist1)
     end
+
     assert_not_empty artist2.errors[:track_artists]
   end
 
@@ -69,6 +73,7 @@ class ArtistTest < ActiveSupport::TestCase
     assert_difference('Artist.count', -1) do
       artist2.merge(artist1)
     end
+
     assert_not track.reload.artists.include?(artist1)
     assert_not_empty TrackArtist.where(track_id: track.id).where(artist_id: artist2.id).where(role: :main)
   end
@@ -82,6 +87,7 @@ class ArtistTest < ActiveSupport::TestCase
     assert_difference('Artist.count', -1) do
       artist2.merge(artist1)
     end
+
     assert_not album.reload.artists.include?(artist1)
     assert_includes album.reload.artists, artist2
   end
@@ -125,12 +131,14 @@ class ArtistTest < ActiveSupport::TestCase
     assert_difference('Artist.count', 0) do
       artist2.merge(artist1)
     end
+
     assert_not_empty artist2.errors[:album_artists]
   end
 
   test 'should nilify blank review_comment' do
     track = build(:track, review_comment: '')
     track.save
+
     assert_nil track.review_comment
   end
 

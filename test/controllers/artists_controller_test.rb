@@ -8,6 +8,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get index' do
     get artists_url
+
     assert_response :success
   end
 
@@ -51,35 +52,43 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show artist' do
     get artist_url(@artist)
+
     assert_response :success
   end
 
   test 'should update review_comment for user' do
     patch artist_url(@artist), params: { artist: { review_comment: 'Comment' } }
+
     assert_response :success
     @artist.reload
+
     assert_equal 'Comment', @artist.review_comment
   end
 
   test 'should not update artist metadata when removing name' do
     sign_in_as create(:moderator)
     patch artist_url(@artist), params: { artist: { name: '' } }
+
     assert_response :unprocessable_entity
     @artist.reload
+
     assert_not_equal '', @artist.name
   end
 
   test 'should not update artist metadata for user' do
     patch artist_url(@artist), params: { artist: { name: 'Naam' } }
     @artist.reload
+
     assert_not_equal 'Naam', @artist.name
   end
 
   test 'should clear review_comment' do
     @artist.update(review_comment: 'test')
     patch artist_url(@artist), params: { artist: { review_comment: nil } }
+
     assert_response :success
     @artist.reload
+
     assert_nil @artist.review_comment
   end
 

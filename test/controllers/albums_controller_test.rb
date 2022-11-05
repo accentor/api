@@ -8,6 +8,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get index' do
     get albums_url
+
     assert_response :success
   end
 
@@ -108,26 +109,31 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show album' do
     get album_url(@album)
+
     assert_response :success
   end
 
   test 'should update review comment for user' do
     patch album_url(@album), params: { album: { review_comment: 'comment' } }
     @album.reload
+
     assert_equal 'comment', @album.review_comment
   end
 
   test 'should not update album metadata for user' do
     patch album_url(@album), params: { album: { release: @album.release, title: 'Titel' } }
     @album.reload
+
     assert_not_equal 'Titel', @album.title
   end
 
   test 'should not update album metadata to empty title' do
     sign_in_as create(:moderator)
     patch album_url(@album), params: { album: { release: @album.release, title: '' } }
+
     assert_response :unprocessable_entity
     @album.reload
+
     assert_not_equal '', @album.title
   end
 
@@ -135,6 +141,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     @album.update(review_comment: 'test')
     patch album_url(@album), params: { album: { review_comment: nil } }
     @album.reload
+
     assert_nil @album.review_comment
   end
 

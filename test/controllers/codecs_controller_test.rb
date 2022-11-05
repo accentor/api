@@ -8,6 +8,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get index' do
     get codecs_url
+
     assert_response :success
   end
 
@@ -62,29 +63,34 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show codec' do
     get codec_url(@codec)
+
     assert_response :success
   end
 
   test 'should not update codec for user' do
     patch codec_url(@codec), params: { codec: { mimetype: @codec.mimetype } }
+
     assert_response :forbidden
   end
 
   test 'should not update codec when clearing mimetype' do
     sign_in_as(create(:moderator))
     patch codec_url(@codec), params: { codec: { mimetype: '' } }
+
     assert_response :unprocessable_entity
   end
 
   test 'should update codec for moderator' do
     sign_in_as(create(:moderator))
     patch codec_url(@codec), params: { codec: { mimetype: @codec.mimetype } }
+
     assert_response :success
   end
 
   test 'should update codec for admin' do
     sign_in_as(create(:admin))
     patch codec_url(@codec), params: { codec: { mimetype: @codec.mimetype } }
+
     assert_response :success
   end
 

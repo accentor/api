@@ -65,6 +65,7 @@ class ContentLengthTest < ActiveSupport::TestCase
     end
 
     @audio_file.reload
+
     assert_equal 1, @audio_file.content_lengths.length
   end
 end
