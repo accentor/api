@@ -523,10 +523,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1nfn5dcz4yyqjz1885pz1gbqgbjzqlhic8j5c0mxk4wnkk1lkcvn";
+      sha256 = "03bgnshh84hrw6f1sdj5srxnz0z50m0a7i93fa28fkbm52c2a1lg";
       type = "gem";
     };
-    version = "2.0.1";
+    version = "2.0.2";
   };
   msgpack = {
     groups = ["default"];

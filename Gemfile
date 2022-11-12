@@ -40,7 +40,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :test do
   gem 'codecov', '~> 0.6.0', require: false
-  gem 'mocha', '~> 2.0.1', require: false
+  gem 'mocha', '~> 2.0.2', require: false
   gem 'simplecov', '~> 0.21', require: false
 end
 
