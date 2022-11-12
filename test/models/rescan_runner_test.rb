@@ -47,6 +47,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
     prev = RescanRunner.all.map(&:finished_at)
     RescanRunner.schedule_all
     after = RescanRunner.all.map(&:finished_at)
+
     prev.each_with_index do |time, i|
       assert_not_equal time, after[i]
     end
