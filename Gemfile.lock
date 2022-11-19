@@ -76,7 +76,7 @@ GEM
       rake (>= 10.4, < 14.0)
     ast (2.4.2)
     bcrypt (3.1.18)
-    bootsnap (1.13.0)
+    bootsnap (1.14.0)
       msgpack (~> 1.2)
     builder (3.2.4)
     byebug (11.1.3)
@@ -134,7 +134,7 @@ GEM
     minitest (5.16.3)
     mocha (2.0.2)
       ruby2_keywords (>= 0.0.5)
-    msgpack (1.5.4)
+    msgpack (1.6.0)
     net-imap (0.2.3)
       digest
       net-protocol
@@ -246,7 +246,7 @@ DEPENDENCIES
   active_model_serializers (~> 0.10)
   annotate (~> 3.2)
   bcrypt (~> 3.1)
-  bootsnap (~> 1.13.0)
+  bootsnap (~> 1.14.0)
   byebug
   codecov (~> 0.6.0)
   delayed_cron_job (~> 0.9)
