@@ -35,6 +35,11 @@
 
             src = pkgs.lib.cleanSourceWith { filter = name: type: !(builtins.elem name [ ".github" "flake.lock" "flake.nix" ]); src = ./.; name = "source"; };
 
+            buildPhase = ''
+              # Compile bootsnap cache
+              ${gems}/bin/bundle exec bootsnap precompile --gemfile app/ lib/
+            '';
+
             installPhase = ''
               mkdir $out
               cp -r * $out
