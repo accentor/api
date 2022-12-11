@@ -32,8 +32,8 @@ class Artist < ApplicationRecord
 
   def merge(other)
     # we check if the artist to be merged have some overlap. If they do, we tell the user that they should resolve this first.
-    errors.add(:album_artists, 'aa.albums-overlap') unless (other.albums.map(&:id) & albums.map(&:id)).empty?
-    errors.add(:track_artists, 'ta.tracks-overlap') unless (other.track_artists.map { |ta| [ta.track_id, ta.role] } & track_artists.map { |ta| [ta.track_id, ta.role] }).empty?
+    errors.add(:album_artists, 'aa.albums-overlap') if other.albums.map(&:id).intersect?(albums.map(&:id))
+    errors.add(:track_artists, 'ta.tracks-overlap') if other.track_artists.map { |ta| [ta.track_id, ta.role] }.intersect?(track_artists.map { |ta| [ta.track_id, ta.role] })
     return false if errors.present?
 
     other.album_artists.find_each do |aa|

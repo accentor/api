@@ -27,7 +27,7 @@ class TracksController < ApplicationController
     @track = Track.new(transformed_attributes)
 
     if @track.save
-      render json: @track, serializer: serializer, status: :created
+      render(json: @track, serializer:, status: :created)
     else
       render json: @track.errors, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class TracksController < ApplicationController
 
   def update
     if @track.update(transformed_attributes)
-      render json: @track, serializer: serializer, status: :ok
+      render(json: @track, serializer:, status: :ok)
     else
       render json: @track.errors, status: :unprocessable_entity
     end
