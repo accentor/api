@@ -23,7 +23,7 @@ gem 'delayed_cron_job', '~> 0.9'
 gem 'wahwah', '~> 1.3.0'
 
 gem 'has_scope', '~> 0.8'
-gem 'pundit', '~> 2.2'
+gem 'pundit', '~> 2.3'
 gem 'will_paginate', '~> 3.3'
 
 # Use ActiveStorage variant
