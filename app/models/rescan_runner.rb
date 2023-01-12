@@ -193,7 +193,7 @@ class RescanRunner < ApplicationRecord
     # Split tag by comma or slash and match or create genre for each part
     tag.split(%r{[,/]}).map do |part|
       Genre.find_by(normalized_name: Genre.normalize(part).strip) || Genre.new(name: part.strip)
-    end
+    end.uniq(&:name)
   end
 
   def convert_year(tag)
