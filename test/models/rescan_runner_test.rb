@@ -625,4 +625,56 @@ class RescanRunnerTest < ActiveSupport::TestCase
     assert_equal Date.new(0), Album.first.release
     assert_equal 'genre', Genre.first.name
   end
+
+  test 'should not fail if genre is duplicated in tag and genre exists' do
+    create :genre, name: 'genre'
+
+    @runner.location.update(path: Rails.root.join('test/files/success-duplicate-genre'))
+
+    @runner.send(:run)
+    @runner.reload
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 1, @runner.processed
+    assert_not @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 3, Artist.count
+    assert_equal 1, Track.count
+    assert_equal 1, AudioFile.count
+    assert_equal 1, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal %w[artist composer], Track.first.artists.map(&:name).sort
+    assert_equal 'album', Album.first.title
+    assert_equal 'albumartist', Album.first.artists.first.name
+    assert_equal 1970, Album.first.release.year
+    assert_equal 'genre', Genre.first.name
+  end
+
+  test 'should not fail if genre is duplicated in tag and genre does not exist' do
+    @runner.location.update(path: Rails.root.join('test/files/success-duplicate-genre'))
+
+    @runner.send(:run)
+    @runner.reload
+
+    assert_equal '', @runner.error_text
+    assert_equal '', @runner.warning_text
+    assert_equal 1, @runner.processed
+    assert_not @runner.running
+
+    assert_equal 1, Album.count
+    assert_equal 3, Artist.count
+    assert_equal 1, Track.count
+    assert_equal 1, AudioFile.count
+    assert_equal 1, Genre.count
+
+    assert_equal 'title', Track.first.title
+    assert_equal %w[artist composer], Track.first.artists.map(&:name).sort
+    assert_equal 'album', Album.first.title
+    assert_equal 'albumartist', Album.first.artists.first.name
+    assert_equal 1970, Album.first.release.year
+    assert_equal 'genre', Genre.first.name
+  end
 end
