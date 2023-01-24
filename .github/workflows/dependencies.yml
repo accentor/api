@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      - uses: cachix/install-nix-action@v18
+      - uses: cachix/install-nix-action@25d64bbf11b34ad6443b4169002d4a1b163a4b02
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
           nix_path: nixpkgs=channel:nixpkgs-unstable
