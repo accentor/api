@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@25d64bbf11b34ad6443b4169002d4a1b163a4b02
+      - uses: cachix/install-nix-action@193b0d85f5ef283d61e38ad64ceb5808dffb97b0
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Cachix
@@ -29,7 +29,7 @@ jobs:
         os: [macos-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@25d64bbf11b34ad6443b4169002d4a1b163a4b02
+      - uses: cachix/install-nix-action@193b0d85f5ef283d61e38ad64ceb5808dffb97b0
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Cachix
