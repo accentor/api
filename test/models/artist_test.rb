@@ -135,6 +135,28 @@ class ArtistTest < ActiveSupport::TestCase
     assert_not_empty artist2.errors[:album_artists]
   end
 
+  test 'should keep not override image during merge' do
+    artist1 = create(:artist, :with_image)
+    artist2 = create(:artist, :with_image)
+
+    assert_difference ['Image.count', 'ActiveStorage::Attachment.count'], -1 do
+      artist2.merge(artist1)
+    end
+
+    assert_predicate artist2.image, :present?
+  end
+
+  test 'should keep image from other during merge if target doesnt have one' do
+    artist1 = create(:artist, :with_image)
+    artist2 = create(:artist)
+
+    assert_no_difference 'Image.count', 'ActiveStorage::Attachment.count' do
+      artist2.merge(artist1)
+    end
+
+    assert_predicate artist2.image, :present?
+  end
+
   test 'should nilify blank review_comment' do
     track = build(:track, review_comment: '')
     track.save
@@ -142,7 +164,7 @@ class ArtistTest < ActiveSupport::TestCase
     assert_nil track.review_comment
   end
 
-  test 'should move playlist_items on merge' do
+  test 'should move playlist_items railon merge' do
     a1 = create(:artist)
     a2 = create(:artist)
     create(:playlist_item, :for_artist, item: a2)

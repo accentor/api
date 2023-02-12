@@ -48,6 +48,16 @@ class Artist < ApplicationRecord
       item.update(item_id: id) unless playlist_items.where(playlist_id: item.playlist_id).any?
     end
 
+    # Copy over the image if other has one and the current artist does not have one
+    if other.image.present? && image.nil?
+      image_id = other.image_id
+      # rubocop:disable Rails/SkipsModelValidations
+      # We have to skip validations and callbacks, so that the `Image` object doesn't get destroyed
+      other.update_column(:image_id, nil)
+      # rubocop:enable Rails/SkipsModelValidations
+      update(image_id:)
+    end
+
     # we have to reload to make sure the track_artists and album_artists relation isn't cached anymore
     other.reload.destroy
   end
