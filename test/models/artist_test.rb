@@ -164,7 +164,7 @@ class ArtistTest < ActiveSupport::TestCase
     assert_nil track.review_comment
   end
 
-  test 'should move playlist_items railon merge' do
+  test 'should move playlist_items on merge' do
     a1 = create(:artist)
     a2 = create(:artist)
     create(:playlist_item, :for_artist, item: a2)
