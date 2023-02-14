@@ -29,6 +29,10 @@ class AlbumPolicy < ApplicationPolicy
     create?
   end
 
+  def merge?
+    create?
+  end
+
   def permitted_attributes
     if user.moderator?
       [

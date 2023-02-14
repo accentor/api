@@ -249,4 +249,25 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
 
     assert_not_nil Album.find_by(id: album2.id)
   end
+
+  test 'should not merge albums for user' do
+    album = create(:album)
+
+    assert_difference('Album.count', 0) do
+      post merge_album_url(@album, source_id: album.id)
+    end
+
+    assert_response :forbidden
+  end
+
+  test 'should merge albums for moderator' do
+    sign_in_as(create(:moderator))
+    album = create(:album)
+
+    assert_difference('Album.count', -1) do
+      post merge_album_url(@album, source_id: album.id)
+    end
+
+    assert_response :success
+  end
 end
