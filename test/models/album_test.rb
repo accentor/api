@@ -94,4 +94,81 @@ class AlbumTest < ActiveSupport::TestCase
 
     assert_nil album.review_comment
   end
+
+  test 'should be able to merge albums' do
+    album1 = create(:album)
+    album2 = create(:album)
+
+    assert_difference 'Album.count', -1 do
+      album2.merge(album1)
+    end
+  end
+
+  test 'should be able to merge albums if one has tracks' do
+    album1 = create(:album)
+    album2 = create(:album)
+    track = create(:track, album: album1)
+
+    assert_not album2.tracks.present?
+
+    assert_difference 'Album.count', -1 do
+      assert_no_difference 'Track.count' do
+        album2.merge(album1)
+      end
+    end
+
+    assert_not_equal album1, track.reload.album
+    assert_equal album2, track.album
+  end
+
+  test 'should be able to merge albums if one belongs to playlist' do
+    album1 = create(:album)
+    album2 = create(:album)
+    playlist = create(:playlist, playlist_type: :album)
+    create(:playlist_item, item: album1, playlist:)
+
+    assert_difference('Album.count', -1) do
+      album2.merge(album1)
+    end
+
+    assert_not playlist.reload.item_ids.include? album1.id
+    assert_includes playlist.reload.item_ids, album2.id
+  end
+
+  test 'should be able to merge albums if they belong to the same playlist' do
+    album1 = create(:album)
+    album2 = create(:album)
+    playlist = create(:playlist, playlist_type: :album)
+    create(:playlist_item, item: album1, playlist:)
+    create(:playlist_item, item: album2, playlist:)
+
+    assert_difference(['Album.count', 'PlaylistItem.count'], -1) do
+      album2.merge(album1)
+    end
+
+    assert_not playlist.reload.item_ids.include? album1.id
+    assert_includes playlist.reload.item_ids, album2.id
+  end
+
+  test 'should keep not override image during merge' do
+    album1 = create(:album, :with_image)
+    album2 = create(:album, :with_image)
+
+    assert_difference ['Image.count', 'ActiveStorage::Attachment.count'], -1 do
+      album2.merge(album1)
+    end
+
+    assert_predicate album2.image, :present?
+  end
+
+  test 'should keep image from other during merge if target doesnt have one' do
+    album1 = create(:album, :with_image)
+    album2 = create(:album)
+
+    assert_no_difference 'Image.count', 'ActiveStorage::Attachment.count' do
+      album2.merge(album1)
+    end
+
+    assert_predicate album2.image, :present?
+  end
 end
