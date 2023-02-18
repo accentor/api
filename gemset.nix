@@ -640,10 +640,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "15hj8r6wp23k187ajmp13kldk53ygm84q4caq7nlndrn8jlcsps0";
+      sha256 = "1ymaq2m30yx35sninw8mjknsjw23k6458ph9k350khwwn1hh2d1k";
       type = "gem";
     };
-    version = "6.0.2";
+    version = "6.1.0";
   };
   pundit = {
     dependencies = ["activesupport"];
