@@ -33,7 +33,7 @@ gem 'image_processing', '~> 1.12.2'
 gem 'bootsnap', '~> 1.16.0', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-gem 'rack-cors', '~> 1.1'
+gem 'rack-cors', '~> 2.0'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
