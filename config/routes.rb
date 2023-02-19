@@ -2,6 +2,7 @@
 #
 #                          Prefix Verb   URI Pattern                                                                                       Controller#Action
 #            destroy_empty_albums POST   /api/albums/destroy_empty(.:format)                                                               albums#destroy_empty
+#                     merge_album POST   /api/albums/:id/merge(.:format)                                                                   albums#merge
 #                    album_tracks GET    /api/albums/:album_id/tracks(.:format)                                                            tracks#index
 #                          albums GET    /api/albums(.:format)                                                                             albums#index
 #                                 POST   /api/albums(.:format)                                                                             albums#create
@@ -108,6 +109,9 @@ Rails.application.routes.draw do
     resources :albums do
       collection do
         post 'destroy_empty'
+      end
+      member do
+        post 'merge'
       end
       resources :tracks, only: [:index]
     end

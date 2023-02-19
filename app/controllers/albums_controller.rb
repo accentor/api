@@ -1,5 +1,5 @@
 class AlbumsController < ApplicationController
-  before_action :set_album, only: %i[show update destroy]
+  before_action :set_album, only: %i[show update destroy merge]
 
   has_scope :by_filter, as: 'filter'
   has_scope :by_label, as: 'label'
@@ -45,6 +45,10 @@ class AlbumsController < ApplicationController
   def destroy_empty
     authorize Album
     Album.where.not(id: Track.select(:album_id).distinct).destroy_all
+  end
+
+  def merge
+    render json: @album.errors, status: :unprocessable_entity unless @album.merge(Album.find(params[:source_id]))
   end
 
   private
