@@ -25,6 +25,18 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     assert_nil body.first['filename']
   end
 
+  test 'should get index with all genres when filtering by genre' do
+    genre = create(:genre)
+    @track.update(genres: [genre, create(:genre)])
+
+    get tracks_url(genre_id: genre.id)
+
+    assert_response :success
+    body = ActiveSupport::JSON.decode response.body
+
+    assert_equal 2, body.first['genre_ids'].length
+  end
+
   test 'should not create track for user' do
     assert_difference('Track.count', 0) do
       post tracks_url, params: { track: { album_id: @track.album_id, number: @track.number, title: @track.title } }
