@@ -36,7 +36,7 @@ class Track < ApplicationRecord
   scope :by_filter, ->(filter) { where('"tracks"."normalized_title" LIKE ?', "%#{Track.normalize(filter)}%") }
   scope :by_artist, ->(artist) { joins(:artists).where(artists: { id: artist }) }
   scope :by_album, ->(album) { where(album:) }
-  scope :by_genre, ->(genre) { joins(:genres).where(genres: { id: genre }) }
+  scope :by_genre, ->(genre) { where(id: joins(:genres).where(genres: { id: genre }).select(:id)) }
 
   def merge(other)
     af = other.audio_file
