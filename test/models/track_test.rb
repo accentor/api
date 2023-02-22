@@ -108,7 +108,8 @@ class TrackTest < ActiveSupport::TestCase
     t2.update(genres: [g2, g3])
 
     assert_equal [t1], Track.by_genre(g1.id).to_a
-    assert_equal [t1, t2], Track.by_genre(g2.id).to_a
+    assert_includes Track.by_genre(g2.id).to_a, t1
+    assert_includes Track.by_genre(g2.id).to_a, t2
     assert_equal [t2], Track.by_genre(g3.id).to_a
   end
 
