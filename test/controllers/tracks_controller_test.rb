@@ -226,8 +226,8 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_equal @track, audio_file.reload.track
-    assert_equal audio_file.length, JSON.parse(response.body)['length']
-    assert_equal audio_file.bitrate, JSON.parse(response.body)['bitrate']
+    assert_equal audio_file.length, response.parsed_body['length']
+    assert_equal audio_file.bitrate, response.parsed_body['bitrate']
 
     assert_response :success
   end

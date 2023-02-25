@@ -12,7 +12,7 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     get plays_url
 
     assert_response :success
-    body = JSON.parse response.body
+    body = response.parsed_body
 
     assert_empty body
   end
@@ -23,7 +23,7 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     get plays_url(album_id: @track.album_id)
 
     assert_response :success
-    body = JSON.parse response.body
+    body = response.parsed_body
 
     assert_includes body, play1.as_json
     assert_not_includes body, play2.as_json
@@ -51,7 +51,7 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     get stats_plays_url
 
     assert_response :success
-    body = JSON.parse response.body
+    body = response.parsed_body
 
     assert_empty body
   end
@@ -61,7 +61,7 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     get stats_plays_url
 
     assert_response :success
-    body = JSON.parse response.body
+    body = response.parsed_body
 
     assert_equal 1, body[0]['count']
     assert_equal '2022-01-02T03:04:05.000Z', body[0]['last_played_at']
@@ -73,7 +73,7 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     get stats_plays_url(album_id: @track.album_id)
 
     assert_response :success
-    body = JSON.parse response.body
+    body = response.parsed_body
 
     assert_equal 1, body.length
   end
@@ -86,7 +86,7 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     get stats_plays_url(played_before: 2.days.ago, played_after: 4.days.ago)
 
     assert_response :success
-    body = JSON.parse response.body
+    body = response.parsed_body
 
     assert_equal 1, body[0]['count']
   end
@@ -98,7 +98,7 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     get stats_plays_url(artist_id: ta.artist_id)
 
     assert_response :success
-    body = JSON.parse response.body
+    body = response.parsed_body
 
     assert_equal 1, body.length
   end
