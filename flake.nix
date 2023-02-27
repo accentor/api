@@ -16,7 +16,7 @@
   outputs = { self, nixpkgs, devshell, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system; overlays = [ devshell.overlay ]; };
+        pkgs = import nixpkgs { inherit system; overlays = [ devshell.overlays.default ]; };
         gems = pkgs.bundlerEnv rec {
           name = "accentor-api-env";
           ruby = pkgs.ruby_3_1;
