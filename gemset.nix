@@ -692,10 +692,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "149m9p5h6i7341s4h5dakwfzsmrv5m69pn863wpj4p7aczf6aqvp";
+      sha256 = "02lvkg1nb4z3zc2nry545dap7a64bb9h2k8waxfz0jkabkgnpimw";
       type = "gem";
     };
-    version = "2.0.0";
+    version = "2.0.1";
   };
   rack-test = {
     dependencies = ["rack"];
