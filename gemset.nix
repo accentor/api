@@ -831,10 +831,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "13gx0dmi5jhs4x2617jclwc57sy4gvw3v8l91dpgc63b8dpmcim6";
+      sha256 = "0j9d71lz0hn5dfwzy7g2n5scgq2y4iz0acfchj2ksy65kw22mgvg";
       type = "gem";
     };
-    version = "2.18.0";
+    version = "2.19.0";
   };
   ruby-progressbar = {
     groups = ["default" "development"];
