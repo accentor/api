@@ -112,7 +112,7 @@
                 category = "dependencies";
                 help = "Update the `Gemfile.lock` and `gemset.nix` files";
                 command = ''
-                  ${pkgs.ruby_3_1}/bin/bundle lock
+                  ${pkgs.ruby_3_2}/bin/bundle lock
                   ${pkgs.bundix}/bin/bundix
                 '';
               }
