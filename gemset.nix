@@ -975,10 +975,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "07d7wkxnx0h7dysjny2gw4z5rygdwx1nmjmg5p1x1b9p22wais9l";
+      sha256 = "1lb3fzz3hll47hixgz9k901nji9cav43ndf2pvhn3a1pz2c2v6pc";
       type = "gem";
     };
-    version = "3.3.1";
+    version = "4.0.0";
   };
   zeitwerk = {
     groups = ["default" "development" "test"];
