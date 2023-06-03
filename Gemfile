@@ -23,7 +23,7 @@ gem 'wahwah', '~> 1.3.0'
 
 gem 'has_scope', '~> 0.8'
 gem 'pundit', '~> 2.3'
-gem 'will_paginate', '~> 3.3'
+gem 'will_paginate', '~> 4.0'
 
 # Use ActiveStorage variant
 gem 'image_processing', '~> 1.12.2'
