@@ -661,10 +661,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1wb03yzy1j41822rbfh9nn77im3zh1f5v8di05cd8rsrdpws542b";
+      sha256 = "10diasjqi1g7s19ns14sldia4wl4c0z1m4pva66q4y2jqvks4qjw";
       type = "gem";
     };
-    version = "2.3.0";
+    version = "2.3.1";
   };
   raabro = {
     groups = ["default"];
