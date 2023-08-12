@@ -954,10 +954,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0bblyycsmk7zbll1h8ndh06k1b58h6kn2c62mhxpnjcc0cj1khks";
+      sha256 = "0b57h2pxagf1711d1snkbz0d1nc58a1qqlrnrc83hwyyvdd6h31z";
       type = "gem";
     };
-    version = "1.5.0";
+    version = "1.5.1";
   };
   websocket-driver = {
     dependencies = ["websocket-extensions"];
