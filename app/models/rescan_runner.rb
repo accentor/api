@@ -86,14 +86,14 @@ class RescanRunner < ApplicationRecord
     return if AudioFile.exists?(location:, filename: relative_path.to_s)
 
     tag = WahWah.open(path)
-    t_artist = tag.artist&.yield_self { |s| clean_string(s) }
-    t_albumartist = tag.albumartist.present? ? tag.albumartist&.yield_self { |s| clean_string(s) } : t_artist
-    t_composer = tag.composer&.yield_self { |s| clean_string(s) }
-    t_title = tag.title&.yield_self { |s| clean_string(s) }
+    t_artist = tag.artist&.then { |s| clean_string(s) }
+    t_albumartist = tag.albumartist.present? ? tag.albumartist&.then { |s| clean_string(s) } : t_artist
+    t_composer = tag.composer&.then { |s| clean_string(s) }
+    t_title = tag.title&.then { |s| clean_string(s) }
     t_number = tag.track || 0
-    t_album = tag.album&.yield_self { |s| clean_string(s) }
+    t_album = tag.album&.then { |s| clean_string(s) }
     t_year = convert_year(tag.year)
-    t_genre = tag.genre&.yield_self { |s| clean_string(s) }
+    t_genre = tag.genre&.then { |s| clean_string(s) }
     length = tag.duration
     bitrate = tag.bitrate || 0
     sample_rate = tag.sample_rate || 0
@@ -208,9 +208,8 @@ class RescanRunner < ApplicationRecord
   def clean_string(s)
     # ID3v2 tags sometimes include null bytes to "split" fields. It doesn't
     # occur very often, so we simply remove null bytes instead of
-    # trying to parse them. Otherwise our database will throw an error, 
+    # trying to parse them. Otherwise our database will throw an error,
     # since null bytes aren't allowed in strings.
     s.delete("\000").unicode_normalize
   end
-
 end
