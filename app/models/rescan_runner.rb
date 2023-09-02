@@ -207,8 +207,9 @@ class RescanRunner < ApplicationRecord
 
   def clean_string(s)
     # ID3v2 tags sometimes include null bytes to "split" fields. It doesn't
-    # occur very often though, so remove null bytes instead of trying to parse
-    # that. Database errors out on null bytes, so we can't just do nothing.
+    # occur very often, so we simply remove null bytes instead of
+    # trying to parse them. Otherwise our database will throw an error, 
+    # since null bytes aren't allowed in strings.
     s.delete("\000").unicode_normalize
   end
 
