@@ -86,14 +86,14 @@ class RescanRunner < ApplicationRecord
     return if AudioFile.exists?(location:, filename: relative_path.to_s)
 
     tag = WahWah.open(path)
-    t_artist = tag.artist&.unicode_normalize
-    t_albumartist = tag.albumartist.present? ? tag.albumartist&.unicode_normalize : t_artist
-    t_composer = tag.composer&.unicode_normalize
-    t_title = tag.title&.unicode_normalize
+    t_artist = tag.artist&.yield_self { |s| clean_string(s) }
+    t_albumartist = tag.albumartist.present? ? tag.albumartist&.yield_self { |s| clean_string(s) } : t_artist
+    t_composer = tag.composer&.yield_self { |s| clean_string(s) }
+    t_title = tag.title&.yield_self { |s| clean_string(s) }
     t_number = tag.track || 0
-    t_album = tag.album&.unicode_normalize
+    t_album = tag.album&.yield_self { |s| clean_string(s) }
     t_year = convert_year(tag.year)
-    t_genre = tag.genre&.unicode_normalize
+    t_genre = tag.genre&.yield_self { |s| clean_string(s) }
     length = tag.duration
     bitrate = tag.bitrate || 0
     sample_rate = tag.sample_rate || 0
@@ -204,4 +204,12 @@ class RescanRunner < ApplicationRecord
   rescue Date::Error
     Date.new(0)
   end
+
+  def clean_string(s)
+    # ID3v2 tags sometimes include null bytes to "split" fields. It doesn't
+    # occur very often though, so remove null bytes instead of trying to parse
+    # that. Database errors out on null bytes, so we can't just do nothing.
+    s.delete("\000").unicode_normalize
+  end
+
 end
