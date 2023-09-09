@@ -282,6 +282,7 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
     location = Location.create(path: Rails.root.join('test/files'))
     flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
     audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
+    perform_enqueued_jobs
     length = audio_file.content_lengths.find_by(codec_conversion:).length
     track = create(:track, audio_file:)
 
@@ -303,18 +304,14 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
     flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
     audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
     track = create(:track, audio_file:)
-    get audio_track_url(track, codec_conversion_id: codec_conversion.id)
-    File.delete(TranscodedItem.last.path)
+    transcode = TranscodedItem.create(audio_file:, codec_conversion:)
+    perform_enqueued_jobs
+    File.delete(transcode.path)
 
-    begin
-      Delayed::Worker.delay_jobs = true
+    assert_enqueued_jobs 1 do
       assert_difference('TranscodedItem.count', 0) do
-        assert_difference('Delayed::Job.count', 1) do
-          get audio_track_url(track, codec_conversion_id: codec_conversion.id)
-        end
+        get audio_track_url(track, codec_conversion_id: codec_conversion.id)
       end
-    ensure
-      Delayed::Worker.delay_jobs = false
     end
 
     assert_response :success
@@ -345,6 +342,7 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
     location = Location.create(path: Rails.root.join('test/files'))
     flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
     audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
+    perform_enqueued_jobs
     length = audio_file.content_lengths.find_by(codec_conversion:).length
     track = create(:track, audio_file:)
 
@@ -365,6 +363,7 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
     location = Location.create(path: Rails.root.join('test/files'))
     flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
     audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
+    perform_enqueued_jobs
     length = audio_file.content_lengths.find_by(codec_conversion:).length
     track = create(:track, audio_file:)
 
