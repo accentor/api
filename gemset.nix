@@ -532,10 +532,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0jnpsbb2dbcs95p4is4431l2pw1l5pn7dfg3vkgb4ga464j0c5l6";
+      sha256 = "0bkmfi9mb49m0fkdhl2g38i3xxa02d411gg0m8x0gvbwfmmg5ym3";
       type = "gem";
     };
-    version = "5.19.0";
+    version = "5.20.0";
   };
   mocha = {
     dependencies = ["ruby2_keywords"];
@@ -851,10 +851,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "05r46ds0dm44fb4p67hbz721zck8mdwblzssz2y25yh075hvs36j";
+      sha256 = "12fg4w7yn9gz9vzi3y0jmgda1i9hc2zmdc0zrz88z4i53c52h79w";
       type = "gem";
     };
-    version = "2.20.2";
+    version = "2.21.0";
   };
   ruby-progressbar = {
     groups = ["default" "development"];
