@@ -256,39 +256,6 @@
     };
     version = "1.8.0";
   };
-  delayed_cron_job = {
-    dependencies = ["fugit"];
-    groups = ["default"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "0vq865hbld0qinzflzknbxzh3mji2swzfvdwlmgr96pdw990qrgj";
-      type = "gem";
-    };
-    version = "0.9.0";
-  };
-  delayed_job = {
-    dependencies = ["activesupport"];
-    groups = ["default"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "0s2xg72ljg4cwmr05zi67vcyz8zib46gvvf7rmrdhsyq387m2qcq";
-      type = "gem";
-    };
-    version = "4.1.11";
-  };
-  delayed_job_active_record = {
-    dependencies = ["activerecord" "delayed_job"];
-    groups = ["default"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "0wh1146hg0b85zv336dn00jx9mzw5ma0maj67is7bvz5l35hd6yk";
-      type = "gem";
-    };
-    version = "4.1.7";
-  };
   docile = {
     groups = ["default" "test"];
     platforms = [];

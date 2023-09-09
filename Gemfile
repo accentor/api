@@ -15,10 +15,6 @@ gem 'active_model_serializers', '~> 0.10'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1'
 
-gem 'delayed_job_active_record', '~> 4.1'
-
-gem 'delayed_cron_job', '~> 0.9'
-
 # Use GoodJob as our Active Job queue adapter
 gem 'good_job', '~> 3.18'
 
