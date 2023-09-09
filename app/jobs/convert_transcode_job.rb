@@ -1,6 +1,5 @@
 class ConvertTranscodeJob < ApplicationJob
-  queue_as :transcodes
-  queue_with_priority 5
+  queue_as :within_30_seconds
 
   def perform(transcode)
     transcode.do_conversion

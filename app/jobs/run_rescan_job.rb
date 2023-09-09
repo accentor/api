@@ -1,6 +1,5 @@
 class RunRescanJob < ApplicationJob
-  queue_as :rescans
-  queue_with_priority 20
+  queue_as :within_5_minutes
 
   def perform(rescan_runner)
     rescan_runner.run

@@ -1,6 +1,5 @@
 class TranscodeCacheCleanJob < ApplicationJob
-  queue_as :transcode_cache_cleaner
-  queue_with_priority 100
+  queue_as :within_30_minuts
 
   def perform
     TranscodedItem.where.not(last_used: (Rails.configuration.transcode_cache_expiry.call..)).destroy_all

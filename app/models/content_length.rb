@@ -22,7 +22,7 @@ class ContentLength < ApplicationRecord
       next unless Rails.application.config.recalculate_content_length_if.call af
 
       CodecConversion.find_each do |cc|
-        CalculateContentLengthJob.set(priority: 25).perform_later(af, cc)
+        CalculateContentLengthJob.set(queue: :whenever).perform_later(af, cc)
       end
     end
   end
