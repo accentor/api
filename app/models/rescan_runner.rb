@@ -17,14 +17,12 @@ class RescanRunner < ApplicationRecord
   def schedule
     return if running?
 
-    delay(queue: :rescans).run
+    RunRescanJob.perform_later(self)
   end
 
   def self.schedule_all
     find_each(&:schedule)
   end
-
-  private
 
   def run
     # rubocop:disable Rails/SkipsModelValidations
@@ -54,6 +52,8 @@ class RescanRunner < ApplicationRecord
       update(running: false, finished_at: DateTime.current)
     end
   end
+
+  private
 
   def process_all_files(path)
     unless File.directory?(path)
