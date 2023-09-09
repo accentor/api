@@ -65,7 +65,7 @@ class RescanRunner < ApplicationRecord
       if File.directory?(File.join(path, child))
         process_all_files(File.join(path, child))
       else
-        Codec.all.find_each do |c|
+        Codec.find_each do |c|
           next unless File.extname(child)[1..]&.downcase == c.extension.downcase.to_s
 
           begin
@@ -173,8 +173,8 @@ class RescanRunner < ApplicationRecord
   end
 
   def find_cover(path)
-    CoverFilename.all.find_each do |cf|
-      ImageType.all.find_each do |it|
+    CoverFilename.find_each do |cf|
+      ImageType.find_each do |it|
         Dir.entries(path).each do |f|
           return [it, File.join(path, f)] if f.downcase == "#{cf.filename.downcase}.#{it.extension.downcase}"
         end
