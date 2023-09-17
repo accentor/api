@@ -34,6 +34,19 @@ you want.
 1. Run `puma -C config/puma.rb` to start the server. You can use any
    other application server as well, but there is no configuration
    provided.
+1. Run `good_job start` to start a background worker.
+   In Accentor, all jobs are handled by the following 4 queues:
+   * within_30_seconds
+   * within_5_minutes
+   * within_30_minutes
+   * whenever
+
+   These queue names refer to the period in which a job should be
+   picked up by a worker. If you want/need to manage the available
+   workers in more details, you can specify the availability of
+   workers per process or per thread with `GOOD_JOB_QUEUES`. 
+   Check the [good job docs](https://github.com/bensheldon/good_job#optimize-queues-threads-and-processes)
+   for the possibilities.
 1. You probably want to set the following environment variables when
    running:
     * DATABASE_URL
