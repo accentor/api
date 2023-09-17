@@ -33,6 +33,7 @@ module Accentor
     config.api_only = true
 
     config.active_job.queue_adapter = :good_job
+    config.active_job.default_queue_name = :within_5_minutes
 
     config.transcode_cache_expiry = -> { 1.day.ago }
     config.recalculate_content_length_if = ->(af) { af.length > 299 || af.track.created_at.after?(1.month.ago) }
