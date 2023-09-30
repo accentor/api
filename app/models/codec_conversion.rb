@@ -23,7 +23,7 @@ class CodecConversion < ApplicationRecord
   def queue_content_length_calculations
     ContentLength.where(codec_conversion: self).destroy_all
     AudioFile.find_each do |af|
-      af.delay(queue: :content_lengths).calc_audio_length(self)
+      CalculateContentLengthJob.perform_later(af, self)
     end
   end
 end

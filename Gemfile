@@ -19,6 +19,9 @@ gem 'delayed_job_active_record', '~> 4.1'
 
 gem 'delayed_cron_job', '~> 0.9'
 
+# Use GoodJob as our Active Job queue adapter
+gem 'good_job', '~> 3.18'
+
 gem 'wahwah', '~> 1.5.1'
 
 gem 'has_scope', '~> 0.8'

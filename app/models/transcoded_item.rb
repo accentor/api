@@ -18,23 +18,12 @@ class TranscodedItem < ApplicationRecord
 
   validates :path, presence: true, uniqueness: true
 
-  after_create :do_delayed_conversion
+  after_create -> { ConvertTranscodeJob.perform_later(self) }
   after_destroy :delete_file
 
   def initialize(params)
     super(params)
     self.path = random_path
-  end
-
-  def do_delayed_conversion
-    delay(queue: :transcodes).do_conversion
-  end
-
-  private
-
-  def random_path
-    uuid = SecureRandom.uuid
-    File.join(BASE_PATH, uuid[0..1], uuid[2..3], uuid)
   end
 
   def do_conversion
@@ -43,6 +32,13 @@ class TranscodedItem < ApplicationRecord
     File.open(tmppath, 'w') { |f| IO.copy_stream(audio_file.convert(codec_conversion), f) }
     FileUtils.mkdir_p Pathname.new(path).parent
     FileUtils.mv(tmppath, path)
+  end
+
+  private
+
+  def random_path
+    uuid = SecureRandom.uuid
+    File.join(BASE_PATH, uuid[0..1], uuid[2..3], uuid)
   end
 
   def delete_file

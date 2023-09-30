@@ -22,7 +22,7 @@ class ContentLength < ApplicationRecord
       next unless Rails.application.config.recalculate_content_length_if.call af
 
       CodecConversion.find_each do |cc|
-        af.delay(queue: :content_lengths_backlog).calc_audio_length(cc)
+        CalculateContentLengthJob.set(queue: :whenever).perform_later(af, cc)
       end
     end
   end

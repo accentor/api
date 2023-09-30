@@ -65,7 +65,7 @@ class TracksController < ApplicationController
         if item.present?
           # Maybe the file was lost, maybe the transcode just hadn't finished
           # yet. Anyway, doing the transcode again doesn't really hurt.
-          item.do_delayed_conversion
+          ConvertTranscodeJob.perform_later(item)
         else
           TranscodedItem.create(audio_file:, codec_conversion: conversion)
         end

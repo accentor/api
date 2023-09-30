@@ -26,5 +26,3 @@ elsif File.directory? File.expand_path('~/Music')
 end
 
 RescanRunner.schedule_all
-
-Delayed::Job.enqueue(TranscodeCacheCleanJob.new, cron: '0 4 * * *')
