@@ -1,7 +1,7 @@
 class TracksController < ApplicationController
   include ActionController::Live
 
-  before_action :set_track, only: %i[show update destroy audio merge]
+  before_action :set_track, only: %i[show update destroy audio download merge]
 
   has_scope :by_filter, as: 'filter'
   has_scope :by_album, as: 'album_id'
@@ -76,6 +76,13 @@ class TracksController < ApplicationController
     else
       audio_with_file(audio_file.full_path, audio_file.codec.mimetype)
     end
+  end
+
+  def download
+    audio_file = @track.audio_file
+    raise ActiveRecord::RecordNotFound.new('track has no audio', 'audio') unless audio_file.present? && audio_file.check_self
+
+    send_file audio_file.full_path
   end
 
   def merge

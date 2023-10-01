@@ -33,6 +33,10 @@ class TrackPolicy < ApplicationPolicy
     index?
   end
 
+  def download?
+    audio?
+  end
+
   def merge?
     create?
   end

@@ -159,6 +159,7 @@ Rails.application.routes.draw do
       end
       member do
         get 'audio'
+        get 'download'
         post 'merge'
       end
     end
