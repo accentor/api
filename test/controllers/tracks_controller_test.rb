@@ -257,6 +257,16 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+
+  test 'should download to user' do
+    location = Location.create(path: Rails.root.join('test/files'))
+    audio_file = create(:audio_file, location:, filename: '/base.flac')
+    track = create(:track, audio_file:)
+
+    get download_track_url(track)
+
+    assert_response :success
+  end
 end
 
 class TracksControllerAudioTest < ActionDispatch::IntegrationTest
