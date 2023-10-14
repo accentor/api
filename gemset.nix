@@ -369,10 +369,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0sndmi35ygyrkbjlif0v5dprg5r5d0z6xz2ix2q575vdxwf65yqg";
+      sha256 = "0m2s29nzwwg26scxjwz2b2mvrfrpvb0v6q70xp9mbkdfhkb57ka8";
       type = "gem";
     };
-    version = "0.8.1";
+    version = "0.8.2";
   };
   i18n = {
     dependencies = ["concurrent-ruby"];
@@ -453,10 +453,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1p744kjpb5zk2ihklbykzii77alycjc04vpnm2ch2f3cp65imlj3";
+      sha256 = "0d5p9vg2qkqfy60i93mpd3b25kw4bdxfai034y5a94pxp5fws61c";
       type = "gem";
     };
-    version = "2.21.3";
+    version = "2.21.4";
   };
   mail = {
     dependencies = ["mini_mime" "net-imap" "net-pop" "net-smtp"];
