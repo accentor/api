@@ -10,7 +10,7 @@
 
 FactoryBot.define do
   factory :codec_conversion do
-    association :resulting_codec, factory: :codec
+    resulting_codec factory: %i[codec]
     name { Faker::Lorem.unique.word }
     ffmpeg_params { Faker::Lorem.words(number: 10) }
   end

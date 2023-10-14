@@ -17,7 +17,7 @@ FactoryBot.define do
     review_comment { Faker::Lorem.word }
 
     trait :with_image do
-      association :image, factory: :image
+      image factory: %i[image]
     end
   end
 end

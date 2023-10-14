@@ -190,7 +190,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   test 'should destroy empty tracks for moderator' do
     sign_in_as(create(:moderator))
 
-    create :track
+    create(:track)
 
     assert_difference('Track.count', -1) do
       post destroy_empty_tracks_url
@@ -309,7 +309,7 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
   test 'should not create transcoded_item if it already exists but should queue if file is gone' do
     io = StringIO.new Rails.root.join('test/files/base.flac').read
     AudioFile.any_instance.stubs(:convert).returns(io)
-    codec_conversion = create :codec_conversion
+    codec_conversion = create(:codec_conversion)
     location = Location.create(path: Rails.root.join('test/files'))
     flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
     audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
@@ -330,7 +330,7 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
   test 'should not create transcoded_item if it already exists' do
     io = StringIO.new Rails.root.join('test/files/base.flac').read
     AudioFile.any_instance.stubs(:convert).returns(io)
-    codec_conversion = create :codec_conversion
+    codec_conversion = create(:codec_conversion)
     location = Location.create(path: Rails.root.join('test/files'))
     flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
     audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)

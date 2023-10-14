@@ -27,7 +27,7 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not create cover_filename for user' do
-    cover_filename = build :cover_filename
+    cover_filename = build(:cover_filename)
     assert_difference('CoverFilename.count', 0) do
       post cover_filenames_url, params: { cover_filename: { filename: cover_filename.filename } }
     end
@@ -46,7 +46,7 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create cover_filename for moderator' do
     sign_in_as create(:moderator)
-    cover_filename = build :cover_filename
+    cover_filename = build(:cover_filename)
     assert_difference('CoverFilename.count', 1) do
       post cover_filenames_url, params: { cover_filename: { filename: cover_filename.filename } }
     end
@@ -56,7 +56,7 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create cover_filename for admin' do
     sign_in_as create(:admin)
-    cover_filename = build :cover_filename
+    cover_filename = build(:cover_filename)
     assert_difference('CoverFilename.count', 1) do
       post cover_filenames_url, params: { cover_filename: { filename: cover_filename.filename } }
     end

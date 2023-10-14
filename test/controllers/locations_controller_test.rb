@@ -2,7 +2,7 @@ require 'test_helper'
 
 class LocationsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @location = create :location
+    @location = create(:location)
     sign_in_as create(:user)
   end
 
@@ -27,7 +27,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not create location for user' do
-    location = build :location
+    location = build(:location)
     assert_difference('Location.count', 0) do
       post locations_url, params: { location: { path: location.path } }
     end
@@ -46,7 +46,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create location for moderator' do
     sign_in_as create(:moderator)
-    location = build :location
+    location = build(:location)
     assert_difference('Location.count', 1) do
       post locations_url, params: { location: { path: location.path } }
     end
@@ -56,7 +56,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create location for admin' do
     sign_in_as create(:admin)
-    location = build :location
+    location = build(:location)
     assert_difference('Location.count', 1) do
       post locations_url, params: { location: { path: location.path } }
     end

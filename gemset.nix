@@ -859,6 +859,17 @@
     };
     version = "1.29.0";
   };
+  rubocop-factory_bot = {
+    dependencies = ["rubocop"];
+    groups = ["development"];
+    platforms = [];
+    source = {
+      remotes = ["https://rubygems.org"];
+      sha256 = "1y79flwjwlaslyhfpg84di9n756ir6bm52n964620xsj658d661h";
+      type = "gem";
+    };
+    version = "2.24.0";
+  };
   rubocop-minitest = {
     dependencies = ["rubocop"];
     groups = ["development"];
