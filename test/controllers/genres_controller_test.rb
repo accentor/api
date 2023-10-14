@@ -122,8 +122,8 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
 
   test 'should destroy empty genres for moderator' do
     sign_in_as(create(:moderator))
-    genre2 = create :genre
-    track = create :track
+    genre2 = create(:genre)
+    track = create(:track)
     track.update(genres: [genre2])
 
     assert_difference('Genre.count', -1) do
@@ -137,8 +137,8 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
 
   test 'should destroy empty genres for admin' do
     sign_in_as(create(:admin))
-    genre2 = create :genre
-    track = create :track
+    genre2 = create(:genre)
+    track = create(:track)
     track.update(genres: [genre2])
 
     assert_difference('Genre.count', -1) do

@@ -21,7 +21,7 @@ FactoryBot.define do
     release { Faker::Date.backward(days: 365 * 100) }
 
     trait :with_image do
-      association :image, factory: :image
+      image factory: %i[image]
     end
 
     transient do

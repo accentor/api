@@ -49,7 +49,7 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show auth_token' do
     sign_in_as(@user)
-    auth_token = create :auth_token, user: @user
+    auth_token = create(:auth_token, user: @user)
     get auth_token_url(auth_token)
 
     assert_response :success
@@ -57,7 +57,7 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
 
   test 'should destroy auth_token' do
     sign_in_as(@user)
-    auth_token = create :auth_token, user: @user
+    auth_token = create(:auth_token, user: @user)
     assert_difference('AuthToken.count', -1) do
       delete auth_token_url(auth_token)
     end

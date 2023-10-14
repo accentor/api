@@ -42,7 +42,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'schedule_all should create one task per runner' do
-    3.times { create(:rescan_runner) }
+    create_list(:rescan_runner, 3)
 
     prev = RescanRunner.all.map(&:finished_at)
     RescanRunner.schedule_all
@@ -627,7 +627,7 @@ class RescanRunnerTest < ActiveSupport::TestCase
   end
 
   test 'should not fail if genre is duplicated in tag and genre exists' do
-    create :genre, name: 'genre'
+    create(:genre, name: 'genre')
 
     @runner.location.update(path: Rails.root.join('test/files/success-duplicate-genre'))
 

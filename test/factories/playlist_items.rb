@@ -17,17 +17,17 @@ FactoryBot.define do
 
     trait :for_album do
       playlist { association :playlist, playlist_type: :album }
-      association :item, factory: :album
+      item factory: %i[album]
     end
 
     trait :for_artist do
       playlist { association :playlist, playlist_type: :artist }
-      association :item, factory: :artist
+      item factory: %i[artist]
     end
 
     trait :for_track do
       playlist { association :playlist, playlist_type: :track }
-      association :item, factory: :track
+      item factory: %i[track]
     end
   end
 end

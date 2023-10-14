@@ -15,11 +15,11 @@ FactoryBot.define do
     user_agent { Faker::Internet.user_agent }
 
     factory :moderator_auth_token do
-      association :user, factory: :moderator
+      user factory: %i[moderator]
     end
 
     factory :admin_auth_token do
-      association :user, factory: :admin
+      user factory: %i[admin]
     end
   end
 end

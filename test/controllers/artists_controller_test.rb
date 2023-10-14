@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ArtistsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @artist = create :artist, :with_image
+    @artist = create(:artist, :with_image)
     sign_in_as create(:user)
   end
 
@@ -22,7 +22,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create artist for moderator' do
     sign_in_as create(:moderator)
-    artist = build :artist
+    artist = build(:artist)
 
     image = {
       data: Base64.encode64(Rails.root.join('test/files/image.jpg').read),
@@ -94,7 +94,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update artist for moderator' do
     sign_in_as create(:moderator)
-    artist = create :artist
+    artist = create(:artist)
 
     image = {
       data: Base64.encode64(Rails.root.join('test/files/image.jpg').read),
@@ -112,7 +112,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should destroy previous image when image is replaced' do
     sign_in_as create(:moderator)
-    artist = create :artist, :with_image
+    artist = create(:artist, :with_image)
 
     image = {
       data: Base64.encode64(Rails.root.join('test/files/image.jpg').read),
@@ -132,7 +132,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should destroy previous image when image is cleared' do
     sign_in_as create(:moderator)
-    artist = create :artist, :with_image
+    artist = create(:artist, :with_image)
 
     image = {
       data: nil,
@@ -182,8 +182,8 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
   test 'should destroy empty artists for moderator (track_artist)' do
     sign_in_as create(:moderator)
 
-    artist2 = create :artist
-    create :track_artist, artist: artist2
+    artist2 = create(:artist)
+    create(:track_artist, artist: artist2)
 
     assert_difference('Image.count', -1) do
       assert_difference('ActiveStorage::Blob.count', -1) do
@@ -202,8 +202,8 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
   test 'should destroy empty artists for moderator (album_artist)' do
     sign_in_as create(:moderator)
 
-    artist2 = create :artist
-    create :album_artist, artist: artist2
+    artist2 = create(:artist)
+    create(:album_artist, artist: artist2)
 
     assert_difference('Image.count', -1) do
       assert_difference('ActiveStorage::Blob.count', -1) do
