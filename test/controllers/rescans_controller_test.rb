@@ -46,6 +46,9 @@ class RescansControllerTest < ActionDispatch::IntegrationTest
     post rescan_url(@runner)
 
     assert_response :success
+
+    perform_enqueued_jobs
+
     @runner.reload
 
     assert_not_equal prev, @runner.finished_at
@@ -63,6 +66,9 @@ class RescansControllerTest < ActionDispatch::IntegrationTest
     post rescans_url
 
     assert_response :success
+
+    perform_enqueued_jobs
+
     @runner.reload
 
     assert_not_equal prev, @runner.finished_at

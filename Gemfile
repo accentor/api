@@ -5,7 +5,7 @@ ruby '~> 3.2.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 # Remove workaround in tracks_controller on transient rack update
-gem 'rails', '~> 7.0'
+gem 'rails', '~> 7.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.2.3', '< 2.0'
 # Use Puma as the app server
