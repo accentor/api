@@ -735,10 +735,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "15rdwbyk71c9nxvd527bvb8jxkcys8r3dj3vqra5b3sa63qs30vv";
+      sha256 = "0j3j8lxb3pda25lq9l3661rjd99a3z2ky6cqxbg7sdmvnwpr2b4w";
       type = "gem";
     };
-    version = "2.2.8";
+    version = "3.0.8";
   };
   rack-cors = {
     dependencies = ["rack"];
@@ -757,10 +757,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "11w6yd60n8ng1ncs1ajlv42dg08yks09drlsgriydgpcjwz21d40";
+      sha256 = "10afdpmy9kh0qva96slcyc59j4gkk9av8ilh58cnj0qq7q3b416v";
       type = "gem";
     };
-    version = "1.0.1";
+    version = "2.0.0";
   };
   rack-test = {
     dependencies = ["rack"];
@@ -779,10 +779,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1wbr03334ba9ilcq25wh9913xciwj0j117zs60vsqm0zgwdkwpp9";
+      sha256 = "0kbcka30g681cqasw47pq93fxjscq7yvs5zf8lp3740rb158ijvf";
       type = "gem";
     };
-    version = "1.0.0";
+    version = "2.1.0";
   };
   rails = {
     dependencies = ["actioncable" "actionmailbox" "actionmailer" "actionpack" "actiontext" "actionview" "activejob" "activemodel" "activerecord" "activestorage" "activesupport" "railties"];
