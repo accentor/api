@@ -18,7 +18,8 @@ namespace :ffmpeg do
 
     exit if prev_version == new_version
 
-    ContentLength.destroy_all_and_recalculate
+    ContentLength.destroy_all
+    RecalculateContentLengthsJob.perform_later
 
     File.write(path, new_version)
   end
