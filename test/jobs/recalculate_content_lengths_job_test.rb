@@ -12,7 +12,7 @@ class RecalculateContentLengthsJobTest < ActiveJob::TestCase
     ContentLength.destroy_all
   end
 
-  test 'should not enqueue job if audio is longer than config and track is older than config' do
+  test 'should not enqueue job if audio is shorter than config and track is older than config' do
     # rubocop:disable Rails/SkipsModelValidations
     # We want to avoid our own before_save callbacks to manually set audio_file length and track age
     @audio_file.update_column(:length, 1)
