@@ -7,13 +7,12 @@ class RecalculateContentLengthsJobTest < ActiveJob::TestCase
     AudioFile.any_instance.stubs(:convert).returns(io)
     @audio_file = create(:audio_file)
     @codec_conversion = create(:codec_conversion)
+    @track = create(:track, audio_file: @audio_file)
 
     ContentLength.destroy_all
   end
 
   test 'should not enqueue job if audio is longer than config and track is older than config' do
-    @track = create(:track, audio_file: @audio_file)
-
     # rubocop:disable Rails/SkipsModelValidations
     # We want to avoid our own before_save callbacks to manually set audio_file length and track age
     @audio_file.update_column(:length, 1)
@@ -26,10 +25,6 @@ class RecalculateContentLengthsJobTest < ActiveJob::TestCase
   end
 
   test 'should enqueue job if audio is longer than config' do
-    io = StringIO.new Rails.root.join('test/files/base.flac').read
-    AudioFile.any_instance.stubs(:convert).returns(io)
-    @track = create(:track, audio_file: @audio_file)
-
     # rubocop:disable Rails/SkipsModelValidations
     # We want to avoid our own before_save callbacks to manually set the audio_file length and track age
     @audio_file.update_column(:length, 1000)
@@ -42,10 +37,6 @@ class RecalculateContentLengthsJobTest < ActiveJob::TestCase
   end
 
   test 'should enqueue job if track is newer than config' do
-    io = StringIO.new Rails.root.join('test/files/base.flac').read
-    AudioFile.any_instance.stubs(:convert).returns(io)
-    @track = create(:track, audio_file: @audio_file)
-
     # rubocop:disable Rails/SkipsModelValidations
     # We want to avoid our own before_save callbacks to manually set the audio_file length and track age
     @audio_file.update_column(:length, 1)
