@@ -116,6 +116,10 @@ class TracksController < ApplicationController
     response.content_type = mimetype
     response.headers['accept-ranges'] = 'bytes'
     response.headers['content-length'] = (last_byte - first_byte + 1).to_s
+    # Unfortunately, if we don't commit the headers, ActionController::Live will
+    # delete the "content-length" header set above. No other headers need to be
+    # set, so we just freeze them here.
+    response.commit!
 
     to_skip = first_byte
     while to_skip.positive?
