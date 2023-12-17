@@ -177,10 +177,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "07y615s8yldk3k13lmkhpk1k190lcqvmxmnjwgh4bzjan9xrc36y";
+      sha256 = "1b1gqa90amazwnll9590m5ighywh9sacsmpyd5ihljivmvjswksk";
       type = "gem";
     };
-    version = "3.1.4";
+    version = "3.1.5";
   };
   bootsnap = {
     dependencies = ["msgpack"];
@@ -389,10 +389,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "11bkx94qmirl4xda4p9bkzif17nz5ahs864rnq37n0hz88wp0p9w";
+      sha256 = "1lqj6mpf14qia3np44y3bp9266ijlyly7zk8p6s0cqq3ngn5vjm1";
       type = "gem";
     };
-    version = "3.21.2";
+    version = "3.21.5";
   };
   has_scope = {
     dependencies = ["actionpack" "activesupport"];
