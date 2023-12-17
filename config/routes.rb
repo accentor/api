@@ -77,6 +77,7 @@
 #                                 POST   /api/plays(.:format)                                                                              plays#create
 #            destroy_empty_tracks POST   /api/tracks/destroy_empty(.:format)                                                               tracks#destroy_empty
 #                     audio_track GET    /api/tracks/:id/audio(.:format)                                                                   tracks#audio
+#                  download_track GET    /api/tracks/:id/download(.:format)                                                                tracks#download
 #                     merge_track POST   /api/tracks/:id/merge(.:format)                                                                   tracks#merge
 #                          tracks GET    /api/tracks(.:format)                                                                             tracks#index
 #                                 POST   /api/tracks(.:format)                                                                             tracks#create
