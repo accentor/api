@@ -34,8 +34,8 @@ class ApplicationController < ActionController::API
   def authenticate_from_token
     token = AuthToken.find_authenticated(
       {
-        secret: (request.headers[:'x-secret'] || params[:secret]),
-        device_id: (request.headers[:'x-device-id'] || params[:device_id])
+        secret: request.headers[:'x-secret'] || params[:secret],
+        device_id: request.headers[:'x-device-id'] || params[:device_id]
       }
     )
     self.current_user = token&.user
