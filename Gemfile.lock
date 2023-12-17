@@ -249,7 +249,7 @@ GEM
       rubocop (~> 1.33)
     rubocop-minitest (0.33.0)
       rubocop (>= 1.39, < 2.0)
-    rubocop-rails (2.22.2)
+    rubocop-rails (2.23.0)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
@@ -301,7 +301,7 @@ DEPENDENCIES
   rails (~> 7.1)
   rubocop-factory_bot (~> 2.24)
   rubocop-minitest (~> 0.33.0)
-  rubocop-rails (~> 2.22)
+  rubocop-rails (~> 2.23)
   simplecov (~> 0.21)
   tzinfo-data
   wahwah (~> 1.5.1)

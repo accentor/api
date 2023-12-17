@@ -5,9 +5,9 @@ module HasNormalized
   class_methods do
     def normalized_col_generator(col_name)
       col = col_name.to_sym
-      normalized_col = "normalized_#{col_name}".to_sym
-      generate_normalized_col = "generate_normalized_#{col_name}".to_sym
-      col_changed = "#{col_name}_changed?".to_sym
+      normalized_col = :"normalized_#{col_name}"
+      generate_normalized_col = :"generate_normalized_#{col_name}"
+      col_changed = :"#{col_name}_changed?"
 
       set_callback :validation, :before, generate_normalized_col, if: col_changed
 
