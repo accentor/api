@@ -250,7 +250,7 @@ GEM
     rubocop-minitest (0.34.1)
       rubocop (>= 1.39, < 2.0)
       rubocop-ast (>= 1.30.0, < 2.0)
-    rubocop-rails (2.23.0)
+    rubocop-rails (2.23.1)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
