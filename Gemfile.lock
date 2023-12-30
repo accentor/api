@@ -247,7 +247,7 @@ GEM
       parser (>= 3.2.1.0)
     rubocop-factory_bot (2.24.0)
       rubocop (~> 1.33)
-    rubocop-minitest (0.34.1)
+    rubocop-minitest (0.34.2)
       rubocop (>= 1.39, < 2.0)
       rubocop-ast (>= 1.30.0, < 2.0)
     rubocop-rails (2.23.0)
@@ -301,7 +301,7 @@ DEPENDENCIES
   rack-cors (~> 2.0)
   rails (~> 7.1)
   rubocop-factory_bot (~> 2.24)
-  rubocop-minitest (~> 0.34.1)
+  rubocop-minitest (~> 0.34.2)
   rubocop-rails (~> 2.23)
   simplecov (~> 0.21)
   tzinfo-data
