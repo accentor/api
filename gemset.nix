@@ -940,10 +940,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0vdbzk5kzjqgwvcpnrn1b6livbyaw12qq0pivf0m55wkyya0m71d";
+      sha256 = "1id396xvixh5w19bjsli477mn4dr48ff8n1243d2z0y4zr1ld52h";
       type = "gem";
     };
-    version = "2.23.0";
+    version = "2.23.1";
   };
   ruby-progressbar = {
     groups = ["default" "development"];
