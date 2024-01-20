@@ -50,6 +50,6 @@ end
 group :development do
   gem 'annotate', '~> 3.2' # Remove workaround in lib/tasks/annotate.rb when https://github.com/ctran/annotate_models/issues/696 is fixed
   gem 'rubocop-factory_bot', '~> 2.25'
-  gem 'rubocop-minitest', '~> 0.34.4'
+  gem 'rubocop-minitest', '~> 0.34.5'
   gem 'rubocop-rails', '~> 2.23'
 end
