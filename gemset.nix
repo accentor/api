@@ -389,10 +389,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1f99c8xy3ljjg4zk1vsvlxxh5in0hwl7zbhgknhlfghf23cgnsj9";
+      sha256 = "1q23jivdanf3n3vkxklhrpapac2jqhx9znn27my84fl8wfqjjcyp";
       type = "gem";
     };
-    version = "3.22.0";
+    version = "3.23.0";
   };
   has_scope = {
     dependencies = ["actionpack" "activesupport"];
