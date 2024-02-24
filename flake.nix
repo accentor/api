@@ -19,7 +19,7 @@
         pkgs = import nixpkgs { inherit system; overlays = [ devshell.overlays.default ]; };
         gems = pkgs.bundlerEnv rec {
           name = "accentor-api-env";
-          ruby = pkgs.ruby_3_2;
+          ruby = pkgs.ruby_3_3;
           gemfile = ./Gemfile;
           lockfile = ./Gemfile.lock;
           gemset = ./gemset.nix;
@@ -112,7 +112,7 @@
                 category = "dependencies";
                 help = "Update the `Gemfile.lock` and `gemset.nix` files";
                 command = ''
-                  ${pkgs.ruby_3_2}/bin/bundle lock
+                  ${pkgs.ruby_3_3}/bin/bundle lock
                   ${pkgs.bundix}/bin/bundix
                 '';
               }
