@@ -28,4 +28,13 @@ class PlayListItemTest < ActiveSupport::TestCase
     assert_not_predicate item, :valid?
     assert_not_empty item.errors[:item]
   end
+
+  test 'item should get order if not present' do
+    playlist = create(:playlist, playlist_type: :album)
+    item = build(:playlist_item, :for_track, playlist:, order: nil)
+
+    item.validate
+
+    assert_equal item.order, 1
+  end
 end
