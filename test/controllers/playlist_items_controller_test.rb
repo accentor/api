@@ -23,7 +23,7 @@ class PlaylistItemsControllerTest < ActionDispatch::IntegrationTest
       post playlist_items_url, params: { playlist_item: { playlist_id: @playlist.id, item_id: @track.id, item_type: 'Track' } }
     end
 
-    assert_response :created
+    assert_response :no_content
     assert_equal 1, PlaylistItem.last.order
   end
 
@@ -34,7 +34,7 @@ class PlaylistItemsControllerTest < ActionDispatch::IntegrationTest
       post playlist_items_url, params: { playlist_item: { playlist_id: playlist.id, item_id: @track.id, item_type: 'Track' } }
     end
 
-    assert_response :created
+    assert_response :no_content
     assert_equal 1, PlaylistItem.last.order
   end
 
