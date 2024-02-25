@@ -53,7 +53,8 @@ Rails.application.configure do
   # config.action_view.annotate_rendered_view_with_filenames = true
 
   # Raise error when a before_action's only/except options reference missing actions
-  config.action_controller.raise_on_missing_callback_actions = true
+  # This is disabled since we have a global `index` action, but don't always have an index action
+  config.action_controller.raise_on_missing_callback_actions = false
 
   # For tests we want these settings to remain the same, regardless of the configuration in application.rb
   config.transcode_cache_expiry = -> { 1.day.ago }

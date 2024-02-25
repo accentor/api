@@ -55,7 +55,8 @@ Rails.application.configure do
   config.i18n.raise_on_missing_translations = true
 
   # Raise error when a before_action's only/except options reference missing actions
-  config.action_controller.raise_on_missing_callback_actions = true
+  # This is disabled since we have a global `index` action, but don't always have an index action
+  config.action_controller.raise_on_missing_callback_actions = false
 
   config.token_hash_rounds = 10
   config.ffmpeg_log_location = Rails.root.join('log/ffmpeg.log').to_s
