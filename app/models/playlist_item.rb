@@ -29,6 +29,6 @@ class PlaylistItem < ApplicationRecord
   def set_order
     return if order.present?
 
-    self.order = self.playlist.items.count + 1
+    self.order = playlist.items.count + 1
   end
 end

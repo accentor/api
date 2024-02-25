@@ -35,6 +35,6 @@ class PlayListItemTest < ActiveSupport::TestCase
 
     item.validate
 
-    assert_equal item.order, 1
+    assert_equal 1, item.order
   end
 end
