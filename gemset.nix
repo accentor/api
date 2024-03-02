@@ -287,15 +287,14 @@
     version = "1.4.0";
   };
   drb = {
-    dependencies = ["ruby2_keywords"];
     groups = ["default" "development" "test"];
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "03ylflxbp9jrs1hx3d4wvx05yb9hdq4a0r706zz6qc6kvqfazr79";
+      sha256 = "0h5kbj9hvg5hb3c7l425zpds0vb42phvln2knab8nmazg2zp5m79";
       type = "gem";
     };
-    version = "2.2.0";
+    version = "2.2.1";
   };
   erubi = {
     groups = ["default" "development" "test"];
@@ -367,10 +366,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1h88378s14r642k9f5xg74ck69kss1jfgx1b3wid67fha3qd8zz4";
+      sha256 = "10m9b2gvwfvmm61000mq7n8q7pk2xkxmizgfydpis66n2ybrhwh5";
       type = "gem";
     };
-    version = "1.10.0";
+    version = "1.10.1";
   };
   globalid = {
     dependencies = ["activesupport"];
@@ -389,10 +388,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1wwvwn9hqr6vvrjagcc15zq6lgmwf97a7qcy570q9r2ai2fqk93k";
+      sha256 = "1135lqgapc9vac15jgwbnyn5ml3qs3ln80a063f4rj90wsnzyv46";
       type = "gem";
     };
-    version = "3.25.0";
+    version = "3.26.1";
   };
   has_scope = {
     dependencies = ["actionpack" "activesupport"];
@@ -875,10 +874,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0fhwdmw89zqb1fdxcd6lr57zabbfi08z8j6kqwngak0xnxi2j10l";
+      sha256 = "1zx7sdh11p4z77c3f9ka6f065mgl6xwbamnsq4rrgwk310qhn41n";
       type = "gem";
     };
-    version = "0.4.2";
+    version = "0.4.3";
   };
   rexml = {
     groups = ["default" "development"];
@@ -1022,10 +1021,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1hx77jxkrwi66yvs10wfxqa8s25ds25ywgrrf66acm9nbfg7zp0s";
+      sha256 = "1vq1fjp45az9hfp6fxljhdrkv75cvbab1jfrwcw738pnsiqk8zps";
       type = "gem";
     };
-    version = "1.3.0";
+    version = "1.3.1";
   };
   timeout = {
     groups = ["default" "development"];
