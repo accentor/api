@@ -66,13 +66,13 @@
 #                                 POST   /api/locations(.:format)                                                                          locations#create
 #                        location GET    /api/locations/:id(.:format)                                                                      locations#show
 #                                 DELETE /api/locations/:id(.:format)                                                                      locations#destroy
+#               add_item_playlist POST   /api/playlists/:id/add_item(.:format)                                                             playlists#add_item
 #                       playlists GET    /api/playlists(.:format)                                                                          playlists#index
 #                                 POST   /api/playlists(.:format)                                                                          playlists#create
 #                        playlist GET    /api/playlists/:id(.:format)                                                                      playlists#show
 #                                 PATCH  /api/playlists/:id(.:format)                                                                      playlists#update
 #                                 PUT    /api/playlists/:id(.:format)                                                                      playlists#update
 #                                 DELETE /api/playlists/:id(.:format)                                                                      playlists#destroy
-#                  playlist_items POST   /api/playlist_items(.:format)                                                                     playlist_items#create
 #                     stats_plays GET    /api/plays/stats(.:format)                                                                        plays#stats
 #                           plays GET    /api/plays(.:format)                                                                              plays#index
 #                                 POST   /api/plays(.:format)                                                                              plays#create
@@ -149,8 +149,11 @@ Rails.application.routes.draw do
       end
     end
     resources :locations, only: %i[index show create destroy]
-    resources :playlists
-    resources :playlist_items, only: %i[create]
+    resources :playlists do
+      member do
+        post 'add_item'
+      end
+    end
     resources :plays, only: %i[index create] do
       collection do
         get 'stats'

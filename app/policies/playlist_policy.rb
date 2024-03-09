@@ -25,7 +25,15 @@ class PlaylistPolicy < ApplicationPolicy
     update?
   end
 
+  def add_item?
+    update?
+  end
+
   def permitted_attributes
     [:name, :description, :playlist_type, { item_ids: [] }, :access]
+  end
+
+  def permitted_attributes_for_add_item
+    %i[item_id item_type]
   end
 end
