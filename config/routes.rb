@@ -66,6 +66,7 @@
 #                                 POST   /api/locations(.:format)                                                                          locations#create
 #                        location GET    /api/locations/:id(.:format)                                                                      locations#show
 #                                 DELETE /api/locations/:id(.:format)                                                                      locations#destroy
+#               add_item_playlist POST   /api/playlists/:id/add_item(.:format)                                                             playlists#add_item
 #                       playlists GET    /api/playlists(.:format)                                                                          playlists#index
 #                                 POST   /api/playlists(.:format)                                                                          playlists#create
 #                        playlist GET    /api/playlists/:id(.:format)                                                                      playlists#show
@@ -148,7 +149,11 @@ Rails.application.routes.draw do
       end
     end
     resources :locations, only: %i[index show create destroy]
-    resources :playlists
+    resources :playlists do
+      member do
+        post 'add_item'
+      end
+    end
     resources :plays, only: %i[index create] do
       collection do
         get 'stats'

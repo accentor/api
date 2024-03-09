@@ -1,5 +1,5 @@
 class PlaylistsController < ApplicationController
-  before_action :set_playlist, only: %i[show update destroy]
+  before_action :set_playlist, only: %i[show update destroy add_item]
 
   def index
     authorize Playlist
@@ -36,6 +36,12 @@ class PlaylistsController < ApplicationController
 
   def destroy
     render json: @playlist.errors, status: :unprocessable_entity unless @playlist.destroy
+  end
+
+  def add_item
+    @item = @playlist.items.create(permitted_attributes(@playlist))
+
+    render json: @item.errors, status: :unprocessable_entity unless @item.save
   end
 
   private

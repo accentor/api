@@ -134,4 +134,51 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :forbidden
   end
+
+  test 'should not add item if no user' do
+    @playlist.update(playlist_type: :track)
+    track = create(:track)
+    sign_out
+
+    assert_no_difference 'PlaylistItem.count' do
+      post add_item_playlist_url(@playlist), params: { playlist: { item_id: track.id, item_type: 'Track' } }
+    end
+
+    assert_response :unauthorized
+  end
+
+  test 'should add item in shared playlist' do
+    @playlist.update(playlist_type: :track)
+    track = create(:track)
+
+    assert_difference('PlaylistItem.count', 1) do
+      post add_item_playlist_url(@playlist), params: { playlist: { item_id: track.id, item_type: 'Track' } }
+    end
+
+    assert_response :no_content
+    assert_equal 1, PlaylistItem.last.order
+  end
+
+  test 'should add item in personal playlist that belongs to user' do
+    playlist = create(:playlist, access: :personal, playlist_type: :track, user: @user)
+    track = create(:track)
+
+    assert_difference('PlaylistItem.count', 1) do
+      post add_item_playlist_url(playlist), params: { playlist: { item_id: track.id, item_type: 'Track' } }
+    end
+
+    assert_response :no_content
+    assert_equal 1, PlaylistItem.last.order
+  end
+
+  test 'should not add item in personal playlist that does not belongs to user' do
+    playlist = create(:playlist, access: :personal, playlist_type: :track)
+    track = create(:track)
+
+    assert_no_difference 'PlaylistItem.count' do
+      post add_item_playlist_url(playlist), params: { playlist: { item_id: track.id, item_type: 'Track' } }
+    end
+
+    assert_response :forbidden
+  end
 end
