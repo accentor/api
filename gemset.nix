@@ -895,10 +895,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "09mhxf4hxi11kjlg69mfk3m36zqg19290nfl7r9y71mbxbl6qi27";
+      sha256 = "0daamn13fbm77rdwwa4w6j6221iq6091asivgdhk6n7g398frcdf";
       type = "gem";
     };
-    version = "1.62.0";
+    version = "1.62.1";
   };
   rubocop-ast = {
     dependencies = ["parser"];
@@ -928,10 +928,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1kv6jrzsd43ms7w333y4j5gsr51mjkvm0vlb4sxzbdxxm0shj3vg";
+      sha256 = "001f4xcs3p0g04cyqfdkb2i1lld0yjmnx1s11y9z2id4b2lg64c4";
       type = "gem";
     };
-    version = "0.34.5";
+    version = "0.35.0";
   };
   rubocop-rails = {
     dependencies = ["activesupport" "rack" "rubocop" "rubocop-ast"];
