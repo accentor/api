@@ -853,10 +853,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "14wnrpd1kl43ynk1wwwgv9avsw84d1lrvlfyrjy3d4h7h7ndnqzp";
+      sha256 = "0ib3cnf4yllvw070gr4bz94sbmqx3haqc5f846fsvdcs494vgxrr";
       type = "gem";
     };
-    version = "6.6.2";
+    version = "6.6.3.1";
   };
   regexp_parser = {
     groups = ["default" "development"];
