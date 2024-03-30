@@ -312,10 +312,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "183ynn9ps1m77x9a85g2fsf2z114c2hcfxka52981fvskm7n0rw3";
+      sha256 = "0r6zylqjfv0xhdxvldr0kgmnglm57nm506pcm6085f0xqa68cvnj";
       type = "gem";
     };
-    version = "1.2.9";
+    version = "1.2.11";
   };
   factory_bot = {
     dependencies = ["activesupport"];
@@ -388,10 +388,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "132dil6hl5vzjxk9diasddb7r768xd2fff9y75ahpfmvmy8rjwbd";
+      sha256 = "06v5gqgyv5kv6pbr0c42cb105g02rmxzvxv0kbzaq53v56vnvdi6";
       type = "gem";
     };
-    version = "3.26.2";
+    version = "3.27.3";
   };
   has_scope = {
     dependencies = ["actionpack" "activesupport"];
