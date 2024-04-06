@@ -388,10 +388,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "06v5gqgyv5kv6pbr0c42cb105g02rmxzvxv0kbzaq53v56vnvdi6";
+      sha256 = "08baxppp1139bm5ivjyfjcd3mm8wxg5yda1zr11vsnzj53dl5r56";
       type = "gem";
     };
-    version = "3.27.3";
+    version = "3.27.4";
   };
   has_scope = {
     dependencies = ["actionpack" "activesupport"];
@@ -842,10 +842,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1ilr853hawi09626axx0mps4rkkmxcs54mapz9jnqvpnlwd3wsmy";
+      sha256 = "17850wcwkgi30p7yqh60960ypn7yibacjjha0av78zaxwvd3ijs6";
       type = "gem";
     };
-    version = "13.1.0";
+    version = "13.2.1";
   };
   rdoc = {
     dependencies = ["psych"];
