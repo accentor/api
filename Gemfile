@@ -52,4 +52,5 @@ group :development do
   gem 'rubocop-factory_bot', '~> 2.25'
   gem 'rubocop-minitest', '~> 0.35.0'
   gem 'rubocop-rails', '~> 2.24'
+  gem 'ruby-lsp', '~> 0.16.6'
 end
