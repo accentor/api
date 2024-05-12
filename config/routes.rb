@@ -96,6 +96,7 @@
 #                          rescan GET    /api/rescans/:id(.:format)                                                                        rescans#show
 #                                 POST   /api/rescans/:id(.:format)                                                                        rescans#start
 #                                 POST   /api/rescans(.:format)                                                                            rescans#start_all
+#              rails_health_check GET    /api/up(.:format)                                                                                 rails/health#show
 #              rails_service_blob GET    /rails/active_storage/blobs/redirect/:signed_id/*filename(.:format)                               active_storage/blobs/redirect#show
 #        rails_service_blob_proxy GET    /rails/active_storage/blobs/proxy/:signed_id/*filename(.:format)                                  active_storage/blobs/proxy#show
 #                                 GET    /rails/active_storage/blobs/:signed_id/*filename(.:format)                                        active_storage/blobs/redirect#show
@@ -173,5 +174,7 @@ Rails.application.routes.draw do
     resources :rescans, only: %i[index show]
     post 'rescans/:id', to: 'rescans#start'
     post 'rescans', to: 'rescans#start_all'
+
+    get 'up', to: 'rails/health#show', as: :rails_health_check
   end
 end
