@@ -21,7 +21,7 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_response 201
+    assert_response :created
   end
 
   test 'should not create auth_token with wrong credentials' do
@@ -62,6 +62,6 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
       delete auth_token_url(auth_token)
     end
 
-    assert_response 204
+    assert_response :no_content
   end
 end

@@ -452,10 +452,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0r9jmjhg2ly3l736flk7r2al47b5c8cayh0gqkq0yhjqzc9a6zhq";
+      sha256 = "0b4qsi8gay7ncmigr0pnbxyb17y3h8kavdyhsh7nrlqwr35vb60q";
       type = "gem";
     };
-    version = "2.7.1";
+    version = "2.7.2";
   };
   jsonapi-renderer = {
     groups = ["default"];
@@ -661,10 +661,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "11r6kp8wam0nkfvnwyc1fmvky102r1vcfr84vi2p1a2wa0z32j3p";
+      sha256 = "0i0255l4pw6c1bc0ny98wx5qck25irinq062ijg4002mj8mydwvq";
       type = "gem";
     };
-    version = "3.3.0.5";
+    version = "3.3.1.0";
   };
   pg = {
     groups = ["default"];
@@ -873,10 +873,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1ndxm0xnv27p4gv6xynk6q41irckj76q1jsqpysd9h6f86hhp841";
+      sha256 = "0ik40vcv7mqigsfpqpca36hpmnx0536xa825ai5qlkv3mmkyf9ss";
       type = "gem";
     };
-    version = "2.9.0";
+    version = "2.9.2";
   };
   reline = {
     dependencies = ["io-console"];
@@ -906,10 +906,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0daamn13fbm77rdwwa4w6j6221iq6091asivgdhk6n7g398frcdf";
+      sha256 = "1zkdxkhvhmxap5w2rncpmrq40dw0pbz81sa1ivsr7kh0p8j0a9x3";
       type = "gem";
     };
-    version = "1.62.1";
+    version = "1.63.5";
   };
   rubocop-ast = {
     dependencies = ["parser"];
@@ -917,10 +917,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1v3q8n48w8h809rqbgzihkikr4g3xk72m1na7s97jdsmjjq6y83w";
+      sha256 = "063qgvqbyv354icl2sgx758z22wzq38hd9skc3n96sbpv0cdc1qv";
       type = "gem";
     };
-    version = "1.31.2";
+    version = "1.31.3";
   };
   rubocop-factory_bot = {
     dependencies = ["rubocop"];
@@ -950,10 +950,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "06dcxrr71sn0kkw8fwh0w884zbig2ilxpkl66s7lcis9jmkggv83";
+      sha256 = "13d6dmkjln887x4z161r3mnn6sqwbzawb9czk51yhrsd2n0j72pn";
       type = "gem";
     };
-    version = "2.24.1";
+    version = "2.25.0";
   };
   ruby-lsp = {
     dependencies = ["language_server-protocol" "prism" "sorbet-runtime"];

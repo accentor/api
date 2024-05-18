@@ -15,6 +15,6 @@ class Play < ApplicationRecord
 
   scope :by_album, ->(album) { where(track_id: Track.by_album(album)) }
   scope :by_artist, ->(artist) { where(track_id: Track.by_artist(artist)) }
-  scope :played_before, ->(date) { where('played_at < ?', date) }
-  scope :played_after, ->(date) { where('played_at > ?', date) }
+  scope :played_before, ->(date) { where(played_at: ...date) }
+  scope :played_after, ->(date) { where(played_at: date...) }
 end
