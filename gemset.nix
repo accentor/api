@@ -198,10 +198,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "045wzckxpwcqzrjr353cxnyaxgf0qg22jh00dcx7z38cys5g1jlr";
+      sha256 = "0pw3r2lyagsxkm71bf44v5b74f7l9r7di22brbyji9fwz791hya9";
       type = "gem";
     };
-    version = "3.2.4";
+    version = "3.3.0";
   };
   case_transform = {
     dependencies = ["activesupport"];
@@ -230,10 +230,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1kmhr3pz2nmhnq0nqlicqfwfmkzkcl835g7sw1gjjhjvhz8g2sf3";
+      sha256 = "0509i1ywnp0v5jr73jf6l53yam5pgg7skixh94v31gjswc3s5scz";
       type = "gem";
     };
-    version = "1.3.1";
+    version = "1.3.2";
   };
   connection_pool = {
     groups = ["default" "development" "test"];
@@ -388,10 +388,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "155r916jyk2d2c3mprln5bb0ggrwh7xzsj5j6i1vdw1w2158bqx9";
+      sha256 = "0wvxa3z093r27bhyzxqjai0vvcm9wz0jg1h7ay6hd5aimxrlbr4y";
       type = "gem";
     };
-    version = "3.29.2";
+    version = "3.29.3";
   };
   has_scope = {
     dependencies = ["actionpack" "activesupport"];
@@ -534,10 +534,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "149r94xi6b3jbp6bv72f8383b95ndn0p5sxnq11gs1j9jadv0ajf";
+      sha256 = "1q1f2sdw3y3y9mnym9dhjgsjr72sq975cfg5c4yx7gwv8nmzbvhk";
       type = "gem";
     };
-    version = "2.8.6";
+    version = "2.8.7";
   };
   minitest = {
     groups = ["default" "development" "test"];
@@ -884,10 +884,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "06rlp3wjcbwbgw3xlawclzzmj6ryn6ap65nh54x5yzgx0c3jlqqz";
+      sha256 = "00paka9wvnl1va70vha28pk8n17sdhp7v7c1hrbh6xv6c5vslzs6";
       type = "gem";
     };
-    version = "0.5.7";
+    version = "0.5.8";
   };
   rexml = {
     dependencies = ["strscan"];
@@ -1155,9 +1155,9 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0ayraiqfhhjzpyr4yxp035002lq78ip1zhr0ix87rn3rqpnsrn3h";
+      sha256 = "1kr2731z8f6cj23jxh67cdnpkrnnfwbrxj1hfhshls4mp8i8drmj";
       type = "gem";
     };
-    version = "2.6.14";
+    version = "2.6.15";
   };
 }
