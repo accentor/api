@@ -22,7 +22,7 @@ class TranscodedItem < ApplicationRecord
   after_destroy :delete_file
 
   def initialize(params)
-    super(params)
+    super
     self.path = random_path
   end
 
