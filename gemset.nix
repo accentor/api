@@ -477,6 +477,16 @@
     };
     version = "3.17.0.3";
   };
+  logger = {
+    groups = ["default" "development"];
+    platforms = [];
+    source = {
+      remotes = ["https://rubygems.org"];
+      sha256 = "0gpg8gzi0xwymw4aaq2iafcbx31i3xzkg3fb30mdxn1d4qhc3dqa";
+      type = "gem";
+    };
+    version = "1.6.0";
+  };
   loofah = {
     dependencies = ["crass" "nokogiri"];
     groups = ["default" "development" "test"];
@@ -681,10 +691,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0ps7lydh1jsqv02vmb1lgky80hi8wcvbv6lfybxgb9q80cx88b55";
+      sha256 = "05j9bcxdz6wfnrjn32zvdwj1qsbp88mwx3rv7g256gziya6avc2r";
       type = "gem";
     };
-    version = "0.29.0";
+    version = "0.30.0";
   };
   psych = {
     dependencies = ["stringio"];
@@ -857,6 +867,17 @@
     };
     version = "13.2.1";
   };
+  rbs = {
+    dependencies = ["logger"];
+    groups = ["default" "development"];
+    platforms = [];
+    source = {
+      remotes = ["https://rubygems.org"];
+      sha256 = "1bnb361ca6gizncs8qybfrm1m9pin2siw548pizfd5l711mrzn4f";
+      type = "gem";
+    };
+    version = "3.5.1";
+  };
   rdoc = {
     dependencies = ["psych"];
     groups = ["default" "development" "test"];
@@ -956,15 +977,15 @@
     version = "2.25.0";
   };
   ruby-lsp = {
-    dependencies = ["language_server-protocol" "prism" "sorbet-runtime"];
+    dependencies = ["language_server-protocol" "prism" "rbs" "sorbet-runtime"];
     groups = ["development"];
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "05in6flpwlvbiy72651ncr87jw3qva37gzn2rg68vn9a6l28i1z1";
+      sha256 = "0n9abpvcq2zhjzygss07sscavj6dvzj2azdiya2d7prf7nzjxb4g";
       type = "gem";
     };
-    version = "0.17.2";
+    version = "0.17.3";
   };
   ruby-progressbar = {
     groups = ["default" "development"];
@@ -1033,10 +1054,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0ziys3ypc56l08jk9inj5svlnxnjh3ccwy5fvfsm7lcfnwpjpfjm";
+      sha256 = "1167sniy4kxy2hp5yqpn5yxsvjqsfflb90van51521kdsi8pl8nh";
       type = "gem";
     };
-    version = "0.5.11422";
+    version = "0.5.11435";
   };
   stringio = {
     groups = ["default" "development" "test"];
