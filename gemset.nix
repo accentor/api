@@ -565,10 +565,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "022442h234f8b129gri8nm4ga19sxb6lz8k0m5krpzlsc7p2xbzk";
+      sha256 = "1bzpqxmk8h9pr0m6knryjd0dgmmyg0bwrksp3rqhrdxpaa3ddr6s";
       type = "gem";
     };
-    version = "2.3.0";
+    version = "2.4.0";
   };
   msgpack = {
     groups = ["default"];
