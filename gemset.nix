@@ -539,6 +539,16 @@
     };
     version = "1.1.5";
   };
+  mini_portile2 = {
+    groups = ["default" "development" "test"];
+    platforms = [];
+    source = {
+      remotes = ["https://rubygems.org"];
+      sha256 = "1q1f2sdw3y3y9mnym9dhjgsjr72sq975cfg5c4yx7gwv8nmzbvhk";
+      type = "gem";
+    };
+    version = "2.8.7";
+  };
   minitest = {
     groups = ["default" "development" "test"];
     platforms = [];
@@ -635,7 +645,7 @@
     version = "2.7.3";
   };
   nokogiri = {
-    dependencies = ["racc"];
+    dependencies = ["mini_portile2" "racc"];
     groups = ["default" "development" "test"];
     platforms = [];
     source = {
