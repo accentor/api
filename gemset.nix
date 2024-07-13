@@ -539,16 +539,6 @@
     };
     version = "1.1.5";
   };
-  mini_portile2 = {
-    groups = ["default" "development" "test"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "1q1f2sdw3y3y9mnym9dhjgsjr72sq975cfg5c4yx7gwv8nmzbvhk";
-      type = "gem";
-    };
-    version = "2.8.7";
-  };
   minitest = {
     groups = ["default" "development" "test"];
     platforms = [];
@@ -645,7 +635,7 @@
     version = "2.7.3";
   };
   nokogiri = {
-    dependencies = ["mini_portile2" "racc"];
+    dependencies = ["racc"];
     groups = ["default" "development" "test"];
     platforms = [];
     source = {
@@ -873,10 +863,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1bnb361ca6gizncs8qybfrm1m9pin2siw548pizfd5l711mrzn4f";
+      sha256 = "1fzk0a3d68fglnkwpaz07npi929y1kh2hh1j63y04943vvshyjmc";
       type = "gem";
     };
-    version = "3.5.1";
+    version = "3.5.2";
   };
   rdoc = {
     dependencies = ["psych"];
@@ -982,10 +972,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "04z280c4mimfwpfgcw2j6b13g1vni0cnrfgwjs9bgkzm95m1vsj9";
+      sha256 = "1kvyk0cald1cw6fqxy5w68la1gnc1nv2mqx8myijjsbcf9npjbp8";
       type = "gem";
     };
-    version = "0.17.4";
+    version = "0.17.7";
   };
   ruby-progressbar = {
     groups = ["default" "development"];
@@ -1054,10 +1044,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1l21hnf5ccmihy2dfj2d7xgbx7fdfri4yxs97mn46q7fdw448r28";
+      sha256 = "122702d5cmrbaydcqfjksh1d78g0mq69h77zd4yljwjrc50jz70b";
       type = "gem";
     };
-    version = "0.5.11444";
+    version = "0.5.11481";
   };
   stringio = {
     groups = ["default" "development" "test"];
