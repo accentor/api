@@ -15,7 +15,7 @@ gem 'active_model_serializers', '~> 0.10'
 gem 'bcrypt', '~> 3.1'
 
 # Use GoodJob as our Active Job queue adapter
-gem 'good_job', '~> 3.30'
+gem 'good_job', '~> 4.0'
 
 gem 'wahwah', '~> 1.6.2'
 
