@@ -27,7 +27,7 @@ gem 'will_paginate', '~> 4.0'
 gem 'image_processing', '~> 1.13.0'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '~> 1.18.3', require: false
+gem 'bootsnap', '~> 1.18.4', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors', '~> 2.0'
