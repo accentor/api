@@ -15,8 +15,8 @@ class Playlist < ApplicationRecord
   belongs_to :user
   has_many :items, class_name: 'PlaylistItem', dependent: :destroy
 
-  enum access: { shared: 0, personal: 1, secret: 2 }
-  enum playlist_type: { album: 0, artist: 1, track: 2 }
+  enum :access, { shared: 0, personal: 1, secret: 2 }
+  enum :playlist_type, { album: 0, artist: 1, track: 2 }
 
   scope :with_item_ids, lambda {
     left_joins(:items)
