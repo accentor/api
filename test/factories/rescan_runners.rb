@@ -12,6 +12,7 @@
 #
 FactoryBot.define do
   factory :rescan_runner do
+    finished_at { 1.minute.ago }
     location
   end
 end

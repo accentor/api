@@ -26,7 +26,9 @@ class RescanRunnerTest < ActiveSupport::TestCase
 
   test 'schedule should create a job' do
     prev = @runner.finished_at
-    @runner.schedule
+    perform_enqueued_jobs do
+      @runner.schedule
+    end
     @runner.reload
 
     assert_not_equal prev, @runner.finished_at
@@ -45,7 +47,11 @@ class RescanRunnerTest < ActiveSupport::TestCase
     create_list(:rescan_runner, 3)
 
     prev = RescanRunner.all.map(&:finished_at)
-    RescanRunner.schedule_all
+
+    perform_enqueued_jobs do
+      RescanRunner.schedule_all
+    end
+
     after = RescanRunner.all.map(&:finished_at)
 
     prev.each_with_index do |time, i|
