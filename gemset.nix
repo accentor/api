@@ -1125,10 +1125,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1lgzisbcxqzar4nynmdpjzkihdjmllyc2i8wb9vlmhaiy8z20hav";
+      sha256 = "0vsb133gyz8xlz6b7xrbybf2w32x8k1h3sy7jmfcg8p48vcvv7cd";
       type = "gem";
     };
-    version = "1.6.2";
+    version = "1.6.4";
   };
   webrick = {
     groups = ["default" "development" "test"];
