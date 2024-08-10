@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '~> 3.3.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.1'
+gem 'rails', '~> 7.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.2.3', '< 2.0'
 # Use Puma as the app server
@@ -48,10 +48,12 @@ group :development, :test do
 end
 
 group :development do
-  gem 'annotate', '~> 3.2' # Remove workaround in lib/tasks/annotate.rb when https://github.com/ctran/annotate_models/issues/696 is fixed
-  gem 'rubocop', '~> 1.65'
-  gem 'rubocop-factory_bot', '~> 2.26'
-  gem 'rubocop-minitest', '~> 0.35.1'
-  gem 'rubocop-rails', '~> 2.25'
-  gem 'ruby-lsp', '~> 0.17.12'
+  gem 'annotate', '~> 3.2', require: false # Remove workaround in lib/tasks/annotate.rb when https://github.com/ctran/annotate_models/issues/696 is fixed
+  gem 'rubocop', '~> 1.65', require: false
+  gem 'rubocop-factory_bot', '~> 2.26', require: false
+  gem 'rubocop-minitest', '~> 0.35.1', require: false
+  gem 'rubocop-rails', '~> 2.25', require: false
+  gem 'ruby-lsp', '~> 0.17.12', require: false
+
+  gem 'brakeman', require: false
 end

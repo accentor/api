@@ -9,7 +9,7 @@
 #
 
 class User < ApplicationRecord
-  enum permission: { user: 0, moderator: 1, admin: 2 }
+  enum :permission, { user: 0, moderator: 1, admin: 2 }
 
   has_secure_password
 
