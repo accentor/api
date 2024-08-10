@@ -26,21 +26,21 @@ class ArtistSerializer < ActiveModel::Serializer
     return nil if object.image.blank?
     return nil unless object.image.image.variable?
 
-    rails_representation_url(object.image.image.variant(resize_to_limit: [100, 100]), **scope)
+    rails_representation_url(object.image.image.variant(resize_to_cover: [100, 100]), **scope)
   end
 
   def image250
     return nil if object.image.blank?
     return nil unless object.image.image.variable?
 
-    rails_representation_url(object.image.image.variant(resize_to_limit: [250, 250]), **scope)
+    rails_representation_url(object.image.image.variant(resize_to_cover: [250, 250]), **scope)
   end
 
   def image500
     return nil if object.image.blank?
     return nil unless object.image.image.variable?
 
-    rails_representation_url(object.image.image.variant(resize_to_limit: [500, 500]), **scope)
+    rails_representation_url(object.image.image.variant(resize_to_cover: [500, 500]), **scope)
   end
 
   def image_type
