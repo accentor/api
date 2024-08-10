@@ -47,4 +47,7 @@ jobs:
       env:
         RAILS_ENV: "test"
       run: |
-        bundle exec rubocop -c .rubocop.yml
+        bundle exec rubocop -c .rubocop.yml -f github
+    - name: Scan with brakeman
+      run: |
+        bundle exec brakeman --no-pager

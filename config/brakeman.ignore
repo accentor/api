@@ -1,0 +1,29 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "4cca0972cd94dfed36bd9c5de56d9194b5f9fa2df9cea101e054130f95d5556f",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/tracks_controller.rb",
+      "line": 85,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(Track.find(params[:id]).audio_file.full_path)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TracksController",
+        "method": "download"
+      },
+      "user_input": "Track.find(params[:id]).audio_file.full_path",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": "The attribute is not configurable by users, but rather set by the scan job"
+    }
+  ],
+  "updated": "2024-08-10 11:14:43 +0200",
+  "brakeman_version": "6.1.2"
+}

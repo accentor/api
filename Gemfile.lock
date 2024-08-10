@@ -85,6 +85,8 @@ GEM
     bigdecimal (3.1.8)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
+    brakeman (6.1.2)
+      racc
     builder (3.3.0)
     case_transform (0.2)
       activesupport
@@ -296,6 +298,7 @@ DEPENDENCIES
   annotate (~> 3.2)
   bcrypt (~> 3.1)
   bootsnap (~> 1.18.4)
+  brakeman
   codecov (~> 0.6.0)
   debug (~> 1.9)
   factory_bot_rails (~> 6.4)
@@ -323,4 +326,4 @@ RUBY VERSION
    ruby 3.3.0p0
 
 BUNDLED WITH
-   2.5.9
+   2.5.11

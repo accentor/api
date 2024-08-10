@@ -48,10 +48,12 @@ group :development, :test do
 end
 
 group :development do
-  gem 'annotate', '~> 3.2' # Remove workaround in lib/tasks/annotate.rb when https://github.com/ctran/annotate_models/issues/696 is fixed
-  gem 'rubocop', '~> 1.65'
-  gem 'rubocop-factory_bot', '~> 2.26'
-  gem 'rubocop-minitest', '~> 0.35.1'
-  gem 'rubocop-rails', '~> 2.25'
-  gem 'ruby-lsp', '~> 0.17.12'
+  gem 'annotate', '~> 3.2', require: false # Remove workaround in lib/tasks/annotate.rb when https://github.com/ctran/annotate_models/issues/696 is fixed
+  gem 'rubocop', '~> 1.65', require: false
+  gem 'rubocop-factory_bot', '~> 2.26', require: false
+  gem 'rubocop-minitest', '~> 0.35.1', require: false
+  gem 'rubocop-rails', '~> 2.25', require: false
+  gem 'ruby-lsp', '~> 0.17.12', require: false
+
+  gem 'brakeman', require: false
 end
