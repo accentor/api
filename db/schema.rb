@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_06_100659) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_17_081958) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -107,6 +107,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_06_100659) do
     t.string "device_id", null: false
     t.string "hashed_secret", null: false
     t.string "user_agent", null: false
+    t.string "application"
     t.index ["device_id"], name: "index_auth_tokens_on_device_id", unique: true
     t.index ["user_id"], name: "index_auth_tokens_on_user_id"
   end

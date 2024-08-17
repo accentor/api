@@ -3,6 +3,7 @@
 # Table name: auth_tokens
 #
 #  id            :bigint           not null, primary key
+#  application   :string
 #  hashed_secret :string           not null
 #  user_agent    :string           not null
 #  device_id     :string           not null
