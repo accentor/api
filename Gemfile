@@ -17,7 +17,7 @@ gem 'bcrypt', '~> 3.1'
 # Use GoodJob as our Active Job queue adapter
 gem 'good_job', '~> 4.1'
 
-gem 'wahwah', '~> 1.6.4'
+gem 'wahwah', '~> 1.6.6'
 
 gem 'has_scope', '~> 0.8'
 gem 'pundit', '~> 2.3'

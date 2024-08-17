@@ -282,7 +282,7 @@ GEM
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
     useragent (0.16.10)
-    wahwah (1.6.4)
+    wahwah (1.6.6)
     webrick (1.8.1)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -319,7 +319,7 @@ DEPENDENCIES
   ruby-lsp (~> 0.17.12)
   simplecov (~> 0.21)
   tzinfo-data
-  wahwah (~> 1.6.4)
+  wahwah (~> 1.6.6)
   will_paginate (~> 4.0)
 
 RUBY VERSION
