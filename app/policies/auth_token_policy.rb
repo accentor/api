@@ -22,6 +22,6 @@ class AuthTokenPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:user_agent]
+    %i[user_agent application]
   end
 end
