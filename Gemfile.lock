@@ -179,7 +179,7 @@ GEM
       stringio
     puma (6.4.2)
       nio4r (~> 2.0)
-    pundit (2.3.2)
+    pundit (2.4.0)
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.1)
@@ -309,7 +309,7 @@ DEPENDENCIES
   mocha (~> 2.4.5)
   pg (>= 1.2.3, < 2.0)
   puma (~> 6.4)
-  pundit (~> 2.3)
+  pundit (~> 2.4)
   rack-cors (~> 2.0)
   rails (~> 7.2)
   rubocop (~> 1.65)
