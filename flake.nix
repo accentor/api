@@ -6,10 +6,7 @@
     flake-utils.url = "github:numtide/flake-utils";
     devshell = {
       url = "github:numtide/devshell";
-      inputs = {
-        flake-utils.follows = "flake-utils";
-        nixpkgs.follows = "nixpkgs";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -31,7 +28,7 @@
           default = accentor-api;
           accentor-api = pkgs.stdenv.mkDerivation rec {
             pname = "accentor-api";
-            version = "0.20.0";
+            version = "0.21.0";
 
             src = pkgs.lib.cleanSourceWith { filter = name: type: !(builtins.elem name [ ".github" "flake.lock" "flake.nix" ]); src = ./.; name = "source"; };
 
