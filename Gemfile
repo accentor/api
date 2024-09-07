@@ -49,9 +49,9 @@ end
 
 group :development do
   gem 'annotate', '~> 3.2', require: false # Remove workaround in lib/tasks/annotate.rb when https://github.com/ctran/annotate_models/issues/696 is fixed
-  gem 'rubocop', '~> 1.65', require: false
+  gem 'rubocop', '~> 1.66', require: false
   gem 'rubocop-factory_bot', '~> 2.26', require: false
-  gem 'rubocop-minitest', '~> 0.35.1', require: false
+  gem 'rubocop-minitest', '~> 0.36.0', require: false
   gem 'rubocop-rails', '~> 2.26', require: false
   gem 'ruby-lsp', '~> 0.17.17', require: false
 
