@@ -489,14 +489,14 @@
     version = "3.17.0.3";
   };
   logger = {
-    groups = ["default" "development"];
+    groups = ["default" "development" "test"];
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0gpg8gzi0xwymw4aaq2iafcbx31i3xzkg3fb30mdxn1d4qhc3dqa";
+      sha256 = "0lwncq2rf8gm79g2rcnnyzs26ma1f4wnfjm6gs4zf2wlsdz5in9s";
       type = "gem";
     };
-    version = "1.6.0";
+    version = "1.6.1";
   };
   loofah = {
     dependencies = ["crass" "nokogiri"];
@@ -961,10 +961,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "090m01vsmykc4byrmxfsxdh9qyggfdlll9la5vh8s5q7kbyhjnwv";
+      sha256 = "1z1a29nalwvg1jgbx1gi3347alk1qsmaqr8bsfg600g2pp25ivvq";
       type = "gem";
     };
-    version = "2.26.0";
+    version = "2.26.1";
   };
   ruby-lsp = {
     dependencies = ["language_server-protocol" "prism" "rbs" "sorbet-runtime"];
@@ -1105,10 +1105,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1d0azx233nags5jx3fqyr23qa2rhgzbhv8pxp46dgbg1mpf82xky";
+      sha256 = "0nkz7fadlrdbkf37m0x7sw8bnz8r355q3vwcfb9f9md6pds9h9qj";
       type = "gem";
     };
-    version = "2.5.0";
+    version = "2.6.0";
   };
   useragent = {
     groups = ["default" "development" "test"];
