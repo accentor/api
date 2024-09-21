@@ -7,8 +7,8 @@ SimpleCov.start 'rails' do
 end
 
 if ENV['CI'].present?
-  require 'codecov'
-  SimpleCov.formatter = SimpleCov::Formatter::Codecov
+  require 'simplecov-cobertura'
+  SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
 end
 
 require_relative '../config/environment'
