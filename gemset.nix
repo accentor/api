@@ -225,17 +225,6 @@
     };
     version = "0.2";
   };
-  codecov = {
-    dependencies = ["simplecov"];
-    groups = ["test"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "1pi2dmqxjw5wsn65yx5qz5ks5msqflj0zxvk11r3cxwgacvj3hys";
-      type = "gem";
-    };
-    version = "0.6.0";
-  };
   concurrent-ruby = {
     groups = ["default" "development" "test"];
     platforms = [];
@@ -911,6 +900,16 @@
     };
     version = "0.5.10";
   };
+  rexml = {
+    groups = ["default" "test"];
+    platforms = [];
+    source = {
+      remotes = ["https://rubygems.org"];
+      sha256 = "09shc1dvg88c4yx83d4c9wf26z838nlapa3cmlq8iqdci39a98v2";
+      type = "gem";
+    };
+    version = "3.3.7";
+  };
   rubocop = {
     dependencies = ["json" "language_server-protocol" "parallel" "parser" "rainbow" "regexp_parser" "rubocop-ast" "ruby-progressbar" "unicode-display_width"];
     groups = ["development"];
@@ -1028,6 +1027,17 @@
       type = "gem";
     };
     version = "0.21.2";
+  };
+  simplecov-cobertura = {
+    dependencies = ["rexml" "simplecov"];
+    groups = ["test"];
+    platforms = [];
+    source = {
+      remotes = ["https://rubygems.org"];
+      sha256 = "00izmp202y48qvmvwrh5x56cc5ivbjhgkkkjklvqmqzj9pik4r9c";
+      type = "gem";
+    };
+    version = "2.1.0";
   };
   simplecov-html = {
     groups = ["default" "test"];
