@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_21_132403) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_04_230124) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -124,15 +124,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_21_132403) do
     t.string "mimetype", null: false
     t.string "extension", null: false
     t.index ["extension"], name: "index_codecs_on_extension", unique: true
-  end
-
-  create_table "content_lengths", force: :cascade do |t|
-    t.bigint "audio_file_id", null: false
-    t.bigint "codec_conversion_id", null: false
-    t.integer "length", null: false
-    t.index ["audio_file_id", "codec_conversion_id"], name: "index_content_lengths_on_audio_file_id_and_codec_conversion_id", unique: true
-    t.index ["audio_file_id"], name: "index_content_lengths_on_audio_file_id"
-    t.index ["codec_conversion_id"], name: "index_content_lengths_on_codec_conversion_id"
   end
 
   create_table "cover_filenames", force: :cascade do |t|
@@ -336,16 +327,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_21_132403) do
   end
 
   create_table "transcoded_items", force: :cascade do |t|
-    t.string "path", null: false
-    t.datetime "last_used", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.bigint "audio_file_id", null: false
     t.bigint "codec_conversion_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uuid", null: false
     t.index ["audio_file_id", "codec_conversion_id"], name: "index_transcoded_items_on_audio_file_id_and_codec_conversion_id", unique: true
     t.index ["audio_file_id"], name: "index_transcoded_items_on_audio_file_id"
+    t.index ["codec_conversion_id", "uuid"], name: "index_transcoded_items_on_codec_conversion_id_and_uuid", unique: true
     t.index ["codec_conversion_id"], name: "index_transcoded_items_on_codec_conversion_id"
-    t.index ["path"], name: "index_transcoded_items_on_path", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -367,8 +357,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_21_132403) do
   add_foreign_key "audio_files", "locations"
   add_foreign_key "auth_tokens", "users"
   add_foreign_key "codec_conversions", "codecs", column: "resulting_codec_id"
-  add_foreign_key "content_lengths", "audio_files"
-  add_foreign_key "content_lengths", "codec_conversions"
   add_foreign_key "genres_tracks", "genres"
   add_foreign_key "genres_tracks", "tracks"
   add_foreign_key "images", "image_types"

@@ -3,43 +3,48 @@
 # Table name: transcoded_items
 #
 #  id                  :bigint           not null, primary key
-#  last_used           :datetime         not null
-#  path                :string           not null
+#  uuid                :string           not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  audio_file_id       :bigint           not null
 #  codec_conversion_id :bigint           not null
 #
 class TranscodedItem < ApplicationRecord
-  BASE_PATH = Rails.configuration.transcode_cache_path
+  BASE_PATH = Rails.configuration.transcode_storage_path
 
   belongs_to :audio_file
   belongs_to :codec_conversion
 
-  validates :path, presence: true, uniqueness: true
+  validates :audio_file_id, uniqueness: { scope: :codec_conversion_id }
+  validates :uuid, presence: true, uniqueness: { scope: :codec_conversion_id }
 
-  after_create -> { ConvertTranscodeJob.perform_later(self) }
-  after_destroy :delete_file
+  # Be careful when adding destroy callbacks! For performance reasons
+  # CodecConversion#destroy/CodecConversion#update ignore these (and take care
+  # of deleting the relevant files themselves).
+  after_commit :delete_file, on: :destroy
 
-  def initialize(params)
-    super
-    self.path = random_path
+  delegate :mimetype, to: :codec_conversion
+
+  def path
+    self.class.path_for(codec_conversion, uuid)
   end
 
-  def do_conversion
-    tmppath = random_path
-    FileUtils.mkdir_p Pathname.new(tmppath).parent
-    File.open(tmppath, 'w') { |f| IO.copy_stream(audio_file.convert(codec_conversion), f) }
-    FileUtils.mkdir_p Pathname.new(path).parent
-    FileUtils.mv(tmppath, path)
+  def self.uuid_for(codec_conversion)
+    loop do
+      uuid = SecureRandom.uuid
+      return uuid unless TranscodedItem.exists?(codec_conversion:, uuid:)
+    end
+  end
+
+  def self.codec_conversion_base_path(codec_conversion)
+    File.join(BASE_PATH, codec_conversion.id.to_s)
+  end
+
+  def self.path_for(codec_conversion, uuid)
+    File.join(codec_conversion_base_path(codec_conversion), uuid[0..1], uuid[2..3], uuid)
   end
 
   private
-
-  def random_path
-    uuid = SecureRandom.uuid
-    File.join(BASE_PATH, uuid[0..1], uuid[2..3], uuid)
-  end
 
   def delete_file
     FileUtils.rm_f path

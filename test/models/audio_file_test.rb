@@ -22,23 +22,14 @@ class AudioFileTest < ActiveSupport::TestCase
   end
 
   test 'convert should not crash' do
-    stdin = StringIO.new
-    stdout = StringIO.new Rails.root.join('test/files/base.flac').read
-    Open3.stubs(:popen2).returns([stdin, stdout, 0])
-    ret_out = @audio_file.convert(create(:codec_conversion))
+    codec_conversion = create(:codec_conversion)
 
-    assert_predicate stdin, :closed?
-    assert_equal stdout, ret_out
-  end
+    path = TranscodedItem.path_for(codec_conversion, SecureRandom.uuid)
 
-  test 'convert should not write to stdin' do
-    stdin = StringIO.new
-    stdout = StringIO.new Rails.root.join('test/files/base.flac').read
-    Open3.stubs(:popen2).returns([stdin, stdout, 0])
-    ret_out = @audio_file.convert(create(:codec_conversion))
+    Open3.stubs(:popen2).once.with do |*args, **kwargs|
+      args.include?('ffmpeg') && args.include?(@audio_file.full_path) && args[-1] == path && kwargs.key?(:err)
+    end
 
-    assert_predicate stdin, :closed?
-    assert_equal '', stdin.string
-    assert_equal stdout, ret_out
+    @audio_file.convert(codec_conversion, path)
   end
 end

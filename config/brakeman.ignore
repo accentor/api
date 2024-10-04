@@ -3,11 +3,34 @@
     {
       "warning_type": "File Access",
       "warning_code": 16,
+      "fingerprint": "1234149990ced2f918f21be30d850427bfdd49bae163b4bc966e370a1a1df78f",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/models/codec_conversion.rb",
+      "line": 35,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "FileUtils.rm_rf(TranscodedItem.codec_conversion_base_path(self))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "CodecConversion",
+        "method": "delete_transcoded_item_files"
+      },
+      "user_input": "TranscodedItem.codec_conversion_base_path(self)",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": "Attribute is never set by user"
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
       "fingerprint": "4cca0972cd94dfed36bd9c5de56d9194b5f9fa2df9cea101e054130f95d5556f",
       "check_name": "SendFile",
       "message": "Model attribute used in file name",
       "file": "app/controllers/tracks_controller.rb",
-      "line": 85,
+      "line": 78,
       "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
       "code": "send_file(Track.find(params[:id]).audio_file.full_path)",
       "render_path": null,
@@ -22,8 +45,54 @@
         22
       ],
       "note": "The attribute is not configurable by users, but rather set by the scan job"
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "59e792a2f517205c25eb262cdac551caaed445b8bda3f581f575edd599afdd17",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/create_transcoded_item_job.rb",
+      "line": 10,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "FileUtils.mkdir_p(Pathname.new(TranscodedItem.path_for(codec_conversion, TranscodedItem.uuid_for(codec_conversion))).parent)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "CreateTranscodedItemJob",
+        "method": "perform"
+      },
+      "user_input": "TranscodedItem.path_for(codec_conversion, TranscodedItem.uuid_for(codec_conversion))",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": "This is never set by a user"
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "8feeb482e779274a005699dc3b1686e6d497d928be7c6508c58fcac32ccdab6f",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/create_transcoded_item_job.rb",
+      "line": 16,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "FileUtils.rm_f(TranscodedItem.path_for(codec_conversion, TranscodedItem.uuid_for(codec_conversion)))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "CreateTranscodedItemJob",
+        "method": "perform"
+      },
+      "user_input": "TranscodedItem.path_for(codec_conversion, TranscodedItem.uuid_for(codec_conversion))",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": "This is never set by a user"
     }
   ],
-  "updated": "2024-08-10 11:14:43 +0200",
-  "brakeman_version": "6.1.2"
+  "updated": "2024-10-06 17:38:18 +0200",
+  "brakeman_version": "6.2.1"
 }

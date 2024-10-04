@@ -57,22 +57,15 @@ class TracksController < ApplicationController
     raise ActiveRecord::RecordNotFound.new('codec_conversion does not exist', 'codec_conversion') if conversion.nil? && params[:codec_conversion_id].present?
 
     if conversion.present?
-      item = TranscodedItem.find_by(audio_file:, codec_conversion: conversion)
-      if item.present? && File.exist?(item.path)
-        item.update(last_used: Time.current)
-        audio_with_file(item.path, item.codec_conversion.resulting_codec.mimetype)
-      else
-        if item.present?
-          # Maybe the file was lost, maybe the transcode just hadn't finished
-          # yet. Anyway, doing the transcode again doesn't really hurt.
-          ConvertTranscodeJob.perform_later(item)
-        else
-          TranscodedItem.create(audio_file:, codec_conversion: conversion)
-        end
-        # AudioFile will only do the conversion if the `ContentLength` doesn't exist yet.
-        content_length = audio_file.calc_audio_length(conversion)
-        audio_with_stream(audio_file.convert(conversion), conversion.resulting_codec.mimetype, content_length.length)
+      transcoded_item = TranscodedItem.find_by(audio_file:, codec_conversion: conversion)
+      unless transcoded_item.present? && File.exist?(transcoded_item.path)
+        transcoded_item.destroy! if transcoded_item.present? # The file was lost. This shouldn't happen, so delete the item
+
+        # This does the conversion inline
+        CreateTranscodedItemJob.perform_now(audio_file, conversion)
+        transcoded_item = TranscodedItem.find_by(audio_file:, codec_conversion: conversion)
       end
+      audio_with_file(transcoded_item.path, transcoded_item.mimetype)
     else
       audio_with_file(audio_file.full_path, audio_file.codec.mimetype)
     end

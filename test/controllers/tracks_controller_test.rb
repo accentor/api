@@ -272,6 +272,12 @@ end
 class TracksControllerAudioTest < ActionDispatch::IntegrationTest
   setup do
     sign_in_as(create(:user))
+    AudioFile.alias_method :old_convert, :convert
+    AudioFile.define_method :convert, ->(_codec_conversion, out_file_name) { FileUtils.cp full_path, out_file_name }
+  end
+
+  teardown do
+    AudioFile.alias_method :convert, :old_convert
   end
 
   test 'should return not_found if codec_conversion does not exit ' do
@@ -285,51 +291,46 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create transcoded_item if codec_conversion is present' do
-    io = StringIO.new Rails.root.join('test/files/base.flac').read
-    AudioFile.any_instance.stubs(:convert).returns(io)
     mp3 = Codec.create(mimetype: 'audio/mpeg', extension: 'mp3')
     codec_conversion = CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
     location = Location.create(path: Rails.root.join('test/files'))
     flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
     audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
     perform_enqueued_jobs
-    length = audio_file.content_lengths.find_by(codec_conversion:).length
+    TranscodedItem.destroy_all
     track = create(:track, audio_file:)
 
     assert_difference('TranscodedItem.count', 1) do
       get audio_track_url(track, codec_conversion_id: codec_conversion.id)
     end
 
-    assert_equal length.to_s, response.headers['content-length']
+    transcoded_item = TranscodedItem.find_by(audio_file:, codec_conversion:)
+
+    assert_equal File.open(transcoded_item.path).size.to_s, response.headers['content-length']
     assert_match 'audio/mpeg', response.headers['content-type']
 
     assert_response :success
   end
 
-  test 'should not create transcoded_item if it already exists but should queue if file is gone' do
-    io = StringIO.new Rails.root.join('test/files/base.flac').read
-    AudioFile.any_instance.stubs(:convert).returns(io)
+  test 'should create transcoded_item if it already exists but file is gone' do
     codec_conversion = create(:codec_conversion)
     location = Location.create(path: Rails.root.join('test/files'))
     flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
     audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
     track = create(:track, audio_file:)
-    transcode = TranscodedItem.create(audio_file:, codec_conversion:)
     perform_enqueued_jobs
+    transcode = TranscodedItem.find_by(audio_file:, codec_conversion:)
     File.delete(transcode.path)
 
-    assert_enqueued_jobs 1 do
-      assert_difference('TranscodedItem.count', 0) do
-        get audio_track_url(track, codec_conversion_id: codec_conversion.id)
-      end
+    assert_difference('TranscodedItem.count', 0) do
+      get audio_track_url(track, codec_conversion_id: codec_conversion.id)
     end
+    assert_nil TranscodedItem.find_by(id: transcode.id)
 
     assert_response :success
   end
 
   test 'should not create transcoded_item if it already exists' do
-    io = StringIO.new Rails.root.join('test/files/base.flac').read
-    AudioFile.any_instance.stubs(:convert).returns(io)
     codec_conversion = create(:codec_conversion)
     location = Location.create(path: Rails.root.join('test/files'))
     flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
@@ -345,15 +346,14 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
   end
 
   test 'should return correct headers for range request' do
-    io = StringIO.new Rails.root.join('test/files/base.flac').read
-    AudioFile.any_instance.stubs(:convert).returns(io)
     mp3 = Codec.create(mimetype: 'audio/mpeg', extension: 'mp3')
     codec_conversion = CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
     location = Location.create(path: Rails.root.join('test/files'))
     flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
     audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
     perform_enqueued_jobs
-    length = audio_file.content_lengths.find_by(codec_conversion:).length
+    transcoded_item = TranscodedItem.find_by(audio_file:, codec_conversion:)
+    length = File.open(transcoded_item.path).size
     track = create(:track, audio_file:)
 
     get(audio_track_url(track, codec_conversion_id: codec_conversion.id), headers: { range: 'bytes=150-500' })
@@ -366,15 +366,14 @@ class TracksControllerAudioTest < ActionDispatch::IntegrationTest
   end
 
   test 'accepts range request without end' do
-    io = StringIO.new Rails.root.join('test/files/base.flac').read
-    AudioFile.any_instance.stubs(:convert).returns(io)
     mp3 = Codec.create(mimetype: 'audio/mpeg', extension: 'mp3')
     codec_conversion = CodecConversion.create(name: 'MP3 (V0)', ffmpeg_params: '-acodec mp3 -q:a 0', resulting_codec: mp3)
     location = Location.create(path: Rails.root.join('test/files'))
     flac = Codec.create(mimetype: 'audio/flac', extension: 'flac')
     audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
     perform_enqueued_jobs
-    length = audio_file.content_lengths.find_by(codec_conversion:).length
+    transcoded_item = TranscodedItem.find_by(audio_file:, codec_conversion:)
+    length = File.open(transcoded_item.path).size
     track = create(:track, audio_file:)
 
     get(audio_track_url(track, codec_conversion_id: codec_conversion.id), headers: { range: 'bytes=150-' })
