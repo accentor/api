@@ -36,13 +36,6 @@ class AudioFile < ApplicationRecord
     false
   end
 
-  def check_file_attributes
-    return unless check_self
-
-    tag = WahWah.open(full_path)
-    update(length: tag.duration, bitrate: tag.bitrate || 0, sample_rate: tag.sample_rate || 0, bit_depth: tag.bit_depth || 0)
-  end
-
   def convert(codec_conversion)
     parameters = codec_conversion.ffmpeg_params.split
     stdin, stdout, = Open3.popen2(

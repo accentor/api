@@ -21,16 +21,6 @@ class AudioFileTest < ActiveSupport::TestCase
     @audio_file = AudioFile.create(bitrate: 0, filename: 'base.flac', length: 100, codec:, location:, sample_rate: 0, bit_depth: 0)
   end
 
-  test 'check_file should add sample_rate and bit_depth' do
-    @audio_file.check_file_attributes
-    @audio_file.reload
-
-    assert_equal 48_000, @audio_file.sample_rate
-    assert_equal 16, @audio_file.bit_depth
-    assert_equal 768, @audio_file.bitrate
-    assert_equal 0, @audio_file.length
-  end
-
   test 'convert should not crash' do
     stdin = StringIO.new
     stdout = StringIO.new Rails.root.join('test/files/base.flac').read
