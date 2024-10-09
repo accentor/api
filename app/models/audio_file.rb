@@ -46,7 +46,10 @@ class AudioFile < ApplicationRecord
       '-map', 'a',
       out_file_name,
       err: [Rails.configuration.ffmpeg_log_location, 'a']
-    )
+    ) do |_stdin, _stdout, _wait_thr|
+      # We call `Open3.popen2` with an empty block, so the process finishes before we return
+      # This returns `Process::Status`
+    end
   end
 
   def full_path
