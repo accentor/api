@@ -10,20 +10,28 @@
 
 class CodecConversion < ApplicationRecord
   belongs_to :resulting_codec, class_name: 'Codec'
-  has_many :content_lengths, dependent: :destroy
-  has_many :transcoded_items, dependent: :destroy
+
+  has_many :transcoded_items, dependent: :delete_all
 
   validates :name, presence: true, uniqueness: true
   validates :ffmpeg_params, presence: true
 
   scope :by_codec, ->(codec) { where(resulting_codec: codec) }
 
-  after_save :queue_content_length_calculations
+  before_destroy :delete_transcoded_item_files
+  after_save :reset_transcoded_items
 
-  def queue_content_length_calculations
-    ContentLength.where(codec_conversion: self).destroy_all
-    AudioFile.find_each do |af|
-      CalculateContentLengthJob.perform_later(af, self)
-    end
+  delegate :mimetype, to: :resulting_codec
+
+  def reset_transcoded_items
+    transcoded_items.delete_all
+    delete_transcoded_item_files
+    QueueTranscodedItemsForCodecConversionJob.perform_later(self)
+  end
+
+  private
+
+  def delete_transcoded_item_files
+    FileUtils.rm_rf TranscodedItem.codec_conversion_base_path(self)
   end
 end

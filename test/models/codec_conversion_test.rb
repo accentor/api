@@ -11,4 +11,26 @@
 require 'test_helper'
 
 class CodecConversionTest < ActiveSupport::TestCase
+  setup do
+    @codec_conversion = create(:codec_conversion)
+    create_list(:transcoded_item, 5, codec_conversion: @codec_conversion)
+  end
+
+  test 'destroying a codec conversion deletes all files and transcoded_items' do
+    FileUtils.stubs(:rm_rf).once.with(File.join(TranscodedItem::BASE_PATH, @codec_conversion.id.to_s))
+
+    assert_difference('TranscodedItem.count', -5) do
+      @codec_conversion.destroy
+    end
+  end
+
+  test 'changing a codec conversion deletes all files and transcoded_items and schedules a new job' do
+    FileUtils.stubs(:rm_rf).once.with(File.join(TranscodedItem::BASE_PATH, @codec_conversion.id.to_s))
+
+    assert_enqueued_jobs 1 do
+      assert_difference('TranscodedItem.count', -5) do
+        @codec_conversion.update!(ffmpeg_params: '-acodec mp3')
+      end
+    end
+  end
 end

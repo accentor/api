@@ -1,15 +1,10 @@
 require 'test_helper'
 
-class RecalculateContentLengthsJobTest < ActiveJob::TestCase
-  def setup
-    # ContentLengths are automatically created when we create an AudioFile and CodecConversion. Manually creating one would result in an error due to uniqueness contraints.
-    io = StringIO.new Rails.root.join('test/files/base.flac').read
-    AudioFile.any_instance.stubs(:convert).returns(io)
-    @audio_file = create(:audio_file)
+class QueueTranscodedItemsForCodecConversionJobTest < ActiveJob::TestCase
+  setup do
+    @audio_file = create(:audio_file, location: create(:location), filename: '/base.flac', codec: create(:codec))
+    create(:track, audio_file: @audio_file)
     @codec_conversion = create(:codec_conversion)
-    @track = create(:track, audio_file: @audio_file)
-
-    ContentLength.destroy_all
   end
 
   test 'should not enqueue job if audio is shorter than config and track is older than config' do
@@ -20,7 +15,7 @@ class RecalculateContentLengthsJobTest < ActiveJob::TestCase
     # rubocop:enable Rails/SkipsModelValidations
 
     assert_no_enqueued_jobs do
-      RecalculateContentLengthsJob.perform_now
+      QueueTranscodedItemsForCodecConversionJob.perform_now(@codec_conversion)
     end
   end
 
@@ -32,7 +27,7 @@ class RecalculateContentLengthsJobTest < ActiveJob::TestCase
     # rubocop:enable Rails/SkipsModelValidations
 
     assert_enqueued_jobs 1 do
-      RecalculateContentLengthsJob.perform_now
+      QueueTranscodedItemsForCodecConversionJob.perform_now(@codec_conversion)
     end
   end
 
@@ -44,7 +39,7 @@ class RecalculateContentLengthsJobTest < ActiveJob::TestCase
     # rubocop:enable Rails/SkipsModelValidations
 
     assert_enqueued_jobs 1 do
-      RecalculateContentLengthsJob.perform_now
+      QueueTranscodedItemsForCodecConversionJob.perform_now(@codec_conversion)
     end
   end
 end
