@@ -15,6 +15,8 @@ require 'open3'
 #
 
 class AudioFile < ApplicationRecord
+  class FailedTranscode < StandardError; end
+
   belongs_to :location
   belongs_to :codec
   has_one :track, dependent: :nullify
@@ -37,7 +39,7 @@ class AudioFile < ApplicationRecord
 
   def convert(codec_conversion, out_file_name)
     parameters = codec_conversion.ffmpeg_params.split
-    Open3.popen2(
+    _stdout, status = Open3.capture2(
       'ffmpeg',
       '-i', full_path,
       '-f', codec_conversion.resulting_codec.extension,
@@ -46,10 +48,8 @@ class AudioFile < ApplicationRecord
       '-map', 'a',
       out_file_name,
       err: [Rails.configuration.ffmpeg_log_location, 'a']
-    ) do |_stdin, _stdout, _wait_thr|
-      # We call `Open3.popen2` with an empty block, so the process finishes before we return
-      # This returns `Process::Status`
-    end
+    )
+    raise FailedTranscode, "ffmpeg exited with #{status.to_i}" unless status.success?
   end
 
   def full_path
