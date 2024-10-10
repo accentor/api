@@ -51,4 +51,30 @@ class AudioFileTest < ActiveSupport::TestCase
       @audio_file.convert(codec_conversion, TranscodedItem.path_for(codec_conversion, SecureRandom.uuid))
     end
   end
+
+  test 'convert_with_tmpfile should clean up after itself' do
+    codec_conversion = create(:codec_conversion)
+    path = TranscodedItem.path_for(codec_conversion, SecureRandom.uuid)
+    sent_filename = nil
+    FileUtils.stubs(:mv).once.with { |tmp_path, out_file_name| out_file_name == path && tmp_path == sent_filename }
+    with_stubbed_audio_file_convert ->(_codec_conversion, out_file_name) { sent_filename = out_file_name } do
+      @audio_file.convert_with_tmpfile(codec_conversion, path)
+    end
+
+    assert_not_equal sent_filename, path
+  end
+
+  test 'convert_with_tmpfile should clean up after itself even when raising' do
+    sent_filename = nil
+    FileUtils.stubs(:rm_f).once.with { |tmp_path| tmp_path == sent_filename }
+    with_stubbed_audio_file_convert lambda { |_codec_conversion, out_file_name|
+      sent_filename = out_file_name
+      raise AudioFile::FailedTranscode, 'oh no'
+    } do
+      codec_conversion = create(:codec_conversion)
+      assert_raises AudioFile::FailedTranscode, 'oh no' do
+        @audio_file.convert_with_tmpfile(codec_conversion, TranscodedItem.path_for(codec_conversion, SecureRandom.uuid))
+      end
+    end
+  end
 end

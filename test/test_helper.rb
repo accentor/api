@@ -15,9 +15,28 @@ require_relative '../config/environment'
 require 'rails/test_help'
 require 'mocha/minitest'
 
+module AudioFileTestHelper
+  def install_audio_file_convert_stub(implementation = nil)
+    AudioFile.alias_method :old_convert, :convert
+    AudioFile.define_method :convert, implementation || ->(_codec_conversion, out_file_name) { FileUtils.cp full_path, out_file_name }
+  end
+
+  def uninstall_audio_file_convert_stub
+    AudioFile.alias_method :convert, :old_convert
+  end
+
+  def with_stubbed_audio_file_convert(implementation = nil)
+    install_audio_file_convert_stub implementation
+    yield
+  ensure
+    uninstall_audio_file_convert_stub
+  end
+end
+
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
   include ActiveJob::TestHelper
+  include AudioFileTestHelper
 
   # Run tests in parallel with specified workers
   parallelize(workers: :number_of_processors)

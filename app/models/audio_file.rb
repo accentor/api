@@ -37,6 +37,14 @@ class AudioFile < ApplicationRecord
     false
   end
 
+  def convert_with_tmpfile(codec_conversion, out_file_name)
+    tmp_path = File.join(Dir.tmpdir, "accentor_transcode-#{id}-#{codec_conversion.id}-#{SecureRandom.uuid}")
+    convert(codec_conversion, tmp_path)
+    FileUtils.mv tmp_path, out_file_name
+  ensure
+    FileUtils.rm_f tmp_path
+  end
+
   def convert(codec_conversion, out_file_name)
     parameters = codec_conversion.ffmpeg_params.split
     _stdout, status = Open3.capture2(
