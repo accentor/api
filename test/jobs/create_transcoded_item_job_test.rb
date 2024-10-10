@@ -34,11 +34,12 @@ class CreateTranscodedItemJobTest < ActiveJob::TestCase
   test 'should abort when TranscodedItem was created while converting' do
     audio_file = @audio_file
     codec_conversion = @codec_conversion
-    AudioFile.define_method :convert, lambda { |_codec_conversion, _out_file_name|
+    AudioFile.define_method :convert, lambda { |_codec_conversion, out_file_name|
+      FileUtils.touch out_file_name
       TranscodedItem.create!(audio_file:, codec_conversion:, uuid: '0000-0000-0000')
     }
 
-    FileUtils.stubs(:rm_f).once
+    FileUtils.stubs(:rm_f).twice
 
     CreateTranscodedItemJob.perform_now(@audio_file, @codec_conversion)
   end
