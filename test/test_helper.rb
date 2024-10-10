@@ -23,6 +23,13 @@ class ActiveSupport::TestCase
   parallelize(workers: :number_of_processors)
 
   parallelize_setup do |worker|
+    # Make sure each worker has its own base path for conversion testing.
+    # Sadly we can't do this in config/environment/test.rb :(
+    # So instead, we do the following crime:
+    old_base_path = TranscodedItem::BASE_PATH
+    TranscodedItem.send :remove_const, :BASE_PATH
+    TranscodedItem.const_set :BASE_PATH, File.join(old_base_path, worker.to_s)
+
     SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}"
   end
 
