@@ -272,12 +272,11 @@ end
 class TracksControllerAudioTest < ActionDispatch::IntegrationTest
   setup do
     sign_in_as(create(:user))
-    AudioFile.alias_method :old_convert, :convert
-    AudioFile.define_method :convert, ->(_codec_conversion, out_file_name) { FileUtils.cp full_path, out_file_name }
+    install_audio_file_convert_stub
   end
 
   teardown do
-    AudioFile.alias_method :convert, :old_convert
+    uninstall_audio_file_convert_stub
   end
 
   test 'should return not_found if codec_conversion does not exit ' do

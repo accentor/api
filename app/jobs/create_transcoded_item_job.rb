@@ -8,7 +8,7 @@ class CreateTranscodedItemJob < ApplicationJob
     uuid = TranscodedItem.uuid_for(codec_conversion)
     path = TranscodedItem.path_for(codec_conversion, uuid)
     FileUtils.mkdir_p Pathname.new(path).parent
-    audio_file.convert(codec_conversion, path)
+    audio_file.convert_with_tmpfile(codec_conversion, path)
 
     TranscodedItem.transaction do
       # Check that the transcoded item was not created while we were executing

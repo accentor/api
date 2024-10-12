@@ -7,12 +7,11 @@ class CreateTranscodedItemJobTest < ActiveJob::TestCase
     @audio_file = create(:audio_file, location:, filename: '/base.flac', codec: flac)
     @codec_conversion = create(:codec_conversion)
 
-    AudioFile.alias_method :old_convert, :convert
-    AudioFile.define_method :convert, ->(_codec_conversion, out_file_name) { FileUtils.cp full_path, out_file_name }
+    install_audio_file_convert_stub
   end
 
   teardown do
-    AudioFile.alias_method :convert, :old_convert
+    uninstall_audio_file_convert_stub
   end
 
   test 'should create a new TranscodedItem with existing file' do
@@ -34,11 +33,14 @@ class CreateTranscodedItemJobTest < ActiveJob::TestCase
   test 'should abort when TranscodedItem was created while converting' do
     audio_file = @audio_file
     codec_conversion = @codec_conversion
-    AudioFile.define_method :convert, lambda { |_codec_conversion, _out_file_name|
+    AudioFile.define_method :convert, lambda { |_codec_conversion, out_file_name|
+      FileUtils.touch out_file_name
       TranscodedItem.create!(audio_file:, codec_conversion:, uuid: '0000-0000-0000')
     }
 
-    FileUtils.stubs(:rm_f).once
+    # Once during `convert_with_tmpfile`, once when noticing that the convert
+    # wasn't necessary anymore.
+    FileUtils.stubs(:rm_f).twice
 
     CreateTranscodedItemJob.perform_now(@audio_file, @codec_conversion)
   end
