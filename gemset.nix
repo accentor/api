@@ -199,10 +199,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "078syvjnnkbair5ffyvchxj9yd2c8215c1271kfh1gqsmaf70bl6";
+      sha256 = "067nggymy626w9v5baza4dfk9jcykb8z8pr244dlakczd59xc0nm";
       type = "gem";
     };
-    version = "6.2.1";
+    version = "6.2.2";
   };
   builder = {
     groups = ["default" "development" "test"];
