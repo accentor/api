@@ -107,7 +107,7 @@ GEM
     factory_bot_rails (6.4.3)
       factory_bot (~> 6.4)
       railties (>= 5.0.0)
-    faker (3.4.2)
+    faker (3.5.1)
       i18n (>= 1.8.11, < 2)
     ffi (1.17.0)
     fugit (1.11.1)
@@ -299,7 +299,7 @@ DEPENDENCIES
   brakeman
   debug (~> 1.9)
   factory_bot_rails (~> 6.4)
-  faker (~> 3.4)
+  faker (~> 3.5)
   good_job (~> 4.4)
   has_scope (~> 0.8)
   image_processing (~> 1.13.0)
