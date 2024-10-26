@@ -671,10 +671,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0dsgcmzc55w7i9cpghfkzhmiskzndvp1vijd8c5ryv8xvlwikmzg";
+      sha256 = "1p2gqqrm895fzr9vi8d118zhql67bm8ydjvgqbq1crdnfggzn7kn";
       type = "gem";
     };
-    version = "1.5.8";
+    version = "1.5.9";
   };
   prism = {
     groups = ["default" "development"];
