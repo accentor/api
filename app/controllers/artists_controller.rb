@@ -1,4 +1,6 @@
 class ArtistsController < ApplicationController
+  include ImageRendering
+
   before_action :set_artist, only: %i[show update destroy merge]
 
   has_scope :by_filter, as: 'filter'
@@ -9,11 +11,12 @@ class ArtistsController < ApplicationController
                .includes(image: [{ image_attachment: :blob }, :image_type])
                .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@artists)
-    render json: @artists
+
+    render json: @artists.map { |it| transform_artist_for_json(it) }
   end
 
   def show
-    render json: @artist
+    render json: transform_artist_for_json(@artist)
   end
 
   def create
@@ -21,7 +24,7 @@ class ArtistsController < ApplicationController
     @artist = Artist.new(transformed_attributes)
 
     if @artist.save
-      render json: @artist, status: :created
+      render json: transform_artist_for_json(@artist), status: :created
     else
       render json: @artist.errors, status: :unprocessable_entity
     end
@@ -29,7 +32,7 @@ class ArtistsController < ApplicationController
 
   def update
     if @artist.update(transformed_attributes)
-      render json: @artist, status: :ok
+      render json: transform_artist_for_json(@artist), status: :ok
     else
       render json: @artist.errors, status: :unprocessable_entity
     end
@@ -75,5 +78,13 @@ class ArtistsController < ApplicationController
       attributes[:image] = image
     end
     attributes
+  end
+
+  def transform_artist_for_json(artist)
+    result = %i[id name normalized_name review_comment created_at updated_at].index_with { |it| artist.send(it) }
+    %i[image image100 image250 image500 image_type].each do |attr|
+      result[attr] = send(attr, artist)
+    end
+    result
   end
 end

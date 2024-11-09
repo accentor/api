@@ -7,11 +7,12 @@ class LabelsController < ApplicationController
               .order(id: :asc)
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@labels)
-    render json: @labels
+
+    render json: @labels.map { |it| transform_label_for_json(it) }
   end
 
   def show
-    render json: @label
+    render json: transform_label_for_json(@label)
   end
 
   def create
@@ -19,7 +20,7 @@ class LabelsController < ApplicationController
     @label = Label.new(permitted_attributes(Label))
 
     if @label.save
-      render json: @label, status: :created
+      render json: transform_label_for_json(@label), status: :created
     else
       render json: @label.errors, status: :unprocessable_entity
     end
@@ -27,7 +28,7 @@ class LabelsController < ApplicationController
 
   def update
     if @label.update(permitted_attributes(@label))
-      render json: @label, status: :ok
+      render json: transform_label_for_json(@label), status: :ok
     else
       render json: @label.errors, status: :unprocessable_entity
     end
@@ -45,7 +46,7 @@ class LabelsController < ApplicationController
   def merge
     @label.merge(Label.find(params[:source_id]))
     # We don't do error handling here. The merge action isn't supposed to fail.
-    render json: @label, status: :ok
+    render json: transform_label_for_json(@label), status: :ok
   end
 
   private
@@ -53,5 +54,9 @@ class LabelsController < ApplicationController
   def set_label
     @label = Label.find(params[:id])
     authorize @label
+  end
+
+  def transform_label_for_json(label)
+    %i[id name normalized_name].index_with { |it| label.send(it) }
   end
 end

@@ -7,11 +7,12 @@ class GenresController < ApplicationController
               .order(id: :asc)
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@genres)
-    render json: @genres
+
+    render json: @genres.map { |it| transform_genre_for_json(it) }
   end
 
   def show
-    render json: @genre
+    render json: transform_genre_for_json(@genre)
   end
 
   def create
@@ -19,7 +20,7 @@ class GenresController < ApplicationController
     @genre = Genre.new(permitted_attributes(Genre))
 
     if @genre.save
-      render json: @genre, status: :created
+      render json: transform_genre_for_json(@genre), status: :created
     else
       render json: @genre.errors, status: :unprocessable_entity
     end
@@ -27,7 +28,7 @@ class GenresController < ApplicationController
 
   def update
     if @genre.update(permitted_attributes(@genre))
-      render json: @genre, status: :ok
+      render json: transform_genre_for_json(@genre), status: :ok
     else
       render json: @genre.errors, status: :unprocessable_entity
     end
@@ -45,7 +46,7 @@ class GenresController < ApplicationController
   def merge
     @genre.merge(Genre.find(params[:source_id]))
     # We don't do error handling here. The merge action isn't supposed to fail.
-    render json: @genre, status: :ok
+    render json: transform_genre_for_json(@genre), status: :ok
   end
 
   private
@@ -53,5 +54,9 @@ class GenresController < ApplicationController
   def set_genre
     @genre = Genre.find(params[:id])
     authorize @genre
+  end
+
+  def transform_genre_for_json(genre)
+    %i[id name normalized_name].index_with { |it| genre.send(it) }
   end
 end

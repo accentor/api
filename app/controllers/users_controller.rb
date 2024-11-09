@@ -7,11 +7,12 @@ class UsersController < ApplicationController
              .order(id: :asc)
              .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@users)
-    render json: @users
+
+    render json: @users.map { |it| transform_user_for_json(it) }
   end
 
   def show
-    render json: @user
+    render json: transform_user_for_json(@user)
   end
 
   def create
@@ -19,7 +20,7 @@ class UsersController < ApplicationController
     @user = User.new(permitted_attributes(User))
 
     if @user.save
-      render json: @user, status: :created
+      render json: transform_user_for_json(@user), status: :created
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -35,7 +36,7 @@ class UsersController < ApplicationController
     end
 
     if @user.update(permitted_attributes(@user))
-      render json: @user, status: :ok
+      render json: transform_user_for_json(@user), status: :ok
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -50,5 +51,9 @@ class UsersController < ApplicationController
   def set_user
     @user = User.find(params[:id])
     authorize @user
+  end
+
+  def transform_user_for_json(user)
+    %i[id name permission].index_with { |it| user.send(it) }
   end
 end

@@ -9,8 +9,6 @@ gem 'rails', '~> 7.2'
 gem 'pg', '>= 1.2.3', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 6.4'
-# Use ActiveModelSerializer for serializing to JSON
-gem 'active_model_serializers', '~> 0.10'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1'
 
