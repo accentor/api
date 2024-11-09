@@ -6,6 +6,10 @@
 #  name            :string           not null
 #  normalized_name :string           not null
 #
+# Indexes
+#
+#  index_labels_on_normalized_name  (normalized_name)
+#
 
 FactoryBot.define do
   factory :label do

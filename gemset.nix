@@ -131,16 +131,15 @@
     };
     version = "7.2.2";
   };
-  annotate = {
-    dependencies = ["activerecord" "rake"];
+  annotaterb = {
     groups = ["development"];
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1lw0fxb5mirsdp3bp20gjyvs7clvi19jbxnrm2ihm20kzfhvlqcs";
+      sha256 = "1w9gdd5cqygm0ppsfxpv3szlw4yh8zg34havcqssgvrg0092jivg";
       type = "gem";
     };
-    version = "3.2.0";
+    version = "4.13.0";
   };
   ast = {
     groups = ["default" "development"];

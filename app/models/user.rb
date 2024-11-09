@@ -7,6 +7,10 @@
 #  password_digest :string           not null
 #  permission      :integer          default("user"), not null
 #
+# Indexes
+#
+#  index_users_on_name  (name) UNIQUE
+#
 
 class User < ApplicationRecord
   enum :permission, { user: 0, moderator: 1, admin: 2 }

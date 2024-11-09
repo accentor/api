@@ -9,6 +9,15 @@
 #  device_id     :string           not null
 #  user_id       :bigint           not null
 #
+# Indexes
+#
+#  index_auth_tokens_on_device_id  (device_id) UNIQUE
+#  index_auth_tokens_on_user_id    (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 
 require 'test_helper'
 

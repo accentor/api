@@ -6,6 +6,10 @@
 #  extension :string           not null
 #  mimetype  :string           not null
 #
+# Indexes
+#
+#  index_codecs_on_extension  (extension) UNIQUE
+#
 
 FactoryBot.define do
   factory :codec do
