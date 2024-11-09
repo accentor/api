@@ -6,6 +6,10 @@
 #  extension :string           not null
 #  mimetype  :string           not null
 #
+# Indexes
+#
+#  index_codecs_on_extension  (extension) UNIQUE
+#
 
 class Codec < ApplicationRecord
   has_many :audio_files, dependent: :restrict_with_error

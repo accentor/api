@@ -6,6 +6,10 @@
 #  extension :string           not null
 #  mimetype  :string           not null
 #
+# Indexes
+#
+#  index_image_types_on_extension  (extension) UNIQUE
+#
 class ImageTypeSerializer < ActiveModel::Serializer
   attributes :id, :extension, :mimetype
 end

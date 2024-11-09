@@ -7,6 +7,15 @@
 #  name               :string           not null
 #  resulting_codec_id :bigint           not null
 #
+# Indexes
+#
+#  index_codec_conversions_on_name                (name) UNIQUE
+#  index_codec_conversions_on_resulting_codec_id  (resulting_codec_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (resulting_codec_id => codecs.id)
+#
 
 class CodecConversion < ApplicationRecord
   belongs_to :resulting_codec, class_name: 'Codec'
