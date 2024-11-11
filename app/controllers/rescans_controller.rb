@@ -5,16 +5,17 @@ class RescansController < ApplicationController
     authorize RescanRunner
     @rescans = policy_scope(RescanRunner).paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@rescans)
-    render json: @rescans
+
+    render json: @rescans.map { |it| transform_rescan_runner_for_json(it) }
   end
 
   def show
-    render json: @rescan
+    render json: transform_rescan_runner_for_json(@rescan)
   end
 
   def start
     @rescan.schedule
-    render json: @rescan
+    render json: transform_rescan_runner_for_json(@rescan)
   end
 
   def start_all
@@ -27,5 +28,9 @@ class RescansController < ApplicationController
   def set_rescan
     @rescan = RescanRunner.find(params[:id])
     authorize @rescan
+  end
+
+  def transform_rescan_runner_for_json(rescan_runner)
+    %i[id error_text warning_text processed running finished_at location_id].index_with { |it| rescan_runner.send(it) }
   end
 end

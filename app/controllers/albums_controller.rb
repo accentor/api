@@ -1,4 +1,6 @@
 class AlbumsController < ApplicationController
+  include ImageRendering
+
   before_action :set_album, only: %i[show update destroy merge]
 
   has_scope :by_filter, as: 'filter'
@@ -12,11 +14,12 @@ class AlbumsController < ApplicationController
               .includes(:album_artists, :album_labels, image: [{ image_attachment: :blob }, :image_type])
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@albums)
-    render json: @albums
+
+    render json: @albums.map { |it| transform_album_for_json(it) }
   end
 
   def show
-    render json: @album
+    render json: transform_album_for_json(@album)
   end
 
   def create
@@ -24,7 +27,7 @@ class AlbumsController < ApplicationController
     @album = Album.new(transformed_attributes)
 
     if @album.save
-      render json: @album, status: :created
+      render json: transform_album_for_json(@album), status: :created
     else
       render json: @album.errors, status: :unprocessable_entity
     end
@@ -32,7 +35,7 @@ class AlbumsController < ApplicationController
 
   def update
     if @album.update(transformed_attributes)
-      render json: @album, status: :ok
+      render json: transform_album_for_json(@album), status: :ok
     else
       render json: @album.errors, status: :unprocessable_entity
     end
@@ -89,5 +92,23 @@ class AlbumsController < ApplicationController
     end
 
     attributes
+  end
+
+  def transform_album_for_json(album)
+    result = %i[id title normalized_title release review_comment edition edition_description created_at updated_at].index_with { |it| album.send(it) }
+    %i[image image100 image250 image500 image_type].each do |attr|
+      result[attr] = send(attr, album)
+    end
+    result[:album_artists] = album.album_artists.map { |it| transform_album_artist_for_json(it) }
+    result[:album_labels] = album.album_labels.map { |it| transform_album_label_for_json(it) }
+    result
+  end
+
+  def transform_album_artist_for_json(album_artist)
+    %i[artist_id name normalized_name order separator].index_with { |attr| album_artist.send(attr) }
+  end
+
+  def transform_album_label_for_json(album_label)
+    %i[label_id catalogue_number].index_with { |attr| album_label.send(attr) }
   end
 end

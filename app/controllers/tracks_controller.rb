@@ -15,11 +15,11 @@ class TracksController < ApplicationController
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@tracks)
 
-    render json: @tracks, each_serializer: serializer
+    render json: @tracks.map { |it| transform_track_for_json(it) }
   end
 
   def show
-    render json: @track, serializer:
+    render json: transform_track_for_json(@track)
   end
 
   def create
@@ -27,7 +27,7 @@ class TracksController < ApplicationController
     @track = Track.new(transformed_attributes)
 
     if @track.save
-      render(json: @track, serializer:, status: :created)
+      render json: transform_track_for_json(@track), status: :created
     else
       render json: @track.errors, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class TracksController < ApplicationController
 
   def update
     if @track.update(transformed_attributes)
-      render(json: @track, serializer:, status: :ok)
+      render json: transform_track_for_json(@track), status: :ok
     else
       render json: @track.errors, status: :unprocessable_entity
     end
@@ -81,7 +81,7 @@ class TracksController < ApplicationController
   def merge
     @track.merge(Track.find(params[:source_id]))
     # We don't do error handling here. The merge action isn't supposed to fail.
-    render json: @track, status: :ok
+    render json: transform_track_for_json(@track), status: :ok
   end
 
   private
@@ -130,10 +130,6 @@ class TracksController < ApplicationController
     response.stream.close
   end
 
-  def serializer
-    current_user.moderator? ? TrackModeratorSerializer : TrackSerializer
-  end
-
   def set_track
     @track = Track.find(params[:id])
     authorize @track
@@ -149,5 +145,62 @@ class TracksController < ApplicationController
     end
 
     attributes
+  end
+
+  def transform_track_for_json(track)
+    if current_user.moderator?
+      transform_track_for_json_for_moderator(track)
+    else
+      transform_track_for_json_for_user(track)
+    end
+  end
+
+  def transform_track_for_json_for_user(track)
+    result = %i[id title normalized_title number album_id review_comment created_at updated_at genre_ids audio_file_id].index_with { |it| track.send(it) }
+    %i[codec_id length bitrate location_id].each do |attr|
+      result[attr] = send(attr, track)
+    end
+    result[:track_artists] = track.track_artists.map { |it| transform_track_artist_for_json(it) }
+    result
+  end
+
+  def transform_track_artist_for_json(track_artist)
+    %i[artist_id name normalized_name role order hidden].index_with { |it| track_artist.send(it) }
+  end
+
+  def transform_track_for_json_for_moderator(track)
+    result = transform_track_for_json_for_user(track)
+    %i[filename sample_rate bit_depth].each do |attr|
+      result[attr] = send(attr, track)
+    end
+    result
+  end
+
+  def codec_id(track)
+    track.audio_file&.codec_id
+  end
+
+  def length(track)
+    track.audio_file&.length
+  end
+
+  def bitrate(track)
+    track.audio_file&.bitrate
+  end
+
+  def location_id(track)
+    track.audio_file&.location_id
+  end
+
+  def filename(track)
+    track.audio_file&.filename
+  end
+
+  def sample_rate(track)
+    track.audio_file&.sample_rate
+  end
+
+  def bit_depth(track)
+    track.audio_file&.bit_depth
   end
 end

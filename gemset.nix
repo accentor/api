@@ -65,17 +65,6 @@
     };
     version = "7.2.2";
   };
-  active_model_serializers = {
-    dependencies = ["actionpack" "activemodel" "case_transform" "jsonapi-renderer"];
-    groups = ["default"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "13n1ipn0dg3k852xhfzdvkr1ljq76xvfnm79qzdix2ishiy1gphl";
-      type = "gem";
-    };
-    version = "0.10.14";
-  };
   activejob = {
     dependencies = ["activesupport" "globalid"];
     groups = ["default"];
@@ -222,17 +211,6 @@
       type = "gem";
     };
     version = "3.3.0";
-  };
-  case_transform = {
-    dependencies = ["activesupport"];
-    groups = ["default"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "0fzyws6spn5arqf6q604dh9mrj84a36k5hsc8z7jgcpfvhc49bg2";
-      type = "gem";
-    };
-    version = "0.2";
   };
   concurrent-ruby = {
     groups = ["default" "development" "test"];
@@ -465,16 +443,6 @@
       type = "gem";
     };
     version = "2.7.5";
-  };
-  jsonapi-renderer = {
-    groups = ["default"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "0ys4drd0k9rw5ixf8n8fx8v0pjh792w4myh0cpdspd317l1lpi5m";
-      type = "gem";
-    };
-    version = "0.2.2";
   };
   language_server-protocol = {
     groups = ["default" "development"];

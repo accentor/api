@@ -10,7 +10,7 @@ class PlaysController < ApplicationController
              .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@plays)
 
-    render json: @plays, each_serializer: PlaySerializer
+    render json: @plays.map { |it| transform_play_for_json(it) }
   end
 
   def create
@@ -18,7 +18,7 @@ class PlaysController < ApplicationController
     @play = Play.new(transformed_attributes)
 
     if @play.save
-      render json: @play, status: :created
+      render json: transform_play_for_json(@play), status: :created
     else
       render json: @play.errors, status: :unprocessable_entity
     end
@@ -34,12 +34,20 @@ class PlaysController < ApplicationController
              .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@stats)
 
-    render json: @stats, each_serializer: PlayStatSerializer
+    render json: @stats.map { |it| transform_play_stat_for_json(it) }
   end
 
   private
 
   def transformed_attributes
     permitted_attributes(Play).merge(user: current_user)
+  end
+
+  def transform_play_for_json(play)
+    %i[id played_at track_id user_id].index_with { |it| play.send(it) }
+  end
+
+  def transform_play_stat_for_json(play_stat)
+    %i[count track_id last_played_at total_length].index_with { |it| play_stat.send(it) }
   end
 end

@@ -8,11 +8,12 @@ class PlaylistsController < ApplicationController
                  .order(id: :asc)
                  .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@playlists)
-    render json: @playlists
+
+    render json: @playlists.map { |it| transform_playlist_for_json(it) }
   end
 
   def show
-    render json: @playlist
+    render json: transform_playlist_for_json(@playlist)
   end
 
   def create
@@ -20,7 +21,7 @@ class PlaylistsController < ApplicationController
     @playlist = Playlist.new(permitted_attributes(Playlist).merge({ user: current_user }))
 
     if @playlist.save
-      render json: @playlist, status: :created
+      render json: transform_playlist_for_json(@playlist), status: :created
     else
       render json: @playlist.errors, status: :unprocessable_entity
     end
@@ -28,7 +29,7 @@ class PlaylistsController < ApplicationController
 
   def update
     if @playlist.update(permitted_attributes(@playlist))
-      render json: @playlist, status: :ok
+      render json: transform_playlist_for_json(@playlist), status: :ok
     else
       render json: @playlist.errors, status: :unprocessable_entity
     end
@@ -49,5 +50,9 @@ class PlaylistsController < ApplicationController
   def set_playlist
     @playlist = Playlist.find(params[:id])
     authorize @playlist
+  end
+
+  def transform_playlist_for_json(playlist)
+    %i[id name description user_id playlist_type created_at updated_at item_ids access].index_with { |it| playlist.send(it) }
   end
 end

@@ -7,11 +7,12 @@ class LocationsController < ApplicationController
                  .order(id: :asc)
                  .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@locations)
-    render json: @locations
+
+    render json: @locations.map { |it| transform_location_for_json(it) }
   end
 
   def show
-    render json: @location
+    render json: transform_location_for_json(@location)
   end
 
   def create
@@ -19,7 +20,7 @@ class LocationsController < ApplicationController
     @location = Location.new(permitted_attributes(Location))
 
     if @location.save
-      render json: @location, status: :created
+      render json: transform_location_for_json(@location), status: :created
     else
       render json: @location.errors, status: :unprocessable_entity
     end
@@ -34,5 +35,9 @@ class LocationsController < ApplicationController
   def set_location
     @location = Location.find(params[:id])
     authorize @location
+  end
+
+  def transform_location_for_json(location)
+    %i[id path].index_with { |it| location.send(it) }
   end
 end
