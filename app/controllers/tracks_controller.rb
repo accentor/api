@@ -1,6 +1,4 @@
 class TracksController < ApplicationController
-  include ActionController::Live
-
   before_action :set_track, only: %i[show update destroy audio download merge]
 
   has_scope :by_filter, as: 'filter'
@@ -65,9 +63,9 @@ class TracksController < ApplicationController
         CreateTranscodedItemJob.perform_now(audio_file, conversion)
         transcoded_item = TranscodedItem.find_by(audio_file:, codec_conversion: conversion)
       end
-      audio_with_file(transcoded_item.path, transcoded_item.mimetype)
+      send_file_with_range(transcoded_item.path, transcoded_item.mimetype)
     else
-      audio_with_file(audio_file.full_path, audio_file.codec.mimetype)
+      send_file_with_range(audio_file.full_path, audio_file.codec.mimetype)
     end
   end
 
@@ -86,48 +84,16 @@ class TracksController < ApplicationController
 
   private
 
-  def audio_with_file(path, mimetype)
-    file = File.open(path, 'rb')
-    audio_with_stream(file, mimetype, file.size)
-  end
-
-  def audio_with_stream(stream, mimetype, total_size)
-    first_byte = 0
-    last_byte = total_size - 1
-    if request.headers['range'].present?
-      response.status = 206
-      # This is technically not a correct parsing of the header; a user agent
-      # can request multiple byte ranges. In practice this doesn't happen
-      # (especially not for web audio).
-      match = request.headers['range'].match(/bytes=(\d+)-(\d*)/)
-      first_byte = match[1].to_i
-      last_byte = match[2].to_i if match[2].present?
-      response.headers['content-range'] = "bytes #{first_byte}-#{last_byte}/#{total_size}"
-    else
-      response.status = 200
+  def send_file_with_range(path, mimetype)
+    Rack::Files.new(nil).serving(request, path).tap do |(status, headers, body)|
+      self.status = status
+      self.response_body = body
+      headers.each do |name, value|
+        response.headers[name] = value
+      end
+      response.headers['accept-ranges'] = 'bytes'
+      response.headers['content-type'] = mimetype
     end
-    response.content_type = mimetype
-    response.headers['accept-ranges'] = 'bytes'
-    response.headers['content-length'] = (last_byte - first_byte + 1).to_s
-    # Unfortunately, if we don't commit the headers, ActionController::Live will
-    # delete the "content-length" header set above. No other headers need to be
-    # set, so we just freeze them here.
-    response.commit!
-
-    to_skip = first_byte
-    while to_skip.positive?
-      read_bytes = stream.read([to_skip, 16.kilobytes].min)
-      to_skip -= read_bytes.length
-    end
-    to_send = last_byte - first_byte + 1
-    while to_send.positive?
-      read_bytes = stream.read([to_send, 16.kilobytes].min)
-      to_send -= read_bytes.length
-      response.stream.write read_bytes
-    end
-  ensure
-    stream.close
-    response.stream.close
   end
 
   def set_track
