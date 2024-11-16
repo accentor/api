@@ -16,7 +16,7 @@
         pkgs = import nixpkgs { inherit system; overlays = [ devshell.overlays.default ]; };
         gems = pkgs.bundlerEnv rec {
           name = "accentor-api-env";
-          ruby = pkgs.ruby_3_3;
+          ruby = pkgs.ruby_3_3.override { jemallocSupport = true; };
           gemfile = ./Gemfile;
           lockfile = ./Gemfile.lock;
           gemset = ./gemset.nix;
