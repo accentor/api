@@ -34,7 +34,7 @@ jobs:
       run: |
         bundle exec rails db:setup
         bundle exec rails test
-    - uses: codecov/codecov-action@v4
+    - uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }} # required
   lint:
