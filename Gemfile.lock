@@ -167,7 +167,7 @@ GEM
     prism (1.2.0)
     psych (5.1.2)
       stringio
-    puma (6.4.3)
+    puma (6.5.0)
       nio4r (~> 2.0)
     pundit (2.4.0)
       activesupport (>= 3.0.0)
@@ -295,7 +295,7 @@ DEPENDENCIES
   image_processing (~> 1.13.0)
   mocha (~> 2.5.0)
   pg (>= 1.2.3, < 2.0)
-  puma (~> 6.4)
+  puma (~> 6.5)
   pundit (~> 2.4)
   rack-cors (~> 2.0)
   rails (~> 8.0)
