@@ -6,7 +6,7 @@ class RescansController < ApplicationController
     @rescans = policy_scope(RescanRunner).paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@rescans)
 
-    render json: @rescans.map { |it| transform_rescan_runner_for_json(it) }
+    render json: @rescans.map { transform_rescan_runner_for_json(it) }
   end
 
   def show
@@ -31,6 +31,6 @@ class RescansController < ApplicationController
   end
 
   def transform_rescan_runner_for_json(rescan_runner)
-    %i[id error_text warning_text processed running finished_at location_id].index_with { |it| rescan_runner.send(it) }
+    %i[id error_text warning_text processed running finished_at location_id].index_with { rescan_runner.send(it) }
   end
 end

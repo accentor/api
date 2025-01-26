@@ -9,7 +9,7 @@ class PlaylistsController < ApplicationController
                  .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@playlists)
 
-    render json: @playlists.map { |it| transform_playlist_for_json(it) }
+    render json: @playlists.map { transform_playlist_for_json(it) }
   end
 
   def show
@@ -53,6 +53,6 @@ class PlaylistsController < ApplicationController
   end
 
   def transform_playlist_for_json(playlist)
-    %i[id name description user_id playlist_type created_at updated_at item_ids access].index_with { |it| playlist.send(it) }
+    %i[id name description user_id playlist_type created_at updated_at item_ids access].index_with { playlist.send(it) }
   end
 end

@@ -8,7 +8,7 @@ class LocationsController < ApplicationController
                  .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@locations)
 
-    render json: @locations.map { |it| transform_location_for_json(it) }
+    render json: @locations.map { transform_location_for_json(it) }
   end
 
   def show
@@ -38,6 +38,6 @@ class LocationsController < ApplicationController
   end
 
   def transform_location_for_json(location)
-    %i[id path].index_with { |it| location.send(it) }
+    %i[id path].index_with { location.send(it) }
   end
 end

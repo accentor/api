@@ -15,7 +15,7 @@ class AlbumsController < ApplicationController
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@albums)
 
-    render json: @albums.map { |it| transform_album_for_json(it) }
+    render json: @albums.map { transform_album_for_json(it) }
   end
 
   def show
@@ -95,12 +95,12 @@ class AlbumsController < ApplicationController
   end
 
   def transform_album_for_json(album)
-    result = %i[id title normalized_title release review_comment edition edition_description created_at updated_at].index_with { |it| album.send(it) }
+    result = %i[id title normalized_title release review_comment edition edition_description created_at updated_at].index_with { album.send(it) }
     %i[image image100 image250 image500 image_type].each do |attr|
       result[attr] = send(attr, album)
     end
-    result[:album_artists] = album.album_artists.map { |it| transform_album_artist_for_json(it) }
-    result[:album_labels] = album.album_labels.map { |it| transform_album_label_for_json(it) }
+    result[:album_artists] = album.album_artists.map { transform_album_artist_for_json(it) }
+    result[:album_labels] = album.album_labels.map { transform_album_label_for_json(it) }
     result
   end
 

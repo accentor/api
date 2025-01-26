@@ -8,7 +8,7 @@ class CodecsController < ApplicationController
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@codecs)
 
-    render json: @codecs.map { |it| transform_codec_for_json(it) }
+    render json: @codecs.map { transform_codec_for_json(it) }
   end
 
   def show
@@ -46,6 +46,6 @@ class CodecsController < ApplicationController
   end
 
   def transform_codec_for_json(codec)
-    %i[id mimetype extension].index_with { |it| codec.send(it) }
+    %i[id mimetype extension].index_with { codec.send(it) }
   end
 end

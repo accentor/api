@@ -10,7 +10,7 @@ class CodecConversionsController < ApplicationController
                          .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@codec_conversions)
 
-    render json: @codec_conversions.map { |it| transform_codec_conversion_for_json(it) }
+    render json: @codec_conversions.map { transform_codec_conversion_for_json(it) }
   end
 
   def show
@@ -48,6 +48,6 @@ class CodecConversionsController < ApplicationController
   end
 
   def transform_codec_conversion_for_json(codec_conversion)
-    %i[id name ffmpeg_params resulting_codec_id].index_with { |it| codec_conversion.send(it) }
+    %i[id name ffmpeg_params resulting_codec_id].index_with { codec_conversion.send(it) }
   end
 end

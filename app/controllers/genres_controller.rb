@@ -8,7 +8,7 @@ class GenresController < ApplicationController
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@genres)
 
-    render json: @genres.map { |it| transform_genre_for_json(it) }
+    render json: @genres.map { transform_genre_for_json(it) }
   end
 
   def show
@@ -57,6 +57,6 @@ class GenresController < ApplicationController
   end
 
   def transform_genre_for_json(genre)
-    %i[id name normalized_name].index_with { |it| genre.send(it) }
+    %i[id name normalized_name].index_with { genre.send(it) }
   end
 end

@@ -8,7 +8,7 @@ class UsersController < ApplicationController
              .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@users)
 
-    render json: @users.map { |it| transform_user_for_json(it) }
+    render json: @users.map { transform_user_for_json(it) }
   end
 
   def show
@@ -54,6 +54,6 @@ class UsersController < ApplicationController
   end
 
   def transform_user_for_json(user)
-    %i[id name permission].index_with { |it| user.send(it) }
+    %i[id name permission].index_with { user.send(it) }
   end
 end

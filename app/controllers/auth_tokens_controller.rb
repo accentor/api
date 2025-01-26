@@ -8,7 +8,7 @@ class AuthTokensController < ApplicationController
                    .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@auth_tokens)
 
-    render json: @auth_tokens.map { |it| transform_auth_token_for_json(it) }
+    render json: @auth_tokens.map { transform_auth_token_for_json(it) }
   end
 
   def show
@@ -50,7 +50,7 @@ class AuthTokensController < ApplicationController
   end
 
   def transform_auth_token_for_json(auth_token)
-    %i[id device_id user_id user_agent application].index_with { |it| auth_token.send(it) }
+    %i[id device_id user_id user_agent application].index_with { auth_token.send(it) }
   end
 
   def transform_auth_token_for_json_with_secret(auth_token)

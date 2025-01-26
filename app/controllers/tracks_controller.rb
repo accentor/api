@@ -13,7 +13,7 @@ class TracksController < ApplicationController
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@tracks)
 
-    render json: @tracks.map { |it| transform_track_for_json(it) }
+    render json: @tracks.map { transform_track_for_json(it) }
   end
 
   def show
@@ -122,16 +122,16 @@ class TracksController < ApplicationController
   end
 
   def transform_track_for_json_for_user(track)
-    result = %i[id title normalized_title number album_id review_comment created_at updated_at genre_ids audio_file_id].index_with { |it| track.send(it) }
+    result = %i[id title normalized_title number album_id review_comment created_at updated_at genre_ids audio_file_id].index_with { track.send(it) }
     %i[codec_id length bitrate location_id].each do |attr|
       result[attr] = send(attr, track)
     end
-    result[:track_artists] = track.track_artists.map { |it| transform_track_artist_for_json(it) }
+    result[:track_artists] = track.track_artists.map { transform_track_artist_for_json(it) }
     result
   end
 
   def transform_track_artist_for_json(track_artist)
-    %i[artist_id name normalized_name role order hidden].index_with { |it| track_artist.send(it) }
+    %i[artist_id name normalized_name role order hidden].index_with { track_artist.send(it) }
   end
 
   def transform_track_for_json_for_moderator(track)

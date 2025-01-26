@@ -8,7 +8,7 @@ class ImageTypesController < ApplicationController
                    .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@image_types)
 
-    render json: @image_types.map { |it| transform_image_type_for_json(it) }
+    render json: @image_types.map { transform_image_type_for_json(it) }
   end
 
   def show
@@ -46,6 +46,6 @@ class ImageTypesController < ApplicationController
   end
 
   def transform_image_type_for_json(image_type)
-    %i[id extension mimetype].index_with { |it| image_type.send(it) }
+    %i[id extension mimetype].index_with { image_type.send(it) }
   end
 end
