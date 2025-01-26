@@ -8,7 +8,7 @@ class LabelsController < ApplicationController
               .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@labels)
 
-    render json: @labels.map { |it| transform_label_for_json(it) }
+    render json: @labels.map { transform_label_for_json(it) }
   end
 
   def show
@@ -57,6 +57,6 @@ class LabelsController < ApplicationController
   end
 
   def transform_label_for_json(label)
-    %i[id name normalized_name].index_with { |it| label.send(it) }
+    %i[id name normalized_name].index_with { label.send(it) }
   end
 end

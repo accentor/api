@@ -10,7 +10,7 @@ class PlaysController < ApplicationController
              .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@plays)
 
-    render json: @plays.map { |it| transform_play_for_json(it) }
+    render json: @plays.map { transform_play_for_json(it) }
   end
 
   def create
@@ -34,7 +34,7 @@ class PlaysController < ApplicationController
              .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@stats)
 
-    render json: @stats.map { |it| transform_play_stat_for_json(it) }
+    render json: @stats.map { transform_play_stat_for_json(it) }
   end
 
   private
@@ -44,10 +44,10 @@ class PlaysController < ApplicationController
   end
 
   def transform_play_for_json(play)
-    %i[id played_at track_id user_id].index_with { |it| play.send(it) }
+    %i[id played_at track_id user_id].index_with { play.send(it) }
   end
 
   def transform_play_stat_for_json(play_stat)
-    %i[count track_id last_played_at total_length].index_with { |it| play_stat.send(it) }
+    %i[count track_id last_played_at total_length].index_with { play_stat.send(it) }
   end
 end

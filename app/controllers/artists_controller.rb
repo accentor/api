@@ -12,7 +12,7 @@ class ArtistsController < ApplicationController
                .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@artists)
 
-    render json: @artists.map { |it| transform_artist_for_json(it) }
+    render json: @artists.map { transform_artist_for_json(it) }
   end
 
   def show
@@ -81,7 +81,7 @@ class ArtistsController < ApplicationController
   end
 
   def transform_artist_for_json(artist)
-    result = %i[id name normalized_name review_comment created_at updated_at].index_with { |it| artist.send(it) }
+    result = %i[id name normalized_name review_comment created_at updated_at].index_with { artist.send(it) }
     %i[image image100 image250 image500 image_type].each do |attr|
       result[attr] = send(attr, artist)
     end

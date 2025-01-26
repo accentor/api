@@ -8,7 +8,7 @@ class CoverFilenamesController < ApplicationController
                        .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@cover_filenames)
 
-    render json: @cover_filenames.map { |it| transform_cover_filename_for_json(it) }
+    render json: @cover_filenames.map { transform_cover_filename_for_json(it) }
   end
 
   def show
@@ -38,6 +38,6 @@ class CoverFilenamesController < ApplicationController
   end
 
   def transform_cover_filename_for_json(cover_filename)
-    %i[id filename].index_with { |it| cover_filename.send(it) }
+    %i[id filename].index_with { cover_filename.send(it) }
   end
 end
