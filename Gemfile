@@ -8,7 +8,7 @@ gem 'rails', '~> 8.0'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.2.3', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 6.5'
+gem 'puma', '~> 6.6'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1'
 
