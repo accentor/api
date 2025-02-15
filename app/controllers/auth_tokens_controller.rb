@@ -32,7 +32,7 @@ class AuthTokensController < ApplicationController
     )
 
     if @auth_token.save
-      render json: transform_auth_token_for_json_with_secret(@auth_token), status: :created
+      render json: transform_auth_token_for_json_with_token(@auth_token), status: :created
     else
       render json: @auth_token.errors, status: :unprocessable_entity
     end
@@ -53,9 +53,12 @@ class AuthTokensController < ApplicationController
     %i[id device_id user_id user_agent application].index_with { |it| auth_token.send(it) }
   end
 
-  def transform_auth_token_for_json_with_secret(auth_token)
+  def transform_auth_token_for_json_with_token(auth_token)
     result = transform_auth_token_for_json(auth_token)
-    result[:secret] = auth_token.secret
+    result[:token] = auth_token.generate_token_for(:api)
+
+    # While clients switch to the new token, we also send the token using the secret attribute
+    result[:secret] = result[:token]
     result
   end
 end
