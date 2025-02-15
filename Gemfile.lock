@@ -102,7 +102,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.5.1)
       i18n (>= 1.8.11, < 2)
-    ffi (1.17.0)
+    ffi (1.17.1)
     fugit (1.11.1)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
@@ -120,8 +120,8 @@ GEM
       activesupport (>= 5.2)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
-    image_processing (1.13.0)
-      mini_magick (>= 4.9.5, < 5)
+    image_processing (1.14.0)
+      mini_magick (>= 4.9.5, < 6)
       ruby-vips (>= 2.0.17, < 3)
     io-console (0.8.0)
     irb (1.15.1)
@@ -141,7 +141,9 @@ GEM
       net-pop
       net-smtp
     marcel (1.0.4)
-    mini_magick (4.13.2)
+    mini_magick (5.1.2)
+      benchmark
+      logger
     mini_mime (1.1.5)
     mini_portile2 (2.8.8)
     minitest (5.25.4)
@@ -257,7 +259,7 @@ GEM
       rbs (>= 3, < 4)
       sorbet-runtime (>= 0.5.10782)
     ruby-progressbar (1.13.0)
-    ruby-vips (2.2.2)
+    ruby-vips (2.2.3)
       ffi (~> 1.12)
       logger
     ruby2_keywords (0.0.5)
@@ -302,7 +304,7 @@ DEPENDENCIES
   faker (~> 3.5)
   good_job (~> 4.9)
   has_scope (~> 0.8)
-  image_processing (~> 1.13.0)
+  image_processing (~> 1.14.0)
   mocha (~> 2.7.1)
   pg (>= 1.2.3, < 2.0)
   puma (~> 6.6)
