@@ -36,16 +36,6 @@ class ApplicationController < ActionController::API
     # While the various clients switch to the authorization header, we also accept the token using the secret header/param
     token ||= AuthToken.find_by_token_for(:api, request.headers[:'x-secret'] || params[:secret])
 
-    # As a fallback, we still allow users to log in with their device_id and secret
-    if token.nil?
-      token = AuthToken.find_authenticated(
-        {
-          secret: request.headers[:'x-secret'] || params[:secret],
-          device_id: request.headers[:'x-device-id'] || params[:device_id]
-        }
-      )
-    end
-
     self.current_user = token&.user
   end
 
