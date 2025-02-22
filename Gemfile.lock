@@ -72,7 +72,7 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    annotaterb (4.13.0)
+    annotaterb (4.14.0)
     ast (2.4.2)
     base64 (0.2.0)
     bcrypt (3.1.20)
@@ -295,7 +295,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  annotaterb (~> 4.13)
+  annotaterb (~> 4.14)
   bcrypt (~> 3.1)
   bootsnap (~> 1.18.4)
   brakeman
