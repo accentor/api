@@ -12,7 +12,26 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should create auth_token' do
+  test 'should allow user to authorize using the fallback header' do
+    api_token = create(:auth_token, user: @user).generate_token_for(:api)
+
+    get auth_tokens_url, headers: { 'x-secret': api_token }
+
+    assert_response :success
+  end
+
+  test 'should allow user to authorize using device_id and secret in headers' do
+    auth_token = create(:auth_token, user: @user)
+
+    get auth_tokens_url, headers: {
+      'x-device-id': auth_token.device_id,
+      'x-secret': auth_token.secret
+    }
+
+    assert_response :success
+  end
+
+  test 'should create auth_token and return token to authenticate' do
     assert_difference('AuthToken.count', 1) do
       post auth_tokens_url, params: {
         name: @user.name,
@@ -21,7 +40,10 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
+    token = @response.parsed_body['token']
+
     assert_response :created
+    assert_equal AuthToken.last, AuthToken.find_by_token_for(:api, token)
   end
 
   test 'should not create auth_token with wrong credentials' do
