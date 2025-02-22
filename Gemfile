@@ -49,8 +49,8 @@ group :development do
   gem 'annotaterb', '~> 4.13', require: false
   gem 'rubocop', '~> 1.72', require: false
   gem 'rubocop-factory_bot', '~> 2.26', require: false
-  gem 'rubocop-minitest', '~> 0.36.0', require: false
-  gem 'rubocop-rails', '~> 2.29', require: false
+  gem 'rubocop-minitest', '~> 0.37.1', require: false
+  gem 'rubocop-rails', '~> 2.30', require: false
   gem 'ruby-lsp', '~> 0.23.11', require: false
 
   gem 'brakeman', require: false
