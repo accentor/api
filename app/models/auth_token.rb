@@ -30,6 +30,8 @@ class AuthToken < ApplicationRecord
 
   attr_accessor :secret
 
+  generates_token_for :api, &:device_id
+
   def self.find_authenticated(credentials)
     token = find_by(device_id: credentials[:device_id])
     token if token&.secret_correct?(credentials[:secret])
