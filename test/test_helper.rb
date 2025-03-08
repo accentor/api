@@ -62,46 +62,43 @@ class ActiveSupport::TestCase
 end
 
 module SignInHelper
-  attr_accessor :credentials
+  attr_accessor :api_token
 
   def sign_in_as(user)
-    auth_token = create(:auth_token, user:)
-    self.credentials = { 'x-device-id': auth_token.device_id, 'x-secret': auth_token.secret }
+    self.api_token = create(:auth_token, user:).generate_token_for(:api)
   end
 
   def sign_out
-    self.credentials = {}
+    self.api_token = nil
   end
 
-  def merge_args(args)
-    args ||= {}
-    args[:headers] = args[:headers] || {}
-    creds = credentials || {}
-    { as: :json }.merge(args || {}).merge(headers: creds.merge(args[:headers]))
+  def merge_args(**args)
+    headers = { Authorization: "Bearer #{api_token}" }.merge(args.fetch(:headers, {}))
+    { as: :json }.merge(args).merge(headers:)
   end
 
-  def get(path, **args)
-    process(:get, path, **merge_args(args))
+  def get(path, **)
+    process(:get, path, **merge_args(**))
   end
 
-  def post(path, **args)
-    process(:post, path, **merge_args(args))
+  def post(path, **)
+    process(:post, path, **merge_args(**))
   end
 
-  def patch(path, **args)
-    process(:patch, path, **merge_args(args))
+  def patch(path, **)
+    process(:patch, path, **merge_args(**))
   end
 
-  def put(path, **args)
-    process(:put, path, **merge_args(args))
+  def put(path, **)
+    process(:put, path, **merge_args(**))
   end
 
-  def delete(path, **args)
-    process(:delete, path, **merge_args(args))
+  def delete(path, **)
+    process(:delete, path, **merge_args(**))
   end
 
-  def head(path, **args)
-    process(:head, path, **merge_args(args))
+  def head(path, **)
+    process(:head, path, **merge_args(**))
   end
 end
 
