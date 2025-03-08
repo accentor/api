@@ -18,7 +18,7 @@ gem 'good_job', '~> 4.9'
 gem 'wahwah', '~> 1.6.6'
 
 gem 'has_scope', '~> 0.8'
-gem 'pundit', '~> 2.4'
+gem 'pundit', '~> 2.5'
 gem 'will_paginate', '~> 4.0'
 
 # Use ActiveStorage variant
