@@ -56,9 +56,6 @@ class AuthTokensController < ApplicationController
   def transform_auth_token_for_json_with_token(auth_token)
     result = transform_auth_token_for_json(auth_token)
     result[:token] = auth_token.generate_token_for(:api)
-
-    # While clients switch to the new token, we also send the token using the secret attribute
-    result[:secret] = result[:token]
     result
   end
 end
