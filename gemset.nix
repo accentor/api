@@ -469,10 +469,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "05s008w9vy7is3njblmavrbdzyrwwc1fsziffdr58w9pwqj8sqfx";
+      sha256 = "00q2zznygpbls8asz5knjvvj2brr3ghmqxgr83xnrdj4rk3xwvhr";
       type = "gem";
     };
-    version = "1.6.6";
+    version = "1.7.0";
   };
   loofah = {
     dependencies = ["crass" "nokogiri"];
@@ -872,10 +872,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0drs9n5qn9pifmb752kali7r2sv0laclvchahc670phlv21awdqf";
+      sha256 = "1mgk94ng74k22znq6p0h1spp7cn619dkil55hyxsj53bknnsl6yh";
       type = "gem";
     };
-    version = "3.9.0";
+    version = "3.9.1";
   };
   rdoc = {
     dependencies = ["psych"];
@@ -980,10 +980,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0rmqhp7v4k3xdz6d9sbb0xjyk2519zrk8lr3hpyrv9xa9jyxn6hn";
+      sha256 = "0j4zcp7nncrr6sn0m3scnqsxcf7j2v82pxcd7p3436m70ncmm1x1";
       type = "gem";
     };
-    version = "0.23.12";
+    version = "0.23.13";
   };
   ruby-progressbar = {
     groups = ["default" "development"];
@@ -1073,10 +1073,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1554ir2a6dn11yl0bihiwpg1xckzxk0whmc29g8d71ahgyc8wf61";
+      sha256 = "01jq11xj3b2d6cwi4a71j6p30k9dg8wfm2j058zh7bwyd6f10jxb";
       type = "gem";
     };
-    version = "0.5.11953";
+    version = "0.5.11965";
   };
   stringio = {
     groups = ["default" "development" "test"];
