@@ -197,10 +197,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0xw57fqs89g02mg482x17agc3b606aim72jlc6d525qgqyq2408s";
+      sha256 = "11ip6dgi7147wp8jgwk9g95k07323zh83q699d6wxif6rqdxj0mn";
       type = "gem";
     };
-    version = "7.0.0";
+    version = "7.0.2";
   };
   builder = {
     groups = ["default" "development" "test"];
