@@ -753,10 +753,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "14jpch41i6iclbgc8rykvkyn7ii8s9dwvn98k96qi0hqcbdpj30p";
+      sha256 = "0i2bjh42cmlkwxjrldqj8g5sfrasdp64xhfr25kvp4ziilm3qqc4";
       type = "gem";
     };
-    version = "3.1.13";
+    version = "3.1.14";
   };
   rack-cors = {
     dependencies = ["rack"];
