@@ -28,6 +28,16 @@ class ApplicationController < ActionController::API
     response.headers['Access-Control-Expose-Headers'] = 'x-total-entries, x-total-pages, x-current-page, x-per-page, x-offset'
   end
 
+  def transform_error_for_json(error)
+    result = %i[attribute type].index_with { |it| error.send(it) }
+    result[:options] = error.options.except(*ActiveModel::Error::CALLBACKS_OPTIONS, *ActiveModel::Error::MESSAGE_OPTIONS)
+    result
+  end
+
+  def transform_errors_for_json(errors)
+    errors.map { |it| transform_error_for_json(it) }
+  end
+
   private
 
   def authenticate_user
