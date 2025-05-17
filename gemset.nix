@@ -759,15 +759,15 @@
     version = "3.1.14";
   };
   rack-cors = {
-    dependencies = ["rack"];
+    dependencies = ["logger" "rack"];
     groups = ["default"];
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "06ysmn14pdf2wyr7agm0qvvr9pzcgyf39w4yvk2n05w9k4alwpa1";
+      sha256 = "0s1zymxhk7pkzsrgrn5ax862p07s0drbv0qvnq36jq1rvdhvx5bv";
       type = "gem";
     };
-    version = "2.0.2";
+    version = "3.0.0";
   };
   rack-session = {
     dependencies = ["base64" "rack"];
