@@ -278,10 +278,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0h5kbj9hvg5hb3c7l425zpds0vb42phvln2knab8nmazg2zp5m79";
+      sha256 = "0wrkl7yiix268s2md1h6wh91311w95ikd8fy8m5gx589npyxc00b";
       type = "gem";
     };
-    version = "2.2.1";
+    version = "2.2.3";
   };
   erubi = {
     groups = ["default" "development" "test"];
@@ -439,10 +439,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0l0av82l1i5703fd5qnxr263zw21xmbpx737av3r9pjn0w0cw3xk";
+      sha256 = "1x5b8ipv6g0z44wgc45039k04smsyf95h2m5m67mqq35sa5a955s";
       type = "gem";
     };
-    version = "2.12.0";
+    version = "2.12.2";
   };
   language_server-protocol = {
     groups = ["default" "development"];
@@ -753,10 +753,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0i2bjh42cmlkwxjrldqj8g5sfrasdp64xhfr25kvp4ziilm3qqc4";
+      sha256 = "197wpw61cfwwdrwfdns0zx4mndrv1qn0y9b1v7g2d2nic2ckwayi";
       type = "gem";
     };
-    version = "3.1.14";
+    version = "3.1.15";
   };
   rack-cors = {
     dependencies = ["logger" "rack"];
@@ -925,10 +925,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0qp25m10kxdm41rndf76f4x2g2nqrvf0l31gkfcqjvz7n8hncv0w";
+      sha256 = "1scbammv27cxmbqbs03akgig6jf0mswapy470q12cgr64nxnwmi3";
       type = "gem";
     };
-    version = "1.75.6";
+    version = "1.75.7";
   };
   rubocop-ast = {
     dependencies = ["parser" "prism"];
@@ -969,10 +969,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1gajdiwcd1apsyg8k6vimsx9wkv169y9qm2hzih3x719fl86wivr";
+      sha256 = "1404nfa0gw3p0xzmv4b9zg9v1da0nwc4m7796pl73zi2hwy65k4z";
       type = "gem";
     };
-    version = "2.31.0";
+    version = "2.32.0";
   };
   ruby-lsp = {
     dependencies = ["language_server-protocol" "prism" "rbs" "sorbet-runtime"];
