@@ -1,0 +1,5 @@
+* @chvp @robbevp
+gemset.nix @chvp
+Gemfile.lock @chvp
+Gemfile @chvp
+.github/* @chvp
