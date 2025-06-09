@@ -41,12 +41,16 @@ class AudioFile < ApplicationRecord
 
   after_create :queue_create_transcoded_items
 
+  # rubocop:disable Naming/PredicateMethod
+  # Despite returning a boolean, this is not a predicate method. Running it can
+  # have very clear side-effects, which one wouldn't expect from a predicate.
   def check_self
     return true if File.exist?(full_path)
 
     destroy
     false
   end
+  # rubocop:enable Naming/PredicateMethod
 
   def convert_with_tmpfile(codec_conversion, out_file_name)
     tmp_path = File.join(Dir.tmpdir, "accentor_transcode-#{id}-#{codec_conversion.id}-#{SecureRandom.uuid}")
