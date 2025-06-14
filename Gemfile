@@ -41,7 +41,7 @@ end
 
 group :development, :test do
   gem 'debug', '~> 1.10'
-  gem 'factory_bot_rails', '~> 6.4'
+  gem 'factory_bot_rails', '~> 6.5'
   gem 'faker', '~> 3.5'
 end
 
