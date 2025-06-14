@@ -175,10 +175,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1qq2v3ly3g8my73d86idzy9k5bam7jc3cjxqx67vlskchwg66s0z";
+      sha256 = "1p2szbr4jdvmwaaj2kxlbv1rp0m6ycbgfyp0kjkkkswmniv5y21r";
       type = "gem";
     };
-    version = "3.2.1";
+    version = "3.2.2";
   };
   bootsnap = {
     dependencies = ["msgpack"];
@@ -320,10 +320,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0q927lvgjqj0xaplxhicj5xv8xadx3957mank3p7g01vb6iv6x33";
+      sha256 = "04z6zkfxasddw2bq1whyzzj45hxzhw2lcsdhzrqlvhd7h1yzn1s7";
       type = "gem";
     };
-    version = "6.5.0";
+    version = "6.5.4";
   };
   factory_bot_rails = {
     dependencies = ["factory_bot" "railties"];
@@ -331,10 +331,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "122wkrc3d2q1dlca27794hh3arw0kvrf3rgmvn7hj3y5lb51g7hk";
+      sha256 = "18n06y5ww7d08w296b6fpzx05yywp5r8p88j0k37r994aiin2ysa";
       type = "gem";
     };
-    version = "6.4.4";
+    version = "6.5.0";
   };
   faker = {
     dependencies = ["i18n"];
