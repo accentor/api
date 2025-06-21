@@ -43,7 +43,7 @@ class RescanRunner < ApplicationRecord
     reload
 
     begin
-      unless Codec.count.positive?
+      if Codec.all.empty?
         update(error_text: 'No codecs defined')
         return
       end
