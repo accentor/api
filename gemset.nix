@@ -1176,10 +1176,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1yfdw7shy6r338h3k5bd41drbxyavnh0ad3h48knh0nj3iz1d5d7";
+      sha256 = "0781qa6pss3ygfjmhk30zwyz16dw55276895p93x1iwsq53whwij";
       type = "gem";
     };
-    version = "1.6.6";
+    version = "1.6.7";
   };
   websocket-driver = {
     dependencies = ["base64" "websocket-extensions"];

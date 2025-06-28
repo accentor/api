@@ -293,7 +293,7 @@ GEM
     unicode-emoji (4.0.4)
     uri (1.0.3)
     useragent (0.16.11)
-    wahwah (1.6.6)
+    wahwah (1.6.7)
     websocket-driver (0.7.7)
       base64
       websocket-extensions (>= 0.1.0)
@@ -329,7 +329,7 @@ DEPENDENCIES
   simplecov (~> 0.22)
   simplecov-cobertura (~> 2.1.0)
   tzinfo-data
-  wahwah (~> 1.6.6)
+  wahwah (~> 1.6.7)
   will_paginate (~> 4.0)
 
 RUBY VERSION
