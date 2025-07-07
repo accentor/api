@@ -29,7 +29,7 @@ class AlbumsController < ApplicationController
     if @album.save
       render json: transform_album_for_json(@album), status: :created
     else
-      render json: @album.errors, status: :unprocessable_entity
+      render json: transform_errors_for_json(@album.errors.errors), status: :unprocessable_entity
     end
   end
 
@@ -37,7 +37,7 @@ class AlbumsController < ApplicationController
     if @album.update(transformed_attributes)
       render json: transform_album_for_json(@album), status: :ok
     else
-      render json: @album.errors, status: :unprocessable_entity
+      render json: transform_errors_for_json(@album.errors.errors), status: :unprocessable_entity
     end
   end
 
