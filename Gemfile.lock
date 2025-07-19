@@ -262,7 +262,7 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.44.0, < 2.0)
-    ruby-lsp (0.25.0)
+    ruby-lsp (0.26.0)
       language_server-protocol (~> 3.17.0)
       prism (>= 1.2, < 2.0)
       rbs (>= 3, < 5)
@@ -323,7 +323,7 @@ DEPENDENCIES
   rubocop-factory_bot (~> 2.27)
   rubocop-minitest (~> 0.38.1)
   rubocop-rails (~> 2.32)
-  ruby-lsp (~> 0.25.0)
+  ruby-lsp (~> 0.26.0)
   simplecov (~> 0.22)
   simplecov-cobertura (~> 3.0.0)
   tzinfo-data
