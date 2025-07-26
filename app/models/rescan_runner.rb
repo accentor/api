@@ -182,9 +182,9 @@ class RescanRunner < ApplicationRecord
 
   def find_cover(path)
     CoverFilename.find_each do |cf|
-      ImageType.find_each do |it|
+      ImageType.find_each do |image_type|
         Dir.entries(path).each do |f|
-          return [it, File.join(path, f)] if f.downcase == "#{cf.filename.downcase}.#{it.extension.downcase}"
+          return [image_type, File.join(path, f)] if f.downcase == "#{cf.filename.downcase}.#{image_type.extension.downcase}"
         end
       end
     end
