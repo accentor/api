@@ -31,7 +31,7 @@ class ApplicationController < ActionController::API
   private
 
   def authenticate_user
-    token = authenticate_with_http_token { |it| AuthToken.find_by_token_for(:api, it) }
+    token = authenticate_with_http_token { AuthToken.find_by_token_for(:api, it) }
     token ||= AuthToken.find_by_token_for(:api, params[:token])
 
     # While the various clients switch to the authorization header, we also accept the token using the secret header/param
