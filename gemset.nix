@@ -670,10 +670,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1p2gqqrm895fzr9vi8d118zhql67bm8ydjvgqbq1crdnfggzn7kn";
+      sha256 = "02ylkcfynmngfs5infhxd5nnky9gnv5kldwjh9x3hbpdwja1dsi6";
       type = "gem";
     };
-    version = "1.5.9";
+    version = "1.6.0";
   };
   pp = {
     dependencies = ["prettyprint"];
