@@ -28,7 +28,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
       post image_types_url, params: { image_type: { mimetype: image_type.mimetype } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should not create image_type without mimetype' do
@@ -38,7 +38,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
       post image_types_url, params: { image_type: { extension: image_type.extension } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should create image_type for moderator' do
@@ -77,7 +77,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:moderator))
     patch image_type_url(@image_type), params: { image_type: { mimetype: '' } }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     @image_type.reload
 
     assert_not_equal '', @image_type.mimetype

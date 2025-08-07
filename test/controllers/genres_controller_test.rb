@@ -27,7 +27,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
       post genres_url, params: { genre: { name: '' } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should create genre for moderator' do
@@ -66,7 +66,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:moderator))
     patch genre_url(@genre), params: { genre: { name: '' } }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     @genre.reload
 
     assert_not_equal '', @genre.name

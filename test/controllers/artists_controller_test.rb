@@ -47,7 +47,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
       post artists_url, params: { artist: { name: '' } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should show artist' do
@@ -69,7 +69,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as create(:moderator)
     patch artist_url(@artist), params: { artist: { name: '' } }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     @artist.reload
 
     assert_not_equal '', @artist.name

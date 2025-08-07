@@ -29,7 +29,7 @@ class AlbumsController < ApplicationController
     if @album.save
       render json: transform_album_for_json(@album), status: :created
     else
-      render json: @album.errors, status: :unprocessable_entity
+      render json: @album.errors, status: :unprocessable_content
     end
   end
 
@@ -37,12 +37,12 @@ class AlbumsController < ApplicationController
     if @album.update(transformed_attributes)
       render json: transform_album_for_json(@album), status: :ok
     else
-      render json: @album.errors, status: :unprocessable_entity
+      render json: @album.errors, status: :unprocessable_content
     end
   end
 
   def destroy
-    render json: @album.errors, status: :unprocessable_entity unless @album.destroy
+    render json: @album.errors, status: :unprocessable_content unless @album.destroy
   end
 
   def destroy_empty
@@ -51,7 +51,7 @@ class AlbumsController < ApplicationController
   end
 
   def merge
-    render json: @album.errors, status: :unprocessable_entity unless @album.merge(Album.find(params[:source_id]))
+    render json: @album.errors, status: :unprocessable_content unless @album.merge(Album.find(params[:source_id]))
   end
 
   private

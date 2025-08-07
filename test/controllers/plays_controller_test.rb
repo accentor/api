@@ -43,7 +43,7 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
       post plays_url, params: { play: { played_at: nil, track_id: @track.id } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should get stats and  not return play stats for other users' do

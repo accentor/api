@@ -28,7 +28,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
       post codecs_url, params: { codec: { mimetype: codec.mimetype } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should not create codec with missing mimetype' do
@@ -38,7 +38,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
       post codecs_url, params: { codec: { extension: codec.extension } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should create codec for moderator' do
@@ -77,7 +77,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:moderator))
     patch codec_url(@codec), params: { codec: { mimetype: '' } }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should update codec for moderator' do

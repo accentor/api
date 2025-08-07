@@ -28,7 +28,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       post users_url, params: { user: { password: 'password', permission: user.permission } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should create user for admin' do
@@ -76,7 +76,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:admin))
     patch user_url(@user), params: { user: { name: '' } }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     @user.reload
 
     assert_not_equal '', @user.name
