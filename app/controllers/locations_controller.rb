@@ -22,12 +22,12 @@ class LocationsController < ApplicationController
     if @location.save
       render json: transform_location_for_json(@location), status: :created
     else
-      render json: @location.errors, status: :unprocessable_entity
+      render json: @location.errors, status: :unprocessable_content
     end
   end
 
   def destroy
-    render json: @location.errors, status: :unprocessable_entity unless @location.destroy
+    render json: @location.errors, status: :unprocessable_content unless @location.destroy
   end
 
   private

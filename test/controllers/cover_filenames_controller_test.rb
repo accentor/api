@@ -41,7 +41,7 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
       post cover_filenames_url, params: { cover_filename: { filename: '' } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should create cover_filename for moderator' do

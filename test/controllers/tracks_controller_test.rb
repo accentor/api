@@ -51,7 +51,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
       post tracks_url, params: { track: { album_id: @track.album_id, number: @track.number + 1 } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should not create track without album_id' do
@@ -60,7 +60,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
       post tracks_url, params: { track: { number: @track.number + 1, title: 'Title' } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should create track for moderator' do
@@ -135,7 +135,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:moderator))
     patch track_url(@track), params: { track: { title: '' } }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     @track.reload
 
     assert_not_equal '', @track.title

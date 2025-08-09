@@ -68,7 +68,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
       } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should not create codec_conversion with empty ffmpeg_params' do
@@ -81,7 +81,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
       } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should not create codec_conversion with empty name' do
@@ -94,7 +94,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
       } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should not create codec_conversion with non-existing resulting_codec' do
@@ -108,7 +108,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
       } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should create codec_conversion for admin' do
@@ -158,7 +158,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
       name: ''
     } }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should update codec_conversion for admin' do

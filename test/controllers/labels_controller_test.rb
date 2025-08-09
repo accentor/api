@@ -28,7 +28,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
       post labels_url, params: { label: { name: '' } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should create label for moderator' do
@@ -67,7 +67,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(create(:moderator))
     patch label_url(@label), params: { label: { name: '' } }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     @label.reload
 
     assert_not_equal '', @label.name

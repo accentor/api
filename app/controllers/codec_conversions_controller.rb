@@ -24,7 +24,7 @@ class CodecConversionsController < ApplicationController
     if @codec_conversion.save
       render json: transform_codec_conversion_for_json(@codec_conversion), status: :created
     else
-      render json: @codec_conversion.errors, status: :unprocessable_entity
+      render json: @codec_conversion.errors, status: :unprocessable_content
     end
   end
 
@@ -32,12 +32,12 @@ class CodecConversionsController < ApplicationController
     if @codec_conversion.update(permitted_attributes(CodecConversion))
       render json: transform_codec_conversion_for_json(@codec_conversion), status: :ok
     else
-      render json: @codec_conversion.errors, status: :unprocessable_entity
+      render json: @codec_conversion.errors, status: :unprocessable_content
     end
   end
 
   def destroy
-    render json: @codec_conversion.errors, status: :unprocessable_entity unless @codec_conversion.destroy
+    render json: @codec_conversion.errors, status: :unprocessable_content unless @codec_conversion.destroy
   end
 
   private

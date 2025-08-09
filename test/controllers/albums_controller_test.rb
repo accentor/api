@@ -52,7 +52,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
       post albums_url, params: { album: { release: album.release } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should create dependent album_labels' do
@@ -131,7 +131,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as create(:moderator)
     patch album_url(@album), params: { album: { release: @album.release, title: '' } }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     @album.reload
 
     assert_not_equal '', @album.title

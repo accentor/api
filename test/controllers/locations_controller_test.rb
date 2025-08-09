@@ -41,7 +41,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
       post locations_url, params: { location: { path: '' } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should create location for moderator' do

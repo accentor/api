@@ -26,7 +26,7 @@ class ArtistsController < ApplicationController
     if @artist.save
       render json: transform_artist_for_json(@artist), status: :created
     else
-      render json: @artist.errors, status: :unprocessable_entity
+      render json: @artist.errors, status: :unprocessable_content
     end
   end
 
@@ -34,12 +34,12 @@ class ArtistsController < ApplicationController
     if @artist.update(transformed_attributes)
       render json: transform_artist_for_json(@artist), status: :ok
     else
-      render json: @artist.errors, status: :unprocessable_entity
+      render json: @artist.errors, status: :unprocessable_content
     end
   end
 
   def destroy
-    render json: @artist.errors, status: :unprocessable_entity unless @artist.destroy
+    render json: @artist.errors, status: :unprocessable_content unless @artist.destroy
   end
 
   def destroy_empty
@@ -51,7 +51,7 @@ class ArtistsController < ApplicationController
   end
 
   def merge
-    render json: @artist.errors, status: :unprocessable_entity unless @artist.merge(Artist.find(params[:source_id]))
+    render json: @artist.errors, status: :unprocessable_content unless @artist.merge(Artist.find(params[:source_id]))
   end
 
   private

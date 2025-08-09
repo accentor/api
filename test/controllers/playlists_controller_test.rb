@@ -41,7 +41,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
       post playlists_url, params: { playlist: { name: '', playlist_type: :track } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should create personal playlist for current user if specified' do
@@ -75,7 +75,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
   test 'should not update playlist with empty name' do
     patch playlist_url(@playlist), params: { playlist: { name: '' } }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'should create playlist items during update' do

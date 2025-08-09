@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     if @user.save
       render json: transform_user_for_json(@user), status: :created
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: @user.errors, status: :unprocessable_content
     end
   end
 
@@ -38,12 +38,12 @@ class UsersController < ApplicationController
     if @user.update(permitted_attributes(@user))
       render json: transform_user_for_json(@user), status: :ok
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: @user.errors, status: :unprocessable_content
     end
   end
 
   def destroy
-    render json: @user.errors, status: :unprocessable_entity unless @user.destroy
+    render json: @user.errors, status: :unprocessable_content unless @user.destroy
   end
 
   private
