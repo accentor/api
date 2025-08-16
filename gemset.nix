@@ -904,10 +904,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1vir4x1wg7vc3gcpl0ymvf6hbid71l2h3nhz91a8rqr25nwnamjs";
+      sha256 = "167zy35y4sasqx7wdpv757vigxl1znphfa0xmd9xxn7zhla9qpjy";
       type = "gem";
     };
-    version = "2.11.1";
+    version = "2.11.2";
   };
   reline = {
     dependencies = ["io-console"];
@@ -976,14 +976,6 @@
   };
   rubocop-rails = {
     dependencies = ["activesupport" "lint_roller" "rack" "rubocop" "rubocop-ast"];
-    groups = ["development"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "1404nfa0gw3p0xzmv4b9zg9v1da0nwc4m7796pl73zi2hwy65k4z";
-      type = "gem";
-    };
-    version = "2.32.0";
   };
   ruby-lsp = {
     dependencies = ["language_server-protocol" "prism" "rbs"];
@@ -1126,10 +1118,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1has87asspm6m9wgqas8ghhhwyf2i1yqrqgrkv47xw7jq3qjmbwc";
+      sha256 = "0knx0bgwwpwa7wcmknqp2i019jq6b46wxfppvhxfxrsyhlbnhmmz";
       type = "gem";
     };
-    version = "3.1.4";
+    version = "3.1.5";
   };
   unicode-emoji = {
     groups = ["default" "development"];
