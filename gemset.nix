@@ -976,6 +976,14 @@
   };
   rubocop-rails = {
     dependencies = ["activesupport" "lint_roller" "rack" "rubocop" "rubocop-ast"];
+    groups = ["development"];
+    platforms = [];
+    source = {
+      remotes = ["https://rubygems.org"];
+      sha256 = "0jzpkb3vx2w8mg25gg18rvxzqvxziaqrwv14cqq2yaf1b0dh3344";
+      type = "gem";
+    };
+    version = "2.33.3";
   };
   ruby-lsp = {
     dependencies = ["language_server-protocol" "prism" "rbs"];
