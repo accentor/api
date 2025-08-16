@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 10
     if: ${{ github.ref != 'refs/heads/main' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - uses: cachix/install-nix-action@v31
