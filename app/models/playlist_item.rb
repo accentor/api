@@ -20,7 +20,7 @@
 #  fk_rails_...  (playlist_id => playlists.id)
 #
 class PlaylistItem < ApplicationRecord
-  belongs_to :playlist
+  belongs_to :playlist, touch: true
   belongs_to :item, polymorphic: true
 
   validates :order, presence: true
