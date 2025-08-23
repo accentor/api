@@ -6,11 +6,11 @@ class PlaysController < ApplicationController
 
   def index
     authorize Play
-    @plays = apply_scopes(policy_scope(Play))
-             .paginate(page: params[:page], per_page: params[:per_page])
+    scoped_plays = apply_scopes(policy_scope(Play))
+    @plays = scoped_plays.paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@plays)
 
-    render json: @plays.map { transform_play_for_json(it) }
+    render json: @plays.map { transform_play_for_json(it) } if stale?(etag: scoped_plays)
   end
 
   def create

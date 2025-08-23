@@ -7,12 +7,12 @@ class ArtistsController < ApplicationController
 
   def index
     authorize Artist
-    @artists = apply_scopes(policy_scope(Artist))
-               .includes(image: [{ image_attachment: :blob }, :image_type])
-               .paginate(page: params[:page], per_page: params[:per_page])
+    scoped_artists = apply_scopes(policy_scope(Artist))
+    @artists = scoped_artists.includes(image: [{ image_attachment: :blob }, :image_type])
+                             .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@artists)
 
-    render json: @artists.map { transform_artist_for_json(it) }
+    render json: @artists.map { transform_artist_for_json(it) } if stale?(etag: scoped_artists)
   end
 
   def show

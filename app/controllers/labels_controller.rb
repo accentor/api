@@ -3,12 +3,12 @@ class LabelsController < ApplicationController
 
   def index
     authorize Label
-    @labels = apply_scopes(policy_scope(Label))
-              .order(id: :asc)
-              .paginate(page: params[:page], per_page: params[:per_page])
+    scoped_labels = apply_scopes(policy_scope(Label))
+    @labels = scoped_labels.order(id: :asc)
+                           .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@labels)
 
-    render json: @labels.map { transform_label_for_json(it) }
+    render json: @labels.map { transform_label_for_json(it) } if stale?(etag: scoped_labels)
   end
 
   def show
