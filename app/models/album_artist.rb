@@ -26,7 +26,7 @@
 class AlbumArtist < ApplicationRecord
   include HasNormalized
 
-  belongs_to :album
+  belongs_to :album, touch: true
   belongs_to :artist
 
   validates :name, presence: true
