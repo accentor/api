@@ -36,7 +36,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 group :test do
   gem 'mocha', '~> 2.7.1', require: false
   gem 'simplecov', '~> 0.22', require: false
-  gem 'simplecov-cobertura', '~> 3.0.0', require: false
+  gem 'simplecov-cobertura', '~> 3.1.0', require: false
 end
 
 group :development, :test do
