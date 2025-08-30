@@ -234,7 +234,7 @@ GEM
     regexp_parser (2.11.2)
     reline (0.6.2)
       io-console (~> 0.5)
-    rexml (3.4.1)
+    rexml (3.4.2)
     rubocop (1.80.1)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -276,7 +276,7 @@ GEM
       docile (~> 1.1)
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
-    simplecov-cobertura (3.0.0)
+    simplecov-cobertura (3.1.0)
       rexml
       simplecov (~> 0.19)
     simplecov-html (0.13.2)
@@ -325,7 +325,7 @@ DEPENDENCIES
   rubocop-rails (~> 2.33)
   ruby-lsp (~> 0.26.1)
   simplecov (~> 0.22)
-  simplecov-cobertura (~> 3.0.0)
+  simplecov-cobertura (~> 3.1.0)
   tzinfo-data
   wahwah (~> 1.6.7)
   will_paginate (~> 4.0)
