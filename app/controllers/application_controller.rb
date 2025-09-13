@@ -2,6 +2,9 @@ class ApplicationController < ActionController::API
   include Pundit::Authorization
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
+  etag { params[:page] }
+  etag { params[:per_page] }
+
   attr_accessor :current_user
 
   before_action :authenticate_user

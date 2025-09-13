@@ -8,12 +8,12 @@ class TracksController < ApplicationController
 
   def index
     authorize Track
-    @tracks = apply_scopes(policy_scope(Track))
-              .includes(:track_artists, :genres, audio_file: %i[location codec])
-              .paginate(page: params[:page], per_page: params[:per_page])
+    scoped_tracks = apply_scopes(policy_scope(Track))
+    @tracks = scoped_tracks.includes(:track_artists, :genres, audio_file: %i[location codec])
+                           .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@tracks)
 
-    render json: @tracks.map { transform_track_for_json(it) }
+    render json: @tracks.map { transform_track_for_json(it) } if stale?(etag: scoped_tracks)
   end
 
   def show
