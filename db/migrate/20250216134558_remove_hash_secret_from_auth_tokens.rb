@@ -8,7 +8,7 @@ class RemoveHashSecretFromAuthTokens < ActiveRecord::Migration[8.0]
 
     AuthToken.find_each do |at|
       at.secret = SecureRandom.urlsafe_base64(48)
-      at.hashed_secret = BCrypt::Password.create(secret, cost: Rails.configuration.token_hash_rounds)
+      at.hashed_secret = BCrypt::Password.create(secret, cost: 10)
       at.save!
     end
 
