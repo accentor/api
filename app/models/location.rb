@@ -2,8 +2,10 @@
 #
 # Table name: locations
 #
-#  id   :bigint           not null, primary key
-#  path :string           not null
+#  id         :bigint           not null, primary key
+#  path       :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 # Indexes
 #

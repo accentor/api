@@ -2,10 +2,12 @@
 #
 # Table name: plays
 #
-#  id        :bigint           not null, primary key
-#  played_at :datetime         not null
-#  track_id  :bigint           not null
-#  user_id   :bigint           not null
+#  id         :bigint           not null, primary key
+#  played_at  :datetime         not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  track_id   :bigint           not null
+#  user_id    :bigint           not null
 #
 # Indexes
 #

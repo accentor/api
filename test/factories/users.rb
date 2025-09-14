@@ -6,6 +6,8 @@
 #  name            :string           not null
 #  password_digest :string           not null
 #  permission      :integer          default("user"), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 # Indexes
 #

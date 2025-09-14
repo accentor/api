@@ -8,6 +8,8 @@
 #  filename    :string           not null
 #  length      :integer          not null
 #  sample_rate :integer          not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #  codec_id    :bigint           not null
 #  location_id :bigint           not null
 #

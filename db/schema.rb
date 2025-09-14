@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_04_134958) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_14_101209) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -49,6 +49,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_134958) do
     t.integer "order", null: false
     t.string "separator"
     t.string "normalized_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["album_id", "artist_id", "name"], name: "index_album_artists_on_album_id_and_artist_id_and_name", unique: true
     t.index ["album_id"], name: "index_album_artists_on_album_id"
     t.index ["artist_id"], name: "index_album_artists_on_artist_id"
@@ -59,6 +61,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_134958) do
     t.bigint "album_id", null: false
     t.bigint "label_id", null: false
     t.string "catalogue_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["album_id", "label_id"], name: "index_album_labels_on_album_id_and_label_id", unique: true
     t.index ["album_id"], name: "index_album_labels_on_album_id"
     t.index ["label_id"], name: "index_album_labels_on_label_id"
@@ -97,6 +101,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_134958) do
     t.integer "bitrate", null: false
     t.integer "sample_rate", null: false
     t.integer "bit_depth", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["codec_id"], name: "index_audio_files_on_codec_id"
     t.index ["location_id", "filename"], name: "index_audio_files_on_location_id_and_filename", unique: true
     t.index ["location_id"], name: "index_audio_files_on_location_id"
@@ -107,6 +113,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_134958) do
     t.string "device_id", null: false
     t.string "user_agent", null: false
     t.string "application"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["device_id"], name: "index_auth_tokens_on_device_id", unique: true
     t.index ["user_id"], name: "index_auth_tokens_on_user_id"
   end
@@ -115,6 +123,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_134958) do
     t.string "name", null: false
     t.string "ffmpeg_params", null: false
     t.bigint "resulting_codec_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_codec_conversions_on_name", unique: true
     t.index ["resulting_codec_id"], name: "index_codec_conversions_on_resulting_codec_id"
   end
@@ -122,17 +132,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_134958) do
   create_table "codecs", force: :cascade do |t|
     t.string "mimetype", null: false
     t.string "extension", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["extension"], name: "index_codecs_on_extension", unique: true
   end
 
   create_table "cover_filenames", force: :cascade do |t|
     t.string "filename", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["filename"], name: "index_cover_filenames_on_filename", unique: true
   end
 
   create_table "genres", force: :cascade do |t|
     t.string "name", null: false
     t.string "normalized_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_genres_on_name", unique: true
     t.index ["normalized_name"], name: "index_genres_on_normalized_name"
   end
@@ -238,22 +254,30 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_134958) do
   create_table "image_types", force: :cascade do |t|
     t.string "extension", null: false
     t.string "mimetype", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["extension"], name: "index_image_types_on_extension", unique: true
   end
 
   create_table "images", force: :cascade do |t|
     t.bigint "image_type_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["image_type_id"], name: "index_images_on_image_type_id"
   end
 
   create_table "labels", force: :cascade do |t|
     t.string "name", null: false
     t.string "normalized_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["normalized_name"], name: "index_labels_on_normalized_name"
   end
 
   create_table "locations", force: :cascade do |t|
     t.string "path", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["path"], name: "index_locations_on_path", unique: true
   end
 
@@ -283,6 +307,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_134958) do
     t.bigint "track_id", null: false
     t.bigint "user_id", null: false
     t.datetime "played_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["track_id"], name: "index_plays_on_track_id"
     t.index ["user_id", "track_id"], name: "index_plays_on_user_id_and_track_id"
     t.index ["user_id"], name: "index_plays_on_user_id"
@@ -295,6 +321,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_134958) do
     t.boolean "running", default: false, null: false
     t.datetime "finished_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.bigint "location_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["location_id"], name: "index_rescan_runners_on_location_id"
   end
 
@@ -306,6 +334,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_134958) do
     t.integer "order", null: false
     t.string "normalized_name", null: false
     t.boolean "hidden", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["artist_id"], name: "index_track_artists_on_artist_id"
     t.index ["normalized_name"], name: "index_track_artists_on_normalized_name"
     t.index ["track_id", "artist_id", "name", "role"], name: "index_track_artists_on_track_id_and_artist_id_and_name_and_role", unique: true
@@ -342,6 +372,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_134958) do
     t.string "name", null: false
     t.string "password_digest", null: false
     t.integer "permission", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_users_on_name", unique: true
   end
 

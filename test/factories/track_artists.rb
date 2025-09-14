@@ -8,6 +8,8 @@
 #  normalized_name :string           not null
 #  order           :integer          not null
 #  role            :integer          not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #  artist_id       :bigint           not null
 #  track_id        :bigint           not null
 #

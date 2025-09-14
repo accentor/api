@@ -4,6 +4,8 @@
 #
 #  id               :bigint           not null, primary key
 #  catalogue_number :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
 #  album_id         :bigint           not null
 #  label_id         :bigint           not null
 #

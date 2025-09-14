@@ -2,8 +2,10 @@
 #
 # Table name: cover_filenames
 #
-#  id       :bigint           not null, primary key
-#  filename :string           not null
+#  id         :bigint           not null, primary key
+#  filename   :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 # Indexes
 #
