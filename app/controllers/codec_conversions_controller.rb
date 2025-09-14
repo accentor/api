@@ -48,6 +48,6 @@ class CodecConversionsController < ApplicationController
   end
 
   def transform_codec_conversion_for_json(codec_conversion)
-    %i[id name ffmpeg_params resulting_codec_id].index_with { codec_conversion.send(it) }
+    %i[id name ffmpeg_params resulting_codec_id created_at updated_at].index_with { codec_conversion.send(it) }
   end
 end

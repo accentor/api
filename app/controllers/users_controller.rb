@@ -54,6 +54,6 @@ class UsersController < ApplicationController
   end
 
   def transform_user_for_json(user)
-    %i[id name permission].index_with { user.send(it) }
+    %i[id name permission created_at updated_at].index_with { user.send(it) }
   end
 end

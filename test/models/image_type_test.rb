@@ -2,9 +2,11 @@
 #
 # Table name: image_types
 #
-#  id        :bigint           not null, primary key
-#  extension :string           not null
-#  mimetype  :string           not null
+#  id         :bigint           not null, primary key
+#  extension  :string           not null
+#  mimetype   :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 # Indexes
 #

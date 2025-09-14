@@ -50,7 +50,7 @@ class AuthTokensController < ApplicationController
   end
 
   def transform_auth_token_for_json(auth_token)
-    %i[id device_id user_id user_agent application].index_with { auth_token.send(it) }
+    %i[id device_id user_id user_agent application created_at updated_at].index_with { auth_token.send(it) }
   end
 
   def transform_auth_token_for_json_with_token(auth_token)

@@ -7,6 +7,8 @@
 #  normalized_name :string           not null
 #  order           :integer          not null
 #  separator       :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #  album_id        :bigint           not null
 #  artist_id       :bigint           not null
 #

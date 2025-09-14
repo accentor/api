@@ -38,6 +38,6 @@ class LocationsController < ApplicationController
   end
 
   def transform_location_for_json(location)
-    %i[id path].index_with { location.send(it) }
+    %i[id path created_at updated_at].index_with { location.send(it) }
   end
 end

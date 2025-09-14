@@ -8,6 +8,8 @@
 #  processed    :integer          default(0), not null
 #  running      :boolean          default(FALSE), not null
 #  warning_text :text
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
 #  location_id  :bigint           not null
 #
 # Indexes

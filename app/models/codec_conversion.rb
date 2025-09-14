@@ -5,6 +5,8 @@
 #  id                 :bigint           not null, primary key
 #  ffmpeg_params      :string           not null
 #  name               :string           not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #  resulting_codec_id :bigint           not null
 #
 # Indexes

@@ -44,7 +44,7 @@ class PlaysController < ApplicationController
   end
 
   def transform_play_for_json(play)
-    %i[id played_at track_id user_id].index_with { play.send(it) }
+    %i[id played_at track_id user_id created_at updated_at].index_with { play.send(it) }
   end
 
   def transform_play_stat_for_json(play_stat)

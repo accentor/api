@@ -57,6 +57,6 @@ class GenresController < ApplicationController
   end
 
   def transform_genre_for_json(genre)
-    %i[id name normalized_name].index_with { genre.send(it) }
+    %i[id name normalized_name created_at updated_at].index_with { genre.send(it) }
   end
 end

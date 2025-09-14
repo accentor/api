@@ -57,6 +57,6 @@ class LabelsController < ApplicationController
   end
 
   def transform_label_for_json(label)
-    %i[id name normalized_name].index_with { label.send(it) }
+    %i[id name normalized_name created_at updated_at].index_with { label.send(it) }
   end
 end
