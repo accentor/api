@@ -46,6 +46,6 @@ class ImageTypesController < ApplicationController
   end
 
   def transform_image_type_for_json(image_type)
-    %i[id extension mimetype].index_with { image_type.send(it) }
+    %i[id extension mimetype created_at updated_at].index_with { image_type.send(it) }
   end
 end

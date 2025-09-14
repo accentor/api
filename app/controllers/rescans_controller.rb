@@ -31,6 +31,6 @@ class RescansController < ApplicationController
   end
 
   def transform_rescan_runner_for_json(rescan_runner)
-    %i[id error_text warning_text processed running finished_at location_id].index_with { rescan_runner.send(it) }
+    %i[id error_text warning_text processed running finished_at location_id created_at updated_at].index_with { rescan_runner.send(it) }
   end
 end

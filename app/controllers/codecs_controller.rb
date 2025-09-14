@@ -46,6 +46,6 @@ class CodecsController < ApplicationController
   end
 
   def transform_codec_for_json(codec)
-    %i[id mimetype extension].index_with { codec.send(it) }
+    %i[id mimetype extension created_at updated_at].index_with { codec.send(it) }
   end
 end

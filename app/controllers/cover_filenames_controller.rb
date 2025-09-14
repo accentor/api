@@ -38,6 +38,6 @@ class CoverFilenamesController < ApplicationController
   end
 
   def transform_cover_filename_for_json(cover_filename)
-    %i[id filename].index_with { cover_filename.send(it) }
+    %i[id filename created_at updated_at].index_with { cover_filename.send(it) }
   end
 end
