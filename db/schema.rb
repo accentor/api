@@ -105,7 +105,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_134958) do
   create_table "auth_tokens", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "device_id", null: false
-    t.string "hashed_secret", null: false
     t.string "user_agent", null: false
     t.string "application"
     t.index ["device_id"], name: "index_auth_tokens_on_device_id", unique: true

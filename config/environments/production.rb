@@ -73,7 +73,6 @@ Rails.application.configure do
 
   config.transcode_cache_expiry = -> { 3.days.ago }
 
-  config.token_hash_rounds = 10
   config.ffmpeg_log_location = ENV.fetch('FFMPEG_LOG_LOCATION') { Rails.root.join('log/ffmpeg.log').to_s }
   config.transcode_storage_path = ENV.fetch('RAILS_TRANSCODES_PATH') { Rails.root.join('storage/transcodes').to_s }
 end

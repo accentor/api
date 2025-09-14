@@ -58,7 +58,6 @@ Rails.application.configure do
   config.transcode_cache_expiry = -> { 1.day.ago }
   config.recalculate_content_length_if = ->(af) { af.length > 299 || af.track.created_at.after?(1.month.ago) }
 
-  config.token_hash_rounds = 1
   config.ffmpeg_log_location = Rails.root.join('tmp/log/ffmpeg.log').to_s
   config.transcode_storage_path = Rails.root.join('tmp/storage/transcodes').to_s
 end

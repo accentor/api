@@ -1,8 +1,7 @@
 user = User.create(name: 'admin', password: 'admin', permission: :admin)
 
 if Rails.env.development?
-  token = AuthToken.create(user: user, user_agent: 'Rails')
-  token.update(hashed_secret: BCrypt::Password.create('secret', cost: 1), device_id: 'device-id')
+  AuthToken.create(user:, user_agent: 'Rails', device_id: 'device-id')
 end
 
 Codec.create(mimetype: 'audio/flac', extension: 'flac')
