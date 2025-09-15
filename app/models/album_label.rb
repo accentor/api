@@ -22,7 +22,7 @@
 #
 
 class AlbumLabel < ApplicationRecord
-  belongs_to :album
+  belongs_to :album, touch: true
   belongs_to :label
 
   validates :album, uniqueness: { scope: :label }

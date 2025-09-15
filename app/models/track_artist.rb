@@ -31,7 +31,7 @@ class TrackArtist < ApplicationRecord
 
   enum :role, { main: 0, performer: 1, composer: 2, conductor: 3, remixer: 4, producer: 5, arranger: 6 }
 
-  belongs_to :track
+  belongs_to :track, touch: true
   belongs_to :artist
 
   validates :role, presence: true

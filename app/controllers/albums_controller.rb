@@ -10,12 +10,12 @@ class AlbumsController < ApplicationController
 
   def index
     authorize Album
-    @albums = apply_scopes(policy_scope(Album))
-              .includes(:album_artists, :album_labels, image: [{ image_attachment: :blob }, :image_type])
-              .paginate(page: params[:page], per_page: params[:per_page])
+    scoped_albums = apply_scopes(policy_scope(Album))
+    @albums = scoped_albums.includes(:album_artists, :album_labels, image: [{ image_attachment: :blob }, :image_type])
+                           .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@albums)
 
-    render json: @albums.map { transform_album_for_json(it) }
+    render json: @albums.map { transform_album_for_json(it) } if stale?(etag: scoped_albums)
   end
 
   def show
