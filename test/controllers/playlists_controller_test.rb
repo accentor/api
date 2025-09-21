@@ -8,9 +8,33 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
+    query = Playlist.where.not(access: :secret).or(Playlist.where(access: :secret, user_id: @user.id)).with_item_ids.order(id: :asc)
+    expected_etag = construct_etag(query)
+
     get playlists_url
 
     assert_response :success
+    assert_equal expected_etag, headers['etag']
+  end
+
+  test 'should get index and return not modified if etag matches' do
+    query = Playlist.where.not(access: :secret).or(Playlist.where(access: :secret, user_id: @user.id)).with_item_ids.order(id: :asc)
+    expected_etag = construct_etag(query)
+
+    get playlists_url, headers: { 'If-None-Match': expected_etag }
+
+    assert_response :not_modified
+    assert_empty response.parsed_body
+  end
+
+  test 'should get index and include page in etag' do
+    query = Playlist.where.not(access: :secret).or(Playlist.where(access: :secret, user_id: @user.id)).with_item_ids.order(id: :asc)
+    expected_etag = construct_etag(query, page: 5, per_page: 501)
+
+    get playlists_url(page: 5, per_page: 501)
+
+    assert_response :success
+    assert_equal expected_etag, headers['etag']
   end
 
   test 'should create playlist for user' do

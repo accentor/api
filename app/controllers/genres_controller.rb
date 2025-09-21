@@ -3,12 +3,11 @@ class GenresController < ApplicationController
 
   def index
     authorize Genre
-    scoped_genres = apply_scopes(policy_scope(Genre))
-    @genres = scoped_genres.order(id: :asc)
-                           .paginate(page: params[:page], per_page: params[:per_page])
+    scoped_genres = apply_scopes(policy_scope(Genre)).reorder(id: :asc)
+    @genres = scoped_genres.paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@genres)
 
-    render json: @genres.map { transform_genre_for_json(it) } if stale?(etag: scoped_genres)
+    render json: @genres.map { transform_genre_for_json(it) } if stale?(scope: scoped_genres)
   end
 
   def show

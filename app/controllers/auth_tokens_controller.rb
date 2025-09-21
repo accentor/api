@@ -3,12 +3,11 @@ class AuthTokensController < ApplicationController
 
   def index
     authorize AuthToken
-    @auth_tokens = apply_scopes(policy_scope(AuthToken))
-                   .order(id: :asc)
-                   .paginate(page: params[:page], per_page: params[:per_page])
+    scoped_tokens = apply_scopes(policy_scope(AuthToken)).reorder(id: :asc)
+    @auth_tokens = scoped_tokens.paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@auth_tokens)
 
-    render json: @auth_tokens.map { transform_auth_token_for_json(it) }
+    render json: @auth_tokens.map { transform_auth_token_for_json(it) } if stale?(scope: scoped_tokens)
   end
 
   def show

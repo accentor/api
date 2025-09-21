@@ -7,9 +7,30 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
+    expected_etag = construct_etag(CodecConversion.order(id: :asc))
+
     get codec_conversions_url
 
     assert_response :success
+    assert_equal expected_etag, headers['etag']
+  end
+
+  test 'should get index and return not modified if etag matches' do
+    expected_etag = construct_etag(CodecConversion.order(id: :asc))
+
+    get codec_conversions_url, headers: { 'If-None-Match': expected_etag }
+
+    assert_response :not_modified
+    assert_empty response.parsed_body
+  end
+
+  test 'should get index and include page in etag' do
+    expected_etag = construct_etag(CodecConversion.order(id: :asc), page: 5, per_page: 501)
+
+    get codec_conversions_url(page: 5, per_page: 501)
+
+    assert_response :success
+    assert_equal expected_etag, headers['etag']
   end
 
   test 'should filter by codec' do

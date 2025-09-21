@@ -3,12 +3,11 @@ class CoverFilenamesController < ApplicationController
 
   def index
     authorize CoverFilename
-    @cover_filenames = apply_scopes(policy_scope(CoverFilename))
-                       .order(id: :asc)
-                       .paginate(page: params[:page], per_page: params[:per_page])
+    scoped_filenames = apply_scopes(policy_scope(CoverFilename)).reorder(id: :asc)
+    @cover_filenames = scoped_filenames.paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@cover_filenames)
 
-    render json: @cover_filenames.map { transform_cover_filename_for_json(it) }
+    render json: @cover_filenames.map { transform_cover_filename_for_json(it) } if stale?(scope: scoped_filenames)
   end
 
   def show

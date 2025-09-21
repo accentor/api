@@ -102,6 +102,14 @@ module SignInHelper
   end
 end
 
+module EtagHelper
+  def construct_etag(query, page: nil, per_page: nil)
+    cache_key = ActiveSupport::Cache.expand_cache_key([query.cache_key_with_version, page, per_page].compact)
+    "W/\"#{ActiveSupport::Digest.hexdigest(cache_key)}\""
+  end
+end
+
 class ActionDispatch::IntegrationTest
+  include EtagHelper
   include SignInHelper
 end

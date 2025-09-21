@@ -3,12 +3,11 @@ class ImageTypesController < ApplicationController
 
   def index
     authorize ImageType
-    @image_types = apply_scopes(policy_scope(ImageType))
-                   .order(id: :asc)
-                   .paginate(page: params[:page], per_page: params[:per_page])
+    scoped_types = apply_scopes(policy_scope(ImageType)).reorder(id: :asc)
+    @image_types = scoped_types.paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@image_types)
 
-    render json: @image_types.map { transform_image_type_for_json(it) }
+    render json: @image_types.map { transform_image_type_for_json(it) } if stale?(scope: scoped_types)
   end
 
   def show

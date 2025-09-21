@@ -7,7 +7,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
-    expected_etag = "W/\"#{ActiveSupport::Digest.hexdigest(Album.order(id: :desc).cache_key_with_version)}\""
+    expected_etag = construct_etag(Album.order(id: :desc))
 
     get albums_url
 
@@ -16,7 +16,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index and return not modified if etag matches' do
-    expected_etag = "W/\"#{ActiveSupport::Digest.hexdigest(Album.order(id: :desc).cache_key_with_version)}\""
+    expected_etag = construct_etag(Album.order(id: :desc))
 
     get albums_url, headers: { 'If-None-Match': expected_etag }
 
@@ -25,7 +25,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index and include page in etag' do
-    expected_etag = "W/\"#{ActiveSupport::Digest.hexdigest(ActiveSupport::Cache.expand_cache_key([Album.order(id: :desc).cache_key_with_version, 5, 501]))}\""
+    expected_etag = construct_etag(Album.order(id: :desc), page: 5, per_page: 501)
 
     get albums_url(page: 5, per_page: 501)
 

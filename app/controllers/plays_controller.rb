@@ -10,7 +10,7 @@ class PlaysController < ApplicationController
     @plays = scoped_plays.paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@plays)
 
-    render json: @plays.map { transform_play_for_json(it) } if stale?(etag: scoped_plays)
+    render json: @plays.map { transform_play_for_json(it) } if stale?(scope: scoped_plays)
   end
 
   def create

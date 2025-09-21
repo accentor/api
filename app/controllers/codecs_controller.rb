@@ -3,12 +3,11 @@ class CodecsController < ApplicationController
 
   def index
     authorize Codec
-    @codecs = apply_scopes(policy_scope(Codec))
-              .order(id: :asc)
-              .paginate(page: params[:page], per_page: params[:per_page])
+    scoped_codecs = apply_scopes(policy_scope(Codec)).reorder(id: :asc)
+    @codecs = scoped_codecs.paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@codecs)
 
-    render json: @codecs.map { transform_codec_for_json(it) }
+    render json: @codecs.map { transform_codec_for_json(it) } if stale?(scope: scoped_codecs)
   end
 
   def show

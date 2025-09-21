@@ -7,9 +7,30 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
+    expected_etag = construct_etag(Label.order(id: :asc))
+
     get labels_url
 
     assert_response :success
+    assert_equal expected_etag, headers['etag']
+  end
+
+  test 'should get index and return not modified if etag matches' do
+    expected_etag = construct_etag(Label.order(id: :asc))
+
+    get labels_url, headers: { 'If-None-Match': expected_etag }
+
+    assert_response :not_modified
+    assert_empty response.parsed_body
+  end
+
+  test 'should get index and include page in etag' do
+    expected_etag = construct_etag(Label.order(id: :asc), page: 5, per_page: 501)
+
+    get labels_url(page: 5, per_page: 501)
+
+    assert_response :success
+    assert_equal expected_etag, headers['etag']
   end
 
   test 'should not create label for user' do

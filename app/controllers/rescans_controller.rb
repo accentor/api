@@ -3,10 +3,11 @@ class RescansController < ApplicationController
 
   def index
     authorize RescanRunner
-    @rescans = policy_scope(RescanRunner).paginate(page: params[:page], per_page: params[:per_page])
+    scoped_rescans = policy_scope(RescanRunner)
+    @rescans = scoped_rescans.paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@rescans)
 
-    render json: @rescans.map { transform_rescan_runner_for_json(it) }
+    render json: @rescans.map { transform_rescan_runner_for_json(it) } if stale?(scope: scoped_rescans)
   end
 
   def show

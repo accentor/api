@@ -12,7 +12,7 @@ class ArtistsController < ApplicationController
                              .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@artists)
 
-    render json: @artists.map { transform_artist_for_json(it) } if stale?(etag: scoped_artists)
+    render json: @artists.map { transform_artist_for_json(it) } if stale?(scope: scoped_artists)
   end
 
   def show

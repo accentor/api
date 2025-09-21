@@ -15,7 +15,7 @@ class AlbumsController < ApplicationController
                            .paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@albums)
 
-    render json: @albums.map { transform_album_for_json(it) } if stale?(etag: scoped_albums)
+    render json: @albums.map { transform_album_for_json(it) } if stale?(scope: scoped_albums)
   end
 
   def show
