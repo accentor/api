@@ -17,6 +17,7 @@
 #  index_tracks_on_album_id          (album_id)
 #  index_tracks_on_audio_file_id     (audio_file_id) UNIQUE
 #  index_tracks_on_normalized_title  (normalized_title)
+#  index_tracks_on_updated_at        (updated_at)
 #
 # Foreign Keys
 #

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_14_101209) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_14_144855) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -80,6 +80,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_14_101209) do
     t.string "normalized_title", null: false
     t.index ["image_id"], name: "index_albums_on_image_id", unique: true
     t.index ["normalized_title"], name: "index_albums_on_normalized_title"
+    t.index ["updated_at"], name: "index_albums_on_updated_at"
   end
 
   create_table "artists", force: :cascade do |t|
@@ -91,6 +92,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_14_101209) do
     t.string "normalized_name", null: false
     t.index ["image_id"], name: "index_artists_on_image_id", unique: true
     t.index ["normalized_name"], name: "index_artists_on_normalized_name"
+    t.index ["updated_at"], name: "index_artists_on_updated_at"
   end
 
   create_table "audio_files", force: :cascade do |t|
@@ -311,6 +313,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_14_101209) do
     t.datetime "updated_at", null: false
     t.index ["track_id"], name: "index_plays_on_track_id"
     t.index ["user_id", "track_id"], name: "index_plays_on_user_id_and_track_id"
+    t.index ["user_id", "updated_at"], name: "index_plays_on_user_id_and_updated_at"
     t.index ["user_id"], name: "index_plays_on_user_id"
   end
 
@@ -354,6 +357,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_14_101209) do
     t.index ["album_id"], name: "index_tracks_on_album_id"
     t.index ["audio_file_id"], name: "index_tracks_on_audio_file_id", unique: true
     t.index ["normalized_title"], name: "index_tracks_on_normalized_title"
+    t.index ["updated_at"], name: "index_tracks_on_updated_at"
   end
 
   create_table "transcoded_items", force: :cascade do |t|

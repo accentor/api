@@ -11,9 +11,10 @@
 #
 # Indexes
 #
-#  index_plays_on_track_id              (track_id)
-#  index_plays_on_user_id               (user_id)
-#  index_plays_on_user_id_and_track_id  (user_id,track_id)
+#  index_plays_on_track_id                (track_id)
+#  index_plays_on_user_id                 (user_id)
+#  index_plays_on_user_id_and_track_id    (user_id,track_id)
+#  index_plays_on_user_id_and_updated_at  (user_id,updated_at)
 #
 # Foreign Keys
 #

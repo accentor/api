@@ -17,6 +17,7 @@
 #
 #  index_albums_on_image_id          (image_id) UNIQUE
 #  index_albums_on_normalized_title  (normalized_title)
+#  index_albums_on_updated_at        (updated_at)
 #
 # Foreign Keys
 #
