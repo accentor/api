@@ -7,9 +7,30 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
+    expected_etag = construct_etag(Album.order(id: :desc))
+
     get albums_url
 
     assert_response :success
+    assert_equal expected_etag, headers['etag']
+  end
+
+  test 'should get index and return not modified if etag matches' do
+    expected_etag = construct_etag(Album.order(id: :desc))
+
+    get albums_url, headers: { 'If-None-Match': expected_etag }
+
+    assert_response :not_modified
+    assert_empty response.parsed_body
+  end
+
+  test 'should get index and include page in etag' do
+    expected_etag = construct_etag(Album.order(id: :desc), page: 5, per_page: 501)
+
+    get albums_url(page: 5, per_page: 501)
+
+    assert_response :success
+    assert_equal expected_etag, headers['etag']
   end
 
   test 'should not create album for user' do

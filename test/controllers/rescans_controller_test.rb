@@ -8,17 +8,50 @@ class RescansControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@user)
   end
 
-  test 'should get not index for user' do
+  test 'should not get index for user' do
     get rescans_url
 
     assert_response :forbidden
   end
 
   test 'should get index for moderator' do
-    sign_in_as(@moderator)
+    sign_in_as @moderator
+    expected_etag = construct_etag(RescanRunner.all)
+
     get rescans_url
 
     assert_response :success
+    assert_equal expected_etag, headers['etag']
+  end
+
+  test 'should get index for admin' do
+    sign_in_as create(:admin)
+    expected_etag = construct_etag(RescanRunner.all)
+
+    get rescans_url
+
+    assert_response :success
+    assert_equal expected_etag, headers['etag']
+  end
+
+  test 'should get index and return not modified if etag matches' do
+    sign_in_as create(:admin)
+    expected_etag = construct_etag(RescanRunner.all)
+
+    get rescans_url, headers: { 'If-None-Match': expected_etag }
+
+    assert_response :not_modified
+    assert_empty response.parsed_body
+  end
+
+  test 'should get index and include page in etag' do
+    sign_in_as create(:admin)
+    expected_etag = construct_etag(RescanRunner.all, page: 5, per_page: 501)
+
+    get rescans_url(page: 5, per_page: 501)
+
+    assert_response :success
+    assert_equal expected_etag, headers['etag']
   end
 
   test 'should get not show for user' do

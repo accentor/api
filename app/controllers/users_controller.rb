@@ -3,12 +3,11 @@ class UsersController < ApplicationController
 
   def index
     authorize User
-    @users = apply_scopes(policy_scope(User))
-             .order(id: :asc)
-             .paginate(page: params[:page], per_page: params[:per_page])
+    scoped_users = apply_scopes(policy_scope(User)).reorder(id: :asc)
+    @users = scoped_users.paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@users)
 
-    render json: @users.map { transform_user_for_json(it) }
+    render json: @users.map { transform_user_for_json(it) } if stale?(scope: scoped_users)
   end
 
   def show

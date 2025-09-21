@@ -7,34 +7,54 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index with filenames for moderator' do
+    expected_etag = construct_etag(Track.order(id: :desc))
+
     sign_in_as(create(:moderator))
     get tracks_url
 
     assert_response :success
-    body = ActiveSupport::JSON.decode response.body
-
-    assert_equal @track.audio_file&.filename, body.first['filename']
+    assert_equal @track.audio_file.filename, response.parsed_body.dig(0, 'filename')
+    assert_equal expected_etag, headers['etag']
   end
 
   test 'should get index without filenames for user' do
+    expected_etag = construct_etag(Track.order(id: :desc))
+
     get tracks_url
 
     assert_response :success
-    body = ActiveSupport::JSON.decode response.body
+    assert_nil response.parsed_body.dig(0, 'filename')
+    assert_equal expected_etag, headers['etag']
+  end
 
-    assert_nil body.first['filename']
+  test 'should get index and return not modified if etag matches' do
+    expected_etag = construct_etag(Track.order(id: :desc))
+
+    get tracks_url, headers: { 'If-None-Match': expected_etag }
+
+    assert_response :not_modified
+    assert_empty response.parsed_body
+  end
+
+  test 'should get index and include page in etag' do
+    expected_etag = construct_etag(Track.order(id: :desc), page: 5, per_page: 501)
+
+    get tracks_url(page: 5, per_page: 501)
+
+    assert_response :success
+    assert_equal expected_etag, headers['etag']
   end
 
   test 'should get index with all genres when filtering by genre' do
     genre = create(:genre)
     @track.update(genres: [genre, create(:genre)])
+    expected_etag = construct_etag(Track.by_genre(genre.id).order(id: :desc))
 
     get tracks_url(genre_id: genre.id)
 
     assert_response :success
-    body = ActiveSupport::JSON.decode response.body
-
-    assert_equal 2, body.first['genre_ids'].length
+    assert_equal 2, response.parsed_body.dig(0, 'genre_ids').length
+    assert_equal expected_etag, headers['etag']
   end
 
   test 'should not create track for user' do

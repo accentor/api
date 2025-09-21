@@ -7,14 +7,45 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     sign_in_as @user
   end
 
-  test 'should get index with only plays for user' do
-    create(:play, track: @track, user: create(:user))
+  test 'should get index' do
+    create(:play, track: @track, user: @user)
+    expected_etag = construct_etag(Play.where(user: @user).order(id: :desc))
+
     get plays_url
 
     assert_response :success
-    body = response.parsed_body
+    assert_equal expected_etag, headers['etag']
+  end
 
-    assert_empty body
+  test 'should get index and return not modified if etag matches' do
+    create(:play, track: @track, user: @user)
+    expected_etag = construct_etag(Play.where(user: @user).order(id: :desc))
+
+    get plays_url, headers: { 'If-None-Match': expected_etag }
+
+    assert_response :not_modified
+    assert_empty response.parsed_body
+  end
+
+  test 'should get index and include page in etag' do
+    create(:play, track: @track, user: @user)
+    expected_etag = construct_etag(Play.where(user: @user).order(id: :desc), page: 5, per_page: 501)
+
+    get plays_url(page: 5, per_page: 501)
+
+    assert_response :success
+    assert_equal expected_etag, headers['etag']
+  end
+
+  test 'should get index with only plays for user' do
+    create(:play, track: @track, user: create(:user))
+    expected_etag = construct_etag(Play.where(user: @user).order(id: :desc))
+
+    get plays_url
+
+    assert_response :success
+    assert_empty response.parsed_body
+    assert_equal expected_etag, headers['etag']
   end
 
   test 'should get index with album scope' do

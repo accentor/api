@@ -7,9 +7,35 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get index' do
     sign_in_as(@user)
+
+    expected_etag = construct_etag(AuthToken.where(user: @user).order(id: :asc))
+
     get auth_tokens_url
 
     assert_response :success
+    assert_equal expected_etag, headers['etag']
+  end
+
+  test 'should get index and return not modified if etag matches' do
+    sign_in_as(@user)
+
+    expected_etag = construct_etag(AuthToken.where(user: @user).order(id: :asc))
+
+    get auth_tokens_url, headers: { 'If-None-Match': expected_etag }
+
+    assert_response :not_modified
+    assert_empty response.parsed_body
+  end
+
+  test 'should get index and include page in etag' do
+    sign_in_as(@user)
+
+    expected_etag = construct_etag(AuthToken.where(user: @user).order(id: :asc), page: 5, per_page: 501)
+
+    get auth_tokens_url(page: 5, per_page: 501)
+
+    assert_response :success
+    assert_equal expected_etag, headers['etag']
   end
 
   test 'should create auth_token and return token to authenticate' do

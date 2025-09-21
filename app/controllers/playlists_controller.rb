@@ -3,13 +3,11 @@ class PlaylistsController < ApplicationController
 
   def index
     authorize Playlist
-    @playlists = apply_scopes(policy_scope(Playlist))
-                 .with_item_ids
-                 .order(id: :asc)
-                 .paginate(page: params[:page], per_page: params[:per_page])
+    scoped_playlists = apply_scopes(policy_scope(Playlist)).with_item_ids.reorder(id: :asc)
+    @playlists = scoped_playlists.paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@playlists)
 
-    render json: @playlists.map { transform_playlist_for_json(it) }
+    render json: @playlists.map { transform_playlist_for_json(it) } if stale?(scope: scoped_playlists)
   end
 
   def show

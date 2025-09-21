@@ -2,6 +2,9 @@ class ApplicationController < ActionController::API
   include Pundit::Authorization
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
+  etag { params[:page] }
+  etag { params[:per_page] }
+
   attr_accessor :current_user
 
   before_action :authenticate_user
@@ -26,6 +29,17 @@ class ApplicationController < ActionController::API
     response.headers['x-per-page'] = collection.per_page
     response.headers['x-offset'] = collection.offset
     response.headers['Access-Control-Expose-Headers'] = 'x-total-entries, x-total-pages, x-current-page, x-per-page, x-offset'
+  end
+
+  # We extend `stale?` so we can manually calculate an etag from a scoped collection.
+  # We don't user rails' method directly to avoid a combined query for the size and `MAX(updated_at)` of the collection
+  # We already have the total size of the collection, due to pagination and can leverage indexes better if we only get `MAX(updated_at)`
+  # The format we output matches rails' `cache_key_with_version`
+  def stale?(scope:, **)
+    timestamp = scope.unscope(:group).maximum(:updated_at)&.utc&.to_fs(scope.cache_timestamp_format)
+    etag = [scope.cache_key, scope.unscope(:group).size, timestamp].compact.join('-')
+
+    super(etag:, **)
   end
 
   private

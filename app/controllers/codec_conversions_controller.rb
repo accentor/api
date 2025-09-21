@@ -5,12 +5,11 @@ class CodecConversionsController < ApplicationController
 
   def index
     authorize CodecConversion
-    @codec_conversions = apply_scopes(policy_scope(CodecConversion))
-                         .order(id: :asc)
-                         .paginate(page: params[:page], per_page: params[:per_page])
+    scoped_conversions = apply_scopes(policy_scope(CodecConversion)).reorder(id: :asc)
+    @codec_conversions = scoped_conversions.paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@codec_conversions)
 
-    render json: @codec_conversions.map { transform_codec_conversion_for_json(it) }
+    render json: @codec_conversions.map { transform_codec_conversion_for_json(it) } if stale?(scope: scoped_conversions)
   end
 
   def show

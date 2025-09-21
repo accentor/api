@@ -3,12 +3,11 @@ class LocationsController < ApplicationController
 
   def index
     authorize Location
-    @locations = apply_scopes(policy_scope(Location))
-                 .order(id: :asc)
-                 .paginate(page: params[:page], per_page: params[:per_page])
+    scoped_locations = apply_scopes(policy_scope(Location)).reorder(id: :asc)
+    @locations = scoped_locations.paginate(page: params[:page], per_page: params[:per_page])
     add_pagination_headers(@locations)
 
-    render json: @locations.map { transform_location_for_json(it) }
+    render json: @locations.map { transform_location_for_json(it) } if stale?(scope: scoped_locations)
   end
 
   def show

@@ -14,16 +14,42 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get index for moderator' do
     sign_in_as create(:moderator)
+    expected_etag = construct_etag(CoverFilename.order(id: :asc))
+
     get cover_filenames_url
 
     assert_response :success
+    assert_equal expected_etag, headers['etag']
   end
 
   test 'should get index for admin' do
     sign_in_as create(:admin)
+    expected_etag = construct_etag(CoverFilename.order(id: :asc))
+
     get cover_filenames_url
 
     assert_response :success
+    assert_equal expected_etag, headers['etag']
+  end
+
+  test 'should get index and return not modified if etag matches' do
+    sign_in_as create(:admin)
+    expected_etag = construct_etag(CoverFilename.order(id: :asc))
+
+    get cover_filenames_url, headers: { 'If-None-Match': expected_etag }
+
+    assert_response :not_modified
+    assert_empty response.parsed_body
+  end
+
+  test 'should get index and include page in etag' do
+    sign_in_as create(:admin)
+    expected_etag = construct_etag(CoverFilename.order(id: :asc), page: 5, per_page: 501)
+
+    get cover_filenames_url(page: 5, per_page: 501)
+
+    assert_response :success
+    assert_equal expected_etag, headers['etag']
   end
 
   test 'should not create cover_filename for user' do

@@ -7,9 +7,30 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
+    expected_etag = construct_etag(User.order(id: :asc))
+
     get users_url
 
     assert_response :success
+    assert_equal expected_etag, headers['etag']
+  end
+
+  test 'should get index and return not modified if etag matches' do
+    expected_etag = construct_etag(User.order(id: :asc))
+
+    get users_url, headers: { 'If-None-Match': expected_etag }
+
+    assert_response :not_modified
+    assert_empty response.parsed_body
+  end
+
+  test 'should get index and include page in etag' do
+    expected_etag = construct_etag(User.order(id: :asc), page: 5, per_page: 501)
+
+    get users_url(page: 5, per_page: 501)
+
+    assert_response :success
+    assert_equal expected_etag, headers['etag']
   end
 
   test 'should not create user for user' do

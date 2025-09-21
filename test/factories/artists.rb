@@ -14,6 +14,7 @@
 #
 #  index_artists_on_image_id         (image_id) UNIQUE
 #  index_artists_on_normalized_name  (normalized_name)
+#  index_artists_on_updated_at       (updated_at)
 #
 # Foreign Keys
 #
