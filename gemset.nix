@@ -734,10 +734,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1ppjk7i1ifz72jv8d93xxzlkccwy4795m4i1df6n6899zaqj2nhg";
+      sha256 = "1gcb23749jwggmgic4607ky6hm2c9fpkya980iihpy94m8miax73";
       type = "gem";
     };
-    version = "2.5.1";
+    version = "2.5.2";
   };
   raabro = {
     groups = ["default"];
