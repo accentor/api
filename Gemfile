@@ -17,7 +17,7 @@ gem 'good_job', '~> 4.12'
 
 gem 'wahwah', '~> 1.6.7'
 
-gem 'has_scope', '~> 0.8'
+gem 'has_scope', '~> 0.9'
 gem 'pundit', '~> 2.5'
 gem 'will_paginate', '~> 4.0'
 
