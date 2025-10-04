@@ -980,10 +980,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0jzpkb3vx2w8mg25gg18rvxzqvxziaqrwv14cqq2yaf1b0dh3344";
+      sha256 = "1danlfzfqx3x1kna248sm2b1br5ki369r51x90jc4vbh6xk8zv1l";
       type = "gem";
     };
-    version = "2.33.3";
+    version = "2.33.4";
   };
   ruby-lsp = {
     dependencies = ["language_server-protocol" "prism" "rbs"];
