@@ -122,14 +122,6 @@
   };
   annotaterb = {
     dependencies = ["activerecord" "activesupport"];
-    groups = ["development"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "023j5k73hjykjyd8s7s6nqahl52sjfzl0h9z72pc2flv0midylf9";
-      type = "gem";
-    };
-    version = "4.19.0";
   };
   ast = {
     groups = ["default" "development"];
@@ -162,14 +154,6 @@
     version = "3.1.20";
   };
   benchmark = {
-    groups = ["default" "development" "test"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "1kicilpma5l0lwayqjb5577bm0hbjndj2gh150xz09xsgc1l1vyl";
-      type = "gem";
-    };
-    version = "0.4.1";
   };
   bigdecimal = {
     groups = ["default" "development" "test"];
