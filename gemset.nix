@@ -697,14 +697,6 @@
     version = "0.2.0";
   };
   prism = {
-    groups = ["default" "development"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "0d3i31npmlhmigcs1zlb9lksg7z7lv6nffams71wrz5rriv1n35l";
-      type = "gem";
-    };
-    version = "1.5.1";
   };
   psych = {
     dependencies = ["date" "stringio"];
@@ -879,14 +871,6 @@
   };
   rbs = {
     dependencies = ["logger"];
-    groups = ["default" "development"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "1mx533jn2nv29xc5faw9g5xj9qbdaiwl9wv2byv98bgw6gqwhhlf";
-      type = "gem";
-    };
-    version = "3.9.4";
   };
   rdoc = {
     dependencies = ["erb" "psych" "tsort"];
@@ -987,14 +971,6 @@
   };
   ruby-lsp = {
     dependencies = ["language_server-protocol" "prism" "rbs"];
-    groups = ["development"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "050qg73g4qs3xza441nafy7610daa3k4ra0pbi3sdlawy9fwfh6i";
-      type = "gem";
-    };
-    version = "0.26.1";
   };
   ruby-progressbar = {
     groups = ["default" "development"];
