@@ -174,7 +174,7 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.5.1)
+    prism (1.6.0)
     psych (5.2.6)
       date
       stringio
@@ -227,7 +227,7 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.3.0)
-    rbs (3.9.4)
+    rbs (3.9.5)
       logger
     rdoc (6.15.0)
       erb
@@ -264,7 +264,7 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.44.0, < 2.0)
-    ruby-lsp (0.26.1)
+    ruby-lsp (0.26.2)
       language_server-protocol (~> 3.17.0)
       prism (>= 1.2, < 2.0)
       rbs (>= 3, < 5)
@@ -326,7 +326,7 @@ DEPENDENCIES
   rubocop-factory_bot (~> 2.27)
   rubocop-minitest (~> 0.38.2)
   rubocop-rails (~> 2.33)
-  ruby-lsp (~> 0.26.1)
+  ruby-lsp (~> 0.26.2)
   simplecov (~> 0.22)
   simplecov-cobertura (~> 3.1.0)
   tzinfo-data
