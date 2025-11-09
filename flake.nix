@@ -2,6 +2,10 @@
   description = "Accentor API";
 
   inputs = {
+    bundix = {
+      url = "github:inscapist/bundix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     devshell = {
@@ -10,13 +14,20 @@
     };
   };
 
-  outputs = { self, nixpkgs, devshell, flake-utils }:
+  outputs = { self, nixpkgs, bundix, devshell, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system; overlays = [ devshell.overlays.default ]; };
-        gems = pkgs.bundlerEnv rec {
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            devshell.overlays.default
+            (self: super: { inherit bundix; })
+          ];
+        };
+        ruby = pkgs.ruby_3_4;
+        gems = pkgs.bundlerEnv {
           name = "accentor-api-env";
-          ruby = pkgs.ruby_3_4.override { jemallocSupport = true; };
+          ruby = ruby.override { jemallocSupport = true; };
           gemfile = ./Gemfile;
           lockfile = ./Gemfile.lock;
           gemset = ./gemset.nix;
@@ -52,7 +63,7 @@
             name = "Accentor API";
             packages = [
               gems
-              (pkgs.lowPrio gems.wrappedRuby)
+              (pkgs.lib.lowPrio gems.wrappedRuby)
               pkgs.ffmpeg
               pkgs.nixpkgs-fmt
               pkgs.postgresql_14
@@ -109,12 +120,13 @@
                 category = "dependencies";
                 help = "Update the `Gemfile.lock` and `gemset.nix` files";
                 command = ''
-                  ${pkgs.ruby_3_4}/bin/bundle lock
+                  ${ruby}/bin/bundle lock --add-checksums
                   ${pkgs.bundix}/bin/bundix
                 '';
               }
             ];
           };
+          deps = pkgs.devshell.mkShell { packages = [ ruby pkgs.bundix ]; };
         };
       }
     );
