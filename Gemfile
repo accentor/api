@@ -46,7 +46,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'annotaterb', '~> 4.19', require: false
+  gem 'annotaterb', '~> 4.20', require: false
   gem 'rubocop', '~> 1.81', require: false
   gem 'rubocop-factory_bot', '~> 2.27', require: false
   gem 'rubocop-minitest', '~> 0.38.2', require: false
