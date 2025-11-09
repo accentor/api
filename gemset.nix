@@ -534,12 +534,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0p5dafxjp6kqkf3yx737gz9lwpaljlkc1raynkvcn6yql68d895w";
+      sha256 = "098m3q2jrx4xbf0knrbmflsynmmb5x9q9b0bzpmj7jmm1cr30mna";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.15.0";
+    version = "2.16.0";
   };
   language_server-protocol = {
     groups = ["default" "development"];
@@ -784,12 +784,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1wl7frfk68q6gsf6q6j32jl5m3yc0b9x8ycxz3hy79miaj9r5mll";
+      sha256 = "1mmb59323ldv6vxfmy98azgsla9k3di3fasvpb28hnn5bkx8fdff";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "3.3.9.0";
+    version = "3.3.10.0";
   };
   pg = {
     groups = ["default"];
@@ -833,12 +833,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0d3i31npmlhmigcs1zlb9lksg7z7lv6nffams71wrz5rriv1n35l";
+      sha256 = "0sqwckzzpj1mmmjnqcvqmq6adlxbhkf5ij3b6ir4i33ih4d2ih5z";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.5.1";
+    version = "1.6.0";
   };
   psych = {
     dependencies = ["date" "stringio"];
@@ -1112,12 +1112,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0d8n87wx2r8vkva5qi4m3hi4s9b6qhmzgw85qgv14hsa65prlaim";
+      sha256 = "157hg99cq6ys670sw8xbggnvxc9yl50h1zhllki925kkihlwrdbg";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.81.1";
+    version = "1.81.7";
   };
   rubocop-ast = {
     dependencies = ["parser" "prism"];
@@ -1125,12 +1125,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1bh1kls2cs2j3cmj6f2j2zmfqfknj2a6i441d828nh2mg00q49jr";
+      sha256 = "0xifbp09jfl1hdy9wwgq9dq2l7mf8y2ycm5d1zgcqvks7yzrppr2";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.47.1";
+    version = "1.48.0";
   };
   rubocop-factory_bot = {
     dependencies = ["lint_roller" "rubocop"];
