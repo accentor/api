@@ -148,12 +148,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "023j5k73hjykjyd8s7s6nqahl52sjfzl0h9z72pc2flv0midylf9";
+      sha256 = "1xwbz5zk37f7p3g6ypxzamisay06hidjmdsrvhxw4q0xin4jw6w7";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.19.0";
+    version = "4.20.0";
   };
   ast = {
     groups = ["default" "development"];
@@ -196,12 +196,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1kicilpma5l0lwayqjb5577bm0hbjndj2gh150xz09xsgc1l1vyl";
+      sha256 = "0v1337j39w1z7x9zs4q7ag0nfv4vs4xlsjx2la0wpv8s6hig2pa6";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "0.4.1";
+    version = "0.5.0";
   };
   bigdecimal = {
     groups = ["default" "development" "test"];
@@ -657,12 +657,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0c1c9lr7h0bnf48xj5sylg2cs2awrb0hfxwimiz4yfl6kz87m0gm";
+      sha256 = "15jskd97qz3zsmyvfqb4shb557560qqdlfrc6jx0n8wf4za66spi";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "5.26.0";
+    version = "5.26.1";
   };
   mocha = {
     dependencies = ["ruby2_keywords"];
@@ -1312,12 +1312,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "03p31w5ghqfsbz5mcjzvwgkw3h9lbvbknqvrdliy8pxmn9wz02cm";
+      sha256 = "1nqf9rg974k4bjji7aggalg8pfvbkd9hys4hv5y450jb21qgkxph";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "0.4.3";
+    version = "0.4.4";
   };
   tsort = {
     groups = ["default" "development" "test"];
@@ -1374,12 +1374,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0jrl2vkdvc5aq8q3qvjmmrgjxfm784w8h7fal19qg7q7gh9msj1l";
+      sha256 = "1ijpbj7mdrq7rhpq2kb51yykhrs2s54wfs6sm9z3icgz4y6sb7rp";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.0.4";
+    version = "1.1.1";
   };
   useragent = {
     groups = ["default" "development" "test"];
