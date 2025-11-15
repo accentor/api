@@ -90,4 +90,14 @@ class AudioFileTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "should touch the associated track when it's destroyed" do
+    one_day_ago = 1.day.ago
+    track = Track.create(number: 0, title: 'title', album: Album.create(title: 'title'), audio_file: @audio_file, updated_at: one_day_ago)
+
+    assert_changes 'track.updated_at', from: one_day_ago do
+      @audio_file.destroy!
+      track.reload
+    end
+  end
 end

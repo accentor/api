@@ -32,7 +32,7 @@ class AudioFile < ApplicationRecord
 
   belongs_to :location
   belongs_to :codec
-  has_one :track, dependent: :nullify
+  has_one :track, dependent: :nullify, touch: true
   has_many :transcoded_items, dependent: :destroy
 
   validates :filename, presence: true, uniqueness: { scope: :location }
