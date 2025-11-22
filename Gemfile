@@ -51,7 +51,7 @@ group :development do
   gem 'rubocop-factory_bot', '~> 2.28', require: false
   gem 'rubocop-minitest', '~> 0.38.2', require: false
   gem 'rubocop-rails', '~> 2.33', require: false
-  gem 'ruby-lsp', '~> 0.26.3', require: false
+  gem 'ruby-lsp', '~> 0.26.4', require: false
 
   gem 'brakeman', require: false
 end
