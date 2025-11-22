@@ -683,12 +683,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0dry34mfnblm6sfjna2yvhr5vd4q0ki8g8is5n8h2kq0x07zh6hq";
+      sha256 = "1vjfizp8yq0319dkc8yzzxr2bv5f1ki1qiknyx72prs7vclyfxqz";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.8.0";
+    version = "2.8.2";
   };
   msgpack = {
     groups = ["default"];
