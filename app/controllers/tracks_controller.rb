@@ -56,7 +56,7 @@ class TracksController < ApplicationController
     if conversion.present?
       transcoded_item = TranscodedItem.find_by(audio_file:, codec_conversion: conversion)
       unless transcoded_item.present? && File.exist?(transcoded_item.path)
-        transcoded_item.destroy! if transcoded_item.present? # The file was lost. This shouldn't happen, so delete the item
+        transcoded_item.presence&.destroy! # The file was lost. This shouldn't happen, so delete the item
 
         # This does the conversion inline
         CreateTranscodedItemJob.perform_now(audio_file, conversion)
