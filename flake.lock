@@ -27,11 +27,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1762521437,
-        "narHash": "sha256-RXN+lcx4DEn3ZS+LqEJSUu/HH+dwGvy0syN7hTo/Chg=",
+        "lastModified": 1764007896,
+        "narHash": "sha256-Qcla1l8tApU2M650JSEMcLA7MqW597DJL60vATygz4o=",
         "owner": "numtide",
         "repo": "devshell",
-        "rev": "07bacc9531f5f4df6657c0a02a806443685f384a",
+        "rev": "2904a96d7a600767e675aa084b74d95bed827e11",
         "type": "github"
       },
       "original": {
