@@ -13,7 +13,7 @@ gem 'puma', '~> 7.1'
 gem 'bcrypt', '~> 3.1'
 
 # Use GoodJob as our Active Job queue adapter
-gem 'good_job', '~> 4.12'
+gem 'good_job', '~> 4.13'
 
 gem 'wahwah', '~> 1.6.7'
 
