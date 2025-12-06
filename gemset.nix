@@ -420,12 +420,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0wy4i4vl3h2v6scffx0zbp74vq1gfgq55m8x3n05kwp3na8h5a7r";
+      sha256 = "0rfp6y0pc2slv83vcnayiypfjsanja5qg9wfm6wwq5dvq0nlhqdr";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "3.5.2";
+    version = "3.5.3";
   };
   ffi = {
     groups = ["default"];
