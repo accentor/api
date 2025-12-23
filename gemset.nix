@@ -666,17 +666,16 @@
     version = "2.8.9";
   };
   minitest = {
-    dependencies = ["prism"];
     groups = ["default" "development" "test"];
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1gjklhryvvd3byyk5psxyfka8vas3pxwb62b5f6s2pkk3py9g9ac";
+      sha256 = "1mbpz92ml19rcxxfjrj91gmkif9khb1xpzyw38f81rvglgw1ffrd";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "6.0.0";
+    version = "5.27.0";
   };
   mocha = {
     dependencies = ["ruby2_keywords"];
