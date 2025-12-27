@@ -247,12 +247,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "164l8dh3c22c8448hgd0zqhsffxvn4d9wad2zzipav29sssjd532";
+      sha256 = "1kkds9q66jryhlyqzwhp4kh8hcb39i05v2r4f8xd3rx221vr413b";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "7.1.1";
+    version = "7.1.2";
   };
   builder = {
     groups = ["default" "development" "test"];
