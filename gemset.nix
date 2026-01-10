@@ -1138,12 +1138,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0xifbp09jfl1hdy9wwgq9dq2l7mf8y2ycm5d1zgcqvks7yzrppr2";
+      sha256 = "1zbikzd6237fvlzjfxdlhwi2vbmavg1cc81y6cyr581365nnghs9";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.48.0";
+    version = "1.49.0";
   };
   rubocop-factory_bot = {
     dependencies = ["lint_roller" "rubocop"];
@@ -1177,12 +1177,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "08kf3nhhhxcwb9shb4bv7jxr1mjrs63fwpywppmgy9cbwip29zqh";
+      sha256 = "1llsxc8wm2pq8glpv5mczd1h36fazbri3wwrh7dfqra80a4pklqh";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.34.2";
+    version = "2.34.3";
   };
   ruby-lsp = {
     dependencies = ["language_server-protocol" "prism" "rbs"];
