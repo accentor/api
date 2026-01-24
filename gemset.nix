@@ -873,12 +873,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1pa9zpr51kqnsq549p6apvnr95s9flx6bnwqii24s8jg2b5i0p74";
+      sha256 = "1a3jd9qakasizrf7dkq5mqv51fjf02r2chybai2nskjaa6mz93mz";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "7.1.0";
+    version = "7.2.0";
   };
   pundit = {
     dependencies = ["activesupport"];
