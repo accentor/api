@@ -205,7 +205,7 @@
     version = "3.1.21";
   };
   benchmark = {
-    groups = ["default" "development" "test"];
+    groups = ["default"];
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
