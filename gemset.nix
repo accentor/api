@@ -547,12 +547,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "01fmiz052cvnxgdnhb3qwcy88xbv7l3liz0fkvs5qgqqwjp0c1di";
+      sha256 = "11prr7nrxh1y4rfsqa51gy4ixx63r18cz9mdnmk0938va1ajf4gy";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.18.0";
+    version = "2.18.1";
   };
   language_server-protocol = {
     groups = ["default" "development"];
@@ -798,12 +798,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1mmb59323ldv6vxfmy98azgsla9k3di3fasvpb28hnn5bkx8fdff";
+      sha256 = "1256ws3w3gnfqj7r3yz2i9y1y7k38fhjphxpybkyb4fds8jsgxh6";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "3.3.10.0";
+    version = "3.3.10.1";
   };
   pg = {
     groups = ["default"];
@@ -1126,12 +1126,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0wz2np5ck54vpwcz18y9x7w80c308wza7gmfcykysq59ajkadw89";
+      sha256 = "06ncdg69d42mfq53f9lvccqbn4vbsrl0mhakxyigahai6mpn5k0l";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.82.1";
+    version = "1.84.1";
   };
   rubocop-ast = {
     dependencies = ["parser" "prism"];
