@@ -34,7 +34,7 @@ gem 'rack-cors', '~> 3.0'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :test do
-  gem 'mocha', '~> 3.0.1', require: false
+  gem 'mocha', '~> 3.0.2', require: false
   gem 'simplecov', '~> 0.22', require: false
   gem 'simplecov-cobertura', '~> 3.1.0', require: false
 end
