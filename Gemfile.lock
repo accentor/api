@@ -232,8 +232,9 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.3.1)
-    rbs (3.10.2)
+    rbs (3.10.3)
       logger
+      tsort
     rdoc (7.1.0)
       erb
       psych (>= 4.0.0)
@@ -269,7 +270,7 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.44.0, < 2.0)
-    ruby-lsp (0.26.5)
+    ruby-lsp (0.26.6)
       language_server-protocol (~> 3.17.0)
       prism (>= 1.2, < 2.0)
       rbs (>= 3, < 5)
@@ -331,7 +332,7 @@ DEPENDENCIES
   rubocop-factory_bot (~> 2.28)
   rubocop-minitest (~> 0.38.2)
   rubocop-rails (~> 2.34)
-  ruby-lsp (~> 0.26.5)
+  ruby-lsp (~> 0.26.6)
   simplecov (~> 0.22)
   simplecov-cobertura (~> 3.1.0)
   tzinfo-data
@@ -423,7 +424,7 @@ CHECKSUMS
   railties (8.1.2) sha256=1289ece76b4f7668fc46d07e55cc992b5b8751f2ad85548b7da351b8c59f8055
   rainbow (3.1.1) sha256=039491aa3a89f42efa1d6dec2fc4e62ede96eb6acd95e52f1ad581182b79bc6a
   rake (13.3.1) sha256=8c9e89d09f66a26a01264e7e3480ec0607f0c497a861ef16063604b1b08eb19c
-  rbs (3.10.2) sha256=bd8a5dc4c62f229f020146b61844a31f9c79e649449d212904a474eb79c846fc
+  rbs (3.10.3) sha256=70627f3919016134d554e6c99195552ae3ef6020fe034c8e983facc9c192daa6
   rdoc (7.1.0) sha256=494899df0706c178596ca6e1d50f1b7eb285a9b2aae715be5abd742734f17363
   regexp_parser (2.11.3) sha256=ca13f381a173b7a93450e53459075c9b76a10433caadcb2f1180f2c741fc55a4
   reline (0.6.3) sha256=1198b04973565b36ec0f11542ab3f5cfeeec34823f4e54cebde90968092b1835
@@ -433,7 +434,7 @@ CHECKSUMS
   rubocop-factory_bot (2.28.0) sha256=4b17fc02124444173317e131759d195b0d762844a71a29fe8139c1105d92f0cb
   rubocop-minitest (0.38.2) sha256=5a9dfb5a538973d0601aa51e59637d3998bb8df81233edf1ff421504c6280068
   rubocop-rails (2.34.3) sha256=10d37989024865ecda8199f311f3faca990143fbac967de943f88aca11eb9ad2
-  ruby-lsp (0.26.5) sha256=19272659139b292a81a700d78e1b4d8988c4812e96b54fd6c30a21ce5e82b189
+  ruby-lsp (0.26.6) sha256=1f50b21cb300586d7742190fc8446c18387f488aa0e9d276cf2bc7f3684ccda2
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   ruby-vips (2.2.3) sha256=41d12b1a805cd6ead4a7965201a8f7c5fe459bb58d3a7d967c9eb0719a6edc92
   ruby2_keywords (0.0.5) sha256=ffd13740c573b7301cf7a2e61fc857b2a8e3d3aff32545d6f8300d8bae10e3ef
