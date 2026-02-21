@@ -270,7 +270,7 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.44.0, < 2.0)
-    ruby-lsp (0.26.6)
+    ruby-lsp (0.26.7)
       language_server-protocol (~> 3.17.0)
       prism (>= 1.2, < 2.0)
       rbs (>= 3, < 5)
@@ -332,7 +332,7 @@ DEPENDENCIES
   rubocop-factory_bot (~> 2.28)
   rubocop-minitest (~> 0.38.2)
   rubocop-rails (~> 2.34)
-  ruby-lsp (~> 0.26.6)
+  ruby-lsp (~> 0.26.7)
   simplecov (~> 0.22)
   simplecov-cobertura (~> 3.1.0)
   tzinfo-data
@@ -434,7 +434,7 @@ CHECKSUMS
   rubocop-factory_bot (2.28.0) sha256=4b17fc02124444173317e131759d195b0d762844a71a29fe8139c1105d92f0cb
   rubocop-minitest (0.38.2) sha256=5a9dfb5a538973d0601aa51e59637d3998bb8df81233edf1ff421504c6280068
   rubocop-rails (2.34.3) sha256=10d37989024865ecda8199f311f3faca990143fbac967de943f88aca11eb9ad2
-  ruby-lsp (0.26.6) sha256=1f50b21cb300586d7742190fc8446c18387f488aa0e9d276cf2bc7f3684ccda2
+  ruby-lsp (0.26.7) sha256=60a1199fc7e329348d63a2479854f94435725d833eeabf3d539b790185cbf21f
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   ruby-vips (2.2.3) sha256=41d12b1a805cd6ead4a7965201a8f7c5fe459bb58d3a7d967c9eb0719a6edc92
   ruby2_keywords (0.0.5) sha256=ffd13740c573b7301cf7a2e61fc857b2a8e3d3aff32545d6f8300d8bae10e3ef
