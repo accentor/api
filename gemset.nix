@@ -1191,12 +1191,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "18nd9ilg7irbrxvd5sd0i947yf0qdi2ch3qr89vnsn00ncfb4l0z";
+      sha256 = "07zjrf2h2ycvacyvzsiyhdfp4da4z5a9hix2cf6k8ag3qygik8b0";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "0.26.6";
+    version = "0.26.7";
   };
   ruby-progressbar = {
     groups = ["default" "development"];
