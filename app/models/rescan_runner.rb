@@ -176,10 +176,15 @@ class RescanRunner < ApplicationRecord
     cover_info = find_cover path
     return if cover_info.blank?
 
+    # rubocop:disable Style/FileOpen
+    # The File.open here is the Rails recommended way to attach a file to an
+    # activestorage attribute. We can assume that Rails properly closes the IO
+    # stream after use.
     Image.new(image_type: cover_info[0],
               image: { io: File.open(cover_info[1]),
                        filename: File.basename(cover_info[1]),
                        content_type: cover_info[0].mimetype })
+    # rubocop:enable Style/FileOpen
   end
 
   def find_cover(path)
