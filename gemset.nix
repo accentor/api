@@ -560,12 +560,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "11prr7nrxh1y4rfsqa51gy4ixx63r18cz9mdnmk0938va1ajf4gy";
+      sha256 = "16lx95g4fwviay5q6qg2dn7hz0lxxi342653mgvkm2v1hgq04lmw";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.18.1";
+    version = "2.19.0";
   };
   json-schema = {
     dependencies = ["addressable" "bigdecimal"];
@@ -573,12 +573,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "00n73lr2gwlpf3safdmxxa44qchg36l3y298v835mzbdzcn0mxvb";
+      sha256 = "0rinh4347nvl9jm0r4mk7gi1zh1iz367w3dxn8d2r8j5v1pg9gz8";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "6.1.0";
+    version = "6.2.0";
   };
   language_server-protocol = {
     groups = ["default" "development"];
@@ -660,12 +660,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1izi2hyyifn8m5b9s1yj8v1d4a453mrhga8yk06ssawmssapi5ps";
+      sha256 = "1yrl1igajy1z0wg23cxg4rilyx2jby06zlkghr98h5lfpd3d32xf";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "0.7.1";
+    version = "0.8.0";
   };
   mini_magick = {
     dependencies = ["benchmark" "logger"];
@@ -911,12 +911,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0mx84s7gn3xabb320hw8060v7amg6gmcyyhfzp0kawafiq60j54i";
+      sha256 = "08znfv30pxmdkjyihvbjqbvv874dj3nybmmyscl958dy3f7v12qs";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "7.0.2";
+    version = "7.0.5";
   };
   puma = {
     dependencies = ["nio4r"];
@@ -1177,12 +1177,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "00cclinxd2xdwdcdc775g1vcxwbadcfrwbsdyra7v841nvz0fx1i";
+      sha256 = "0xyc0rs1xaiqln7x611v0f3kjpna7n8h6apbxrvc795sc7lzkg1x";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.85.0";
+    version = "1.85.1";
   };
   rubocop-ast = {
     dependencies = ["parser" "prism"];
