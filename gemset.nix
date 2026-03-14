@@ -5,12 +5,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "12isf17cd4xyx5vg97nzxsi92703yh40fxyns6gl9f11331a4ign";
+      sha256 = "0lf99kmjnnhmm8ks9ip4qd6x816w3v6ylk05vilp3rkpkmir2iml";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.1.16";
+    version = "2.1.17";
   };
   actioncable = {
     dependencies = ["actionpack" "activesupport" "nio4r" "websocket-driver" "zeitwerk"];
@@ -369,12 +369,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1rcpq49pyaiclpjp3c3qjl25r95hqvin2q2dczaynaj7qncxvv18";
+      sha256 = "0ar4nmvk1sk7drjigqyh9nnps3mxg625b8chfk42557p8i6jdrlz";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "6.0.1";
+    version = "6.0.2";
   };
   erubi = {
     groups = ["default" "development" "test"];
@@ -560,12 +560,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "16lx95g4fwviay5q6qg2dn7hz0lxxi342653mgvkm2v1hgq04lmw";
+      sha256 = "0b888h9v2y4aasi9aapxqimiaj1i1csk56l22dczigs8kv2zv56x";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.19.0";
+    version = "2.19.1";
   };
   json-schema = {
     dependencies = ["addressable" "bigdecimal"];
@@ -705,17 +705,17 @@
     version = "2.8.9";
   };
   minitest = {
-    dependencies = ["prism"];
+    dependencies = ["drb" "prism"];
     groups = ["default" "development" "test"];
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1fslin1vyh60snwygx8jnaj4kwhk83f3m0v2j2b7bsg2917wfm3q";
+      sha256 = "0gdwmn2d4sznjdxyl3kz7hr95mvdgm38fk1vd0s63k3fdyamfvnv";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "6.0.1";
+    version = "6.0.2";
   };
   mocha = {
     dependencies = ["ruby2_keywords"];
@@ -1064,12 +1064,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0q55i6mpad20m2x1lg5pkqfpbmmapk0sjsrvr1sqgnj2hb5f5z1m";
+      sha256 = "128y5g3fyi8fds41jasrr4va1jrs7hcamzklk1523k7rxb64bc98";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.6.2";
+    version = "1.7.0";
   };
   railties = {
     dependencies = ["actionpack" "activesupport" "irb" "rackup" "rake" "thor" "tsort" "zeitwerk"];
