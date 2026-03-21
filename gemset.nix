@@ -723,12 +723,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1y1dx5crlx7ppshzv7qqfj0mgpvzyxc0f107mvsvywcb3m9jk01x";
+      sha256 = "0mhx9qyiig73mw3zrk8f28ca8dqx8gwgipw94jri07zvxdljvx3m";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "3.0.2";
+    version = "3.1.0";
   };
   msgpack = {
     groups = ["default"];
