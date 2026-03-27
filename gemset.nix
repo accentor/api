@@ -234,12 +234,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "19y406nx17arzsbc515mjmr6k5p59afprspa1k423yd9cp8d61wb";
+      sha256 = "1bkcvp4aavdxh1pmgg65sypyjx5l0w5ffylfsk65di1xm9kpgh3d";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.0.1";
+    version = "4.1.0";
   };
   bootsnap = {
     dependencies = ["msgpack"];
@@ -660,12 +660,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1yrl1igajy1z0wg23cxg4rilyx2jby06zlkghr98h5lfpd3d32xf";
+      sha256 = "0ci9pmifwwgbh86acriwrlg2djzrzflw55i18r7jghcx9xpr44yl";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "0.8.0";
+    version = "0.9.2";
   };
   mini_magick = {
     dependencies = ["benchmark" "logger"];
