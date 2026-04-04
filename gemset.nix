@@ -471,12 +471,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0bhy2ms4dq1f2h9b9k6qh92g3xz63h8mj8az0pnk09nxvl88firp";
+      sha256 = "0h7hn8pv2i4fghcs8n36pi4x7dykjwfg7hqv24nhw8x6rdyg0gqz";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.13.3";
+    version = "4.14.1";
   };
   has_scope = {
     dependencies = ["actionpack" "activesupport"];
@@ -671,12 +671,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0gdwmn2d4sznjdxyl3kz7hr95mvdgm38fk1vd0s63k3fdyamfvnv";
+      sha256 = "048ls6kn009jkwj1rvka2b5vnwq73b0krjz740j6j03cwcfqmb48";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "6.0.2";
+    version = "6.0.3";
   };
   mocha = {
     dependencies = ["ruby2_keywords"];
