@@ -948,12 +948,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1sg4laz2qmllxh1c5sqlj9n1r7scdn08p3m4b0zmhjvyx9yw0v8b";
+      sha256 = "1s7zcxlmg88a6dam4aqbgk9xkpy6dkdfqmmcszkkliy3q3w38m2r";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.1.1";
+    version = "2.1.2";
   };
   rack-test = {
     dependencies = ["rack"];
