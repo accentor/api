@@ -42,7 +42,7 @@ end
 group :development, :test do
   gem 'debug', '~> 1.11'
   gem 'factory_bot_rails', '~> 6.5'
-  gem 'faker', '~> 3.6'
+  gem 'faker', '~> 3.8'
 end
 
 group :development do
