@@ -221,12 +221,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1bkcvp4aavdxh1pmgg65sypyjx5l0w5ffylfsk65di1xm9kpgh3d";
+      sha256 = "1jjlh2zkxdl4jm2xslmrmpgr3wqgxkd0qsrir01m590xjsmyy28w";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.1.0";
+    version = "4.1.1";
   };
   bootsnap = {
     dependencies = ["msgpack"];
@@ -356,12 +356,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0ar4nmvk1sk7drjigqyh9nnps3mxg625b8chfk42557p8i6jdrlz";
+      sha256 = "14bf53yp8rqzdnrpasz4gha77vski4p1dcki9296msm0l2l8adp4";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "6.0.2";
+    version = "6.0.3";
   };
   erubi = {
     groups = ["default" "development" "test"];
@@ -471,12 +471,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0h7hn8pv2i4fghcs8n36pi4x7dykjwfg7hqv24nhw8x6rdyg0gqz";
+      sha256 = "08frb1r4j16lf4xbvd2k4b6yzh595liklwgvzagzxsxlqyhs6ac7";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.14.1";
+    version = "4.18.0";
   };
   has_scope = {
     dependencies = ["actionpack" "activesupport"];
@@ -671,12 +671,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "048ls6kn009jkwj1rvka2b5vnwq73b0krjz740j6j03cwcfqmb48";
+      sha256 = "18fw91yyphazl5bi9bkw1p7b0rpqa72gsiwj1130zm498mk084yz";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "6.0.3";
+    version = "6.0.4";
   };
   mocha = {
     dependencies = ["ruby2_keywords"];
@@ -1050,12 +1050,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "175iisqb211n0qbfyqd8jz2g01q6xj038zjf4q0nm8k6kz88k7lc";
+      sha256 = "009p524zl0p0kfa65nii8wdmaigkmawv9pbvlcffky7islmmp0nb";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "13.3.1";
+    version = "13.4.2";
   };
   rbs = {
     dependencies = ["logger" "prism" "tsort"];
