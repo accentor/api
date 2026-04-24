@@ -356,12 +356,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "14bf53yp8rqzdnrpasz4gha77vski4p1dcki9296msm0l2l8adp4";
+      sha256 = "1ncmbdjf2bwmk0jf5cxywns9zbxyfiy4h4p3pzi7yddyjhv81qrq";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "6.0.3";
+    version = "6.0.4";
   };
   erubi = {
     groups = ["default" "development" "test"];
