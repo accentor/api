@@ -15,9 +15,6 @@ require_relative '../config/environment'
 require 'rails/test_help'
 require 'mocha/minitest'
 
-# rubocop:disable Style/OneClassPerFile
-# All modules and classes defined here are monkeypatches for standard rails test
-# behaviour, and are a very normal way to do this.
 module AudioFileTestHelper
   def install_audio_file_convert_stub(implementation = nil)
     AudioFile.alias_method :old_convert, :convert
@@ -116,4 +113,3 @@ class ActionDispatch::IntegrationTest
   include EtagHelper
   include SignInHelper
 end
-# rubocop:enable Style/OneClassPerFile
