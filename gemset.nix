@@ -221,12 +221,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1jjlh2zkxdl4jm2xslmrmpgr3wqgxkd0qsrir01m590xjsmyy28w";
+      sha256 = "1g9zi8c4i7g8zz0c3hxrw6mblrjvgn7akys60clb9si7c1k1gljk";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.1.1";
+    version = "4.1.2";
   };
   bootsnap = {
     dependencies = ["msgpack"];
@@ -471,12 +471,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "08frb1r4j16lf4xbvd2k4b6yzh595liklwgvzagzxsxlqyhs6ac7";
+      sha256 = "19pc1da1qx48bqg3hfwxhshs52a13p7l85mp9anvgiszhqaplmby";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.18.0";
+    version = "4.18.2";
   };
   has_scope = {
     dependencies = ["actionpack" "activesupport"];
@@ -535,24 +535,24 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1bishrxfn2anwlagw8rzly7i2yicjnr947f48nh638yqjgdlv30n";
+      sha256 = "1qs8a9vprg7s8krgq4s0pygr91hclqqyz98ik15p0m1sf2h5956y";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.17.0";
+    version = "1.18.0";
   };
   json = {
     groups = ["default" "development" "test"];
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0il6qxkxqql7n7sgrws5bi5a36v51dswqcxb6j6gm8aj62shp6r8";
+      sha256 = "1b1rabz30grash5wh0lcv109w2ggggmmbclwnajqrcdk7wrps2k7";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.19.3";
+    version = "2.19.4";
   };
   language_server-protocol = {
     groups = ["default" "development"];
@@ -671,12 +671,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "18fw91yyphazl5bi9bkw1p7b0rpqa72gsiwj1130zm498mk084yz";
+      sha256 = "0p0m046nqiwwvq3bm44wvhf8ba5bqvbjr102jmafmzpldcjdf1zh";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "6.0.4";
+    version = "6.0.5";
   };
   mocha = {
     dependencies = ["ruby2_keywords"];
