@@ -76,7 +76,7 @@ class TracksController < ApplicationController
   end
 
   def merge
-    @track.merge(Track.find(params[:source_id]))
+    @track.merge(Track.find(params.expect(:source_id)))
     # We don't do error handling here. The merge action isn't supposed to fail.
     render json: transform_track_for_json(@track), status: :ok
   end
@@ -96,7 +96,7 @@ class TracksController < ApplicationController
   end
 
   def set_track
-    @track = Track.find(params[:id])
+    @track = Track.find(params.expect(:id))
     authorize @track
   end
 

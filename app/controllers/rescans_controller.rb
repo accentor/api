@@ -27,7 +27,7 @@ class RescansController < ApplicationController
   private
 
   def set_rescan
-    @rescan = RescanRunner.find(params[:id])
+    @rescan = RescanRunner.find(params.expect(:id))
     authorize @rescan
   end
 

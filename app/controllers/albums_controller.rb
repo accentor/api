@@ -51,13 +51,13 @@ class AlbumsController < ApplicationController
   end
 
   def merge
-    render json: @album.errors, status: :unprocessable_content unless @album.merge(Album.find(params[:source_id]))
+    render json: @album.errors, status: :unprocessable_content unless @album.merge(Album.find(params.expect(:source_id)))
   end
 
   private
 
   def set_album
-    @album = Album.find(params[:id])
+    @album = Album.find(params.expect(:id))
     authorize @album
   end
 

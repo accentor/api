@@ -42,7 +42,7 @@ class CodecConversionsController < ApplicationController
   private
 
   def set_codec_conversion
-    @codec_conversion = CodecConversion.find(params[:id])
+    @codec_conversion = CodecConversion.find(params.expect(:id))
     authorize @codec_conversion
   end
 
