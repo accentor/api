@@ -43,7 +43,7 @@ class LabelsController < ApplicationController
   end
 
   def merge
-    @label.merge(Label.find(params[:source_id]))
+    @label.merge(Label.find(params.expect(:source_id)))
     # We don't do error handling here. The merge action isn't supposed to fail.
     render json: transform_label_for_json(@label), status: :ok
   end
@@ -51,7 +51,7 @@ class LabelsController < ApplicationController
   private
 
   def set_label
-    @label = Label.find(params[:id])
+    @label = Label.find(params.expect(:id))
     authorize @label
   end
 

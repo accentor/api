@@ -51,13 +51,13 @@ class ArtistsController < ApplicationController
   end
 
   def merge
-    render json: @artist.errors, status: :unprocessable_content unless @artist.merge(Artist.find(params[:source_id]))
+    render json: @artist.errors, status: :unprocessable_content unless @artist.merge(Artist.find(params.expect(:source_id)))
   end
 
   private
 
   def set_artist
-    @artist = Artist.find(params[:id])
+    @artist = Artist.find(params.expect(:id))
     authorize @artist
   end
 

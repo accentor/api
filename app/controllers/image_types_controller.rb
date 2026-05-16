@@ -40,7 +40,7 @@ class ImageTypesController < ApplicationController
   private
 
   def set_image_type
-    @image_type = ImageType.find(params[:id])
+    @image_type = ImageType.find(params.expect(:id))
     authorize @image_type
   end
 

@@ -43,7 +43,7 @@ class GenresController < ApplicationController
   end
 
   def merge
-    @genre.merge(Genre.find(params[:source_id]))
+    @genre.merge(Genre.find(params.expect(:source_id)))
     # We don't do error handling here. The merge action isn't supposed to fail.
     render json: transform_genre_for_json(@genre), status: :ok
   end
@@ -51,7 +51,7 @@ class GenresController < ApplicationController
   private
 
   def set_genre
-    @genre = Genre.find(params[:id])
+    @genre = Genre.find(params.expect(:id))
     authorize @genre
   end
 
