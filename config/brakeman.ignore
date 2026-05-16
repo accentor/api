@@ -7,7 +7,7 @@
       "check_name": "FileAccess",
       "message": "Model attribute used in file name",
       "file": "app/models/codec_conversion.rb",
-      "line": 35,
+      "line": 46,
       "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
       "code": "FileUtils.rm_rf(TranscodedItem.codec_conversion_base_path(self))",
       "render_path": null,
@@ -22,29 +22,6 @@
         22
       ],
       "note": "Attribute is never set by user"
-    },
-    {
-      "warning_type": "File Access",
-      "warning_code": 16,
-      "fingerprint": "4cca0972cd94dfed36bd9c5de56d9194b5f9fa2df9cea101e054130f95d5556f",
-      "check_name": "SendFile",
-      "message": "Model attribute used in file name",
-      "file": "app/controllers/tracks_controller.rb",
-      "line": 78,
-      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
-      "code": "send_file(Track.find(params[:id]).audio_file.full_path)",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "TracksController",
-        "method": "download"
-      },
-      "user_input": "Track.find(params[:id]).audio_file.full_path",
-      "confidence": "Medium",
-      "cwe_id": [
-        22
-      ],
-      "note": "The attribute is not configurable by users, but rather set by the scan job"
     },
     {
       "warning_type": "File Access",
@@ -91,8 +68,30 @@
         22
       ],
       "note": "This is never set by a user"
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "f903737fb470236fa01012f7c9278cf768fa5d69c2f4d0e6c8aa340181bd87c3",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/tracks_controller.rb",
+      "line": 75,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(Track.find(params.expect(:id)).audio_file.full_path)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TracksController",
+        "method": "download"
+      },
+      "user_input": "Track.find(params.expect(:id)).audio_file.full_path",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": "The attribute is not configurable by users, but rather set by the scan job"
     }
   ],
-  "updated": "2024-10-06 17:38:18 +0200",
-  "brakeman_version": "6.2.1"
+  "brakeman_version": "8.0.4"
 }
