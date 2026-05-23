@@ -1178,12 +1178,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "176lzkmnkcy7666q503l20bxs01fdl5lq70qvnfkvdyrqvvg1nd5";
+      sha256 = "1hjanr38napxrwvi88gdbvm6idqslxah1h0kixf2m4kmjsz6b208";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.35.0";
+    version = "2.35.2";
   };
   ruby-lsp = {
     dependencies = ["language_server-protocol" "prism" "rbs"];
