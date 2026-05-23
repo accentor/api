@@ -415,6 +415,18 @@
     targets = [];
     version = "3.8.0";
   };
+  ffi = {
+    groups = ["default"];
+    platforms = [];
+    source = {
+      remotes = ["https://rubygems.org"];
+      sha256 = "1kqasqvy8d7r09ri4n6bkdwbk63j7afd9ilsw34nzlgh0qp69ldw";
+      target = "ruby";
+      type = "gem";
+    };
+    targets = [];
+    version = "1.17.4";
+  };
   fugit = {
     dependencies = ["et-orbi" "raabro"];
     groups = ["default"];
@@ -1171,6 +1183,19 @@
     };
     targets = [];
     version = "1.13.0";
+  };
+  ruby-vips = {
+    dependencies = ["ffi" "logger"];
+    groups = ["default"];
+    platforms = [];
+    source = {
+      remotes = ["https://rubygems.org"];
+      sha256 = "0n3pgw1jkkivgkn08qpc4fb1kiivhbshkj0lhrms4sy3fahlgigk";
+      target = "ruby";
+      type = "gem";
+    };
+    targets = [];
+    version = "2.2.5";
   };
   ruby2_keywords = {
     groups = ["default" "test"];
