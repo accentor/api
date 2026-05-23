@@ -204,18 +204,6 @@
     targets = [];
     version = "3.1.22";
   };
-  benchmark = {
-    groups = ["default"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "0v1337j39w1z7x9zs4q7ag0nfv4vs4xlsjx2la0wpv8s6hig2pa6";
-      target = "ruby";
-      type = "gem";
-    };
-    targets = [];
-    version = "0.5.0";
-  };
   bigdecimal = {
     groups = ["default" "development" "test"];
     platforms = [];
@@ -427,18 +415,6 @@
     targets = [];
     version = "3.8.0";
   };
-  ffi = {
-    groups = ["default"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "0fgwn1grxf4zxmyqmb9i4z2hr111585n9jnk17y6y7hhs7dv1xi6";
-      target = "ruby";
-      type = "gem";
-    };
-    targets = [];
-    version = "1.17.1";
-  };
   fugit = {
     dependencies = ["et-orbi" "raabro"];
     groups = ["default"];
@@ -505,17 +481,16 @@
     version = "1.14.8";
   };
   image_processing = {
-    dependencies = ["mini_magick" "ruby-vips"];
     groups = ["default"];
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1ys28w0ayq3vl2sl4lpq6jnsy7gd4p9vzimyi449hqn2r5lw2k3m";
+      sha256 = "0gxz5kgpcpjrapr46h6fxvsw3qsllnzyhfkc78s7j4gyv8b35jb9";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.14.0";
+    version = "2.0.1";
   };
   io-console = {
     groups = ["default" "development" "test"];
@@ -627,19 +602,6 @@
     };
     targets = [];
     version = "1.1.0";
-  };
-  mini_magick = {
-    dependencies = ["benchmark" "logger"];
-    groups = ["default"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "0zlsc8dj0ak37snw3icag1jk56iq7j5mdayp3rmzinam5hm12mrc";
-      target = "ruby";
-      type = "gem";
-    };
-    targets = [];
-    version = "5.1.2";
   };
   mini_mime = {
     groups = ["default"];
@@ -1209,19 +1171,6 @@
     };
     targets = [];
     version = "1.13.0";
-  };
-  ruby-vips = {
-    dependencies = ["ffi" "logger"];
-    groups = ["default"];
-    platforms = [];
-    source = {
-      remotes = ["https://rubygems.org"];
-      sha256 = "14nwdsd73c4ygjb7sfldnndlbzn5yyl02llnlzafmmjwh0d2pla1";
-      target = "ruby";
-      type = "gem";
-    };
-    targets = [];
-    version = "2.2.3";
   };
   ruby2_keywords = {
     groups = ["default" "test"];
