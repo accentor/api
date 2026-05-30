@@ -1190,12 +1190,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0n3pgw1jkkivgkn08qpc4fb1kiivhbshkj0lhrms4sy3fahlgigk";
+      sha256 = "0x2k5x272m2zs0vmznl2jac14bj9a2g0365xxcnr2s9rq41fr1g6";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.2.5";
+    version = "2.3.0";
   };
   ruby2_keywords = {
     groups = ["default" "test"];
