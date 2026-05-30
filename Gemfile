@@ -23,7 +23,7 @@ gem 'will_paginate', '~> 4.0'
 
 # Use ActiveStorage variant
 gem 'image_processing', '~> 2.0.1'
-gem 'ruby-vips', '~> 2.2.3'
+gem 'ruby-vips', '~> 2.3.0'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '~> 1.24.5', require: false
