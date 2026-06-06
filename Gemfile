@@ -26,7 +26,7 @@ gem 'image_processing', '~> 2.0.1'
 gem 'ruby-vips', '~> 2.3.0'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '~> 1.24.5', require: false
+gem 'bootsnap', '~> 1.24.6', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors', '~> 3.0'
