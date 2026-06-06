@@ -22,7 +22,7 @@ gem 'pundit', '~> 2.5'
 gem 'will_paginate', '~> 4.0'
 
 # Use ActiveStorage variant
-gem 'image_processing', '~> 2.0.1'
+gem 'image_processing', '~> 2.0.2'
 gem 'ruby-vips', '~> 2.3.0'
 
 # Reduces boot times through caching; required in config/boot.rb
