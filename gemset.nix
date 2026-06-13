@@ -1087,12 +1087,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "05y4lwzci16c2xgckmpxkzq4czgkyaiiqhvrabdgaym3aj2jd10k";
+      sha256 = "0hninnbvqd2pn40h863lbrn9p11gvdxp928izkag5ysx8b1s5q0r";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "3.4.2";
+    version = "3.4.4";
   };
   rubocop = {
     dependencies = ["json" "language_server-protocol" "lint_roller" "parallel" "parser" "rainbow" "regexp_parser" "rubocop-ast" "ruby-progressbar" "unicode-display_width"];
@@ -1240,12 +1240,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1iaxj8lfcl5cfr4qa64mcapqw4qprf4bvrdjfhhwlrf96am3hzvd";
+      sha256 = "0h47i30bb7awmnrn52ykrkr2zilbrxf93dnfb87b5z3phrjh5mvh";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "3.1.0";
+    version = "3.2.0";
   };
   simplecov-html = {
     groups = ["default" "test"];
