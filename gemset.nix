@@ -161,12 +161,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "11h2lz0fyj1hh37x1lwvxr0svaisnkjs2g81hap84nwdykjl1z36";
+      sha256 = "00265gr8j5jnzkz5jjqyj3l1qqwkji3wvc6rv5syqyz080frpi8g";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.22.0";
+    version = "4.23.0";
   };
   ast = {
     groups = ["default" "development"];
