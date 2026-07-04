@@ -38,9 +38,12 @@ jobs:
       run: |
         bundle exec rails db:setup
         bundle exec rails test
-    - uses: codecov/codecov-action@v7
+    - name: Upload coverage report
+      if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+      uses: actions/upload-code-coverage@v1
       with:
-        token: ${{ secrets.CODECOV_TOKEN }} # required
+        file: coverage/coverage.xml
+        language: Ruby
   lint:
     runs-on: ubuntu-latest
     steps:
