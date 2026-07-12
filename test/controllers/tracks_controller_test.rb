@@ -63,6 +63,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'track_policy', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should not create track without title' do
@@ -188,6 +189,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'track_policy', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should destroy track for moderator' do
@@ -206,6 +208,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'track_policy', 'type' => 'forbidden', 'action' => 'destroy_empty?' }
   end
 
   test 'should destroy empty tracks for moderator' do
@@ -232,6 +235,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'track_policy', 'type' => 'forbidden', 'action' => 'merge?' }
   end
 
   test 'should merge tracks for moderator' do
@@ -257,6 +261,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     get audio_track_url(create(:track))
 
     assert_response :not_found
+    assert_includes response.parsed_body['errors'], { 'model' => 'audio', 'type' => 'not_found' }
   end
 
   test 'should return not_found and destroy audio if file is missing ' do
@@ -267,6 +272,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :not_found
+    assert_includes response.parsed_body['errors'], { 'model' => 'audio', 'type' => 'not_found' }
   end
 
   test 'should serve audio to user' do
@@ -307,6 +313,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
       get audio_track_url(track, codec_conversion_id: 0)
 
       assert_response :not_found
+      assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'type' => 'not_found' }
     end
 
     test 'should create transcoded_item if codec_conversion is present' do
