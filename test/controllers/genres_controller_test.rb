@@ -49,6 +49,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'name', 'type' => 'required' }
   end
 
   test 'should create genre for moderator' do
@@ -88,9 +89,8 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     patch genre_url(@genre), params: { genre: { name: '' } }
 
     assert_response :unprocessable_content
-    @genre.reload
-
-    assert_not_equal '', @genre.name
+    assert_not_equal '', @genre.reload.name
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'name', 'type' => 'required' }
   end
 
   test 'should update genre for moderator' do

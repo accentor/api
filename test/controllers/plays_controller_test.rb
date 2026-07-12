@@ -75,6 +75,7 @@ class PlaysControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'played_at', 'type' => 'required' }
   end
 
   test 'should get stats and  not return play stats for other users' do
