@@ -72,6 +72,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'title', 'type' => 'required' }
   end
 
   test 'should not create track without album_id' do
@@ -81,6 +82,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'album', 'type' => 'required' }
   end
 
   test 'should create track for moderator' do
@@ -156,9 +158,8 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     patch track_url(@track), params: { track: { title: '' } }
 
     assert_response :unprocessable_content
-    @track.reload
-
-    assert_not_equal '', @track.title
+    assert_not_equal '', @track.reload.title
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'title', 'type' => 'required' }
   end
 
   test 'should clear review comment' do

@@ -74,6 +74,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'title', 'type' => 'required' }
   end
 
   test 'should create dependent album_labels' do
@@ -153,9 +154,8 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     patch album_url(@album), params: { album: { release: @album.release, title: '' } }
 
     assert_response :unprocessable_content
-    @album.reload
-
-    assert_not_equal '', @album.title
+    assert_not_equal '', @album.reload.title
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'title', 'type' => 'required' }
   end
 
   test 'should clear review comment' do

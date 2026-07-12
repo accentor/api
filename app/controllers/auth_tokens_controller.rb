@@ -33,12 +33,12 @@ class AuthTokensController < ApplicationController
     if @auth_token.save
       render json: transform_auth_token_for_json_with_token(@auth_token), status: :created
     else
-      render json: @auth_token.errors, status: :unprocessable_content
+      render json: transform_errors_for_json(@auth_token), status: :unprocessable_content
     end
   end
 
   def destroy
-    render json: @auth_token.errors, status: :unprocessable_content unless @auth_token.destroy
+    render json: transform_errors_for_json(@auth_token), status: :unprocessable_content unless @auth_token.destroy
   end
 
   private

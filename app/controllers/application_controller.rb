@@ -2,6 +2,9 @@ class ApplicationController < ActionController::API
   include Pundit::Authorization
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
+  # This map only includes the type of validation errors that we could have inside the app
+  ERROR_TYPE_MAP = { blank: :required, taken: :not_unique }.freeze
+
   etag { params[:page] }
   etag { params[:per_page] }
 
@@ -40,6 +43,15 @@ class ApplicationController < ActionController::API
     etag = [scope.cache_key, scope.unscope(:group).size, timestamp].compact.join('-')
 
     super(etag:, **)
+  end
+
+  def transform_error_for_json(error)
+    { attribute: error.attribute, type: ERROR_TYPE_MAP[error.type] }
+  end
+
+  # This method expects an instance of a class that includes `ActiveModel::Errors`
+  def transform_errors_for_json(object)
+    { errors: object.errors.errors.map { transform_error_for_json(it) } }
   end
 
   private

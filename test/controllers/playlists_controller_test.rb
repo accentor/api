@@ -66,6 +66,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'name', 'type' => 'required' }
   end
 
   test 'should create personal playlist for current user if specified' do
@@ -97,9 +98,12 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not update playlist with empty name' do
-    patch playlist_url(@playlist), params: { playlist: { name: '' } }
+    assert_no_changes '@playlist.reload.name' do
+      patch playlist_url(@playlist), params: { playlist: { name: '' } }
+    end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'name', 'type' => 'required' }
   end
 
   test 'should create playlist items during update' do

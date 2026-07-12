@@ -21,7 +21,7 @@ class LabelsController < ApplicationController
     if @label.save
       render json: transform_label_for_json(@label), status: :created
     else
-      render json: @label.errors, status: :unprocessable_content
+      render json: transform_errors_for_json(@label), status: :unprocessable_content
     end
   end
 
@@ -29,12 +29,12 @@ class LabelsController < ApplicationController
     if @label.update(permitted_attributes(@label))
       render json: transform_label_for_json(@label), status: :ok
     else
-      render json: @label.errors, status: :unprocessable_content
+      render json: transform_errors_for_json(@label), status: :unprocessable_content
     end
   end
 
   def destroy
-    render json: @label.errors, status: :unprocessable_content unless @label.destroy
+    render json: transform_errors_for_json(@label), status: :unprocessable_content unless @label.destroy
   end
 
   def destroy_empty

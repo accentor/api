@@ -69,6 +69,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'name', 'type' => 'required' }
   end
 
   test 'should show artist' do
@@ -91,9 +92,8 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     patch artist_url(@artist), params: { artist: { name: '' } }
 
     assert_response :unprocessable_content
-    @artist.reload
-
-    assert_not_equal '', @artist.name
+    assert_not_equal '', @artist.reload.name
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'name', 'type' => 'required' }
   end
 
   test 'should not update artist metadata for user' do

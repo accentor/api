@@ -50,16 +50,19 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'extension', 'type' => 'required' }
   end
 
   test 'should not create codec with missing mimetype' do
     sign_in_as(create(:moderator))
     codec = build(:codec)
+
     assert_difference('Codec.count', 0) do
       post codecs_url, params: { codec: { extension: codec.extension } }
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'mimetype', 'type' => 'required' }
   end
 
   test 'should create codec for moderator' do
@@ -96,9 +99,13 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not update codec when clearing mimetype' do
     sign_in_as(create(:moderator))
-    patch codec_url(@codec), params: { codec: { mimetype: '' } }
+
+    assert_no_changes '@codec.reload.mimetype' do
+      patch codec_url(@codec), params: { codec: { mimetype: '' } }
+    end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'mimetype', 'type' => 'required' }
   end
 
   test 'should update codec for moderator' do
