@@ -29,8 +29,7 @@ class UsersController < ApplicationController
     if @user == current_user &&
        params[:user][:password].present? &&
        !@user.try(:authenticate, params[:user][:current_password])
-      render json: { unauthorized: [I18n.t('users.current_password_is_incorrect')] },
-             status: :unauthorized
+      render json: { errors: [{ attribute: :base, type: :incorrect_password }] }, status: :unauthorized
       return
     end
 

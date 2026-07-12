@@ -40,6 +40,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'user_policy', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should not create user without name' do
@@ -79,6 +80,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     patch user_url(@user), params: { user: { password: 'new password', current_password: 'not correct' } }
 
     assert_response :unauthorized
+    assert_includes response.parsed_body['errors'], { 'attribute' => 'base', 'type' => 'incorrect_password' }
   end
 
   test 'should update password with current password for current user' do

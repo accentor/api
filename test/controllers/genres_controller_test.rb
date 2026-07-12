@@ -40,6 +40,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'genre_policy', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should not create genre with empty name' do
@@ -82,6 +83,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     patch genre_url(@genre), params: { genre: { name: @genre.name } }
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'genre_policy', 'type' => 'forbidden', 'action' => 'update?' }
   end
 
   test 'should not update genre to empty name' do
@@ -113,6 +115,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'genre_policy', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should destroy genre for moderator' do
@@ -139,6 +142,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'genre_policy', 'type' => 'forbidden', 'action' => 'destroy_empty?' }
   end
 
   test 'should destroy empty genres for moderator' do
@@ -179,6 +183,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'genre_policy', 'type' => 'forbidden', 'action' => 'merge?' }
   end
 
   test 'should merge genres for moderator' do

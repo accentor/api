@@ -64,16 +64,11 @@ class ApplicationController < ActionController::API
   end
 
   def user_not_authorized(exc)
-    policy_name = exc.policy.class.to_s.underscore
-
     status = current_user.present? ? :forbidden : :unauthorized
-    render json: { status => [I18n.t("#{policy_name}.#{exc.query}",
-                                     scope: 'pundit',
-                                     default: :default)] },
-           status:
+    render json: { errors: [{ policy: exc.policy.class.to_s.underscore, type: status, action: exc.query }] }, status:
   end
 
   def model_not_found(exc)
-    render json: { not_found: ["#{exc.model.pluralize.downcase}.not-found"] }, status: :not_found
+    render json: { errors: [{ model: exc.model.downcase, type: :not_found }] }, status: :not_found
   end
 end

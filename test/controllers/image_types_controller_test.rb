@@ -40,6 +40,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'image_type_policy', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should not create image_type without extension' do
@@ -94,6 +95,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
     patch image_type_url(@image_type), params: { image_type: { mimetype: @image_type.mimetype } }
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'image_type_policy', 'type' => 'forbidden', 'action' => 'update?' }
   end
 
   test 'should not update image_type to empty mimetype' do
@@ -125,6 +127,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'image_type_policy', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should destroy image_type for moderator' do
