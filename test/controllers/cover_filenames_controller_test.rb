@@ -70,7 +70,7 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'attribute' => 'filename', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'cover_filename', 'attribute' => 'filename', 'type' => 'required' }
   end
 
   test 'should create cover_filename for moderator' do

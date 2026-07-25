@@ -19,7 +19,7 @@ class AuthTokensController < ApplicationController
 
     user = User.find_by(name: params[:name])
     unless user.try(:authenticate, params[:password])
-      render json: { errors: [{ attribute: :base, type: :wrong_credentials }] }, status: :unauthorized
+      render json: { errors: [{ model: :auth_token, attribute: :base, type: :wrong_credentials }] }, status: :unauthorized
       return
     end
 
