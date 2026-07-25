@@ -51,7 +51,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'user', 'attribute' => 'name', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'user', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should create user for admin' do
@@ -102,7 +102,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_content
     assert_not_equal '', @user.reload.name
-    assert_includes response.parsed_body['errors'], { 'model' => 'user', 'attribute' => 'name', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'user', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should not update own permission if not admin' do

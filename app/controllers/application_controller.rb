@@ -3,7 +3,7 @@ class ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
   # This map only includes the type of validation errors that we could have inside the app
-  ERROR_TYPE_MAP = { blank: :required, taken: :not_unique }.freeze
+  ERROR_TYPE_MAP = { blank: :blank, taken: :taken }.freeze
 
   etag { params[:page] }
   etag { params[:per_page] }

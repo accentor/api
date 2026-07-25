@@ -70,7 +70,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'attribute' => 'name', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should show artist' do
@@ -94,7 +94,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_content
     assert_not_equal '', @artist.reload.name
-    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'attribute' => 'name', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should not update artist metadata for user' do

@@ -51,7 +51,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'image_type', 'attribute' => 'extension', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'image_type', 'attribute' => 'extension', 'type' => 'blank' }
   end
 
   test 'should not create image_type without mimetype' do
@@ -62,7 +62,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'image_type', 'attribute' => 'mimetype', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'image_type', 'attribute' => 'mimetype', 'type' => 'blank' }
   end
 
   test 'should create image_type for moderator' do
@@ -104,7 +104,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_content
     assert_not_equal '', @image_type.reload.mimetype
-    assert_includes response.parsed_body['errors'], { 'model' => 'image_type', 'attribute' => 'mimetype', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'image_type', 'attribute' => 'mimetype', 'type' => 'blank' }
   end
 
   test 'should update image_type for moderator' do
