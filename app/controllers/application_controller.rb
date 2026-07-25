@@ -2,9 +2,6 @@ class ApplicationController < ActionController::API
   include Pundit::Authorization
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
-  # This map only includes the type of validation errors that we could have inside the app
-  ERROR_TYPE_MAP = { blank: :blank, taken: :taken }.freeze
-
   etag { params[:page] }
   etag { params[:per_page] }
 
@@ -46,7 +43,7 @@ class ApplicationController < ActionController::API
   end
 
   def transform_error_for_json(object, error)
-    { model: object.model_name.singular, attribute: error.attribute, type: ERROR_TYPE_MAP[error.type] }
+    { model: object.model_name.singular, attribute: error.attribute, type: error.type }
   end
 
   # This method expects an instance of a class that includes `ActiveModel::Errors`
