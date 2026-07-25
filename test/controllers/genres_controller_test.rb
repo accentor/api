@@ -50,7 +50,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'attribute' => 'name', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'genre', 'attribute' => 'name', 'type' => 'required' }
   end
 
   test 'should create genre for moderator' do
@@ -92,7 +92,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_content
     assert_not_equal '', @genre.reload.name
-    assert_includes response.parsed_body['errors'], { 'attribute' => 'name', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'genre', 'attribute' => 'name', 'type' => 'required' }
   end
 
   test 'should update genre for moderator' do

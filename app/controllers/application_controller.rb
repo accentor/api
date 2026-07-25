@@ -45,13 +45,13 @@ class ApplicationController < ActionController::API
     super(etag:, **)
   end
 
-  def transform_error_for_json(error)
-    { attribute: error.attribute, type: ERROR_TYPE_MAP[error.type] }
+  def transform_error_for_json(object, error)
+    { model: object.model_name.singular, attribute: error.attribute, type: ERROR_TYPE_MAP[error.type] }
   end
 
   # This method expects an instance of a class that includes `ActiveModel::Errors`
   def transform_errors_for_json(object)
-    { errors: object.errors.errors.map { transform_error_for_json(it) } }
+    { errors: object.errors.errors.map { transform_error_for_json(object, it) } }
   end
 
   private

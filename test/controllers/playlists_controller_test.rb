@@ -66,7 +66,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'attribute' => 'name', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'playlist', 'attribute' => 'name', 'type' => 'required' }
   end
 
   test 'should create personal playlist for current user if specified' do
@@ -103,7 +103,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'attribute' => 'name', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'playlist', 'attribute' => 'name', 'type' => 'required' }
   end
 
   test 'should create playlist items during update' do
