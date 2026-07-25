@@ -259,12 +259,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1c2i64xsd35vijnb50rxb70g508s0x674xi0qpyyb8jy7bncl4j4";
+      sha256 = "1qfi2ns3zwkgq616fc127xiqhan7g7m7gqpwriwcr34nds1vxwdj";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.3.7";
+    version = "1.3.8";
   };
   connection_pool = {
     groups = ["default" "development" "test"];
@@ -332,12 +332,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1ncmbdjf2bwmk0jf5cxywns9zbxyfiy4h4p3pzi7yddyjhv81qrq";
+      sha256 = "1raacipbb5m0176w05m3n21ip91w7i0cb5zjqhkz2nqgf234kcm9";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "6.0.4";
+    version = "6.0.6";
   };
   erubi = {
     groups = ["default" "development" "test"];
@@ -421,12 +421,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0phfqbch9pll4cny2c5ipna9nb3bnzc0v3mz1i0bsqxjipr2ngv4";
+      sha256 = "065b6jb3k92cfnrfi2fv7ivfm555w90m02kl2vr55nj0wzy97w54";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.12.2";
+    version = "1.13.0";
   };
   globalid = {
     dependencies = ["activesupport"];
@@ -447,12 +447,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1sxki5xh41lqnc46dlbnp2ys0qr7r18wbv713xls5d253i0az25i";
+      sha256 = "1c744q61269qh2dzb1njni14ahy73hv27gy0v6wji7d2jl2ymx3k";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.19.1";
+    version = "4.19.2";
   };
   has_scope = {
     dependencies = ["actionpack" "activesupport"];
@@ -847,12 +847,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "10m8bln9d00dwzjil1k42i5r7l82x25ysbi45fwyv4932zsrzynl";
+      sha256 = "02j4fyc9qljz0db8s5j1117xlnqa5r6n705m7bgq972gr1xqm69z";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.4.0";
+    version = "1.5.0";
   };
   racc = {
     groups = ["default" "development" "test"];
