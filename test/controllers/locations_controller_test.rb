@@ -70,7 +70,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'location', 'attribute' => 'path', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'location', 'attribute' => 'path', 'type' => 'blank' }
   end
 
   test 'should create location for moderator' do

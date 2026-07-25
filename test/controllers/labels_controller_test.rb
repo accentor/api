@@ -51,7 +51,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'label', 'attribute' => 'name', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'label', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should create label for moderator' do
@@ -93,7 +93,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_content
     assert_not_equal '', @label.reload.name
-    assert_includes response.parsed_body['errors'], { 'model' => 'label', 'attribute' => 'name', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'label', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should update label for moderator' do

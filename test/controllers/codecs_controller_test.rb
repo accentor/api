@@ -51,7 +51,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'codec', 'attribute' => 'extension', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec', 'attribute' => 'extension', 'type' => 'blank' }
   end
 
   test 'should not create codec with missing mimetype' do
@@ -63,7 +63,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'codec', 'attribute' => 'mimetype', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec', 'attribute' => 'mimetype', 'type' => 'blank' }
   end
 
   test 'should create codec for moderator' do
@@ -107,7 +107,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'codec', 'attribute' => 'mimetype', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec', 'attribute' => 'mimetype', 'type' => 'blank' }
   end
 
   test 'should update codec for moderator' do

@@ -75,7 +75,7 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'auth_token', 'attribute' => 'user_agent', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'auth_token', 'attribute' => 'user_agent', 'type' => 'blank' }
   end
 
   test 'should show auth_token' do

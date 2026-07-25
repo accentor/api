@@ -91,7 +91,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'attribute' => 'name', 'type' => 'not_unique' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'attribute' => 'name', 'type' => 'taken' }
   end
 
   test 'should not create codec_conversion with empty ffmpeg_params' do
@@ -105,7 +105,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'attribute' => 'ffmpeg_params', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'attribute' => 'ffmpeg_params', 'type' => 'blank' }
   end
 
   test 'should not create codec_conversion with empty name' do
@@ -119,7 +119,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'attribute' => 'name', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should not create codec_conversion with non-existing resulting_codec' do
@@ -134,7 +134,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'attribute' => 'resulting_codec', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'attribute' => 'resulting_codec', 'type' => 'blank' }
   end
 
   test 'should create codec_conversion for admin' do
@@ -187,7 +187,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'attribute' => 'name', 'type' => 'required' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should update codec_conversion for admin' do
