@@ -35,7 +35,7 @@ class PlayListItemTest < ActiveSupport::TestCase
     item = build(:playlist_item, :for_track, playlist:)
 
     assert_not_predicate item, :valid?
-    assert_not_empty item.errors[:item]
+    assert_error_of_kind item, :item, :type_mismatch
   end
 
   test 'item should get order if not present' do

@@ -29,8 +29,8 @@ class Location < ApplicationRecord
 
   def cant_be_parent_or_subdir_of_other_location
     Location.find_each do |l|
-      errors.add(:path, 'path-is-subdirectoy') if expanded_path.fnmatch?(File.join(l.expanded_path, '**'))
-      errors.add(:path, 'path-is-parent') if l.expanded_path.fnmatch?(File.join(expanded_path, '**'))
+      errors.add(:path, :is_subdirectory) if expanded_path.fnmatch?(File.join(l.expanded_path, '**'))
+      errors.add(:path, :is_parent) if l.expanded_path.fnmatch?(File.join(expanded_path, '**'))
     end
   end
 

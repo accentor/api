@@ -71,6 +71,6 @@ class Playlist < ApplicationRecord
     # When validating, we use `collect(&:item_id)` so we get the correct data
     # Regardless of whether the items were already saved
     doubles = items.collect(&:item_id).uniq!
-    errors.add(:items, 'item-ids-contains-double') unless doubles.nil?
+    errors.add(:items, :taken) unless doubles.nil?
   end
 end
