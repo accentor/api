@@ -70,7 +70,7 @@ class ArtistTest < ActiveSupport::TestCase
       artist2.merge(artist1)
     end
 
-    assert_not_empty artist2.errors[:track_artists]
+    assert_error_of_kind artist2, :track_artists, :tracks_overlap
   end
 
   test 'should be able to merge artists if they share track_artist with different role' do
@@ -142,7 +142,7 @@ class ArtistTest < ActiveSupport::TestCase
       artist2.merge(artist1)
     end
 
-    assert_not_empty artist2.errors[:album_artists]
+    assert_error_of_kind artist2, :album_artists, :albums_overlap
   end
 
   test 'should keep not override image during merge' do
