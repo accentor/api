@@ -47,7 +47,9 @@ class Artist < ApplicationRecord
     return false if errors.present?
 
     other.album_artists.find_each do |aa|
-      aa.update(artist_id: id)
+      # rubocop:disable Rails/SkipsModelValidations -- we skip validations, as this would check the separators while we're moving over the album artists
+      aa.update_columns(artist_id: id)
+      # rubocop:enable Rails/SkipsModelValidations
     end
 
     other.track_artists.find_each do |ta|
