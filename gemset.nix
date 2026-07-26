@@ -1114,12 +1114,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1vgp1i8ki0gh9bwk2i628xljnpxc3sd71gzry2bx49j0vbb9i0wr";
+      sha256 = "179acw62bi7jdm9zc336ggbvk6znjrd0pks424ai4pqik60njg1m";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "0.39.1";
+    version = "0.40.0";
   };
   rubocop-rails = {
     dependencies = ["activesupport" "lint_roller" "rack" "rubocop" "rubocop-ast"];
