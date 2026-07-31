@@ -24,7 +24,6 @@ jobs:
         with:
           name: accentor
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-          skipPush: true
       - name: "Setup database"
         run: |
           nix develop --command pg:start
@@ -48,7 +47,6 @@ jobs:
         with:
           name: accentor
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-          skipPush: true
       - name: Lint with rubocop
         env:
           RAILS_ENV: "test"
