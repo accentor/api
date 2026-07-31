@@ -658,12 +658,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0v68nyl07xira30iyhn3118a4g59ar5748laq0cx2pwnsdy7ivrz";
+      sha256 = "098d9njb36sdffyhpisp8c1bmh8q6m6bgzn4zfrfipynk4fd2h74";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.8.1";
+    version = "1.8.2";
   };
   net-imap = {
     dependencies = ["date" "net-protocol"];
