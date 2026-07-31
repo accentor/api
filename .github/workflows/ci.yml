@@ -5,7 +5,7 @@ on:
     branches:
       - main
     tags:
-      - '*'
+      - "*"
   pull_request:
   merge_group:
 
@@ -14,47 +14,44 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: "test"
-      DATABASE_URL: "postgres://postgres:accentor@127.0.0.1:5432/accentor"
-    services:
-      postgresql:
-        image: postgres
-        env:
-          POSTGRES_PASSWORD: "accentor"
-        ports:
-        - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
-    - uses: actions/checkout@v7
-    - name: Install system dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install libvips-dev
-    - name: Setup ruby from /.ruby_version
-      uses: ruby/setup-ruby@v1
-      with:
-        bundler-cache: true
-    - name: Run tests
-      env:
-        CI: true
-      run: |
-        bundle exec rails db:setup
-        bundle exec rails test
-    - uses: codecov/codecov-action@v7
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }} # required
+      - uses: actions/checkout@v7
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Cachix
+        uses: cachix/cachix-action@v17
+        with:
+          name: accentor
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          skipPush: true
+      - name: "Setup database"
+        run: |
+          nix develop --command pg:start
+          nix develop --command rails db:setup
+      - name: Run tests
+        env:
+          CI: true
+        run: nix develop --command rails test
+      - uses: codecov/codecov-action@v7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # required
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v7
-    - name: Setup ruby from /.ruby_version
-      uses: ruby/setup-ruby@v1
-      with:
-        bundler-cache: true
-    - name: Lint with rubocop
-      env:
-        RAILS_ENV: "test"
-      run: |
-        bundle exec rubocop -c .rubocop.yml -f github
-    - name: Scan with brakeman
-      run: |
-        bundle exec brakeman --no-pager
+      - uses: actions/checkout@v7
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Cachix
+        uses: cachix/cachix-action@v17
+        with:
+          name: accentor
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          skipPush: true
+      - name: Lint with rubocop
+        env:
+          RAILS_ENV: "test"
+        run: nix develop --command rubocop -c .rubocop.yml -f github
+      - name: Scan with brakeman
+        run: nix develop --command brakeman --no-pager
