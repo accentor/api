@@ -21,7 +21,7 @@ class GenresController < ApplicationController
     if @genre.save
       render json: transform_genre_for_json(@genre), status: :created
     else
-      render json: @genre.errors, status: :unprocessable_content
+      render json: transform_errors_for_json(@genre), status: :unprocessable_content
     end
   end
 
@@ -29,12 +29,12 @@ class GenresController < ApplicationController
     if @genre.update(permitted_attributes(@genre))
       render json: transform_genre_for_json(@genre), status: :ok
     else
-      render json: @genre.errors, status: :unprocessable_content
+      render json: transform_errors_for_json(@genre), status: :unprocessable_content
     end
   end
 
   def destroy
-    render json: @genre.errors, status: :unprocessable_content unless @genre.destroy
+    render json: transform_errors_for_json(@genre), status: :unprocessable_content unless @genre.destroy
   end
 
   def destroy_empty

@@ -21,12 +21,12 @@ class CoverFilenamesController < ApplicationController
     if @cover_filename.save
       render json: transform_cover_filename_for_json(@cover_filename), status: :created
     else
-      render json: @cover_filename.errors, status: :unprocessable_content
+      render json: transform_errors_for_json(@cover_filename), status: :unprocessable_content
     end
   end
 
   def destroy
-    render json: @cover_filename.errors, status: :unprocessable_content unless @cover_filename.destroy
+    render json: transform_errors_for_json(@cover_filename), status: :unprocessable_content unless @cover_filename.destroy
   end
 
   private

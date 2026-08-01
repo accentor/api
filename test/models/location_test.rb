@@ -23,14 +23,14 @@ class LocationTest < ActiveSupport::TestCase
     child = build(:location, path: '/var/parent/music')
 
     assert_not child.valid?
-    assert_not_empty child.errors[:path]
+    assert_error_of_kind child, :path, :is_subdirectory
   end
 
   test 'location cant be parent of other location' do
     parent = build(:location, path: '/var')
 
     assert_not parent.valid?
-    assert_not_empty parent.errors[:path]
+    assert_error_of_kind parent, :path, :is_parent
   end
 
   test 'should be able to add similar siblings' do

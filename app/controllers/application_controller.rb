@@ -42,6 +42,15 @@ class ApplicationController < ActionController::API
     super(etag:, **)
   end
 
+  def transform_error_for_json(object, error)
+    { model: object.model_name.singular, attribute: error.attribute, type: error.type }
+  end
+
+  # This method expects an instance of a class that includes `ActiveModel::Errors`
+  def transform_errors_for_json(object)
+    { errors: object.errors.errors.map { transform_error_for_json(object, it) } }
+  end
+
   private
 
   def authenticate_user
@@ -52,16 +61,11 @@ class ApplicationController < ActionController::API
   end
 
   def user_not_authorized(exc)
-    policy_name = exc.policy.class.to_s.underscore
-
     status = current_user.present? ? :forbidden : :unauthorized
-    render json: { status => [I18n.t("#{policy_name}.#{exc.query}",
-                                     scope: 'pundit',
-                                     default: :default)] },
-           status:
+    render json: { errors: [{ policy: exc.policy.class.to_s.underscore, type: status, action: exc.query }] }, status:
   end
 
   def model_not_found(exc)
-    render json: { not_found: ["#{exc.model.pluralize.downcase}.not-found"] }, status: :not_found
+    render json: { errors: [{ model: exc.model.downcase, type: :not_found }] }, status: :not_found
   end
 end

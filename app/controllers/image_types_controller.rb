@@ -21,7 +21,7 @@ class ImageTypesController < ApplicationController
     if @image_type.save
       render json: transform_image_type_for_json(@image_type), status: :created
     else
-      render json: @image_type.errors, status: :unprocessable_content
+      render json: transform_errors_for_json(@image_type), status: :unprocessable_content
     end
   end
 
@@ -29,12 +29,12 @@ class ImageTypesController < ApplicationController
     if @image_type.update(permitted_attributes(@image_type))
       render json: transform_image_type_for_json(@image_type), status: :ok
     else
-      render json: @image_type.errors, status: :unprocessable_content
+      render json: transform_errors_for_json(@image_type), status: :unprocessable_content
     end
   end
 
   def destroy
-    render json: @image_type.errors, status: :unprocessable_content unless @image_type.destroy
+    render json: transform_errors_for_json(@image_type), status: :unprocessable_content unless @image_type.destroy
   end
 
   private

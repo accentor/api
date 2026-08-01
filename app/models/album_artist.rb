@@ -33,6 +33,18 @@ class AlbumArtist < ApplicationRecord
 
   validates :name, presence: true
   validates :order, presence: true
+  validate :separator_not_nil, unless: :last_item?
+  validates :separator, absence: { allow_blank: false }, if: :last_item?
 
   normalized_col_generator :name
+
+  private
+
+  def last_item?
+    order == album.album_artists.size
+  end
+
+  def separator_not_nil
+    errors.add(:separator, :blank) if separator.nil?
+  end
 end

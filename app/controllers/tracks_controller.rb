@@ -26,7 +26,7 @@ class TracksController < ApplicationController
     if @track.save
       render json: transform_track_for_json(@track), status: :created
     else
-      render json: @track.errors, status: :unprocessable_content
+      render json: transform_errors_for_json(@track), status: :unprocessable_content
     end
   end
 
@@ -34,12 +34,12 @@ class TracksController < ApplicationController
     if @track.update(transformed_attributes)
       render json: transform_track_for_json(@track), status: :ok
     else
-      render json: @track.errors, status: :unprocessable_content
+      render json: transform_errors_for_json(@track), status: :unprocessable_content
     end
   end
 
   def destroy
-    render json: @track.errors, status: :unprocessable_content unless @track.destroy
+    render json: transform_errors_for_json(@track), status: :unprocessable_content unless @track.destroy
   end
 
   def destroy_empty

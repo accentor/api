@@ -40,6 +40,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'label_policy', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should not create label with empty name' do
@@ -50,6 +51,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'label', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should create label for moderator' do
@@ -82,6 +84,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     patch label_url(@label), params: { label: { name: @label.name } }
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'label_policy', 'type' => 'forbidden', 'action' => 'update?' }
   end
 
   test 'should not update label to empty name' do
@@ -89,9 +92,8 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     patch label_url(@label), params: { label: { name: '' } }
 
     assert_response :unprocessable_content
-    @label.reload
-
-    assert_not_equal '', @label.name
+    assert_not_equal '', @label.reload.name
+    assert_includes response.parsed_body['errors'], { 'model' => 'label', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should update label for moderator' do
@@ -114,6 +116,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'label_policy', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should destroy label for moderator' do
@@ -140,6 +143,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'label_policy', 'type' => 'forbidden', 'action' => 'destroy_empty?' }
   end
 
   test 'should destroy empty labels for moderator' do
@@ -180,6 +184,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'policy' => 'label_policy', 'type' => 'forbidden', 'action' => 'merge?' }
   end
 
   test 'should merge labels for moderator' do

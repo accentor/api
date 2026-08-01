@@ -42,12 +42,14 @@ class Artist < ApplicationRecord
 
   def merge(other)
     # we check if the artist to be merged have some overlap. If they do, we tell the user that they should resolve this first.
-    errors.add(:album_artists, 'aa.albums-overlap') if other.albums.map(&:id).intersect?(albums.map(&:id))
-    errors.add(:track_artists, 'ta.tracks-overlap') if other.track_artists.map { |ta| [ta.track_id, ta.role] }.intersect?(track_artists.map { |ta| [ta.track_id, ta.role] })
+    errors.add(:album_artists, :albums_overlap) if other.albums.map(&:id).intersect?(albums.map(&:id))
+    errors.add(:track_artists, :tracks_overlap) if other.track_artists.map { |ta| [ta.track_id, ta.role] }.intersect?(track_artists.map { |ta| [ta.track_id, ta.role] })
     return false if errors.present?
 
     other.album_artists.find_each do |aa|
-      aa.update(artist_id: id)
+      # rubocop:disable Rails/SkipsModelValidations -- we skip validations, as this would check the separators while we're moving over the album artists
+      aa.update_columns(artist_id: id)
+      # rubocop:enable Rails/SkipsModelValidations
     end
 
     other.track_artists.find_each do |ta|
