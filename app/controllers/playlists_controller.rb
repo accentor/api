@@ -21,7 +21,7 @@ class PlaylistsController < ApplicationController
     if @playlist.save
       render json: transform_playlist_for_json(@playlist), status: :created
     else
-      render json: @playlist.errors, status: :unprocessable_content
+      render json: transform_errors_for_json(@playlist), status: :unprocessable_content
     end
   end
 
@@ -29,18 +29,18 @@ class PlaylistsController < ApplicationController
     if @playlist.update(permitted_attributes(@playlist))
       render json: transform_playlist_for_json(@playlist), status: :ok
     else
-      render json: @playlist.errors, status: :unprocessable_content
+      render json: transform_errors_for_json(@playlist), status: :unprocessable_content
     end
   end
 
   def destroy
-    render json: @playlist.errors, status: :unprocessable_content unless @playlist.destroy
+    render json: transform_errors_for_json(@playlist), status: :unprocessable_content unless @playlist.destroy
   end
 
   def add_item
     @item = @playlist.items.create(permitted_attributes(@playlist))
 
-    render json: @item.errors, status: :unprocessable_content unless @item.save
+    render json: transform_errors_for_json(@item), status: :unprocessable_content unless @item.save
   end
 
   private

@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     if @user.save
       render json: transform_user_for_json(@user), status: :created
     else
-      render json: @user.errors, status: :unprocessable_content
+      render json: transform_errors_for_json(@user), status: :unprocessable_content
     end
   end
 
@@ -29,20 +29,19 @@ class UsersController < ApplicationController
     if @user == current_user &&
        params[:user][:password].present? &&
        !@user.try(:authenticate, params[:user][:current_password])
-      render json: { unauthorized: [I18n.t('users.current_password_is_incorrect')] },
-             status: :unauthorized
+      render json: { errors: [{ model: :user, attribute: :base, type: :incorrect_password }] }, status: :unauthorized
       return
     end
 
     if @user.update(permitted_attributes(@user))
       render json: transform_user_for_json(@user), status: :ok
     else
-      render json: @user.errors, status: :unprocessable_content
+      render json: transform_errors_for_json(@user), status: :unprocessable_content
     end
   end
 
   def destroy
-    render json: @user.errors, status: :unprocessable_content unless @user.destroy
+    render json: transform_errors_for_json(@user), status: :unprocessable_content unless @user.destroy
   end
 
   private

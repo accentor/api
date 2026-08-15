@@ -63,6 +63,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'track', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should not create track without title' do
@@ -72,6 +73,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'track', 'attribute' => 'title', 'type' => 'blank' }
   end
 
   test 'should not create track without album_id' do
@@ -81,6 +83,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'track', 'attribute' => 'album', 'type' => 'blank' }
   end
 
   test 'should create track for moderator' do
@@ -156,9 +159,8 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     patch track_url(@track), params: { track: { title: '' } }
 
     assert_response :unprocessable_content
-    @track.reload
-
-    assert_not_equal '', @track.title
+    assert_not_equal '', @track.reload.title
+    assert_includes response.parsed_body['errors'], { 'model' => 'track', 'attribute' => 'title', 'type' => 'blank' }
   end
 
   test 'should clear review comment' do
@@ -187,6 +189,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'track', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should destroy track for moderator' do
@@ -205,6 +208,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'track', 'type' => 'forbidden', 'action' => 'destroy_empty?' }
   end
 
   test 'should destroy empty tracks for moderator' do
@@ -231,6 +235,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'track', 'type' => 'forbidden', 'action' => 'merge?' }
   end
 
   test 'should merge tracks for moderator' do
@@ -256,6 +261,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     get audio_track_url(create(:track))
 
     assert_response :not_found
+    assert_includes response.parsed_body['errors'], { 'model' => 'audio', 'type' => 'not_found' }
   end
 
   test 'should return not_found and destroy audio if file is missing ' do
@@ -266,6 +272,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :not_found
+    assert_includes response.parsed_body['errors'], { 'model' => 'audio', 'type' => 'not_found' }
   end
 
   test 'should serve audio to user' do
@@ -306,6 +313,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
       get audio_track_url(track, codec_conversion_id: 0)
 
       assert_response :not_found
+      assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'type' => 'not_found' }
     end
 
     test 'should create transcoded_item if codec_conversion is present' do

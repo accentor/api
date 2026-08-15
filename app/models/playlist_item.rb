@@ -32,7 +32,7 @@ class PlaylistItem < ApplicationRecord
   private
 
   def item_type_should_match_playlist_type
-    errors.add(:item, 'item-type-different-from-playlist-type') unless item_type.downcase == playlist.playlist_type
+    errors.add(:item, :type_mismatch) unless item_type.downcase == playlist.playlist_type
   end
 
   def set_order

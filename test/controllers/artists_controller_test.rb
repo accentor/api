@@ -39,6 +39,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should create artist for moderator' do
@@ -69,6 +70,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should show artist' do
@@ -91,9 +93,8 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     patch artist_url(@artist), params: { artist: { name: '' } }
 
     assert_response :unprocessable_content
-    @artist.reload
-
-    assert_not_equal '', @artist.name
+    assert_not_equal '', @artist.reload.name
+    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should not update artist metadata for user' do
@@ -176,6 +177,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should destroy artist for moderator' do
@@ -198,6 +200,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'type' => 'forbidden', 'action' => 'destroy_empty?' }
   end
 
   test 'should destroy empty artists for moderator (track_artist)' do
@@ -248,6 +251,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'type' => 'forbidden', 'action' => 'merge?' }
   end
 
   test 'should merge artists for moderator' do

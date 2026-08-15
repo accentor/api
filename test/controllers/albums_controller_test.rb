@@ -39,6 +39,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should create album for moderator' do
@@ -74,6 +75,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'attribute' => 'title', 'type' => 'blank' }
   end
 
   test 'should create dependent album_labels' do
@@ -153,9 +155,8 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     patch album_url(@album), params: { album: { release: @album.release, title: '' } }
 
     assert_response :unprocessable_content
-    @album.reload
-
-    assert_not_equal '', @album.title
+    assert_not_equal '', @album.reload.title
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'attribute' => 'title', 'type' => 'blank' }
   end
 
   test 'should clear review comment' do
@@ -229,6 +230,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should destroy album for moderator' do
@@ -251,6 +253,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'type' => 'forbidden', 'action' => 'destroy_empty?' }
   end
 
   test 'should destroy empty albums for moderator' do
@@ -279,6 +282,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'type' => 'forbidden', 'action' => 'merge?' }
   end
 
   test 'should merge albums for moderator' do

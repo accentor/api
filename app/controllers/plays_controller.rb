@@ -20,7 +20,7 @@ class PlaysController < ApplicationController
     if @play.save
       render json: transform_play_for_json(@play), status: :created
     else
-      render json: @play.errors, status: :unprocessable_content
+      render json: transform_errors_for_json(@play), status: :unprocessable_content
     end
   end
 

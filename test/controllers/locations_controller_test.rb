@@ -10,6 +10,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     get locations_url
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'location', 'type' => 'forbidden', 'action' => 'index?' }
   end
 
   test 'should get index for moderator' do
@@ -59,6 +60,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'location', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should not create location with empty path' do
@@ -68,6 +70,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'location', 'attribute' => 'path', 'type' => 'blank' }
   end
 
   test 'should create location for moderator' do
@@ -94,6 +97,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     get location_url(@location)
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'location', 'type' => 'forbidden', 'action' => 'show?' }
   end
 
   test 'should show location for moderator' do
@@ -116,6 +120,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'location', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should destroy location for moderator' do

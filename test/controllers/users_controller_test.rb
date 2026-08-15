@@ -40,6 +40,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'user', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should not create user without name' do
@@ -50,6 +51,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'user', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should create user for admin' do
@@ -78,6 +80,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     patch user_url(@user), params: { user: { password: 'new password', current_password: 'not correct' } }
 
     assert_response :unauthorized
+    assert_includes response.parsed_body['errors'], { 'model' => 'user', 'attribute' => 'base', 'type' => 'incorrect_password' }
   end
 
   test 'should update password with current password for current user' do
@@ -98,9 +101,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     patch user_url(@user), params: { user: { name: '' } }
 
     assert_response :unprocessable_content
-    @user.reload
-
-    assert_not_equal '', @user.name
+    assert_not_equal '', @user.reload.name
+    assert_includes response.parsed_body['errors'], { 'model' => 'user', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should not update own permission if not admin' do

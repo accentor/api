@@ -52,6 +52,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should create codec_conversion for moderator' do
@@ -90,6 +91,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'attribute' => 'name', 'type' => 'taken' }
   end
 
   test 'should not create codec_conversion with empty ffmpeg_params' do
@@ -103,6 +105,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'attribute' => 'ffmpeg_params', 'type' => 'blank' }
   end
 
   test 'should not create codec_conversion with empty name' do
@@ -116,6 +119,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should not create codec_conversion with non-existing resulting_codec' do
@@ -130,6 +134,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'attribute' => 'resulting_codec', 'type' => 'blank' }
   end
 
   test 'should create codec_conversion for admin' do
@@ -160,6 +165,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     } }
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'type' => 'forbidden', 'action' => 'update?' }
   end
 
   test 'should update codec_conversion for moderator' do
@@ -175,11 +181,13 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not update codec_conversion to empty name' do
     sign_in_as(create(:moderator))
-    patch codec_conversion_url(@codec_conversion), params: { codec_conversion: {
-      name: ''
-    } }
+
+    assert_no_changes '@codec_conversion.reload.name' do
+      patch codec_conversion_url(@codec_conversion), params: { codec_conversion: { name: '' } }
+    end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should update codec_conversion for admin' do
@@ -199,6 +207,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should destroy codec_conversion for moderator' do

@@ -33,10 +33,26 @@ module AudioFileTestHelper
   end
 end
 
+module ValidationAssertions
+  ##
+  # Assertion to check whether an object has an error with the specified attribute and type
+  # The object should implement `ActiveModel::Errors` for this to work
+  #
+  # For a list of the types for different validators, see [the rails guides](https://guides.rubyonrails.org/i18n.html#error-message-interpolation)
+  def assert_error_of_kind(object, attribute, type = :invalid)
+    attribute_errors = object.errors.filter { |e| e.attribute == attribute }
+    message = "Expected #{object.class.name} to have an error of type #{type} for #{attribute}, but no error was found."
+    message << "\nThe object does have the following errors for #{attribute}: #{attribute_errors}" if attribute_errors.present?
+
+    assert object.errors.of_kind?(attribute, type), message
+  end
+end
+
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
   include ActiveJob::TestHelper
   include AudioFileTestHelper
+  include ValidationAssertions
 
   # Run tests in parallel with specified workers
   parallelize(workers: :number_of_processors)

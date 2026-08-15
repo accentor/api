@@ -63,6 +63,7 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unauthorized
+    assert_includes response.parsed_body['errors'], { 'model' => 'auth_token', 'attribute' => 'base', 'type' => 'wrong_credentials' }
   end
 
   test 'should not create auth_token without user_agent' do
@@ -74,6 +75,7 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'auth_token', 'attribute' => 'user_agent', 'type' => 'blank' }
   end
 
   test 'should show auth_token' do

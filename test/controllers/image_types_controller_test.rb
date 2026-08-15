@@ -40,6 +40,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'image_type', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should not create image_type without extension' do
@@ -50,6 +51,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'image_type', 'attribute' => 'extension', 'type' => 'blank' }
   end
 
   test 'should not create image_type without mimetype' do
@@ -60,6 +62,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'image_type', 'attribute' => 'mimetype', 'type' => 'blank' }
   end
 
   test 'should create image_type for moderator' do
@@ -92,6 +95,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
     patch image_type_url(@image_type), params: { image_type: { mimetype: @image_type.mimetype } }
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'image_type', 'type' => 'forbidden', 'action' => 'update?' }
   end
 
   test 'should not update image_type to empty mimetype' do
@@ -99,9 +103,8 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
     patch image_type_url(@image_type), params: { image_type: { mimetype: '' } }
 
     assert_response :unprocessable_content
-    @image_type.reload
-
-    assert_not_equal '', @image_type.mimetype
+    assert_not_equal '', @image_type.reload.mimetype
+    assert_includes response.parsed_body['errors'], { 'model' => 'image_type', 'attribute' => 'mimetype', 'type' => 'blank' }
   end
 
   test 'should update image_type for moderator' do
@@ -124,6 +127,7 @@ class ImageTypesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'image_type', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should destroy image_type for moderator' do

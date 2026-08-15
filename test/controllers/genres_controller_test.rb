@@ -40,6 +40,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'genre', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should not create genre with empty name' do
@@ -49,6 +50,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'genre', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should create genre for moderator' do
@@ -81,6 +83,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     patch genre_url(@genre), params: { genre: { name: @genre.name } }
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'genre', 'type' => 'forbidden', 'action' => 'update?' }
   end
 
   test 'should not update genre to empty name' do
@@ -88,9 +91,8 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     patch genre_url(@genre), params: { genre: { name: '' } }
 
     assert_response :unprocessable_content
-    @genre.reload
-
-    assert_not_equal '', @genre.name
+    assert_not_equal '', @genre.reload.name
+    assert_includes response.parsed_body['errors'], { 'model' => 'genre', 'attribute' => 'name', 'type' => 'blank' }
   end
 
   test 'should update genre for moderator' do
@@ -113,6 +115,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'genre', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should destroy genre for moderator' do
@@ -139,6 +142,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'genre', 'type' => 'forbidden', 'action' => 'destroy_empty?' }
   end
 
   test 'should destroy empty genres for moderator' do
@@ -179,6 +183,7 @@ class GenresControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
+    assert_includes response.parsed_body['errors'], { 'model' => 'genre', 'type' => 'forbidden', 'action' => 'merge?' }
   end
 
   test 'should merge genres for moderator' do
