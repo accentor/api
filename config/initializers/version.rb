@@ -4,7 +4,7 @@ module Accentor
   class Application
     module Version
       MAJOR = 0
-      MINOR = 23
+      MINOR = 24
       PATCH = 0
 
       STRING = [MAJOR, MINOR, PATCH].compact.join('.')
