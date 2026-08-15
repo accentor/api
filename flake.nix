@@ -66,7 +66,7 @@
               (pkgs.lib.lowPrio gems.wrappedRuby)
               pkgs.ffmpeg
               pkgs.nixpkgs-fmt
-              pkgs.postgresql_14
+              pkgs.postgresql_18
             ];
             env = [
               {
