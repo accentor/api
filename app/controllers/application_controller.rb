@@ -62,7 +62,7 @@ class ApplicationController < ActionController::API
 
   def user_not_authorized(exc)
     status = current_user.present? ? :forbidden : :unauthorized
-    render json: { errors: [{ policy: exc.policy.class.to_s.underscore, type: status, action: exc.query }] }, status:
+    render json: { errors: [{ model: exc.policy.record.model_name.singular, type: status, action: exc.query }] }, status:
   end
 
   def model_not_found(exc)

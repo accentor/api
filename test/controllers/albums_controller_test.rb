@@ -39,7 +39,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'album_policy', 'type' => 'forbidden', 'action' => 'create?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should create album for moderator' do
@@ -230,7 +230,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'album_policy', 'type' => 'forbidden', 'action' => 'destroy?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should destroy album for moderator' do
@@ -253,7 +253,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'album_policy', 'type' => 'forbidden', 'action' => 'destroy_empty?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'type' => 'forbidden', 'action' => 'destroy_empty?' }
   end
 
   test 'should destroy empty albums for moderator' do
@@ -282,7 +282,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'album_policy', 'type' => 'forbidden', 'action' => 'merge?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'type' => 'forbidden', 'action' => 'merge?' }
   end
 
   test 'should merge albums for moderator' do

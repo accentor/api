@@ -40,7 +40,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'user_policy', 'type' => 'forbidden', 'action' => 'create?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'user', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should not create user without name' do

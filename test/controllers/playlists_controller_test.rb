@@ -125,7 +125,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     patch playlist_url(@playlist), params: { playlist: { name: 'My playlist' } }
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'playlist_policy', 'type' => 'forbidden', 'action' => 'update?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'playlist', 'type' => 'forbidden', 'action' => 'update?' }
   end
 
   test 'should not update secret playlist for different user' do
@@ -134,7 +134,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     patch playlist_url(@playlist), params: { playlist: { name: 'My playlist' } }
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'playlist_policy', 'type' => 'forbidden', 'action' => 'update?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'playlist', 'type' => 'forbidden', 'action' => 'update?' }
   end
 
   test 'should destroy shared playlist for user' do
@@ -153,7 +153,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'playlist_policy', 'type' => 'forbidden', 'action' => 'destroy?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'playlist', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should not destroy secret playlist for different user' do
@@ -164,7 +164,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'playlist_policy', 'type' => 'forbidden', 'action' => 'destroy?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'playlist', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should not add item if no user' do
@@ -177,7 +177,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unauthorized
-    assert_includes response.parsed_body['errors'], { 'policy' => 'playlist_policy', 'type' => 'unauthorized', 'action' => 'add_item?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'playlist', 'type' => 'unauthorized', 'action' => 'add_item?' }
   end
 
   test 'should add item in shared playlist' do
@@ -213,6 +213,6 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'playlist_policy', 'type' => 'forbidden', 'action' => 'add_item?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'playlist', 'type' => 'forbidden', 'action' => 'add_item?' }
   end
 end

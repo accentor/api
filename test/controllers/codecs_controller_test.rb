@@ -40,7 +40,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'codec_policy', 'type' => 'forbidden', 'action' => 'create?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should not create codec with missing extension' do
@@ -96,7 +96,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
     patch codec_url(@codec), params: { codec: { mimetype: @codec.mimetype } }
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'codec_policy', 'type' => 'forbidden', 'action' => 'update?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec', 'type' => 'forbidden', 'action' => 'update?' }
   end
 
   test 'should not update codec when clearing mimetype' do
@@ -130,7 +130,7 @@ class CodecsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'codec_policy', 'type' => 'forbidden', 'action' => 'destroy?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should destroy codec for moderator' do

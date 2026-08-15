@@ -63,7 +63,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'track_policy', 'type' => 'forbidden', 'action' => 'create?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'track', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should not create track without title' do
@@ -189,7 +189,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'track_policy', 'type' => 'forbidden', 'action' => 'destroy?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'track', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should destroy track for moderator' do
@@ -208,7 +208,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'track_policy', 'type' => 'forbidden', 'action' => 'destroy_empty?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'track', 'type' => 'forbidden', 'action' => 'destroy_empty?' }
   end
 
   test 'should destroy empty tracks for moderator' do
@@ -235,7 +235,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'track_policy', 'type' => 'forbidden', 'action' => 'merge?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'track', 'type' => 'forbidden', 'action' => 'merge?' }
   end
 
   test 'should merge tracks for moderator' do

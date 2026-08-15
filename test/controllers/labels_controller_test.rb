@@ -40,7 +40,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'label_policy', 'type' => 'forbidden', 'action' => 'create?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'label', 'type' => 'forbidden', 'action' => 'create?' }
   end
 
   test 'should not create label with empty name' do
@@ -84,7 +84,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     patch label_url(@label), params: { label: { name: @label.name } }
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'label_policy', 'type' => 'forbidden', 'action' => 'update?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'label', 'type' => 'forbidden', 'action' => 'update?' }
   end
 
   test 'should not update label to empty name' do
@@ -116,7 +116,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'label_policy', 'type' => 'forbidden', 'action' => 'destroy?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'label', 'type' => 'forbidden', 'action' => 'destroy?' }
   end
 
   test 'should destroy label for moderator' do
@@ -143,7 +143,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'label_policy', 'type' => 'forbidden', 'action' => 'destroy_empty?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'label', 'type' => 'forbidden', 'action' => 'destroy_empty?' }
   end
 
   test 'should destroy empty labels for moderator' do
@@ -184,7 +184,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'policy' => 'label_policy', 'type' => 'forbidden', 'action' => 'merge?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'label', 'type' => 'forbidden', 'action' => 'merge?' }
   end
 
   test 'should merge labels for moderator' do
