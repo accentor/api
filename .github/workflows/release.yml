@@ -9,16 +9,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-    - name: Parse tag
-      id: parse_tag
-      run: "echo ${{ github.ref }} | sed 's#^refs/tags/#::set-output name=version::#'"
-    - name: Create release
-      id: create_release
-      uses: release-drafter/release-drafter@v7
-      with:
-        name: ${{ steps.parse_tag.outputs.version }}
-        tag: ${{ steps.parse_tag.outputs.version }}
-        version: ${{ steps.parse_tag.outputs.version }}
-        publish: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" --generate-notes --verify-tag

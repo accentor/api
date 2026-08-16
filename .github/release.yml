@@ -1,0 +1,17 @@
+changelog:
+  exclude:
+    labels:
+      - dependencies
+  categories:
+    - title: "🚀 New Features"
+      labels:
+        - enhancement
+    - title: "🐛 Bug Fixes"
+      labels:
+        - bug
+    - title: "🧰 Maintenance"
+      labels:
+        - chore
+    - title: "✨ Changes"
+      labels:
+        - "*"
