@@ -83,6 +83,11 @@ class TracksController < ApplicationController
 
   private
 
+  def set_track
+    @track = policy_scope(Track).find(params.expect(:id))
+    authorize @track
+  end
+
   def send_file_with_range(path, mimetype)
     Rack::Files.new(nil).serving(request, path).tap do |(status, headers, body)|
       self.status = status
@@ -93,11 +98,6 @@ class TracksController < ApplicationController
       response.headers['accept-ranges'] = 'bytes'
       response.headers['content-type'] = mimetype
     end
-  end
-
-  def set_track
-    @track = Track.find(params.expect(:id))
-    authorize @track
   end
 
   def transformed_attributes

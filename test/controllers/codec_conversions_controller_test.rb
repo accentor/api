@@ -52,7 +52,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'type' => 'forbidden', 'action' => 'create?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'type' => 'forbidden', 'action' => 'create' }
   end
 
   test 'should create codec_conversion for moderator' do
@@ -165,7 +165,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     } }
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'type' => 'forbidden', 'action' => 'update?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'type' => 'forbidden', 'action' => 'update' }
   end
 
   test 'should update codec_conversion for moderator' do
@@ -207,7 +207,7 @@ class CodecConversionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'type' => 'forbidden', 'action' => 'destroy?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'codec_conversion', 'type' => 'forbidden', 'action' => 'destroy' }
   end
 
   test 'should destroy codec_conversion for moderator' do

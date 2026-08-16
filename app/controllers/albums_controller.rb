@@ -57,7 +57,7 @@ class AlbumsController < ApplicationController
   private
 
   def set_album
-    @album = Album.find(params.expect(:id))
+    @album = policy_scope(Album).find(params.expect(:id))
     authorize @album
   end
 

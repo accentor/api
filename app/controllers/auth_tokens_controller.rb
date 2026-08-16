@@ -15,7 +15,8 @@ class AuthTokensController < ApplicationController
   end
 
   def create
-    authorize AuthToken
+    # We don't use pundit in this action since it's configured to require a user
+    skip_authorization
 
     user = User.find_by(name: params[:name])
     unless user.try(:authenticate, params[:password])
@@ -25,7 +26,7 @@ class AuthTokensController < ApplicationController
 
     @auth_token = AuthToken.new(
       { user_agent: request.headers[:'user-agent'] }
-          .merge(params[:auth_token].present? ? permitted_attributes(AuthToken) : {})
+          .merge(params[:auth_token].present? ? params.expect(auth_token: %i[user_agent application]) : {})
           .merge(user:)
     )
 
@@ -43,7 +44,7 @@ class AuthTokensController < ApplicationController
   private
 
   def set_auth_token
-    @auth_token = AuthToken.find(params.expect(:id))
+    @auth_token = policy_scope(AuthToken).find(params.expect(:id))
     authorize @auth_token
   end
 

@@ -5,17 +5,9 @@ class PlayPolicy < ApplicationPolicy
     end
   end
 
-  def index?
-    user.present?
-  end
-
-  def create?
-    user.present?
-  end
-
-  def stats?
-    user.present?
-  end
+  def index? = true
+  def create? = true
+  def stats? = true
 
   def permitted_attributes
     %i[track_id played_at]

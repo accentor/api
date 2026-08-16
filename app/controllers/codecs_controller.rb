@@ -40,7 +40,7 @@ class CodecsController < ApplicationController
   private
 
   def set_codec
-    @codec = Codec.find(params.expect(:id))
+    @codec = policy_scope(Codec).find(params.expect(:id))
     authorize @codec
   end
 

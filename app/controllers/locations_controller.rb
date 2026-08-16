@@ -32,7 +32,7 @@ class LocationsController < ApplicationController
   private
 
   def set_location
-    @location = Location.find(params.expect(:id))
+    @location = policy_scope(Location).find(params.expect(:id))
     authorize @location
   end
 

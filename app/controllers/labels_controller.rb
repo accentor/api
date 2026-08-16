@@ -51,7 +51,7 @@ class LabelsController < ApplicationController
   private
 
   def set_label
-    @label = Label.find(params.expect(:id))
+    @label = policy_scope(Label).find(params.expect(:id))
     authorize @label
   end
 

@@ -5,25 +5,11 @@ class CodecPolicy < ApplicationPolicy
     end
   end
 
-  def index?
-    user.present?
-  end
-
-  def show?
-    index?
-  end
-
-  def create?
-    user&.moderator?
-  end
-
-  def update?
-    create?
-  end
-
-  def destroy?
-    create?
-  end
+  def index? = true
+  def show? = true
+  def create? = user.moderator?
+  def update? = create?
+  def destroy? = create?
 
   def permitted_attributes_for_create
     %i[mimetype extension]

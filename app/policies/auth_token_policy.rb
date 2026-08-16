@@ -5,23 +5,7 @@ class AuthTokenPolicy < ApplicationPolicy
     end
   end
 
-  def index?
-    user.present?
-  end
-
-  def show?
-    user.present? && record.user == user
-  end
-
-  def create?
-    true
-  end
-
-  def destroy?
-    show?
-  end
-
-  def permitted_attributes
-    %i[user_agent application]
-  end
+  def index? = true
+  def show? = record.user == user
+  def destroy? = show?
 end
