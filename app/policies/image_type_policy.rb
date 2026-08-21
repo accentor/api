@@ -12,10 +12,14 @@ class ImageTypePolicy < ApplicationPolicy
   def destroy? = create?
 
   def permitted_attributes_for_create
+    return unless user.moderator?
+
     %i[mimetype extension]
   end
 
   def permitted_attributes_for_update
+    return unless user.moderator?
+
     [:mimetype]
   end
 end

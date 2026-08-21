@@ -842,6 +842,18 @@
     targets = [];
     version = "2.5.2";
   };
+  pundit_assertions = {
+    groups = ["test"];
+    platforms = [];
+    source = {
+      remotes = ["https://rubygems.org"];
+      sha256 = "1cbr6mqsys0miqwz6czi8dg2v7zzi25rfaqn3w0xhfj6g4qvxcjc";
+      target = "ruby";
+      type = "gem";
+    };
+    targets = [];
+    version = "0.1.0";
+  };
   raabro = {
     groups = ["default"];
     platforms = [];
