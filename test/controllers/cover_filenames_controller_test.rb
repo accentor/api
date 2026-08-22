@@ -10,7 +10,7 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
     get cover_filenames_url
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'model' => 'cover_filename', 'type' => 'forbidden', 'action' => 'index?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'cover_filename', 'type' => 'forbidden', 'action' => 'index' }
   end
 
   test 'should get index for moderator' do
@@ -60,7 +60,7 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'model' => 'cover_filename', 'type' => 'forbidden', 'action' => 'create?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'cover_filename', 'type' => 'forbidden', 'action' => 'create' }
   end
 
   test 'should not create cover_filename with empty filename' do
@@ -97,7 +97,7 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
     get cover_filename_url(@cover_filename)
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'model' => 'cover_filename', 'type' => 'forbidden', 'action' => 'show?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'cover_filename', 'type' => 'forbidden', 'action' => 'show' }
   end
 
   test 'should show cover_filename for moderator' do
@@ -120,7 +120,7 @@ class CoverFilenamesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'model' => 'cover_filename', 'type' => 'forbidden', 'action' => 'destroy?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'cover_filename', 'type' => 'forbidden', 'action' => 'destroy' }
   end
 
   test 'should destroy cover_filename for moderator' do

@@ -12,7 +12,7 @@ class RescansControllerTest < ActionDispatch::IntegrationTest
     get rescans_url
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'model' => 'rescan_runner', 'type' => 'forbidden', 'action' => 'index?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'rescan_runner', 'type' => 'forbidden', 'action' => 'index' }
   end
 
   test 'should get index for moderator' do
@@ -59,7 +59,7 @@ class RescansControllerTest < ActionDispatch::IntegrationTest
     get rescan_url(@runner)
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'model' => 'rescan_runner', 'type' => 'forbidden', 'action' => 'show?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'rescan_runner', 'type' => 'forbidden', 'action' => 'show' }
   end
 
   test 'should get show for moderator' do
@@ -73,7 +73,7 @@ class RescansControllerTest < ActionDispatch::IntegrationTest
     post rescan_url(@runner)
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'model' => 'rescan_runner', 'type' => 'forbidden', 'action' => 'start?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'rescan_runner', 'type' => 'forbidden', 'action' => 'start' }
   end
 
   test 'should start rescan' do
@@ -94,7 +94,7 @@ class RescansControllerTest < ActionDispatch::IntegrationTest
     post rescans_url
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'model' => 'rescan_runner', 'type' => 'forbidden', 'action' => 'start_all?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'rescan_runner', 'type' => 'forbidden', 'action' => 'start_all' }
   end
 
   test 'should start all rescans' do

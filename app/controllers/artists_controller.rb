@@ -57,7 +57,7 @@ class ArtistsController < ApplicationController
   private
 
   def set_artist
-    @artist = Artist.find(params.expect(:id))
+    @artist = policy_scope(Artist).find(params.expect(:id))
     authorize @artist
   end
 

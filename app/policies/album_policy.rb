@@ -5,33 +5,13 @@ class AlbumPolicy < ApplicationPolicy
     end
   end
 
-  def index?
-    user.present?
-  end
-
-  def show?
-    index?
-  end
-
-  def create?
-    user&.moderator?
-  end
-
-  def update?
-    user
-  end
-
-  def destroy?
-    create?
-  end
-
-  def destroy_empty?
-    create?
-  end
-
-  def merge?
-    create?
-  end
+  def index? = true
+  def show? = true
+  def create? = user.moderator?
+  def update? = true
+  def destroy? = create?
+  def destroy_empty? = create?
+  def merge? = create?
 
   def permitted_attributes
     if user.moderator?

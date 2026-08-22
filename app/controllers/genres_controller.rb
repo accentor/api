@@ -51,7 +51,7 @@ class GenresController < ApplicationController
   private
 
   def set_genre
-    @genre = Genre.find(params.expect(:id))
+    @genre = policy_scope(Genre).find(params.expect(:id))
     authorize @genre
   end
 

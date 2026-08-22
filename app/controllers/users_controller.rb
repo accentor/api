@@ -47,7 +47,7 @@ class UsersController < ApplicationController
   private
 
   def set_user
-    @user = User.find(params.expect(:id))
+    @user = policy_scope(User).find(params.expect(:id))
     authorize @user
   end
 

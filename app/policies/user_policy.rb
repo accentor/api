@@ -5,25 +5,11 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
-  def index?
-    user.present?
-  end
-
-  def show?
-    index?
-  end
-
-  def create?
-    user&.admin?
-  end
-
-  def update?
-    user == record || user&.admin?
-  end
-
-  def destroy?
-    update?
-  end
+  def index? = true
+  def show? = true
+  def create? = user.admin?
+  def update? = user == record || create?
+  def destroy? = update?
 
   def permitted_attributes
     if user.admin?

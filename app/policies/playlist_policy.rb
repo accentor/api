@@ -5,29 +5,12 @@ class PlaylistPolicy < ApplicationPolicy
     end
   end
 
-  def index?
-    user.present?
-  end
-
-  def show?
-    user.present? && (!record.secret? || user.id == record.user_id)
-  end
-
-  def create?
-    user.present?
-  end
-
-  def update?
-    user.present? && (record.shared? || record.user_id == user.id)
-  end
-
-  def destroy?
-    update?
-  end
-
-  def add_item?
-    update?
-  end
+  def index? = true
+  def show? = !record.secret? || user.id == record.user_id
+  def create? = true
+  def update? = record.shared? || record.user_id == user.id
+  def destroy? = update?
+  def add_item? = update?
 
   def permitted_attributes
     [:name, :description, :playlist_type, { item_ids: [] }, :access]

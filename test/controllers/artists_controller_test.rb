@@ -39,7 +39,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'type' => 'forbidden', 'action' => 'create?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'type' => 'forbidden', 'action' => 'create' }
   end
 
   test 'should create artist for moderator' do
@@ -177,7 +177,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'type' => 'forbidden', 'action' => 'destroy?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'type' => 'forbidden', 'action' => 'destroy' }
   end
 
   test 'should destroy artist for moderator' do
@@ -200,7 +200,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'type' => 'forbidden', 'action' => 'destroy_empty?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'type' => 'forbidden', 'action' => 'destroy_empty' }
   end
 
   test 'should destroy empty artists for moderator (track_artist)' do
@@ -251,7 +251,7 @@ class ArtistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :forbidden
-    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'type' => 'forbidden', 'action' => 'merge?' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'artist', 'type' => 'forbidden', 'action' => 'merge' }
   end
 
   test 'should merge artists for moderator' do

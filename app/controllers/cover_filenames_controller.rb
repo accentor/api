@@ -32,7 +32,7 @@ class CoverFilenamesController < ApplicationController
   private
 
   def set_cover_filename
-    @cover_filename = CoverFilename.find(params.expect(:id))
+    @cover_filename = policy_scope(CoverFilename).find(params.expect(:id))
     authorize @cover_filename
   end
 

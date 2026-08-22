@@ -16,6 +16,13 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
     assert_equal expected_etag, headers['etag']
   end
 
+  test 'should not get index for signed-out user' do
+    get auth_tokens_url
+
+    assert_response :unauthorized
+    assert_includes response.parsed_body['errors'], { 'model' => 'auth_token', 'type' => 'unauthorized', 'action' => 'index' }
+  end
+
   test 'should get index and return not modified if etag matches' do
     sign_in_as(@user)
 
@@ -84,6 +91,24 @@ class AuthTokensControllerTest < ActionDispatch::IntegrationTest
     get auth_token_url(auth_token)
 
     assert_response :success
+  end
+
+  test 'should not be allowed to find auth token when signed out' do
+    auth_token = create(:auth_token, user: @user)
+    get auth_token_url(auth_token)
+
+    assert_response :unauthorized
+    assert_includes response.parsed_body['errors'], { 'model' => 'auth_token', 'type' => 'unauthorized', 'action' => 'show' }
+  end
+
+  test 'should not find auth token for other user' do
+    sign_in_as(@user)
+
+    auth_token = create(:auth_token)
+    get auth_token_url(auth_token)
+
+    assert_response :not_found
+    assert_includes response.parsed_body['errors'], { 'model' => 'auth_token', 'type' => 'not_found' }
   end
 
   test 'should destroy auth_token' do
