@@ -1201,12 +1201,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1d71ra19cf6bcg9c7yp1bw1kg45g1sjn6m1d83ppghsrlqqjzw9h";
+      sha256 = "0y0ya82s3zi2wmkadnmb3l9r13mbsvd1g63n9mlp8bhb7zqmx0i5";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.1.0";
+    version = "1.1.1";
   };
   simplecov-cobertura = {
     dependencies = ["rexml" "simplecov"];
