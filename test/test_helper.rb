@@ -49,6 +49,7 @@ module ValidationAssertions
 end
 
 class ActiveSupport::TestCase
+  include PunditAssertions::TestHelpers
   include FactoryBot::Syntax::Methods
   include ActiveJob::TestHelper
   include AudioFileTestHelper
