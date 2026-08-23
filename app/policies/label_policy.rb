@@ -14,6 +14,8 @@ class LabelPolicy < ApplicationPolicy
   def merge? = create?
 
   def permitted_attributes
+    return unless user.moderator?
+
     [:name]
   end
 end
