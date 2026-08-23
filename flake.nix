@@ -15,9 +15,10 @@
 
   outputs = inputs:
     let
+      rubyForPkgs = pkgs: pkgs.ruby_4_0.override { jemallocSupport = true; };
       gemsForPkgs = pkgs: pkgs.bundlerEnv {
         name = "accentor-api-env";
-        ruby = pkgs.ruby_4_0.override { jemallocSupport = true; };
+        ruby = rubyForPkgs pkgs;
         gemfile = ./Gemfile;
         lockfile = ./Gemfile.lock;
         gemset = ./gemset.nix;
@@ -43,7 +44,7 @@
           {
             accentor-api = pkgs.callPackage ./shell.nix { accentor-api-env = gemsForPkgs pkgs; };
             default = inputs.self.devShells.${system}.accentor-api;
-            deps = pkgs.devshell.mkShell { packages = [ (gemsForPkgs pkgs).wrappedRuby pkgs.bundix ]; };
+            deps = pkgs.devshell.mkShell { packages = [ (rubyForPkgs pkgs) pkgs.bundix ]; };
           })
         inputs.nixpkgs.legacyPackages;
     };
