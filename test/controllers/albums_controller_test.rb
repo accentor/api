@@ -185,6 +185,18 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should update album and replace associated album_artists' do
+    sign_in_as create(:moderator)
+    create_list(:album_artist, 2, album: @album)
+    artist = create(:artist)
+
+    assert_difference '@album.album_artists.reload.count', -1 do
+      patch album_url(@album), params: { album: { album_artists: [{ artist_id: artist.id, name: artist.name, order: 1 }] } }
+    end
+
+    assert_response :success
+  end
+
   test 'should destroy previous image when image is replaced' do
     sign_in_as create(:moderator)
     album = create(:album, :with_image)

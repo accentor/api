@@ -35,6 +35,32 @@ class AlbumTest < ActiveSupport::TestCase
     assert_equal 'iouaaa', album.normalized_title
   end
 
+  test 'should pass if all but last album artists have separator' do
+    album = build(:album, album_artists: [build(:album_artist, separator: ' / ', order: 1), build(:album_artist, separator: nil, order: 2)])
+
+    assert_predicate album, :valid?
+  end
+
+  test 'should reject if album artists except last has no separator' do
+    album = build(:album, album_artists: [build(:album_artist, separator: nil, order: 1), build(:album_artist, separator: nil, order: 2)])
+
+    assert_not_predicate album, :valid?
+    assert_error_of_kind album, :album_artists, :separator_blank
+  end
+
+  test 'should allow album artists with empty string as separator' do
+    album = build(:album, album_artists: [build(:album_artist, separator: '', order: 1), build(:album_artist, separator: nil, order: 2)])
+
+    assert_predicate album, :valid?
+  end
+
+  test 'should reject if last album artists has separator' do
+    album = build(:album, album_artists: [build(:album_artist, separator: ' / ')])
+
+    assert_not_predicate album, :valid?
+    assert_error_of_kind album, :album_artists, :last_separator_present
+  end
+
   test 'should normalize order of album artists' do
     aa1 = build(:album_artist, order: 5)
     aa2 = build(:album_artist, order: 2)
