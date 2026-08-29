@@ -46,9 +46,8 @@ class Artist < ApplicationRecord
     errors.add(:track_artists, :tracks_overlap) if other.track_artists.map { |ta| [ta.track_id, ta.role] }.intersect?(track_artists.map { |ta| [ta.track_id, ta.role] })
     return false if errors.present?
 
-    # rubocop:disable Rails/SkipsModelValidations -- we skip validations, as this would check the separators while we're moving over the album artists
+    # rubocop:disable-next Rails/SkipsModelValidations -- we skip validations, as this would check the separators while we're moving over the album artists
     other.album_artists.update_all(artist_id: id)
-    # rubocop:enable Rails/SkipsModelValidations
 
     other.track_artists.find_each do |ta|
       ta.update(artist_id: id)
