@@ -12,6 +12,8 @@ class CodecConversionPolicy < ApplicationPolicy
   def destroy? = create?
 
   def permitted_attributes
+    return unless user.moderator?
+
     %i[name ffmpeg_params resulting_codec_id]
   end
 end
