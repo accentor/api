@@ -40,6 +40,7 @@ class Album < ApplicationRecord
   before_validation :normalize_artist_order
 
   validates :title, presence: true
+  validate :album_artist_separators
 
   normalized_col_generator :title
   nilify_blank_values :edition_description, :review_comment
@@ -78,6 +79,16 @@ class Album < ApplicationRecord
     album_artists.sort { |aa1, aa2| aa1.order <=> aa2.order }.map.with_index(1) do |aa, i|
       aa.order = i
       aa.save unless aa.new_record?
+    end
+  end
+
+  def album_artist_separators
+    album_artists.each do |aa|
+      if aa.order == album_artists.to_a.count
+        errors.add(:album_artists, :last_separator_present) unless aa.separator.nil?
+      elsif aa.separator.nil?
+        errors.add(:album_artists, :separator_blank)
+      end
     end
   end
 end
