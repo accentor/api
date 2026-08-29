@@ -130,6 +130,31 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     assert_response :created
   end
 
+  test 'should not create album and render errors if invalid' do
+    sign_in_as create(:moderator)
+    attributes = attributes_for(:album)
+
+    assert_no_difference 'Album.count' do
+      post albums_url, params: { album: { release: attributes[:release], title: '' } }
+    end
+
+    assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'attribute' => 'title', 'type' => 'blank' }
+  end
+
+  test 'should not create album and render errors if album artists are invalid' do
+    sign_in_as create(:moderator)
+    artist = create(:artist)
+    attributes = attributes_for(:album)
+
+    assert_no_difference 'Album.count' do
+      post albums_url, params: { album: attributes.merge({ album_artists: [{ artist_id: artist.id, name: '', order: 1 }] }) }
+    end
+
+    assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'attribute' => 'album_artists', 'type' => 'invalid' }
+  end
+
   test 'should show album' do
     get album_url(@album)
 
@@ -195,6 +220,31 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
+  end
+
+  test 'should not update album and render errors if invalid' do
+    sign_in_as create(:moderator)
+    album = create(:album)
+
+    assert_no_difference 'Album.count' do
+      patch album_url(album), params: { album: { title: '' } }
+    end
+
+    assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'attribute' => 'title', 'type' => 'blank' }
+  end
+
+  test 'should not update album and render errors if album artists are invalid' do
+    sign_in_as create(:moderator)
+    album = create(:album)
+    artist = create(:artist)
+
+    assert_no_difference 'Album.count' do
+      patch album_url(album), params: { album: { album_artists: [{ artist_id: artist.id, name: '', order: 1 }] } }
+    end
+
+    assert_response :unprocessable_content
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'attribute' => 'album_artists', 'type' => 'invalid' }
   end
 
   test 'should destroy previous image when image is replaced' do
