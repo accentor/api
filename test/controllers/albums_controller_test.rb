@@ -152,7 +152,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'attribute' => 'album_artists', 'type' => 'invalid' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'attribute' => 'album_artists.name', 'type' => 'blank' }
   end
 
   test 'should show album' do
@@ -222,6 +222,19 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should update album and album artists' do
+    sign_in_as create(:moderator)
+    album_artist = create(:album_artist, album: @album, separator: nil)
+
+    assert_no_difference '@album.album_artists.reload.count' do
+      assert_changes 'album_artist.reload.name', to: 'New name' do
+        patch album_url(@album), params: { album: { album_artists: [{ artist_id: album_artist.artist_id, name: 'New name' }] } }
+      end
+    end
+
+    assert_response :success
+  end
+
   test 'should not update album and render errors if invalid' do
     sign_in_as create(:moderator)
     album = create(:album)
@@ -244,7 +257,7 @@ class AlbumsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'attribute' => 'album_artists', 'type' => 'invalid' }
+    assert_includes response.parsed_body['errors'], { 'model' => 'album', 'attribute' => 'album_artists.name', 'type' => 'blank' }
   end
 
   test 'should destroy previous image when image is replaced' do
