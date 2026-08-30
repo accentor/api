@@ -37,6 +37,8 @@ class Album < ApplicationRecord
   has_many :playlists, through: :playlist_items, source: :playlist
   belongs_to :image, optional: true, dependent: :destroy
 
+  accepts_nested_attributes_for :album_artists, allow_destroy: true
+
   before_validation :normalize_artist_order
 
   validates :title, presence: true
