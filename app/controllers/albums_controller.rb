@@ -86,8 +86,18 @@ class AlbumsController < ApplicationController
     end
 
     if attributes[:album_artists].present?
-      attributes[:album_artists] = attributes[:album_artists].map do |aa, _i|
-        AlbumArtist.new(artist_id: aa[:artist_id], name: aa[:name], separator: aa[:separator], order: aa[:order] || 0)
+      prev_aa = @album&.album_artists.to_a
+      attributes[:album_artists_attributes] = attributes.delete(:album_artists).map do |aa|
+        existing = prev_aa.find { it.artist_id == aa[:artist_id] }
+        unless existing.nil?
+          prev_aa.delete(existing)
+          aa.merge!({ id: existing.id })
+        end
+        aa
+      end
+      prev_aa.each do |aa|
+        attributes[:album_artists_attributes].push({ id: aa.id, _destroy: true })
+        attributes[:album_artists_attributes].last.permit!
       end
     end
 
