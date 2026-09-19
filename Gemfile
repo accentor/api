@@ -5,6 +5,8 @@ ruby '~> 4.0.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 8.1'
+# Rails isn't compatible with JSON 3, but doesn't declare it. Remove on next rails release.
+gem 'json', '~> 2.21.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.2.3', '< 2.0'
 # Use Puma as the app server
@@ -50,7 +52,7 @@ end
 
 group :development do
   gem 'annotaterb', '~> 4.24', require: false
-  gem 'rubocop', '~> 1.90', require: false
+  gem 'rubocop', '~> 1.91', require: false
   gem 'rubocop-factory_bot', '~> 2.28', require: false
   gem 'rubocop-minitest', '~> 0.40.0', require: false
   gem 'rubocop-rails', '~> 2.37', require: false
