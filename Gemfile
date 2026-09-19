@@ -38,7 +38,7 @@ group :test do
   gem 'pundit_assertions', '~> 0.1.0'
 
   gem 'mocha', '~> 3.1.0', require: false
-  gem 'simplecov', '~> 1.2', require: false
+  gem 'simplecov', '~> 1.3', require: false
   gem 'simplecov-cobertura', '~> 4.0.0', require: false
 end
 
