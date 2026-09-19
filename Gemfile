@@ -37,7 +37,7 @@ gem 'rack-cors', '~> 3.0'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :test do
-  gem 'pundit_assertions', '~> 0.1.0'
+  gem 'pundit_assertions', '~> 0.2.1'
 
   gem 'mocha', '~> 3.1.0', require: false
   gem 'simplecov', '~> 1.3', require: false

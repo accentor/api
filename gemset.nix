@@ -843,16 +843,17 @@
     version = "2.5.2";
   };
   pundit_assertions = {
+    dependencies = ["minitest"];
     groups = ["test"];
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1cbr6mqsys0miqwz6czi8dg2v7zzi25rfaqn3w0xhfj6g4qvxcjc";
+      sha256 = "0sxk0nnwrnf907nhnd1156alv9cwdsx4ikmmjcbqg7q5s4a6clgs";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "0.1.0";
+    version = "0.2.1";
   };
   raabro = {
     groups = ["default"];
