@@ -161,12 +161,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1mnfzfw28ddjn5rpj55xr98ixbz4068a4pldk9ihdvw6zfix6lrr";
+      sha256 = "12gdshfrqx0wbrxqjmrgrrjdis9ir2l9wa1i0x3fpqxgsr1lqyhw";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.24.0";
+    version = "4.25.0";
   };
   ast = {
     groups = ["default" "development"];
@@ -209,12 +209,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1g9zi8c4i7g8zz0c3hxrw6mblrjvgn7akys60clb9si7c1k1gljk";
+      sha256 = "0rng45p4vc3f6nac44cnylwch7rj4zsff3icdz6c7garwpjy3sv1";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.1.2";
+    version = "4.1.3";
   };
   bootsnap = {
     dependencies = ["msgpack"];
