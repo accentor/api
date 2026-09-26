@@ -25,6 +25,7 @@
 :ignore_unknown_models: false
 :include_version: false
 :show_check_constraints: false
+:show_unique_constraints: true
 :show_complete_foreign_keys: false
 :show_foreign_keys: true
 :show_indexes: true
