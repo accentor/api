@@ -209,12 +209,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1g9zi8c4i7g8zz0c3hxrw6mblrjvgn7akys60clb9si7c1k1gljk";
+      sha256 = "0rng45p4vc3f6nac44cnylwch7rj4zsff3icdz6c7garwpjy3sv1";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.1.2";
+    version = "4.1.3";
   };
   bootsnap = {
     dependencies = ["msgpack"];
@@ -1050,12 +1050,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1fwfw26a32rps78920nn29shqg2zmqv72i89j1fap41isshida9m";
+      sha256 = "0w5pgh8bjy1fqdj9is5395d61y58s2rvybsdj5rlx59q45fxj1fi";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.12.0";
+    version = "2.13.0";
   };
   reline = {
     dependencies = ["io-console"];
@@ -1140,12 +1140,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0zjby5icpp5r9gqqnfcl2dcpqsam1y10vnnxz0l063h6snnla5kf";
+      sha256 = "01igzbkf7w1ixrqbrn7amii5c0jviw5w5gki0c2y75gs5r9pqavf";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.37.0";
+    version = "2.38.0";
   };
   ruby-lsp = {
     dependencies = ["language_server-protocol" "prism" "rbs"];
@@ -1289,24 +1289,24 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0hiwhnqpq271xqari6mg996fgjps42sffm9cpk6ljn8sd2srdp8c";
+      sha256 = "04xnl0zwpjjvxipd6rdnxkm11pfhbhhi3179yzv51nqi9dmacyjb";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "3.2.0";
+    version = "3.3.0";
   };
   unicode-emoji = {
     groups = ["default" "development"];
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "03zqn207zypycbz5m9mn7ym763wgpk7hcqbkpx02wrbm1wank7ji";
+      sha256 = "1kp89lja8ii7l6f0bq5vdxq1p3kxr3a2qmmhdc38qdwh6akjzh0i";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.2.0";
+    version = "4.3.0";
   };
   uri = {
     groups = ["default" "development" "test"];
