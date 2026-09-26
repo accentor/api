@@ -522,12 +522,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0shwgjqbj856mb6m9kgkpy08nhym2gdvc2yaprlimfmky9y3n78z";
+      sha256 = "1pqrpn0wkxvhcrwm4i0z9ailjj7if45zkkih0hij2k1q25xpwvcf";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.21.2";
+    version = "3.0.2";
   };
   language_server-protocol = {
     groups = ["default" "development"];
