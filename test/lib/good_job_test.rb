@@ -10,4 +10,8 @@ class GoodJobTest < ActiveSupport::TestCase
                      'GoodJob has pending migrations.' \
                      'Run `rails g good_job:update` and `rails db:migrate` to ensure all migrations are applied'
   end
+
+  test 'configuration should be valid' do
+    assert_predicate GoodJob.configuration, :valid?, 'GoodJob configuration is invalid.'
+  end
 end
