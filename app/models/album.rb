@@ -31,7 +31,7 @@ class Album < ApplicationRecord
   has_many :album_labels, dependent: :destroy
   has_many :labels, through: :album_labels, source: :label
   has_many :tracks, dependent: :restrict_with_error
-  has_many :album_artists, dependent: :destroy
+  has_many :album_artists, dependent: :destroy, autosave: true
   has_many :artists, through: :album_artists, source: :artist
   has_many :playlist_items, as: :item, dependent: :destroy
   has_many :playlists, through: :playlist_items, source: :playlist
