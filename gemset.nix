@@ -447,12 +447,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "135bfxdgr50n0qz8ajah5vcswiz0iqsfk9bmlckmapwn68f9dwwf";
+      sha256 = "1lk2z9f3g2f2zmk4hrxxkgy9s1s9qb0xss5yvpj8cxqn94gm7c10";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.21.1";
+    version = "4.22.1";
   };
   has_scope = {
     dependencies = ["actionpack" "activesupport"];
@@ -522,12 +522,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1pqrpn0wkxvhcrwm4i0z9ailjj7if45zkkih0hij2k1q25xpwvcf";
+      sha256 = "1n1v9rhb19cnf1a89s6yvvhw394jy8qnqx9sg8bn12g5zpwcrrrw";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "3.0.2";
+    version = "3.1.0";
   };
   language_server-protocol = {
     groups = ["default" "development"];
