@@ -24,9 +24,8 @@ class AlbumsController < ApplicationController
 
   def create
     authorize Album
-    @album = Album.new(transformed_attributes)
-
-    if @album.save
+    @album = Album.new
+    if SaveAlbumService.call(@album, permitted_attributes(@album))
       render json: transform_album_for_json(@album), status: :created
     else
       render json: transform_errors_for_json(@album), status: :unprocessable_content
@@ -34,7 +33,7 @@ class AlbumsController < ApplicationController
   end
 
   def update
-    if @album.update(transformed_attributes)
+    if SaveAlbumService.call(@album, permitted_attributes(@album))
       render json: transform_album_for_json(@album), status: :ok
     else
       render json: transform_errors_for_json(@album), status: :unprocessable_content
@@ -59,39 +58,6 @@ class AlbumsController < ApplicationController
   def set_album
     @album = policy_scope(Album).find(params.expect(:id))
     authorize @album
-  end
-
-  def transformed_attributes
-    attributes = permitted_attributes(@album || Album)
-
-    if attributes[:image].present? && attributes[:image][:data].nil?
-      attributes[:image] = nil
-    elsif attributes[:image].present?
-      image_type = ImageType.find_by(extension: File.extname(attributes[:image][:filename])[1..].downcase) ||
-                   ImageType.new(extension: File.extname(attributes[:image][:filename])[1..].downcase,
-                                 mimetype: attributes[:image][:mimetype])
-
-      image = Image.new(image_type:)
-      image.image.attach(io: StringIO.new(Base64.decode64(attributes[:image][:data])),
-                         filename: attributes[:image][:filename],
-                         content_type: attributes[:image][:mimetype])
-
-      attributes[:image] = image
-    end
-
-    if attributes[:album_labels].present?
-      attributes[:album_labels] = attributes[:album_labels].map do |al|
-        AlbumLabel.new(label_id: al[:label_id], catalogue_number: al[:catalogue_number])
-      end
-    end
-
-    if attributes[:album_artists].present?
-      attributes[:album_artists] = attributes[:album_artists].map do |aa, _i|
-        AlbumArtist.new(artist_id: aa[:artist_id], name: aa[:name], separator: aa[:separator], order: aa[:order] || 0)
-      end
-    end
-
-    attributes
   end
 
   def transform_album_for_json(album)
