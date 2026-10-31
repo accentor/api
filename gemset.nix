@@ -222,12 +222,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "06xz31vjlw3drpl27csk8q9ymi8ay0f85mb356h79kg62mq275na";
+      sha256 = "1qk4l833mslv3bnazhj8mi1yf9gawbxnzmf14y337shkiw7xjnsv";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.26.0";
+    version = "1.26.1";
   };
   brakeman = {
     dependencies = ["racc"];
@@ -658,12 +658,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1fhpfl9fznn6wi39xh05crswigywvyiw3rn0cbjf7prmgfm9whcp";
+      sha256 = "0cyzl8cshfjkvhm980aak1fp5czli9zjqpfrx3k4g42z3dvfrvyz";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.8.5";
+    version = "1.8.7";
   };
   net-imap = {
     dependencies = ["date" "net-protocol"];
