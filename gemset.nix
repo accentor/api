@@ -283,12 +283,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "15djj19ynz3sbw54fsf8n7y3sha8a333f2mgvjfwhr46jhcqg1ll";
+      sha256 = "1zjfw8xs3zlqaa07s4m500x84i6437l9r9mk4dwqx7y5lb3la0bs";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "1.0.7";
+    version = "1.0.8";
   };
   date = {
     groups = ["default" "development" "test"];
@@ -447,12 +447,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1lk2z9f3g2f2zmk4hrxxkgy9s1s9qb0xss5yvpj8cxqn94gm7c10";
+      sha256 = "15xprgcsjxp866rcb0fch0ncll90h5lqp2nkrm6g9rv843k56lwi";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.22.1";
+    version = "4.23.1";
   };
   has_scope = {
     dependencies = ["actionpack" "activesupport"];
@@ -497,12 +497,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1cgvhm0d4awr8j42b8v1nl1jfgx45ihv8mylargfi3lj697k00x4";
+      sha256 = "1m8lcj26n7qchw21iaafk96mzsqj8b6kjnr455k430269jzrppc3";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "0.9.4";
+    version = "0.9.5";
   };
   irb = {
     dependencies = ["pp" "prism" "rdoc" "reline"];
@@ -884,12 +884,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1dwgab330lsv4qppw3f52mc4ihr8lagxgll53mkmcdgr4hf3xqck";
+      sha256 = "1isfvhl6r55ddxwq8qsmn6zbljfmzjgq5zszjhm7mg1y8rgciv0z";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "3.2.7";
+    version = "3.2.8";
   };
   rack-cors = {
     dependencies = ["logger" "rack"];
@@ -923,12 +923,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0qy4ylhcfdn65a5mz2hly7g9vl0g13p5a0rmm6sc0sih5ilkcnh0";
+      sha256 = "1s212a39z3v1ksgnhvwddsiq2n7dr4cqvzdnq4pmfb00rivx265i";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.2.0";
+    version = "2.3.0";
   };
   rackup = {
     dependencies = ["rack"];
