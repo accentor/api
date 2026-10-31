@@ -16,14 +16,18 @@ jobs:
       RAILS_ENV: "test"
     steps:
       - uses: actions/checkout@v7
-      - uses: cachix/install-nix-action@v31
+      - name: Install nix
+        uses: NixOS/nix-installer-action@main
         with:
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Cachix
-        uses: cachix/cachix-action@v17
+          extra-conf: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+            experimental-features = nix-command flakes
+      - name: Attic
+        uses: ryanccn/attic-action@v0
         with:
-          name: accentor
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          endpoint: https://attic.chvp.be
+          cache: accentor
+          token: '${{ secrets.ATTIC_AUTH_TOKEN }}'
       - name: "Setup database"
         run: |
           nix develop --command pg:start
@@ -39,14 +43,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: cachix/install-nix-action@v31
+      - name: Install nix
+        uses: NixOS/nix-installer-action@main
         with:
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Cachix
-        uses: cachix/cachix-action@v17
+          extra-conf: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+            experimental-features = nix-command flakes
+      - name: Attic
+        uses: ryanccn/attic-action@v0
         with:
-          name: accentor
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          endpoint: https://attic.chvp.be
+          cache: accentor
+          token: '${{ secrets.ATTIC_AUTH_TOKEN }}'
       - name: Lint with rubocop
         env:
           RAILS_ENV: "test"
@@ -57,14 +65,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: cachix/install-nix-action@v31
+      - name: Install nix
+        uses: NixOS/nix-installer-action@main
         with:
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Cachix
-        uses: cachix/cachix-action@v17
+          extra-conf: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+            experimental-features = nix-command flakes
+      - name: Attic
+        uses: ryanccn/attic-action@v0
         with:
-          name: accentor
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          endpoint: https://attic.chvp.be
+          cache: accentor
+          token: '${{ secrets.ATTIC_AUTH_TOKEN }}'
       - name: "Setup database"
         run: |
           nix develop --command pg:start
