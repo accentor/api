@@ -447,12 +447,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1gbd69fqb818vl27rs4bpf5wsfgnpnb0z18f9daqix0nq1kl62bl";
+      sha256 = "0jiqgbgjxwf6564lix66j3bpi3x1dw3bnl0c4yx1pc4gg2yaq193";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "4.24.0";
+    version = "4.24.1";
   };
   has_scope = {
     dependencies = ["actionpack" "activesupport"];
