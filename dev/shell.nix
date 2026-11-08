@@ -1,22 +1,22 @@
-{ devshell
-, lib
-, accentor-api-env
-, ffmpeg
-, nixpkgs-fmt
-, postgresql_18
-, bundix
+{
+  devshell,
+  lib,
+  accentor-api,
+  ffmpeg,
+  nixfmt,
+  postgresql_18,
 }:
 
 let
-  ruby = accentor-api-env.wrappedRuby;
+  ruby = accentor-api.env.wrappedRuby;
 in
 devshell.mkShell {
   name = "Accentor API";
   packages = [
-    accentor-api-env
+    accentor-api.env
     (lib.lowPrio ruby)
     ffmpeg
-    nixpkgs-fmt
+    nixfmt
     postgresql_18
   ];
   env = [
@@ -71,8 +71,8 @@ devshell.mkShell {
       category = "dependencies";
       help = "Update the `Gemfile.lock` and `gemset.nix` files";
       command = ''
-        ${ruby}/bin/bundle lock --add-checksums
-        ${bundix}/bin/bundix
+        nix develop $PRJ_ROOT/dev#deps -c bundle lock --add-checksums
+        nix develop $PRJ_ROOT/dev#deps -c bundix
       '';
     }
   ];
