@@ -34,7 +34,7 @@
         default = inputs.self.devShells.${system}.accentor-api;
         deps = pkgs.devshell.mkShell {
           packages = [
-            pkgs.accentor-api.ruby
+            pkgs.accentor-api.env.wrappedRuby
             pkgs.bundix
           ];
         };
