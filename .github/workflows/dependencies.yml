@@ -28,7 +28,7 @@ jobs:
           cache: accentor
           token: '${{ secrets.ATTIC_AUTH_TOKEN }}'
       - name: Run bundix
-        run: nix develop .#deps --command bundix
+        run: nix develop ./dev#deps --command bundix
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v7.2.1
         with:

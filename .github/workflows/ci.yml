@@ -30,12 +30,12 @@ jobs:
           token: '${{ secrets.ATTIC_AUTH_TOKEN }}'
       - name: "Setup database"
         run: |
-          nix develop --command pg:start
-          nix develop --command rails db:setup
+          nix develop ./dev --command pg:start
+          nix develop ./dev --command rails db:setup
       - name: Run tests
         env:
           CI: true
-        run: nix develop --command rails test
+        run: nix develop ./dev --command rails test
       - uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # required
@@ -58,9 +58,9 @@ jobs:
       - name: Lint with rubocop
         env:
           RAILS_ENV: "test"
-        run: nix develop --command rubocop -c .rubocop.yml -f github
+        run: nix develop ./dev --command rubocop -c .rubocop.yml -f github
       - name: Scan with brakeman
-        run: nix develop --command brakeman --no-pager
+        run: nix develop ./dev --command brakeman --no-pager
   annotate-diff-check:
     runs-on: ubuntu-latest
     steps:
@@ -79,10 +79,10 @@ jobs:
           token: '${{ secrets.ATTIC_AUTH_TOKEN }}'
       - name: "Setup database"
         run: |
-          nix develop --command pg:start
-          nix develop --command rails db:setup
+          nix develop ./dev --command pg:start
+          nix develop ./dev --command rails db:setup
       - name: Run annotate
-        run: nix develop --command annotaterb models
+        run: nix develop ./dev --command annotaterb models
       - name: Check diff
         run: |
           if ! git diff-index --quiet HEAD; then
