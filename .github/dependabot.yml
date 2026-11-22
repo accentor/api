@@ -21,7 +21,9 @@ updates:
     timezone: Europe/Brussels
   open-pull-requests-limit: 99
 - package-ecosystem: nix
-  directory: "/"
+  directories:
+    - "/"
+    - "/dev"
   schedule:
     interval: weekly
     day: saturday
