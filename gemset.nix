@@ -485,12 +485,12 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0x393h8mpkhzw9rqgl4fy7r62cy6bdpmrb1gpfvw4nirlj99ijz0";
+      sha256 = "0wrfszkyjxm8qj6fnbc6y06w9bl7gx6n3956xxzc16sk409k20n7";
       target = "ruby";
       type = "gem";
     };
     targets = [];
-    version = "2.2.0";
+    version = "2.2.2";
   };
   io-console = {
     groups = ["default" "development" "test"];
